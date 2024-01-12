@@ -52,7 +52,7 @@ const AuthLinks: React.FC<AuthLinksProps> = () => {
         >
           <motion.li
               className="text-l rounded-lg p-1 m-2 border dark:border-slate-700 flex justify-center items-center"
-              whileHover={{ scale: 1.05 }}
+              
             >
               <Darkmode/>
             </motion.li>

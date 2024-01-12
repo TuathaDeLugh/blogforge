@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/Components/layout/Navebar'
 import StateProvider from '@/Components/layout/StateProvider'
+import Footer from '@/Components/layout/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,10 +23,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} text-black bg-white dark:text-slate-200 dark:bg-gray-900`}>
         <Navbar/>
-        <main className=''>
+        <main className=' min-h-screen'>
 
         {children}
         </main>
+        <Footer/>
         </body>
     </html>
     </StateProvider>

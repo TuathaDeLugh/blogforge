@@ -1,36 +1,68 @@
 "use client"
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { MdComputer } from 'react-icons/md';
-import { setDarkMode, selectDarkMode } from '@/Redux/darkModeSlice';
 import { motion } from 'framer-motion';
+import Cookies from 'js-cookie';
 
 const Darkmode: React.FC = () => {
-  const dispatch = useDispatch();
-  const darkMode = useSelector(selectDarkMode);
-
-  useEffect(() => {
-    const systemDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    if (darkMode === 'system') {
-      toggleDarkMode(systemDarkMode ? 'dark' : 'light');
-    }
-
-    document.documentElement.classList.toggle('dark', darkMode === 'dark');
-  }, [darkMode]);
+  const [isDarkMode, setIsDarkMode] = useState<string | null>(null);
 
   const toggleDarkMode = (mode: 'dark' | 'light' | 'system') => {
-    console.log('Toggling Dark Mode to:', mode);
-    dispatch(setDarkMode(mode));
-    localStorage.setItem('dark-mode', mode || '');
+    if (mode === 'system') {
+      Cookies.remove('dark-mode');
+      const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setIsDarkMode(systemDarkMode ? 'dark' : 'light');
+    } else {
+      setIsDarkMode(mode);
+      Cookies.set('dark-mode', mode, { expires: 365 });
+    }
   };
+
+  useEffect(() => {
+    const cookieDarkMode = Cookies.get('dark-mode');
+
+    if (cookieDarkMode === undefined) {
+      setIsDarkMode('system');
+      const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (systemDarkMode) {
+        toggleDarkMode('dark');
+      } else {
+        toggleDarkMode('light');
+      }
+    } else {
+      setIsDarkMode(cookieDarkMode);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isDarkMode !== null) {
+      if (isDarkMode === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    }
+  }, [isDarkMode]);
+
+  useEffect(() => {
+    const updateDarkMode = (e: MediaQueryListEvent) => {
+      setIsDarkMode(e.matches ? 'dark' : 'light');
+    };
+
+    const systemDarkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    systemDarkModeQuery.addEventListener('change', updateDarkMode);
+
+    return () => {
+      systemDarkModeQuery.removeEventListener('change', updateDarkMode);
+    };
+  }, []);
 
   return (
     <>
       <div className='flex items-center text-white right-0 p-1 gap-2'>
         <motion.div whileHover={{ scale: 1.1 }}>
-          {darkMode === 'dark' ? (
+          {isDarkMode === 'dark' ? (
             <motion.button
               onClick={() => toggleDarkMode('light')}
               className={`rounded-full p-2 bg-purple-500/70`}

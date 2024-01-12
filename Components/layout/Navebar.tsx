@@ -15,53 +15,75 @@ let navData = [
 ];
 
 const variants = {
-	open: { opacity: 1, height: 'auto', innerWidth: 'auto' },
-	closed: { opacity: 0, height: 0, innerWidth: 0 },
+	open: { opacity: 1, height: 'auto', innerWidth: 'auto', y: 0},
+	closed: { opacity: 0, height: 0, innerWidth: 0 , y: -50},
 };
 
 export default function Navbar() {
+	const [navbarani, setNavbarani] = useState<boolean>(false);
 	const [navbar, setNavbar] = useState<boolean>(false);
+	const [windowWidth, setWindowWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 0);
 
 
+	
+	const closenavbarWithDelay = () => {
+		
+		setTimeout(() => {
+		  setNavbar(!navbar);
+		}, 500); 
+	  };
+
+	
 	useEffect(() => {
 		const handleResize = () => {
-			if (typeof window !== 'undefined' && window.innerWidth <= 768) {
-				setNavbar(true);
+			if (typeof window !== 'undefined') {
+				setWindowWidth(window.innerWidth);
+				setNavbar(window.innerWidth >= 768);
 			}
-			if (typeof window !== 'undefined' && window.innerWidth > 768) {
-				setNavbar(false);
-			}
-
 		};
+		handleResize();
+
 		window.addEventListener('resize', handleResize);
 
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
-	}, [])
+	}, []);
 
 	return (
 		<>
 			<nav className='sticky top-0 left-0 right-0 z-50 '>
 				<div className="flex max-w-[1500px] mx-auto ">
 					<div className='grow  px-4 shadow-sm m-2 text-black bg-white/80 dark:text-slate-200 dark:bg-slate-800/80 dark:border-slate-600 dark:shadow-slate-500/50 backdrop-blur-sm border rounded-xl flex md:items-center lg:max-w-screen-2xl items-start'>
-						<div className='md:hidden py-1'>
+						<div className='md:hidden py-1 flex items-center '>
+							 {navbarani ? (
+							
 							<motion.button
-								className='p-2 text-purple-500 rounded-md outline-none'
-								onClick={() => setNavbar(!navbar)}
+								className='p-2  rounded-md outline-none '
+								onClick={() =>{setNavbarani(!navbarani); closenavbarWithDelay() }}
 								whileTap={{ scale: 0.9 }}
 								transition={{ type: 'spring', stiffness: 300 }}
 							>
-								{navbar ? (
-									<motion.div whileHover={{ scale: 1.1 }}>
-										<AiOutlineClose size={'25'} />
+								<motion.div whileHover={{ scale: 1.1 }}
+										className='text-red-600  dark:text-red-400 '>
+										<AiOutlineClose size={'30'} />
 									</motion.div>
-								) : (
-									<motion.div whileHover={{ scale: 1.1 }}>
-										<GiHamburgerMenu size={'25'} />
-									</motion.div>
-								)}
 							</motion.button>
+								
+									
+								) : ( 
+									<motion.button
+								className='p-2  rounded-md outline-none '
+								onClick={() =>{setNavbarani(!navbarani); setNavbar(true) }}
+								whileTap={{ scale: 0.9 }}
+								transition={{ type: 'spring', stiffness: 300 }}
+							>
+									<motion.div whileHover={{ scale: 1.1 }}
+										className='text-slate-400  dark:text-white'>
+										<GiHamburgerMenu size={'30'} />
+									</motion.div>
+							</motion.button>
+								 )} 
 						</div>
 
 						<div className=' grow  justify-between   md:items-center md:flex '>
@@ -76,67 +98,72 @@ export default function Navbar() {
 							<motion.div
 								variants={variants}
 								animate={
-									typeof window !== 'undefined'
-										? window.innerWidth <= 768
-											? navbar
-												? 'open'
-												: 'closed'
-											: 'open'
+									windowWidth <= 768
+										? navbarani
+											? 'open'
+											: 'closed'
 										: 'open'
 								}
 								className={`w-full md:w-auto  md:block md:pb-0 md:overflow-hidden md:max-h-screen`}
 							>
+
 								{/* md:flex-1 for center */}
 								{
-									typeof window !== 'undefined'
-										&& window.innerWidth >= 768 || navbar ?
-										<>
-											<ul className={` pb-5 md:pb-0 items-center justify-center md:flex `} >
+									navbar ?
+										(
+											<ul className={` pb-5 md:pb-0 items-center justify-center md:flex `}
+											>
 
 												{navData.map(link => {
 													return (
-														<li
-															key={link.key}
-															className={`text-l py-5 px-5 text-center 
-													`}
-														>
-															<Link
-																className='inline-block w-full'
-																onClick={() => setNavbar(!navbar)}
-																href={link.path}
+														<>
+
+															<motion.li
+																key={link.key}
+																whileTap={{ scale: 0.9 }}
+																transition={{ type: 'spring', stiffness: 300 }}
+																className={`text-l py-5 px-5 text-center `}
 															>
-																{link.name}
-															</Link>
-														</li>
+																{
+																	windowWidth < 768 ? (<Link
+																		className='inline-block w-full'
+																		onClick={() => {
+																			setNavbarani(!navbarani);
+																			closenavbarWithDelay();
+																		  }}
+																		href={link.path}
+																	>
+
+																		{link.name}
+																	</Link>) : (<Link
+																		className='inline-block w-full'
+																		href={link.path}
+																	>
+
+																		{link.name}
+																	</Link>)
+
+																}
+
+															</motion.li>
+
+														</>
 													)
 												})}
-												</ul>
-											</> : 
-											<>
-											<ul className={` md:flex `}>
-											{navData.map(link => {
-												return (
-
-													<li
-														key={link.key}
-														className={`text-l py-10 px-5 text-center 
-														`}
-														>
-													</li>
-												)
-											})}
 											</ul>
-											</>
-									}
+										)
+										: null
+								}
 
 
 
 
-										</motion.div>
+							</motion.div>
 
 						</div>
 						<div className='m-2'>
 							<AuthBTN />
+
 						</div>
 
 					</div>

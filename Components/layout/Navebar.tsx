@@ -15,8 +15,8 @@ let navData = [
 ];
 
 const variants = {
-	open: { opacity: 1, height: 'auto' },
-	closed: { opacity: 0, height: 0 },
+	open: { opacity: 1, height: 'auto', innerWidth: 'auto' },
+	closed: { opacity: 0, height: 0, innerWidth: 0 },
 };
 
 export default function Navbar() {
@@ -45,7 +45,7 @@ export default function Navbar() {
 			<nav className='sticky top-0 left-0 right-0 z-50 '>
 				<div className="flex max-w-[1500px] mx-auto ">
 					<div className='grow  px-4 shadow-sm m-2 text-black bg-white/80 dark:text-slate-200 dark:bg-slate-800/80 dark:border-slate-600 dark:shadow-slate-500/50 backdrop-blur-sm border rounded-xl flex md:items-center lg:max-w-screen-2xl items-start'>
-					<div className='md:hidden py-1'>
+						<div className='md:hidden py-1'>
 							<motion.button
 								className='p-2 text-purple-500 rounded-md outline-none'
 								onClick={() => setNavbar(!navbar)}
@@ -63,9 +63,9 @@ export default function Navbar() {
 								)}
 							</motion.button>
 						</div>
-						
+
 						<div className=' grow  justify-between   md:items-center md:flex '>
-							
+
 							<div className='flex items-center justify-center py-3 md:py-5 md:block'>
 								<Link href='/' className='flex'>
 									<Image src={'/Logo.png'} alt='' width={150} height={75} />
@@ -85,36 +85,60 @@ export default function Navbar() {
 										: 'open'
 								}
 								className={`w-full md:w-auto  md:block md:pb-0 md:overflow-hidden md:max-h-screen`}
-								>
-								{/* md:flex-1 fpr center */}
-								<ul className=' delay-1000 pb-5 md:pb-0 items-center justify-center md:flex '>
-									{navData.map(link => {
-										return (
-											<li
-												key={link.key}
-												className={`text-l py-5 px-5 text-center 
+							>
+								{/* md:flex-1 for center */}
+								{
+									typeof window !== 'undefined'
+										&& window.innerWidth >= 768 || navbar ?
+										<>
+											<ul className={` pb-5 md:pb-0 items-center justify-center md:flex `} >
+
+												{navData.map(link => {
+													return (
+														<li
+															key={link.key}
+															className={`text-l py-5 px-5 text-center 
 													`}
-											>
-												<Link
-													className='inline-block w-full'
-													onClick={() => setNavbar(!navbar)}
-													href={link.path}
-												>
-													{link.name}
-												</Link>
-											</li>
-										)
-									})}
+														>
+															<Link
+																className='inline-block w-full'
+																onClick={() => setNavbar(!navbar)}
+																href={link.path}
+															>
+																{link.name}
+															</Link>
+														</li>
+													)
+												})}
+												</ul>
+											</> : 
+											<>
+											<ul className={` md:flex `}>
+											{navData.map(link => {
+												return (
+
+													<li
+														key={link.key}
+														className={`text-l py-10 px-5 text-center 
+														`}
+														>
+													</li>
+												)
+											})}
+											</ul>
+											</>
+									}
 
 
-								</ul>
-							</motion.div>
+
+
+										</motion.div>
 
 						</div>
 						<div className='m-2'>
-							<AuthBTN/>
+							<AuthBTN />
 						</div>
-						
+
 					</div>
 				</div>
 			</nav>

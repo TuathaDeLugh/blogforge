@@ -16,17 +16,17 @@ let navData = [
 
 const variants = {
 	open: { opacity: 1, height: 'auto', innerWidth: 'auto', y: 0},
-	closed: { opacity: 0, height: 0, innerWidth: 0 , y: -50},
+	closed: { opacity: 0, height: 0, innerWidth: 0 , y: -70},
 };
 
 export default function Navbar() {
-	const [navbarani, setNavbarani] = useState<boolean>(false);
+	const [navbarAni, setNavbarAni] = useState<boolean>(false);
 	const [navbar, setNavbar] = useState<boolean>(false);
 	const [windowWidth, setWindowWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 0);
 
 
 	
-	const closenavbarWithDelay = () => {
+	const closeNavbarWithDelay = () => {
 		
 		setTimeout(() => {
 		  setNavbar(!navbar);
@@ -34,21 +34,22 @@ export default function Navbar() {
 	  };
 
 	
-	useEffect(() => {
+	  useEffect(() => {
 		const handleResize = () => {
-			if (typeof window !== 'undefined') {
-				setWindowWidth(window.innerWidth);
-				setNavbar(window.innerWidth >= 768);
-			}
+		  if (typeof window !== 'undefined') {
+			setWindowWidth(window.innerWidth);
+			setNavbar(window.innerWidth >= 768);
+		  }
 		};
+	  
 		handleResize();
-
+	  
 		window.addEventListener('resize', handleResize);
-
+	  
 		return () => {
-			window.removeEventListener('resize', handleResize);
+		  window.removeEventListener('resize', handleResize);
 		};
-	}, []);
+	  }, []);
 
 	return (
 		<>
@@ -56,32 +57,32 @@ export default function Navbar() {
 				<div className="flex max-w-[1500px] mx-auto ">
 					<div className='grow  px-4 shadow-sm m-2 text-black bg-white/80 dark:text-slate-200 dark:bg-slate-800/80 dark:border-slate-600 dark:shadow-slate-500/50 backdrop-blur-sm border rounded-xl flex md:items-center lg:max-w-screen-2xl items-start'>
 						<div className='md:hidden py-1 flex items-center '>
-							 {navbarani ? (
+							 {navbarAni ? (
 							
 							<motion.button
-								className='p-2  rounded-md outline-none '
-								onClick={() =>{setNavbarani(!navbarani); closenavbarWithDelay() }}
-								whileTap={{ scale: 0.9 }}
+								className='p-2  rounded-md outline-none text-red-600  dark:text-red-400'
+								onClick={() =>{setNavbarAni(!navbarAni); closeNavbarWithDelay() }}
+								whileTap={{ scale: 0.5 }}
+								whileHover={{ scale: 1.1 }}
 								transition={{ type: 'spring', stiffness: 300 }}
 							>
-								<motion.div whileHover={{ scale: 1.1 }}
-										className='text-red-600  dark:text-red-400 '>
+								
+										
 										<AiOutlineClose size={'30'} />
-									</motion.div>
+									
 							</motion.button>
 								
 									
 								) : ( 
 									<motion.button
-								className='p-2  rounded-md outline-none '
-								onClick={() =>{setNavbarani(!navbarani); setNavbar(true) }}
-								whileTap={{ scale: 0.9 }}
+								className='p-2  rounded-md outline-none text-slate-400  dark:text-white '
+								onClick={() =>{setNavbarAni(!navbarAni); setNavbar(true) }}
+								whileTap={{ scale: 0.5 }}
+								whileHover={{ scale: 1.1 }}
 								transition={{ type: 'spring', stiffness: 300 }}
 							>
-									<motion.div whileHover={{ scale: 1.1 }}
-										className='text-slate-400  dark:text-white'>
+									
 										<GiHamburgerMenu size={'30'} />
-									</motion.div>
 							</motion.button>
 								 )} 
 						</div>
@@ -99,7 +100,7 @@ export default function Navbar() {
 								variants={variants}
 								animate={
 									windowWidth <= 768
-										? navbarani
+										? navbarAni
 											? 'open'
 											: 'closed'
 										: 'open'
@@ -124,26 +125,19 @@ export default function Navbar() {
 																transition={{ type: 'spring', stiffness: 300 }}
 																className={`text-l py-5 px-5 text-center `}
 															>
-																{
-																	windowWidth < 768 ? (<Link
+																	<Link
 																		className='inline-block w-full'
-																		onClick={() => {
-																			setNavbarani(!navbarani);
-																			closenavbarWithDelay();
+																		onClick={() => { windowWidth < 768 ? (
+
+																			setNavbarAni(!navbarAni),
+																			closeNavbarWithDelay()
+																			) : null
 																		  }}
 																		href={link.path}
 																	>
 
 																		{link.name}
-																	</Link>) : (<Link
-																		className='inline-block w-full'
-																		href={link.path}
-																	>
-
-																		{link.name}
-																	</Link>)
-
-																}
+																	</Link>
 
 															</motion.li>
 

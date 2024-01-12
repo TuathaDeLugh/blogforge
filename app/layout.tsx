@@ -21,7 +21,7 @@ export default function RootLayout({
     <StateProvider>
       
     <html lang="en">
-      <body className={`${inter.className} text-black bg-white dark:text-slate-200 dark:bg-gray-900`}>
+      <body className={`${inter.className} text-black bg-white dark:text-white dark:bg-gray-900`}>
         <Navbar/>
         <main className=' min-h-screen'>
 

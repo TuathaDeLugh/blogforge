@@ -10,7 +10,7 @@ export default function Footer() {
     <div className="grid grid-cols-1 gap-2 lg:grid-cols-3">
       <div>
         <div className="text-teal-600 dark:text-teal-300">
-          <Image src={'/logo.png'} height={100} width={200} alt='LOGO'/>
+          <Image src={'/Logo.png'} height={100} width={200} alt='LOGO'/>
         </div>
 
         <p className="mt-4 max-w-xs text-gray-500 dark:text-gray-400">

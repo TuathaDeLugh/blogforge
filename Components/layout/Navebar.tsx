@@ -15,8 +15,8 @@ let navData = [
 ];
 
 const variants = {
-	open: { opacity: 1, height: 'auto', innerWidth: 'auto', y: 0},
-	closed: { opacity: 0, height: 0, innerWidth: 0 , y: -70},
+	open: { opacity: 1, height: 'auto', innerWidth: 'auto', y: 0 },
+	closed: { opacity: 0, height: 0, innerWidth: 0 , y: -100 , },
 };
 
 export default function Navbar() {
@@ -30,7 +30,7 @@ export default function Navbar() {
 		
 		setTimeout(() => {
 		  setNavbar(!navbar);
-		}, 500); 
+		}, 50); 
 	  };
 
 	

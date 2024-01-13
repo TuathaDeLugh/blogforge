@@ -4,8 +4,8 @@ export default function contact() {
   return (
     <div class="grid sm:grid-cols-2 items-center gap-16 my-6 mx-auto max-w-7xl  font-[sans-serif]">
             <div>
-                <h1 class="text-3xl font-extrabold">Let's Talk</h1>
-                <p class="text-sm text-gray-400 mt-3">Have some big idea or brand to develop and need help? Then reach out we'd love to hear about your project  and provide help.</p>
+                <h1 class="text-3xl font-extrabold">Let&apos;s Talk</h1>
+                <p class="text-sm text-gray-400 mt-3">Have some big idea or brand to develop and need help? Then reach out we&apos;d love to hear about your project  and provide help.</p>
                 <div class="mt-12">
                     <h2 class="text-lg font-extrabold">Email</h2>
                     <ul class="mt-3">

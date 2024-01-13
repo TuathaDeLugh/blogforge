@@ -14,7 +14,7 @@ export default function Error() {
                         <Image width={400} height={400} alt="404" className="w-[50%]" src="https://i.ibb.co/G9DC8S0/404-2.png" />
                         <div className="">
                             <h1 className="my-2 text-gray-800 dark:text-gray-400 font-bold text-2xl">
-                                Looks like you've found the
+                                Looks like you&apos;ve found the
                                 doorway to the great nothing
                             </h1>
                             <p className="my-2 text-gray-800 dark:text-gray-400">Sorry about that! Please visit our hompage to get where you need to go.</p>

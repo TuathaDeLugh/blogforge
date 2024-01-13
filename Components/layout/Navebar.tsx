@@ -99,7 +99,7 @@ export default function Navbar() {
 							<motion.div
 								variants={variants}
 								animate={
-									windowWidth <= 768
+									windowWidth < 768
 										? navbarAni
 											? 'open'
 											: 'closed'

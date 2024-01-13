@@ -50,12 +50,12 @@ const AuthLinks: React.FC<AuthLinksProps> = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <motion.li
+          {/* <motion.li
               className="text-l rounded-lg p-1 m-2 border dark:border-slate-700 flex justify-center items-center"
               
             >
               <Darkmode/>
-            </motion.li>
+            </motion.li> */}
           {dropdata.map((link) => (
             <motion.li
               key={link.key}

@@ -9,8 +9,8 @@ import AuthBTN from './AuthBTN';
 
 let navData = [
 	{ name: 'Home', path: '/', key: 1 },
-	{ name: 'About', path: '/about', key: 2 },
-	{ name: 'Project', path: '/project', key: 3 },
+	{ name: 'Reviews', path: '/reviews', key: 2 },
+	{ name: 'About', path: '/about', key: 3 },
 	{ name: 'contact', path: '/contact', key: 4 },
 ];
 
@@ -55,7 +55,7 @@ export default function Navbar() {
 		<>
 			<nav className='sticky top-0 left-0 right-0 z-50 '>
 				<div className="flex max-w-[1500px] mx-auto ">
-					<div className='grow  px-4 shadow-sm m-2 text-black bg-white/80 dark:text-slate-200 dark:bg-slate-800/80 dark:border-slate-600 dark:shadow-slate-500/50 backdrop-blur-sm border rounded-xl flex md:items-center lg:max-w-screen-2xl items-start'>
+					<div className='grow  px-2 md:px-4 shadow-sm m-2 text-black bg-white/80 dark:text-slate-200 dark:bg-slate-800/80 dark:border-slate-600 dark:shadow-slate-500/50 backdrop-blur-sm border rounded-xl flex md:items-center lg:max-w-screen-2xl items-start'>
 						<div className='md:hidden py-1 flex items-center '>
 							 {navbarAni ? (
 							

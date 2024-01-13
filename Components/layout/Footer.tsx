@@ -7,13 +7,13 @@ export default function Footer() {
   return (
     <footer className="bg-white dark:bg-gray-900 border-t dark:border-slate-700" >
   <div className="mx-auto max-w-[1500px] space-y-8 px-4 pt-10 sm:px-6 lg:space-y-16 lg:px-8">
-    <div className="grid grid-cols-1 gap-2 lg:grid-cols-3">
-      <div>
-        <div className="text-teal-600 dark:text-teal-300">
+    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-5">
+    <div className="lg:col-span-2">
+        <div className="">
           <Image src={'/Logo.png'} height={100} width={200} alt='LOGO'/>
         </div>
 
-        <p className="mt-4 max-w-xs text-gray-500 dark:text-gray-400">
+        <p className="mt-4 text-gray-500 dark:text-gray-400  max-w-md">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse non cupiditate quae nam
           molestias.
         </p>
@@ -77,44 +77,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className=" text-center sm:text-left grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4">
-        <div>
-          <p className="font-medium text-lg text-gray-900 dark:text-white">Services</p>
-
-          <ul className="mt-6 space-y-4 text-sm">
-            <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                1on1 Coaching
-              </a>
-            </li>
-
-            <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                Company Review
-              </a>
-            </li>
-
-            <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                Accounts Review
-              </a>
-            </li>
-
-            <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                HR Consulting
-              </a>
-            </li>
-
-            <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                SEO Optimisation
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div>
+      <div className='text-center md:text-left'>
           <p className="font-medium text-lg text-gray-900 dark:text-white">Company</p>
 
           <ul className="mt-6 space-y-4 text-sm">
@@ -132,66 +95,77 @@ export default function Footer() {
 
             <li>
               <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                Accounts Review
+              Contact
               </a>
             </li>
-          </ul>
-        </div>
-
-        <div>
-          <p className="font-medium text-gray-900 dark:text-white">Helpful Links</p>
-
-          <ul className="mt-6 space-y-4 text-sm">
-            <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                Contact
-              </a>
-            </li>
-
             <li>
               <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
                 FAQs
               </a>
             </li>
-
-            <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                Live Chat
-              </a>
-            </li>
           </ul>
         </div>
-
-        <div>
-          <p className="font-medium text-lg text-gray-900 dark:text-white">Legal</p>
+        
+        <div className='text-center md:text-left' >
+          <p className="font-medium text-lg text-gray-900 dark:text-white">Category</p>
 
           <ul className="mt-6 space-y-4 text-sm">
             <li>
               <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                Accessibility
+              Lifestyle
               </a>
             </li>
 
             <li>
               <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                Returns Policy
+              Food
               </a>
             </li>
 
             <li>
               <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                Refund Policy
+              Educational
               </a>
             </li>
 
             <li>
               <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                Hiring Statistics
+              Gaming
               </a>
             </li>
           </ul>
         </div>
-      </div>
+
+        
+
+         <div className='text-center md:text-left'>
+          <p className="font-medium text-gray-900 dark:text-white">Helpful Links</p>
+
+          <ul className="mt-6 space-y-4 text-sm">
+            <li>
+              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+                Home
+              </a>
+            </li>
+
+            <li>
+              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+                All Review
+              </a>
+            </li>
+
+            <li>
+              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+                My Review
+              </a>
+            </li>
+            <li>
+              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+                My Saved Review
+              </a>
+            </li>
+          </ul>
+        </div>
     </div>
 
     <p className="text-xs text-gray-500 dark:text-gray-400 text-center border-t dark:border-slate-700 p-5">

@@ -43,7 +43,7 @@ const AuthLinks: React.FC<AuthLinksProps> = () => {
       <AnimatePresence>
         {open && (
           <motion.ul
-            className=" absolute right-0 mt-6 list-none m-1 border dark:border-slate-700 w-full md:w-40 rounded bg-white/90 dark:bg-slate-900/90"
+            className=" absolute right-0 mt-6 list-none m-1 border dark:border-slate-700 w-max md:w-40 rounded bg-white/90 dark:bg-slate-900/90"
             initial={{ opacity: 0, y: -20, }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}

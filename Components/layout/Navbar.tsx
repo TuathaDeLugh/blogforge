@@ -75,7 +75,7 @@ export default function Navbar() {
 									
 								) : ( 
 									<motion.button
-								className='p-2  rounded-md outline-none text-slate-400  dark:text-white '
+								className='p-2  rounded-md outline-none text-orange-500  dark:text-orange-400 '
 								onClick={() =>{setNavbarAni(!navbarAni); setNavbar(true) }}
 								whileTap={{ scale: 0.5 }}
 								whileHover={{ scale: 1.1 }}

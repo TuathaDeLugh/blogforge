@@ -126,7 +126,7 @@ export default function Navbar() {
 																className={`text-l py-5 px-5 text-center `}
 															>
 																	<Link
-																		className='inline-block w-full'
+																		className='inline-block w-full hover:text-orange-400 '
 																		onClick={() => { windowWidth < 768 ? (
 
 																			setNavbarAni(!navbarAni),

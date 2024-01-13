@@ -2,6 +2,7 @@ import React from 'react'
 import Darkmode from './Darkmode'
 import Image from 'next/image'
 import { FaFacebook, FaGithub, FaInstagram, FaTwitter } from "react-icons/fa";
+import Link from 'next/link';
 
 export default function Footer() {
   return (
@@ -82,26 +83,26 @@ export default function Footer() {
 
           <ul className="mt-6 space-y-4 text-sm">
             <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+              <Link href="/about" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
                 About
-              </a>
+              </Link>
             </li>
 
             <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                Meet the Team
-              </a>
+              <Link href="/about#feature" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+                Features
+              </Link>
             </li>
 
             <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+              <Link href="/contact" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
               Contact
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+              <Link href="/faq" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
                 FAQs
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

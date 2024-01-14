@@ -91,7 +91,7 @@ export default function Login() {
             </button>
           </div>
           <div className="md:w-[450px] mt-6 text-center">
-            Don't have Account? <Link href={'/register'} className='text-orange-400 hover:text-orange-500'>Create one </Link> 
+            Don&apos;t have Account? <Link href={'/register'} className='text-orange-400 hover:text-orange-500'>Create one </Link> 
           </div>
         </div>
         <Div

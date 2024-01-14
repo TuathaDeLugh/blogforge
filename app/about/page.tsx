@@ -7,7 +7,7 @@ import { Div, H1, P } from '@/Components/Motion/Motion';
 
 export default function About() {
   return (
-    <section className="flex items-center lg:py-10">
+    <section className="flex items-center lg:py-10 overflow-x-hidden">
       <div className="justify-center flex-1 max-w-[1500px] py-4 mx-auto lg:py-6 md:px-6">
         <Div
           initial={{ opacity: 0, y: -20 }}
@@ -19,9 +19,12 @@ export default function About() {
             <div className="relative">
               <Image width={300} height={250} src="/About.gif" alt=""
                 className="relative z-40 object-cover w-full h-96 lg:rounded-tr-[80px] lg:rounded-bl-[80px] rounded" />
-              <div
+              <Div
+        initial={{ opacity: 0, x: 20, y:-20 }}
+        animate={{ opacity: 1, x: 0,y:0  }}
+        transition={{ duration: 0.5, delay: 0.3 }}
                 className="absolute z-10 hidden w-full h-full bg-orange-400 rounded-bl-[80px] rounded -bottom-6 right-6 lg:block">
-              </div>
+              </Div>
             </div>
           </div>
           <div className="w-full px-4 lg:w-1/2 lg:mb-0 ">

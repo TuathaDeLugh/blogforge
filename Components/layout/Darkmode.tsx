@@ -65,7 +65,7 @@ const Darkmode: React.FC = () => {
           {isDarkMode === 'dark' ? (
             <motion.button
               onClick={() => toggleDarkMode('light')}
-              className={`rounded-full p-2 bg-yellow-500 border dark:border-slate-400`}
+              className={`rounded-full p-2 bg-orange-400 border dark:border-slate-400`}
               whileTap={{ scale: 0.9, rotate: 30 }}
               transition={{ type: 'spring', stiffness: 300 }}
             >

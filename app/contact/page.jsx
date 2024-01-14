@@ -113,7 +113,7 @@ export default function contact() {
         <Div className="h-full flex items-center relative"
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}>
+        transition={{ duration: 0.5, delay: 0.2 }}>
 
           <form
              className="mx-auto space-y-4 p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 ">
@@ -148,9 +148,12 @@ export default function contact() {
               Send
             </button>
           </form>
-          <div
-                            className="absolute -z-10 hidden w-full h-full bg-orange-400/50 rounded-md -bottom-3 -right-3 lg:block">
-                        </div>
+          <Div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+         className="absolute -z-10 hidden w-full h-full bg-orange-400/50 rounded-md -bottom-3 -right-3 md:block">
+      </Div>
         </Div>
       </div>
     </div>

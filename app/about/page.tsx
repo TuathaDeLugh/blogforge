@@ -18,7 +18,7 @@ export default function About() {
           <div className="w-full px-4 mb-10 lg:w-1/2 lg:mb-0">
             <div className="relative">
               <Image width={300} height={250} src="/About.gif" alt=""
-                className="relative z-40 object-cover w-full h-96 lg:rounded-tr-[80px] lg:rounded-bl-[80px] rounded" />
+                className="relative z-40 object-cover w-full bg-slate-200 dark:bg-slate-500 h-96 lg:rounded-tr-[80px] lg:rounded-bl-[80px] rounded" />
               <Div
         initial={{ opacity: 0, x: 20, y:-20 }}
         animate={{ opacity: 1, x: 0,y:0  }}

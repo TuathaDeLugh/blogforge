@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import SessionProvider from '@/Components/Logic/sessionPro'
 import Navbar from '@/Components/layout/Navbar'
 // import StateProvider from '@/Components/layout/StateProvider'
 import Footer from '@/Components/layout/Footer'
+import Toast from '@/Components/layout/Toast'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,12 +24,15 @@ export default function RootLayout({
       
     <html lang="en">
       <body className={`${inter.className} text-black bg-white dark:text-white dark:bg-gray-900`}>
+      <SessionProvider>
+        <Toast/>
         <Navbar/>
         <main className=' min-h-[93vh] md:min-h-[91vh] '>
 
         {children}
         </main>
         <Footer/>
+      </SessionProvider>
         </body>
     </html>
     // </StateProvider>

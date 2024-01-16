@@ -1,13 +1,61 @@
 'use client'
 import { Div, H1 } from '@/Components/Motion/Motion';
+import { useFormik } from "formik";
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export default function Login() {
-    const [disabled, setDisabled] = useState(true);
+    const [disabled, setDisabled] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+
+    const initialValues = {
+      email: "",
+      password: "",
+    };
+    const router = useRouter();
+
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues,
+      // validationSchema: loginSchema,
+      onSubmit: (async (values, action) => {
+
+        try {
+          setDisabled(true)
+          const result = await signIn('credentials', {
+            redirect: false,
+            callbackUrl: "/",
+            email: values.email,
+            password: values.password,
+          })
+          if (
+            result &&
+            (result).status == 200 &&
+            (result).error == undefined
+          ) {
+            router.refresh();
+            router.push('/')
+          } else {
+            toast.error('incorrect username or password')
+          }
+        } catch (error) {
+          console.log('Login Failed:', error)
+        }
+        setDisabled(false)
+        action.resetForm();
+
+      }
+      ),
+    });
+
+
+
+
   return (
     <div className="flex min-h-[92vh] md:min-h-[90vh] items-center mx-auto max-w-[1500px] justify-center">
       <Div
@@ -41,11 +89,15 @@ export default function Login() {
 
 
         
-        <form >
+        <form onSubmit={handleSubmit} autoComplete="off" >
           <div className="w-[75vw] md:w-[450px] my-8">
             <input
               type="text"
+              name="email"
               placeholder="Email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
               className="w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm outline-orange-500"
             />
           </div>
@@ -54,6 +106,10 @@ export default function Login() {
             <input
               type={showPassword ? 'text' : 'password'}
               placeholder="Password"
+              name="password"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
               className="w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm outline-orange-500"
             />
              <div
@@ -67,7 +123,7 @@ export default function Login() {
           <div className="md:w-[450px] mt-8 mb-2">
           <button
                                 disabled ={disabled}
-                                type="button"
+                                type="submit"
                                 className="text-white bg-orange-400 hover:bg-orange-600 disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 w-full flex items-center justify-center gap-4"
                             >
                                 Login 
@@ -84,7 +140,7 @@ export default function Login() {
         </div>
           <div className="md:w-[450px] mb-8 mt-2 ">
             <button
-              type="button"
+              
               className="text-white bg-slate-400 hover:bg-gray-600 font-semibold rounded-md text-sm px-4 py-3 w-full"
             >
                 Login With Google

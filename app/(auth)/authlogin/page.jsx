@@ -2,15 +2,17 @@
 import { Div, H1 } from '@/Components/Motion/Motion';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { FaEye, FaEyeSlash, FaGithub } from 'react-icons/fa';
+import { FaEye, FaEyeSlash} from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { FcGoogle } from 'react-icons/fc';
-import { signIn } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
-export default function Login() {
+export default function AuthLgin() {
     const [disabled, setDisabled] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
     const [conPassword, setConPassword] = useState(false);
+
+    const {data:session} = useSession();
+
     return (
         <div className="flex min-h-[92vh] md:min-h-[90vh] items-center mx-auto max-w-[1500px] justify-center">
             <Div
@@ -37,21 +39,22 @@ export default function Login() {
                             transition={{ duration: 0.5, delay: 0.3 }}
                             className="pl-2 font-bold border-l-8 border-orange-400 text-5xl dark:text-white"
                         >
-                            SIGN UP
+                            New Account 
                         </H1>
                     </div>
-
+                    <div className="w-[75vw] md:w-[450px] my-4 p-3 rounded-md bg-red-200 dark:bg-red-600/20 text-sm">
+                        <p>
+                        No account found with this email <span className=' underline '>{session?.user?.email}</span>.
+                        </p>
+                        <p>
+                            Create new one & login again
+                            </p>
+                        </div>    
 
 
 
                     <form >
-                        <div className=" w-[75vw] md:w-[450px] my-4">
-                            <input
-                                type="text"
-                                placeholder="Name"
-                                className="w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm outline-orange-500"
-                            />
-                        </div>
+                        
                         <div className="w-[75vw] md:w-[450px] my-4">
                             <input
                                 type="text"
@@ -59,13 +62,7 @@ export default function Login() {
                                 className="w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm outline-orange-500"
                             />
                         </div>
-                        <div className="w-[75vw] md:w-[450px] my-4">
-                            <input
-                                type="text"
-                                placeholder="Email"
-                                className="w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm outline-orange-500"
-                            />
-                        </div>
+                       
 
                         <div className="w-[75vw] md:w-[450px] my-4">
                             <div className="relative">
@@ -85,7 +82,7 @@ export default function Login() {
                             <div className="relative">
                                 <input
                                     type={conPassword ? 'text' : 'password'}
-                                    placeholder="Password"
+                                    placeholder="Confirm Password"
                                     className="w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm outline-orange-500"
                                 /> <div
                                     className={` absolute top-0  right-3 h-full flex items-center text-slate-400`}
@@ -111,28 +108,6 @@ export default function Login() {
                             </button>
                         </div>
                     </form>
-                    <div className="md:w-[450px] text-center">
-                        OR
-                    </div>
-                    <div className="md:w-[450px] mb-8 mt-2 grid grid-cols-2 gap-3 ">
-                        <button
-                            onClick={() => signIn('google', { callbackUrl: '/authlogin' })}
-                            className="text-black bg-slate-200 hover:opacity-50 border border-slate-500 font-semibold rounded-md text-sm px-4 py-3 w-full flex gap-2 items-center justify-center"
-                        >
-                            Sign Up With
-                             <FcGoogle size={20} className="bg-white rounded-full" />
-                        </button>
-                        <button
-                            onClick={() => signIn('github', { callbackUrl: '/authlogin' })}
-                            className="text-white bg-slate-600 hover:opacity-50 font-semibold rounded-md text-sm px-4 py-3 w-full flex gap-2 items-center justify-center"
-                        >
-                            Sign Up With
-                            <FaGithub size={20} className="bg-slate-800 rounded-full" />
-                        </button>
-                    </div>
-                    <div className="md:w-[450px] mt-6 text-center">
-                        Already have Account? <Link href={'/login'} className='text-orange-400 hover:text-orange-500'>Sign In </Link>
-                    </div>
                 </div>
                 <Div
                     initial={{ opacity: 0, x: -20 }}

@@ -52,7 +52,7 @@ export default function Progress() {
       repeatDelay: 0.5,
       delay: -0.3
     }}
-    className='h-8 w-8 dark:bg-orange-400 bg-orange-600  rounded-full '> 
+    className='h-8 w-8 dark:bg-orange-400 bg-orange-600  rounded-md '> 
      </motion.div>
     </div>
 	<div className=' animate-bounce  [animation-delay:-0.15s]'>
@@ -70,7 +70,7 @@ export default function Progress() {
       repeatDelay: 0.5,
       delay: -0.15
     }}
-    className='h-8 w-8 dark:bg-orange-400 bg-orange-600  rounded-full '> 
+    className='h-8 w-8 dark:bg-orange-400 bg-orange-600  rounded-md '> 
      </motion.div>
   </div>
 	<div className=' animate-bounce '>
@@ -88,7 +88,7 @@ export default function Progress() {
       repeatDelay: 0.5
       
     }}
-    className='h-8 w-8 dark:bg-orange-400 bg-orange-600  rounded-full '> 
+    className='h-8 w-8 dark:bg-orange-400 bg-orange-600  rounded-md'> 
      </motion.div>
   </div>
 </div>

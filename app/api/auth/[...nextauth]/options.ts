@@ -4,9 +4,6 @@ import  { AuthOptions } from 'next-auth'
 import bcrypt from "bcryptjs";
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google'
-
-
-
   export type CustomUser = {
     id?: string | null;
     username?:string | null;
@@ -15,8 +12,6 @@ import GoogleProvider from 'next-auth/providers/google'
     role?: string | null;
     avatar?: string | null;
   };
-
-  
 export const authOptions : AuthOptions = {
 	providers: [
 		GoogleProvider({
@@ -30,7 +25,6 @@ export const authOptions : AuthOptions = {
                 password: {  name: "Password", type: "password" }
               },      
             async authorize(credentials) {
-                // const { email, password } = credentials;
                 const email = credentials?.email
                 const password = credentials?.password
                console.log(email , password);
@@ -71,9 +65,6 @@ export const authOptions : AuthOptions = {
                 }
               
                 // Update properties based on your User model
-                user.name = dbuser.name || '';
-                user.avatar = dbuser.avatar || '';
-                user.role = dbuser.role || '';
                 user.id = dbuser.id || '';
               
                 return true;
@@ -81,18 +72,12 @@ export const authOptions : AuthOptions = {
           async jwt({ token, user }: { token: any; user?: CustomUser }) {
             if (user) {
               // Modify token directly
-              token.username = user.username;
-              token.avatar = user.avatar;
-              token.role = user.role;
               token.userid = user.id;
             }
   
               return token
           },
           async session({ session, token }: { session: any; token: any }) {
-            session.user.username = token?.username || '';
-            session.user.avatar = token?.avatar || '';
-            session.user.role = token?.role || '';
             session.user.id = token?.userid || '';
           
             return session;

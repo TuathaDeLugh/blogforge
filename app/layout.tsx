@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import SessionProvider from '@/Components/Logic/sessionPro'
 import Navbar from '@/Components/layout/Navbar'
-// import StateProvider from '@/Components/layout/StateProvider'
+import StateProvider from '@/Components/layout/StateProvider'
 import Footer from '@/Components/layout/Footer'
 import Toast from '@/Components/layout/Toast'
 
@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    // <StateProvider>
+    <StateProvider>
       
     <html lang="en">
       <body className={`${inter.className} text-black bg-white dark:text-white dark:bg-gray-900`}>
@@ -35,6 +35,6 @@ export default function RootLayout({
       </SessionProvider>
         </body>
     </html>
-    // </StateProvider>
+    </StateProvider>
   )
 }

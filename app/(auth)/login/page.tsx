@@ -1,6 +1,7 @@
 'use client'
 import { Div, H1 } from '@/Components/Motion/Motion';
 import { useFormik } from "formik";
+import { FcGoogle } from "react-icons/fc";
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -46,6 +47,7 @@ export default function Login() {
         } catch (error) {
           console.log('Login Failed:', error)
         }
+        toast.success(`Logedin sucessfully with ${values.email}`)
         setDisabled(false)
         action.resetForm();
 
@@ -140,10 +142,10 @@ export default function Login() {
         </div>
           <div className="md:w-[450px] mb-8 mt-2 ">
             <button
-              
-              className="text-white bg-slate-400 hover:bg-gray-600 font-semibold rounded-md text-sm px-4 py-3 w-full"
+              onClick={() => signIn('google', { callbackUrl: '/' })}
+              className="text-white bg-slate-400 hover:bg-gray-600 font-semibold rounded-md text-sm px-4 py-3 w-full flex gap-2 items-center justify-center"
             >
-                Login With Google
+                Login With <FcGoogle size={20} className="bg-white rounded-full" />
             </button>
           </div>
           <div className="md:w-[450px] mt-6 text-center">

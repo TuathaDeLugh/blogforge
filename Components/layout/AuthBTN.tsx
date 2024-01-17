@@ -3,13 +3,16 @@ import Link from 'next/link';
 import { AiOutlineUser } from 'react-icons/ai';
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/Redux/store';
 
-type AuthLinksProps = {};
 
-const AuthLinks: React.FC<AuthLinksProps> = () => {
+const AuthLinks = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-
+  const user = useSelector((state: RootState) => state.user.data);
+  console.log(user);
+  
   const handleOutsideClick = (event: MouseEvent) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
       setOpen(false);
@@ -28,6 +31,25 @@ const AuthLinks: React.FC<AuthLinksProps> = () => {
     { name: 'Login', path: '/login', key: 1 },
     { name: 'Register', path: '/register', key: 2 },
   ];
+
+  if  (user?.role == 'user')
+  {
+    dropdata = [
+      { name: 'My review', path: '/user/review', key: 1 },
+      { name: 'Saved Review', path: '/user/savedreview', key: 2 },
+    ];
+  }
+
+  if  (user?.role == 'admin')
+  {
+    dropdata = [
+      { name: 'Admin Panal', path: '/admin', key: 1 },
+      { name: 'My review', path: '/user/review', key: 2 },
+      { name: 'Saved Review', path: '/user/savedreview', key: 3 },
+    ];
+  }
+
+
 
   return (
     <div className="relative" ref={dropdownRef}>

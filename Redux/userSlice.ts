@@ -1,11 +1,8 @@
 // userSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk } from './store'; // Assuming you have a store with AppThunk type
 
 interface UserState {
   data: UserData | null;
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
 }
 
 interface UserData {
@@ -19,8 +16,6 @@ interface UserData {
 
 const initialState: UserState = {
   data: null,
-  status: 'idle',
-  error: null,
 };
 
 const userSlice = createSlice({
@@ -29,15 +24,9 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<UserData>) => {
       state.data = action.payload;
-      state.status = 'succeeded';
-      state.error = null;
-    },
-    setError: (state, action: PayloadAction<string>) => {
-      state.status = 'failed';
-      state.error = action.payload;
-    },
+    }
   },
 });
 
-export const { setUser, setError } = userSlice.actions;
+export const { setUser } = userSlice.actions;
 export default userSlice.reducer;

@@ -1,7 +1,7 @@
 'use client'
 // UserData.tsx
 import { RootState } from '@/Redux/store';
-import { setError, setUser } from '@/Redux/userSlice';
+import { setUser } from '@/Redux/userSlice';
 import { useSession } from 'next-auth/react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,8 +11,6 @@ const UserData: React.FC = () => {
   const { data: session } = useSession();
   const userId= session?.user?.dbid || null
   const user = useSelector((state: RootState) => state.user.data);
-  const status = useSelector((state: RootState) => state.user.status);
-  const error = useSelector((state: RootState) => state.user.error);
 
   const emptydata = {
     username: '',
@@ -30,13 +28,19 @@ const UserData: React.FC = () => {
           cache: 'no-store',
         });
         const userData = await response.json();
-        dispatch(setUser(userData.data));
+        dispatch(setUser({
+          username: userData.data.username,
+          name: userData.data.name,
+          provider: userData.data.provider,
+          email: userData.data.email,
+          avatar: userData.data.avatar,
+          role: userData.data.role
+        }));
       } catch (err: any) {
-        dispatch(setError(err.message));
+        console.log(err);
+        
       }
     };
-
-    // Add a conditional check for session existence
 
     if (session && userId) {
       fetchData();
@@ -44,24 +48,7 @@ const UserData: React.FC = () => {
       dispatch(setUser(emptydata));
     }
   }, [dispatch, userId]);
-
-  if (status === 'idle' || status === 'loading') {
-    return <div>Loading...</div>;
-  }
-
-  if (status === 'failed') {
-    return <div>Error: {error}</div>;
-  }
-
-  return (
-    <div>
-      <h1>{user?.username}</h1>
-      <h1>{user?.email}</h1>
-      <h1>{user?.avatar}</h1>
-      <h1>{user?.role}</h1>
-      <h1>{user?.provider}</h1>
-    </div>
-  );
+  return null
 };
 
 export default UserData;

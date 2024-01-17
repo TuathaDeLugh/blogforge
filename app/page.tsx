@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div>
       <UserData/>
-      {session?.user?.id}
+      {session?.user?.dbid}
       <button onClick={() => signOut({ callbackUrl: '/' })}>Log Out</button>
 
     </div>

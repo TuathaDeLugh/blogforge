@@ -38,16 +38,16 @@ export default function Login() {
             result &&
             (result).status == 200 &&
             (result).error == undefined
-          ) {
-            router.refresh();
-            router.push('/')
-          } else {
-            toast.error('incorrect username or password')
+            ) {
+              router.refresh();
+              router.push('/')
+              toast.success(`Logedin sucessfully with ${values.email}`)
+            } else {
+              toast.error('incorrect username or password')
+            }
+          } catch (error) {
+            console.log('Login Failed:', error)
           }
-        } catch (error) {
-          console.log('Login Failed:', error)
-        }
-        toast.success(`Logedin sucessfully with ${values.email}`)
         setDisabled(false)
         action.resetForm();
 

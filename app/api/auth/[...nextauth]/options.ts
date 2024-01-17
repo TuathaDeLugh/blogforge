@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google'
   export type CustomUser = {
-    id?: string | null;
+    dbid?: string | null;
     username?:string | null;
     name?: string | null;
     email?: string | null;
@@ -58,27 +58,31 @@ export const authOptions : AuthOptions = {
         callbacks: {
             async signIn({ user }: { user: CustomUser }) {
                 await connectdb();
-                const dbuser = await User.findOne({ email: user.email || '' });
-              
+
+                console.log(user);
+                const dbuser = await User.findOne({ email: user.email});
+                
                 if (!dbuser) {
                   return true;
                 }
-              
+                if (dbuser) {
+                  user.dbid = dbuser._id;
+                  return true;
+                }
                 // Update properties based on your User model
-                user.id = dbuser.id || '';
               
                 return true;
               },
           async jwt({ token, user }: { token: any; user?: CustomUser }) {
             if (user) {
               // Modify token directly
-              token.userid = user.id;
+              token.userdbid = user.dbid;
             }
   
               return token
           },
           async session({ session, token }: { session: any; token: any }) {
-            session.user.id = token?.userid || '';
+            session.user.dbid = token?.userdbid;
           
             return session;
           },
@@ -88,5 +92,6 @@ export const authOptions : AuthOptions = {
         secret: process.env.NEXTAUTH_SECRET,
         pages: {
           signIn: "/login",
+          error: '/auth/error'
         },
       };

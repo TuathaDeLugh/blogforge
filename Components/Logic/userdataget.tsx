@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const UserData: React.FC = () => {
   const dispatch = useDispatch();
   const { data: session } = useSession();
-  const userId= session?.user?.id || ''
+  const userId= session?.user?.dbid || null
   const user = useSelector((state: RootState) => state.user.data);
   const status = useSelector((state: RootState) => state.user.status);
   const error = useSelector((state: RootState) => state.user.error);
@@ -25,7 +25,7 @@ const UserData: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
+      try { 
         const response = await fetch(`/api/user/${userId}`, {
           cache: 'no-store',
         });

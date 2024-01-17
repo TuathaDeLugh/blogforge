@@ -5,12 +5,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/Redux/store';
-
+import { signOut, useSession } from 'next-auth/react';
 
 const AuthLinks = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const user = useSelector((state: RootState) => state.user.data);
+  const {data:session} = useSession(); 
   console.log(user);
   
   const handleOutsideClick = (event: MouseEvent) => {
@@ -79,8 +80,17 @@ const AuthLinks = () => {
                 <Link onClick={() => setOpen(!open)} href={link.path} className="inline-block px-1 w-full">
                   {link.name}
                 </Link>
+                
               </motion.li>
             ))}
+              {session && session.user ? (
+              <motion.li
+              whileHover={{ scale: 1.05 }}
+                className="text-l rounded-lg text-red-400 border border-red-400 p-1 m-2 text-center hover:bg-red-400   hover:text-slate-50 md:dark:hover:text-slate-200"
+              >
+                <button onClick={() => signOut({ callbackUrl: '/' })}>Log Out</button>
+              </motion.li>
+            ) : null}
           </motion.ul>
         )}
       </AnimatePresence>

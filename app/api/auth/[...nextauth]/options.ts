@@ -27,7 +27,6 @@ export const authOptions : AuthOptions = {
             async authorize(credentials) {
                 const email = credentials?.email
                 const password = credentials?.password
-               console.log(email , password);
                
                 try {
                   await connectdb();
@@ -58,8 +57,6 @@ export const authOptions : AuthOptions = {
         callbacks: {
             async signIn({ user }: { user: CustomUser }) {
                 await connectdb();
-
-                console.log(user);
                 const dbuser = await User.findOne({ email: user.email});
                 
                 if (!dbuser) {

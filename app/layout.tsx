@@ -27,7 +27,7 @@ export default function RootLayout({
       <SessionProvider>
         <Toast/>
         <Navbar/>
-        <main className=' min-h-[93vh] md:min-h-[91vh] '>
+        <main className=' min-h-[93vh] md:min-h-[91vh] overflow-x-hidden '>
 
         {children}
         </main>

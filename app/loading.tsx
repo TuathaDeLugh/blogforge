@@ -28,9 +28,11 @@ export default function Progress() {
     <>
     <div className=' fixed top-0 bg-transparent h-[2px] w-full z-50'>
         <motion.div
-          animate={{ width: `${progress}%`  }}
+          animate={{ width: `${progress}%`  
+        }}
           initial={{ width: '0%' }}
-          transition={{ duration: 1.3}}
+          transition={{ duration: 1.3,stiffness: 100,
+            damping: 30,}}
         
         className=' h-full bg-orange-600 dark:bg-orange-400 ' style={{width:`${progress}%`}}></motion.div>
     </div>

@@ -2,8 +2,9 @@
 import { Div, H1 } from '@/Components/Motion/Motion';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaGithub } from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { FcGoogle } from 'react-icons/fc';
 
 export default function Login() {
     const [disabled, setDisabled] = useState(true);
@@ -80,7 +81,7 @@ export default function Login() {
                             </div>
                         </div>
                         <div className="w-[75vw] md:w-[450px] my-4">
-                        <div className="relative">
+                            <div className="relative">
                                 <input
                                     type={conPassword ? 'text' : 'password'}
                                     placeholder="Password"
@@ -96,15 +97,15 @@ export default function Login() {
 
                         <div className="w-[75vw] md:w-[450px] mt-4 mb-2">
                             <button
-                                disabled ={disabled}
+                                disabled={disabled}
                                 type="button"
                                 className="text-white bg-orange-400 hover:bg-orange-600  disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 w-full flex items-center justify-center gap-4"
                             >
-                                Register 
+                                Register
                                 {
                                     disabled ?
-                                    <AiOutlineLoading3Quarters size={20} className='animate-spin'/>
-                                    : null
+                                        <AiOutlineLoading3Quarters size={20} className='animate-spin' />
+                                        : null
                                 }
                             </button>
                         </div>
@@ -112,12 +113,20 @@ export default function Login() {
                     <div className="md:w-[450px] text-center">
                         OR
                     </div>
-                    <div className="md:w-[450px] mb-4 mt-2 ">
+                    <div className="md:w-[450px] mb-8 mt-2 grid grid-cols-2 gap-3 ">
                         <button
-                            type="button"
-                            className="text-white bg-slate-400 hover:bg-gray-600 font-semibold rounded-md text-sm px-4 py-3 w-full "
+                            onClick={() => signIn('google', { callbackUrl: '/' })}
+                            className="text-black bg-slate-200 hover:opacity-50 border border-slate-500 font-semibold rounded-md text-sm px-4 py-3 w-full flex gap-2 items-center justify-center"
                         >
-                            Login With Google 
+                            Sign Up With
+                             <FcGoogle size={20} className="bg-white rounded-full" />
+                        </button>
+                        <button
+                            onClick={() => signIn('github', { callbackUrl: '/' })}
+                            className="text-white bg-slate-600 hover:opacity-50 font-semibold rounded-md text-sm px-4 py-3 w-full flex gap-2 items-center justify-center"
+                        >
+                            Sign Up With
+                            <FaGithub size={20} className="bg-slate-800 rounded-full" />
                         </button>
                     </div>
                     <div className="md:w-[450px] mt-6 text-center">

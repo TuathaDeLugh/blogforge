@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaGithub } from 'react-icons/fa';
 
 export default function Login() {
     const [disabled, setDisabled] = useState(false);
@@ -140,12 +140,19 @@ export default function Login() {
         <div className="md:w-[450px] text-center">
             OR
         </div>
-          <div className="md:w-[450px] mb-8 mt-2 ">
+          <div className="md:w-[450px] mb-8 mt-2 grid grid-cols-2 gap-3 ">
             <button
               onClick={() => signIn('google', { callbackUrl: '/' })}
-              className="text-white bg-slate-400 hover:bg-gray-600 font-semibold rounded-md text-sm px-4 py-3 w-full flex gap-2 items-center justify-center"
+              className="text-black bg-slate-200 hover:opacity-50 border border-slate-500 font-semibold rounded-md text-sm px-4 py-3 w-full flex gap-2 items-center justify-center"
             >
                 Login With <FcGoogle size={20} className="bg-white rounded-full" />
+            </button>
+            <button
+              onClick={() => signIn('github', { callbackUrl: '/' })}
+              className="text-white bg-slate-600 hover:opacity-50 font-semibold rounded-md text-sm px-4 py-3 w-full flex gap-2 items-center justify-center"
+            >
+                Login With  
+                <FaGithub size={20} className="bg-slate-800 rounded-full" />
             </button>
           </div>
           <div className="md:w-[450px] mt-6 text-center">

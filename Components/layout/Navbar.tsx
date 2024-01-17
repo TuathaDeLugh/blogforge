@@ -91,7 +91,7 @@ export default function Navbar() {
 
 							<div className='flex items-center justify-center py-3 md:py-5 md:block'>
 								<Link href='/' className='flex'>
-									<Image src={'/Logo.png'} alt='' width={150} height={75} />
+									<Image src={'/Logo.png'} alt='' width={150} height={28} />
 								</Link>
 
 							</div>

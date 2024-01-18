@@ -6,13 +6,13 @@ interface UserState {
 }
 
 interface UserData {
-  username: string;
-  name: string;
-  provider: string;
-  email: string;
-  avatar: string;
-  role: string;
-}
+  username: string | null;
+  name: string | null;
+  provider: string | null;
+  email: string | null;
+  avatar: string | null;
+  role: string | null;
+} 
 
 const initialState: UserState = {
   data: null,
@@ -22,7 +22,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<UserData>) => {
+    setUser: (state, action: PayloadAction<UserData|null>) => {
       state.data = action.payload;
     }
   },

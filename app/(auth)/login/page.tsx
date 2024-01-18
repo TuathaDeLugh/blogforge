@@ -9,21 +9,22 @@ import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { FaEye, FaEyeSlash, FaGithub } from 'react-icons/fa';
+import { loginSchema } from '@/yupSchema';
 
 export default function Login() {
-    const [disabled, setDisabled] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-    const initialValues = {
-      email: "",
-      password: "",
-    };
-    const router = useRouter();
+  const initialValues = {
+    email: "",
+    password: "",
+  };
+  const router = useRouter();
 
-    const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
-      // validationSchema: loginSchema,
+      validationSchema: loginSchema,
       onSubmit: (async (values, action) => {
 
         try {
@@ -38,16 +39,16 @@ export default function Login() {
             result &&
             (result).status == 200 &&
             (result).error == undefined
-            ) {
-              router.refresh();
-              router.push('/')
-              toast.success(`Logedin sucessfully with ${values.email}`)
-            } else {
-              toast.error('incorrect username or password')
-            }
-          } catch (error) {
-            console.log('Login Failed:', error)
+          ) {
+            router.refresh();
+            router.push('/')
+            toast.success(`Logedin sucessfully with ${values.email}`)
+          } else {
+            toast.error('incorrect username or password')
           }
+        } catch (error) {
+          console.log('Login Failed:', error)
+        }
         setDisabled(false)
         action.resetForm();
 
@@ -67,7 +68,7 @@ export default function Login() {
         transition={{ duration: 0.5 }}
       >
         <div
-        className="mx-auto p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 min-h-[400px]"
+          className="mx-auto p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 min-h-[400px]"
         >
           <div className="relative mt-5 md:mt-10">
             <H1
@@ -90,80 +91,87 @@ export default function Login() {
 
 
 
-        
-        <form onSubmit={handleSubmit} autoComplete="off" >
-          <div className="w-[75vw] md:w-[450px] my-8">
-            <input
-              type="text"
-              name="email"
-              placeholder="Email"
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              className="w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm outline-orange-500"
-            />
-          </div>
-          <div className="w-[75vw] md:w-[450px] my-8">
-          <div className="relative">
-            <input
-              type={showPassword ? 'text' : 'password'}
-              placeholder="Password"
-              name="password"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              className="w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm outline-orange-500"
-            />
-             <div
-                      className={` absolute top-0  right-3 h-full flex items-center text-slate-400`}
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? <FaEyeSlash size={25} /> : <FaEye size={22} />}
-                    </div>
+
+          <form onSubmit={handleSubmit} autoComplete="off" className=' space-y-4 pt-10 pb-4' >
+            <div className="w-[75vw] md:w-[450px] h-14">
+              <input
+                type="text"
+                placeholder="Email"
+                name="email"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={`outline ${errors.email && touched.email ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50' : ' outline-transparent '} w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
+
+              />
+              {errors.email && touched.email ? (
+                <p className=" text-red-500 text-sm">* {errors.email}</p>
+              ) : null}
             </div>
-          </div>
-          <div className="md:w-[450px] mt-8 mb-2">
-          <button
-                                disabled ={disabled}
-                                type="submit"
-                                className="text-white bg-orange-400 hover:bg-orange-600 disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 w-full flex items-center justify-center gap-4"
-                            >
-                                Login 
-                                {
-                                    disabled ?
-                                    <AiOutlineLoading3Quarters size={20} className='animate-spin'/>
-                                    : null
-                                }
-                            </button>
-          </div>
-        </form>
-        <div className="md:w-[450px] text-center">
+            <div className="w-[75vw] md:w-[450px] h-14">
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Password"
+                  name="password"
+                  value={values.password}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={`outline ${errors.password && touched.password ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50' : ' outline-transparent '} w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
+
+                /> <div
+                  className={` absolute top-0  right-3 h-full flex items-center text-slate-400`}
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FaEyeSlash size={25} /> : <FaEye size={22} />}
+                </div>
+              </div>
+              {errors.password && touched.password ? (
+                <p className=" text-red-500 text-sm">* {errors.password}</p>
+              ) : null}
+            </div>
+            <div className="md:w-[450px] mt-8 mb-2">
+              <button
+                disabled={disabled}
+                type="submit"
+                className="text-white bg-orange-400 hover:bg-orange-600 disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 w-full flex items-center justify-center gap-4"
+              >
+                Login
+                {
+                  disabled ?
+                    <AiOutlineLoading3Quarters size={20} className='animate-spin' />
+                    : null
+                }
+              </button>
+            </div>
+          </form>
+          <div className="md:w-[450px] text-center">
             OR
-        </div>
+          </div>
           <div className="md:w-[450px] mb-8 mt-2 grid grid-cols-2 gap-3 ">
             <button
               onClick={() => signIn('google', { callbackUrl: '/authlogin' })}
               className="text-black bg-slate-200 hover:opacity-50 border border-slate-500 font-semibold rounded-md text-sm px-4 py-3 w-full flex gap-2 items-center justify-center"
             >
-                Login With <FcGoogle size={20} className="bg-white rounded-full" />
+              Login With <FcGoogle size={20} className="bg-white rounded-full" />
             </button>
             <button
               onClick={() => signIn('github', { callbackUrl: '/authlogin' })}
               className="text-white bg-slate-600 hover:opacity-50 font-semibold rounded-md text-sm px-4 py-3 w-full flex gap-2 items-center justify-center"
             >
-                Login With  
-                <FaGithub size={20} className="bg-slate-800 rounded-full" />
+              Login With
+              <FaGithub size={20} className="bg-slate-800 rounded-full" />
             </button>
           </div>
           <div className="md:w-[450px] mt-6 text-center">
-            Don&apos;t have Account? <Link href={'/register'} className='text-orange-400 hover:text-orange-500'>Create one </Link> 
+            Don&apos;t have Account? <Link href={'/register'} className='text-orange-400 hover:text-orange-500'>Create one </Link>
           </div>
         </div>
         <Div
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-         className="absolute -z-10 hidden w-full h-full bg-orange-400/50 rounded-md -bottom-3 -right-3 md:block"></Div>
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="absolute -z-10 hidden w-full h-full bg-orange-400/50 rounded-md -bottom-3 -right-3 md:block"></Div>
       </Div>
     </div>
   );

@@ -8,11 +8,9 @@ import GitHubProvider from "next-auth/providers/github";
 
   export type CustomUser = {
     dbid?: string | null;
-    username?:string | null;
     name?: string | null;
     email?: string | null;
-    role?: string | null;
-    avatar?: string | null;
+    image?: string | null;
   };
 export const authOptions : AuthOptions = {
 	providers: [

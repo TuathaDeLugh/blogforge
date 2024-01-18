@@ -6,6 +6,7 @@ import Navbar from '@/Components/layout/Navbar'
 import StateProvider from '@/Components/layout/StateProvider'
 import Footer from '@/Components/layout/Footer'
 import Toast from '@/Components/layout/Toast'
+import UserData from '@/Components/Logic/userdataget'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,6 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} text-black bg-white dark:text-white dark:bg-gray-900`}>
       <SessionProvider>
+      <UserData/>
         <Toast/>
         <Navbar/>
         <main className=' min-h-[93vh] md:min-h-[91vh] overflow-x-hidden '>

@@ -1,19 +1,17 @@
-"use client";
+"use client"
 import Link from 'next/link';
 import { AiOutlineUser } from 'react-icons/ai';
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/Redux/store';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 
 const AuthLinks = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const user = useSelector((state: RootState) => state.user.data);
-  const {data:session} = useSession(); 
-  console.log(user);
-  
+
   const handleOutsideClick = (event: MouseEvent) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
       setOpen(false);
@@ -36,8 +34,9 @@ const AuthLinks = () => {
   if  (user?.role == 'user')
   {
     dropdata = [
-      { name: 'My review', path: '/user/review', key: 1 },
-      { name: 'Saved Review', path: '/user/savedreview', key: 2 },
+      { name: 'Profile', path: '/user', key: 1 },
+      { name: 'My review', path: '/user/review', key: 2 },
+      { name: 'Saved Review', path: '/user/savedreview', key: 3 },
     ];
   }
 
@@ -45,8 +44,9 @@ const AuthLinks = () => {
   {
     dropdata = [
       { name: 'Admin Panal', path: '/admin', key: 1 },
-      { name: 'My review', path: '/user/review', key: 2 },
-      { name: 'Saved Review', path: '/user/savedreview', key: 3 },
+      { name: 'Profile', path: '/user', key: 2 },
+      { name: 'My review', path: '/user/review', key: 3 },
+      { name: 'Saved Review', path: '/user/savedreview', key: 4 },
     ];
   }
 
@@ -70,12 +70,21 @@ const AuthLinks = () => {
             initial={{ opacity: 0, y: -20, }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-          >
+          >   {
+              user? 
+          
+              <li
+              key={0}
+              className=" text-slate-800 dark:text-slate-300 border-b dark:border-slate-600 py-3 text-center"
+              >
+                {user?.username}
+              </li>
+                : null  }
             {dropdata.map((link) => (
               <motion.li
+              whileHover={{ scale: 1.05 }}
                 key={link.key}
-                className="text-l rounded-lg text-slate-800 dark:text-slate-300 p-1 m-2 text-center md:text-left hover:bg-orange-400/90 hover:text-slate-50 md:dark:hover:text-slate-200"
-                whileHover={{ scale: 1.05 }}
+                className=" rounded-lg text-slate-800 dark:text-slate-300 p-1 m-2 text-center md:text-left hover:bg-orange-400/90 hover:text-slate-50 md:dark:hover:text-slate-200"
               >
                 <Link onClick={() => setOpen(!open)} href={link.path} className="inline-block px-1 w-full">
                   {link.name}
@@ -83,10 +92,10 @@ const AuthLinks = () => {
                 
               </motion.li>
             ))}
-              {session && session.user ? (
+              {user ? (
               <motion.li
               whileHover={{ scale: 1.05 }}
-                className="text-l rounded-lg text-red-400 border border-red-400 p-1 m-2 text-center hover:bg-red-400   hover:text-slate-50 md:dark:hover:text-slate-200"
+                className=" rounded-lg text-red-400 border border-red-400 p-1 m-2 text-center hover:bg-red-400   hover:text-slate-50 md:dark:hover:text-slate-200"
               >
                 <button onClick={() => signOut({ callbackUrl: '/' })}>Log Out</button>
               </motion.li>

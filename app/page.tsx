@@ -1,21 +1,14 @@
-'use client'
-import UserData from '@/Components/Logic/userdataget';
-// import { getServerSession } from 'next-auth';
-import { signOut, useSession } from 'next-auth/react';
+import { getServerSession } from 'next-auth';
 import React from 'react'
-// import { authOptions } from './api/auth/[...nextauth]/options';
+import { authOptions } from './api/auth/[...nextauth]/options';
 
-export default  function Home() {
-  const { data: session } = useSession();
-  // const session = await getServerSession(authOptions)
-  console.log(session);
-  
+export default async function Home() {
+  const session = await getServerSession(authOptions)  
   return (
     <div>
-      <UserData/>
+      Empty Like your Brain
       {session?.user?.dbid}
-      <button onClick={() => signOut({ callbackUrl: '/' })}>Log Out</button>
-
+      
     </div>
   )
 }

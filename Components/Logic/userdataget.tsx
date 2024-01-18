@@ -12,14 +12,6 @@ const UserData: React.FC = () => {
   const userId= session?.user?.dbid || null
   const user = useSelector((state: RootState) => state.user.data);
 
-  const emptydata = {
-    username: '',
-    name: '',
-    provider: '',
-    email: '',
-    avatar: '',
-    role: ''
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,7 +37,7 @@ const UserData: React.FC = () => {
     if (session && userId) {
       fetchData();
     } else {
-      dispatch(setUser(emptydata));
+      dispatch(setUser(null));
     }
   }, [dispatch, userId]);
   return null

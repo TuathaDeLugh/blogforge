@@ -10,17 +10,21 @@ export async function POST(request:any)
        const{name,username,email,avatar,pass,provider} = await request.json();
        const password = await bcrypt.hash(pass, 10);
         await connectdb();
-        const role = 'user';
-        await User.create({name,username,email,avatar,password,provider,role});
+        const user = await User.create({
+            name,
+            username,
+            email,
+            avatar,
+            password,
+            provider,
+            role : 'user',
+            watchlist: [],
+        });
         
-
-        return NextResponse.json(
-           {
+        return NextResponse.json({
             message: "Created",
-           }, 
-           {status:200}
-
-        );
+            user,
+        }, { status: 200 });
    }
     catch(error){
         console.log(error)

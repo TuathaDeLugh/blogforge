@@ -12,7 +12,6 @@ const userSchema = new Schema(
 		watchlist: {
 			type: [Schema.Types.ObjectId],
 			ref: 'review',
-			unique: true,
 		},
 	},
 	{

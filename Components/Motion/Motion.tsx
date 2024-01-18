@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import React from 'react'
 
 export function H1({children,className,initial,animate,transition}:{
-    children: React.ReactNode,className:string,initial:{},animate:{},transition:{}
+    children: React.ReactNode| null,className:string| '',initial:{},animate:{},transition:{}
   }) 
   {
     return (
@@ -19,7 +19,7 @@ export function H1({children,className,initial,animate,transition}:{
   }
 
   export function Div({children,className,initial,animate,transition}:{
-    children ? : React.ReactNode| null,className:string,initial? :{} ,animate:{},transition:{}
+    children ? : React.ReactNode| null,className:string| '',initial? :{} ,animate:{},transition:{}
   }) 
   {
     return (
@@ -35,7 +35,7 @@ export function H1({children,className,initial,animate,transition}:{
   }
 
   export function P({children,className,initial,animate,transition}:{
-    children: React.ReactNode,className:string,initial:{},animate:{},transition:{}
+    children: React.ReactNode| null,className:string|'',initial:{},animate:{},transition:{}
   }) 
   {
     return (

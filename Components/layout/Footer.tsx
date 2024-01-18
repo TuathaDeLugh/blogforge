@@ -15,8 +15,7 @@ export default function Footer() {
         </div>
 
         <p className="mt-4 text-gray-500 dark:text-gray-400  max-w-md">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse non cupiditate quae nam
-          molestias.
+        BlogForge, your destination for inspired blogging. Unleash creativity with our innovative platform, where every word matters. Connect, create, and elevate your stories with us.
         </p>
 
         <ul className="mt-2 flex gap-6">
@@ -79,7 +78,7 @@ export default function Footer() {
       </div>
 
       <div className='text-center md:text-left'>
-          <p className="font-medium text-lg text-gray-900 dark:text-white">Company</p>
+      <p className="font-medium text-lg text-orange-600 dark:text-orange-400">Company</p>
 
           <ul className="mt-6 space-y-4 text-sm">
             <li>
@@ -108,7 +107,7 @@ export default function Footer() {
         </div>
         
         <div className='text-center md:text-left' >
-          <p className="font-medium text-lg text-gray-900 dark:text-white">Category</p>
+          <p className="font-medium text-lg text-orange-600 dark:text-orange-400">Category</p>
 
           <ul className="mt-6 space-y-4 text-sm">
             <li>
@@ -140,7 +139,7 @@ export default function Footer() {
         
 
          <div className='text-center md:text-left'>
-          <p className="font-medium text-gray-900 dark:text-white">Helpful Links</p>
+         <p className="font-medium text-lg text-orange-600 dark:text-orange-400">Helpful Links</p>
 
           <ul className="mt-6 space-y-4 text-sm">
             <li>

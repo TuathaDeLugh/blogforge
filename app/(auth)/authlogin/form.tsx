@@ -46,7 +46,7 @@ export default function AuthForm({user} : any ) {
       }
       const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues,
-        // validationSchema: UsernameSchema,
+        validationSchema: UsernameSchema,
         onSubmit: (async (values, action) => {
 
           try {

@@ -6,12 +6,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/Redux/store';
 import { signOut } from 'next-auth/react';
+import Image from 'next/image';
 
 const AuthLinks = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const user = useSelector((state: RootState) => state.user.data);
-
   const handleOutsideClick = (event: MouseEvent) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
       setOpen(false);
@@ -60,7 +60,10 @@ const AuthLinks = () => {
         whileTap={{ scale: 0.9 }}
         transition={{ type: 'spring', stiffness: 300 }}
       >
-        <AiOutlineUser size={25} />
+        {
+          user?.avatar ? (<Image src={user?.avatar} width={25} height={25} alt='avatar' className='rounded-full'/>) :
+          (<AiOutlineUser size={25} />)
+        }
       </motion.button>
 
       <AnimatePresence>

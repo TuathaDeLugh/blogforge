@@ -20,9 +20,9 @@ export default function About() {
               <Image width={300} height={250} src="/About.gif" alt=""
                 className="relative z-40 object-cover w-full bg-slate-200 h-96 lg:rounded-tr-[80px] lg:rounded-bl-[80px] rounded" />
               <Div
-        initial={{ opacity: 0, x: 20, y:-20 }}
-        animate={{ opacity: 1, x: 0,y:0  }}
-        transition={{ duration: 0.5, delay: 0.3 }}
+                initial={{ opacity: 0, x: 20, y: -20 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
                 className="absolute z-10 hidden w-full h-full bg-orange-400 rounded-bl-[80px] rounded -bottom-6 right-6 lg:block">
               </Div>
             </div>

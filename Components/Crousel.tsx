@@ -92,7 +92,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
                 <div className="mx-auto md:w-[85%] relative">
 
               <Image src={images[currentIndex]} height={200} width={400} alt="image"
-                className=" h-full md:rounded-br-[80px] md:rounded-tl-[80px] md:h-[40vh]  opacity-20 md:opacity-100 w-full object-cover md:rounded shadow border dark:border-slate-500/50 dark:shadow-slate-600/50"
+                className=" h-full bg-slate-200 dark:bg-slate-600 md:rounded-br-[80px] md:rounded-tl-[80px] md:h-[40vh]  opacity-20 md:opacity-100 w-full object-cover md:rounded shadow border dark:border-slate-500/50 dark:shadow-slate-600/50"
                 />
               <Div
                 initial={{ opacity: 0, x: 20, y: -20 }}

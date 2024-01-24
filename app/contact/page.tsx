@@ -4,6 +4,7 @@ import { CiMail } from "react-icons/ci";
 import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 import { RiQuestionAnswerLine } from "react-icons/ri";
 import { Div, H1, P } from '@/Components/Motion/Motion';
+import ContactForm from './ContactForm';
 export default function contact() {
   return (
     <div
@@ -110,39 +111,7 @@ export default function contact() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}>
 
-          <form
-             className="mx-auto space-y-4 p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 ">
-            <input
-              type="text"
-              placeholder="Name"
-
-              className="w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm outline-orange-500"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-
-              className="w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm outline-orange-500"
-            />
-            <input
-              type="text"
-              placeholder="Subject"
-
-              className="w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm outline-orange-500"
-            />
-            <textarea
-              placeholder="Message"
-              rows={12}
-
-              className="w-full resize-none rounded-md px-4 bg-gray-100 dark:bg-gray-700 text-sm pt-3 outline-orange-500"
-            ></textarea>
-            <button
-              type="button"
-              className="text-white bg-orange-400 hover:bg-orange-600 font-semibold rounded-md text-sm px-4 py-3 w-full"
-            >
-              Send
-            </button>
-          </form>
+          <ContactForm name='' email=''/>
           <Div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}

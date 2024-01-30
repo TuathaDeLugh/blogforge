@@ -24,7 +24,7 @@ export default function AnimationList({data}:any) {
             items.map((item: any,index: number) => (
 
                 <motion.li key={index}
-                className=' w-full md:w-[30%] h-56 border rounded'
+                className=' w-full md:w-[32%] h-56 border rounded'
                 variants={variants}
                 initial='initial'
                 whileInView='animate'

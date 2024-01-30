@@ -27,6 +27,7 @@ export default function FeatureCard({content}:any) {
     {
         items.map((item: any,index: number) => (
             <motion.div
+            key={index}
             variants={variants}
             initial='initial'
             whileInView='animate'

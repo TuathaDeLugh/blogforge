@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth';
 import React from 'react'
 import { authOptions } from './api/auth/[...nextauth]/options';
 import Carousel from '@/Components/Crousel';
+import AnimationList from '@/Components/Motion/AnimationList';
 
 export default async function Home() {
   const images = [
@@ -14,12 +15,12 @@ export default async function Home() {
   ];
   const session = await getServerSession(authOptions)
   console.log(session);
-  
+  const  data = ['apple','mango','banana','pineapple','watermelon','melon','strowbarry','blueberry','raspberry','cherry','peach']
   return (
-    <>
+    <section className='max-w-[1500px] mx-auto'>
       <Carousel images={images} />
       {session?.user?.dbid}
-      
-    </>
+      <AnimationList data={data}/>
+    </section>
   )
 }

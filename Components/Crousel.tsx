@@ -76,8 +76,8 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
     return () => clearTimeout(autoChangeTimeout);
   }, [currentIndex]);
   return (
-    <div className=" w-full  max-w-[1500px] mx-auto md:h-auto px-2 ">
-      <div className="relative w-full h-[35rem] md:h-[30rem] m-auto overflow-hidden rounded-lg  ">
+    <div className=" w-full  max-w-[1500px] mx-auto lg:h-auto px-2 ">
+      <div className="relative w-full h-[35rem] lg:h-[40rem] m-auto overflow-hidden rounded-lg  ">
         <AnimatePresence>
           <motion.div
             key={currentIndex}
@@ -86,29 +86,29 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
             animate="visible"
             exit='exit'
             variants={slideVariants}
-            className=" w-full h-full relative p-2 grid gap-4 md:grid-cols-2 bg-slate-800 md:bg-transparent"
+            className=" w-full h-full relative p-2 grid gap-4 lg:grid-cols-2 bg-slate-800 lg:bg-transparent"
           >
-            <div className="h-full w-full absolute md:relative md:m-10 ">
-              <div className=" md:w-[85%] relative">
-                <Image src={images[currentIndex]} height={200} width={400} alt="image"
-                  className="h-[35rem] bg-slate-200 dark:bg-slate-600 md:rounded-br-[80px] md:rounded-tl-[80px] md:h-[24rem]  opacity-20 md:opacity-100 w-full object-cover md:rounded shadow border dark:border-slate-500/50 dark:shadow-slate-600/50 "
+            <div className="h-full w-full absolute lg:relative lg:m-10 ">
+              <div className=" lg:w-[85%] relative">
+                <Image src={images[currentIndex]} height={600} width={800} alt="image"
+                  className="h-[40rem] bg-slate-200 dark:bg-slate-600 lg:rounded-br-[80px] lg:rounded-tl-[80px] lg:h-[35rem]  opacity-20 lg:opacity-100 w-full object-cover lg:rounded shadow border dark:border-slate-500/50 dark:shadow-slate-600/50 "
                 />
 
                 <Div
                   initial={{ opacity: 0, x: 20, y: -20 }}
                   animate={{ opacity: 1, x: 0, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
-                  className="absolute -z-10 hidden h-[24rem] w-full md:rounded-br-[80px] md:rounded-tl-[80px] bg-orange-400 rounded top-5 left-5 md:block">
+                  className="absolute -z-10 hidden h-[35rem] w-full lg:rounded-br-[90px] lg:rounded-tl-[80px] bg-orange-400 rounded top-5 left-5 lg:block">
                 </Div>
               </div>
             </div>
-            <div className="z-10 text-slate-200 md:dark:text-slate-200  md:text-slate-700 px-10 md:p-4 mt-7 md:mt-10">
+            <div className="z-10 text-slate-200 lg:dark:text-slate-200  lg:text-slate-700 px-10 lg:p-4 mt-7 lg:mt-10">
               <div className="relative ">
                 <H1
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 0.1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.6 }}
-                  className="absolute -top-16 lg:-top-20   left-0 md:text-[75px] lg:text-[100px] text-gray-900 font-bold  dark:text-gray-200 opacity-5 md:block hidden">
+                  className="absolute -top-16 lg:-top-20   left-0 lg:text-[100px] text-gray-900 font-bold  dark:text-gray-200 opacity-5 lg:block hidden">
                   Tranding
                 </H1>
                 <H1
@@ -116,7 +116,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.6 }}
-                  className="pl-2 text-3xl font-bold border-l-8 border-orange-400 md:text-5xl dark:text-white">
+                  className="pl-2 text-3xl font-bold border-l-8 border-orange-400 lg:text-5xl dark:text-white">
                   Title
                 </H1>
               </div>
@@ -127,7 +127,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
                 className="mt-6 mb-10 text-base leading-7 text-gray-500 dark:text-gray-400 text-justify">
                 DATA
               </P>
-              <button className="rounded p-1 text-sm absolute bottom-12 bg-orange-500 text-white " >View Article</button>
+              <button className="rounded p-1 text-sm absolute bottom-5 bg-orange-500 text-white " >View Article</button>
             </div>
           </motion.div>
         </AnimatePresence>
@@ -156,7 +156,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
           </motion.button>
         </div>
       </div>
-      <div className="hidden md:flex  m-5  justify-center gap-5">
+      <div className="hidden lg:flex  m-5  justify-center gap-5">
         {images.map((_, index) => (
           <motion.div
             key={index}

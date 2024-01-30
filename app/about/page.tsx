@@ -1,18 +1,44 @@
 import Image from 'next/image'
 import React from 'react'
-import { FaFeatherAlt } from 'react-icons/fa';
-import { Child, Parent } from '@/Components/Motion/Data';
 import { Div, H1, P } from '@/Components/Motion/Motion';
+import FeatureCard from './FeatureCard';
 
 
 export default function About() {
+  const content = [
+    {
+      "heading": "Adaptive Theme Switching",
+      "data": "Enjoy a tailored writing experience with our Adaptive Theme Switching. Let your surroundings influence your creativity by seamlessly adjusting between light and dark modes, ensuring optimal visibility and comfort in any environment."
+    },
+    {
+      "heading": "Cross-Platform Harmony",
+      "data": "Immerse yourself in a unified blogging experience across all your devices. With Cross-Platform Harmony, BlogForge ensures that your creativity is never confined  whether you're crafting posts on your laptop, tablet, or smartphone."
+    },
+    {
+      "heading": "Fortified Security with Google Shield",
+      "data": "Trust in the security of BlogForge with our exclusive Google Shield integration. Benefit from an additional layer of protection through Google Authentication, providing peace of mind while simplifying the login process."
+    },
+    {
+      "heading": "Swift and Smart with NextGen Tech",
+      "data": "Elevate your blogging journey with the power of Next.js technology. Experience a platform that is both swift and intelligent, as NextGen Tech enhances the speed, performance, and overall efficiency of BlogForge."
+    },
+    {
+      "heading": "Intuitive Design Elegance",
+      "data": "Choose a blogging platform that not only looks stunning but also feels intuitive. Our Intuitive Design Elegance ensures a seamless and aesthetically pleasing user interface, enhancing the overall user experience for bloggers of all levels."
+    },
+    {
+      "heading": "Creative Freedom with Rich Multimedia Toolbox",
+      "data": "Unleash your creativity with the Rich Multimedia Toolbox. Craft visually stunning blog posts effortlessly by leveraging a range of formatting options, multimedia embedding capabilities, and a suite of tools that transform your ideas into captivating content."
+    }
+  ]
+  
   return (
     <section className="flex items-center lg:py-10">
       <div className="justify-center flex-1 max-w-[1500px] py-4 mx-auto lg:py-6 md:px-6">
         <Div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ duration: 0.2}}
           className="flex flex-wrap "
         >
           <div className="w-full px-4 mb-10 lg:w-1/2 lg:mb-0">
@@ -23,7 +49,7 @@ export default function About() {
                 initial={{ opacity: 0, x: 20, y: -20 }}
                 animate={{ opacity: 1, x: 0, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="absolute z-10 hidden w-full h-full bg-orange-400 rounded-bl-[80px] rounded -bottom-6 right-6 lg:block">
+                className="absolute z-10 hidden w-full h-full bg-orange-400 rounded-bl-[90px] rounded-tr-[90px] rounded -bottom-6 right-6 lg:block">
               </Div>
             </div>
           </div>
@@ -77,46 +103,10 @@ export default function About() {
             Why Choose Us
           </H1>
         </Div>
-        <Parent className="flex flex-wrap mx-4">
-
-
-          <Card heading='Adaptive Theme Switching' data='Enjoy a tailored writing experience with our Adaptive Theme Switching. Let your surroundings influence your creativity by seamlessly adjusting between light and dark modes, ensuring optimal visibility and comfort in any environment.' />
-
-          <Card heading='Cross-Platform Harmony' data={`Immerse yourself in a unified blogging experience across all your devices. With Cross-Platform Harmony, BlogForge ensures that your creativity is never confined  whether you're crafting posts on your laptop, tablet, or smartphone.`} />
-          <Card heading='Fortified Security with Google Shield' data={`Trust in the security of BlogForge with our exclusive Google Shield integration. Benefit from an additional layer of protection through Google Authentication, providing peace of mind while simplifying the login process.`} />
-          <Card heading='Swift and Smart with NextGen Tech' data={`Elevate your blogging journey with the power of Next.js technology. Experience a platform that is both swift and intelligent, as NextGen Tech enhances the speed, performance, and overall efficiency of BlogForg.`} />
-          <Card heading='Intuitive Design Elegance' data={`Choose a blogging platform that not only looks stunning but also feels intuitive. Our Intuitive Design Elegance ensures a seamless and aesthetically pleasing user interface, enhancing the overall user experience for bloggers of all levels.`} />
-          <Card heading='Creative Freedom with Rich Multimedia Toolbox' data={`Unleash your creativity with the Rich Multimedia Toolbox. Craft visually stunning blog posts effortlessly by leveraging a range of formatting options, multimedia embedding capabilities, and a suite of tools that transform your ideas into captivating content.`} />
-        </Parent>
+        
+        <FeatureCard content={content}/>
       </div>
 
     </section>
-  )
-}
-
-
-function Card({ heading, data }: { heading: string; data: string }) {
-  return (
-    <Child
-      className="w-full px-4 mb-16 md:w-1/2 lg:w-1/3"
-    >
-      <div
-        className="relative h-full px-8 pt-16 pb-8 transition duration-200 rounded-md shadow-md border dark:border-slate-600 dark:shadow-gray-700/50 "
-      >
-        <div
-          className="absolute top-0 inline-flex items-center justify-center w-16 h-16 transition duration-200 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-full dark:bg-gray-900 left-1/2">
-          <div
-            className="inline-flex items-center justify-center w-12 h-12 text-white bg-orange-500 rounded-full">
-            <FaFeatherAlt size={25} />
-          </div>
-        </div>
-        <h2 className="max-w-xs mb-4 text-xl font-bold leading-7 text-gray-700 dark:text-gray-300">
-          {heading}
-        </h2>
-        <p className="font-medium text-gray-500 transition duration-200 dark:text-gray-500 text-justify">
-          {data}
-        </p>
-      </div>
-    </Child>
   )
 }

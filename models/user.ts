@@ -11,7 +11,7 @@ const userSchema = new Schema(
 		role: String,
 		watchlist: {
 			type: [Schema.Types.ObjectId],
-			ref: 'review',
+			ref: 'blog',
 		},
 	},
 	{

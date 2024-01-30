@@ -9,7 +9,7 @@ import AuthBTN from './AuthBTN';
 
 let navData = [
 	{ name: 'Home', path: '/', key: 1 },
-	{ name: 'Reviews', path: '/reviews', key: 2 },
+	{ name: 'Blogs', path: '/blogs', key: 2 },
 	{ name: 'About', path: '/about', key: 3 },
 	{ name: 'contact', path: '/contact', key: 4 },
 ];

@@ -25,7 +25,7 @@ export async function GET(request :any, { params }:any) {
 //     { new: true }
 //   );
 
-//   await Review.updateMany(
+//   await blog.updateMany(
 //     { 'creator.userid': id },
 //     {
 //       $set: {
@@ -35,7 +35,7 @@ export async function GET(request :any, { params }:any) {
 //     }
 //   );
 
-//   await Review.updateMany(
+//   await blog.updateMany(
 //     { 'comments.userid': id },
 //     {
 //       $set: {
@@ -46,7 +46,7 @@ export async function GET(request :any, { params }:any) {
 //   );
 
 //   return NextResponse.json(
-//     { message: 'Profile and associated reviews updated', updatedUser },
+//     { message: 'Profile and associated blogs updated', updatedUser },
 //     { status: 200 }
 //   );
 // }
@@ -66,8 +66,8 @@ export async function GET(request :any, { params }:any) {
 //     case 'removeWatchlist':
 //       const user = await User.findById(id)
 
-//       const index = user.watchlist.find(review => {
-//         return review === rid
+//       const index = user.watchlist.find(blog => {
+//         return blog === rid
 //       })
 //       user.watchlist.splice(index, 1)
 //       user.save()

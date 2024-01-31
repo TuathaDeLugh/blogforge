@@ -62,7 +62,7 @@ function Form({ name , email}: FormProps) {
                     error: " Failed To Send"
                 });
                 action.resetForm();
-
+                setDisabled(false);
             }
             ),
         });

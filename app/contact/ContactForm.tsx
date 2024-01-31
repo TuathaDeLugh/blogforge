@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 
 export default function ContactForm(){
@@ -45,7 +46,6 @@ function Form({ name , email}: FormProps) {
             },
             body: JSON.stringify(ogvalues),
         });
-        router.push("/");
         router.refresh();
 
     }
@@ -69,7 +69,7 @@ function Form({ name , email}: FormProps) {
 
     return (
         <form onSubmit={handleSubmit}
-            className="mx-auto p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 ">
+            className="mx-auto p-4 md:p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 ">
 
             <div className="w-full h-[4.25rem] inline-block">
                 <input
@@ -143,11 +143,17 @@ function Form({ name , email}: FormProps) {
                 ) : null}
             </div>
             <button
-                type="submit"
-                className="text-white bg-orange-400 hover:bg-orange-600 font-semibold rounded-md text-sm px-4 py-3 w-full"
-            >
-                Send
-            </button>
+                                    disabled={disabled}
+                                    type="submit"
+                                    className="text-white bg-orange-400 hover:bg-orange-600  disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 w-full flex items-center justify-center gap-4"
+                                >
+                                    Send
+                                    {
+                                        disabled ?
+                                            <AiOutlineLoading3Quarters size={20} className='animate-spin' />
+                                            : null
+                                    }
+                                </button>
         </form>
     )
 }

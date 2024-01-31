@@ -97,7 +97,7 @@ export default function Login() {
                     transition={{ duration: 0.5 }}
                 >
                     <div
-                        className="mx-auto p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 min-h-[400px]"
+                        className="mx-auto p-5 md:p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 min-h-[400px]"
                     >
                         <div className="relative mt-5 md:mt-10">
                             <H1
@@ -122,7 +122,7 @@ export default function Login() {
 
 
                         <form onSubmit={handleSubmit} autoComplete='off' className=' space-y-4 pt-10 pb-4' >
-                            <div className=" w-[75vw] md:w-[450px] h-14">
+                            <div className=" w-[85vw] md:w-[450px] h-14">
                                 <input
                                     type="text"
                                     placeholder="Name"
@@ -136,7 +136,7 @@ export default function Login() {
                                     <p className=" text-red-500 text-sm">* {errors.name}</p>
                                 ) : null}
                             </div>
-                            <div className="w-[75vw] md:w-[450px] h-14">
+                            <div className="w-[85vw] md:w-[450px] h-14">
                                 <input
                                     type="text"
                                     placeholder="Username"
@@ -151,7 +151,7 @@ export default function Login() {
                                     <p className=" text-red-500 text-sm">* {errors.username}</p>
                                 ) : null}
                             </div>
-                            <div className="w-[75vw] md:w-[450px] h-14">
+                            <div className="w-[85vw] md:w-[450px] h-14">
                                 <input
                                     type="text"
                                     placeholder="Email"
@@ -167,7 +167,7 @@ export default function Login() {
                                 ) : null}
                             </div>
 
-                            <div className="w-[75vw] md:w-[450px] h-14">
+                            <div className="w-[85vw] md:w-[450px] h-14">
                                 <div className="relative">
                                     <input
                                         type={showPassword ? 'text' : 'password'}
@@ -189,7 +189,7 @@ export default function Login() {
                                     <p className=" text-red-500 text-sm">* {errors.pass}</p>
                                 ) : null}
                             </div>
-                            <div className="w-[75vw] md:w-[450px] h-14">
+                            <div className="w-[85vw] md:w-[450px] h-14">
                                 <div className="relative">
                                     <input
                                         type={conPassword ? 'text' : 'password'}
@@ -212,7 +212,7 @@ export default function Login() {
                                 ) : null}
                             </div>
 
-                            <div className="w-[75vw] md:w-[450px] mb-2">
+                            <div className="w-[85vw] md:w-[450px] mb-2">
                                 <button
                                     disabled={disabled}
                                     type="submit"

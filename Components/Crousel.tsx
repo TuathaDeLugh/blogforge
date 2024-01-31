@@ -13,7 +13,7 @@ interface CarouselProps {
     image: {
       link: string;
       name: string;
-    } ;
+    }[] ;
     id : string ;
   }[];
 }
@@ -98,7 +98,7 @@ const Carousel: React.FC<CarouselProps> = ({ trending }) => {
             className=" w-full h-full relative grid lg:grid-cols-2 gap-3 bg-slate-800 lg:bg-transparent"
           >
             <div className="h-full w-full absolute lg:relative lg:py-2">
-                <Image src={trending[currentIndex].image?.link} height={600} width={800} alt="image"
+                <Image src={trending[currentIndex].image[0]?.link} height={600} width={800} alt="image"
                   className="h-full w-full bg-slate-200 dark:bg-slate-600 opacity-20 lg:opacity-100 object-cover lg:rounded-xl shadow-md border dark:border-slate-500/50 dark:shadow-slate-600/50 "
                 />
             </div>

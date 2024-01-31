@@ -53,7 +53,7 @@ const AuthLinks = () => {
 
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative" ref={dropdownRef} >
       <motion.button
         onClick={() => setOpen(!open)}
         className="border border-gray-300 dark:border-gray-500 rounded-full m-1 p-[1px]"
@@ -69,8 +69,8 @@ const AuthLinks = () => {
       <AnimatePresence>
         {open && (
           <motion.ul
-            className=" absolute right-0 mt-6 list-none m-1 border dark:border-slate-700 w-max md:w-40 rounded bg-white/90 dark:bg-slate-900/90"
-            initial={{ opacity: 0, y: -20, }}
+            className=" absolute right-0 mt-6 list-none m-1 border dark:border-slate-700 w-max md:w-40 rounded bg-white/80 dark:bg-slate-900/80 "
+            initial={{ opacity: 0, y: -20 , x:20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
           >   {

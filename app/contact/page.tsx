@@ -25,9 +25,9 @@ export default function contact() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 0.1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-              className="absolute -top-20   left-0 text-[20px] lg:text-[100px] text-gray-900 font-bold  dark:text-gray-200 opacity-5 md:block hidden"
+              className="absolute -top-20   left-0 text-[80px] lg:text-[100px] text-gray-900 font-bold  dark:text-gray-200 opacity-5 md:block hidden"
               >
-              Contact Us
+              Contact
             </H1>
             <H1
             initial={{ opacity: 0, y: -20 }}
@@ -111,7 +111,7 @@ export default function contact() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}>
 
-          <ContactForm name='' email=''/>
+          <ContactForm />
           <Div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}

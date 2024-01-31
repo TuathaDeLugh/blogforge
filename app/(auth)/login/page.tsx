@@ -62,13 +62,13 @@ export default function Login() {
   return (
     <div className="flex min-h-[92vh] md:min-h-[90vh] items-center mx-auto max-w-[1500px] justify-center">
       <Div
-        className="h-full flex items-center relative max-w-2xl mx-5"
+        className="h-full flex items-center relative max-w-2xl md:mx-5"
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
       >
         <div
-          className="mx-auto p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 min-h-[400px]"
+          className="mx-auto p-5 md:p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 min-h-[400px]"
         >
           <div className="relative mt-5 md:mt-10">
             <H1
@@ -92,8 +92,8 @@ export default function Login() {
 
 
 
-          <form onSubmit={handleSubmit} autoComplete="off" className=' space-y-4 pt-10 pb-4' >
-            <div className="w-[75vw] md:w-[450px] h-14">
+          <form onSubmit={handleSubmit} autoComplete="off" className=' space-y-4 pt-10 pb-4 ' >
+            <div className="w-[85vw] md:w-[450px] h-14">
               <input
                 type="text"
                 placeholder="Email"
@@ -108,7 +108,7 @@ export default function Login() {
                 <p className=" text-red-500 text-sm">* {errors.email}</p>
               ) : null}
             </div>
-            <div className="w-[75vw] md:w-[450px] h-14">
+            <div className="w-[85vw] md:w-[450px] h-14">
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}

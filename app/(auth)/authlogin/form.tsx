@@ -79,7 +79,7 @@ export default function AuthForm({user} : any ) {
     <>
     <form onSubmit={handleSubmit} autoComplete='off' className=' space-y-4 py-4'>
                         
-                        <div className="w-[75vw] md:w-[450px] h-14">
+                        <div className="w-[85vw] md:w-[450px] h-14">
                                     <input
                                         type="text"
                                         placeholder="Username"
@@ -96,7 +96,7 @@ export default function AuthForm({user} : any ) {
                                 </div>
     
                             
-                            <div className="w-[75vw] md:w-[450px] h-14">
+                            <div className="w-[85vw] md:w-[450px] h-14">
                                     <div className="relative">
                                         <input
                                             type={showPassword ? 'text' : 'password'}
@@ -118,7 +118,7 @@ export default function AuthForm({user} : any ) {
                                         <p className=" text-red-500 text-sm">* {errors.pass}</p>
                                     ) : null}
                                 </div>
-                                <div className="w-[75vw] md:w-[450px] h-14">
+                                <div className="w-[85vw] md:w-[450px] h-14">
                                     <div className="relative">
                                         <input
                                             type={conPassword ? 'text' : 'password'}
@@ -141,7 +141,7 @@ export default function AuthForm({user} : any ) {
                                     ) : null}
                                 </div>
     
-                            <div className="w-[75vw] md:w-[450px] mt-4 mb-2">
+                            <div className="w-[85vw] md:w-[450px] mt-4 mb-2">
                                 <button
                                     disabled={disabled}
                                     type="submit"

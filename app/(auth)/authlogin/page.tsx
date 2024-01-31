@@ -26,7 +26,7 @@ export default async function AuthLogin() {
                     transition={{ duration: 0.5 }}
                 >
                     <div
-                        className="mx-auto p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 min-h-[400px]"
+                        className="mx-auto p-5 md:p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 min-h-[400px]"
                     >
                         <div className="relative mt-5 md:mt-10">
                             <H1
@@ -46,7 +46,7 @@ export default async function AuthLogin() {
                                 New Account
                             </H1>
                         </div>
-                        <div className="w-[75vw] md:w-[450px] my-4 p-3 rounded-md bg-red-200 dark:bg-red-600/20 text-sm">
+                        <div className="w-[85vw] md:w-[450px] my-4 p-3 rounded-md bg-red-200 dark:bg-red-600/20 text-sm">
                             <p>
                                 No account found with this email <span className=' underline '>{session?.user?.email}</span>.
                             </p>

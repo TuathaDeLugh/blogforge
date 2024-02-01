@@ -4,6 +4,9 @@ import { Toaster } from 'react-hot-toast';
 
 export default function Toast() {
   return (
-    <Toaster />
+    <Toaster 
+    position="top-right"
+    toastOptions={{duration: 5000 
+    }} />
   )
 }

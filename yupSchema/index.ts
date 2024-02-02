@@ -6,7 +6,7 @@ export const loginSchema = Yup.object({
 });
 
 export const UsernameSchema = Yup.object({
-  username: Yup.string().min(2).max(25).required("Please enter username"),
+  username: Yup.string().min(2).max(25).matches(/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores").required("Please enter username"),
   pass: Yup.string()
     .required("Please enter a password")
     .min(8, 'Password must be 8 characters long')
@@ -21,7 +21,7 @@ export const UsernameSchema = Yup.object({
 
 export const SignupSchema = Yup.object({
   name: Yup.string().min(2).max(25).required("Please enter Full Name"),
-  username: Yup.string().min(2).max(25).required("Please enter username"),
+  username: Yup.string().min(2).max(25).matches(/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores").required("Please enter username"),
   email: Yup.string().email().required("Please enter email"),
   pass: Yup.string()
     .required("Please enter a password")
@@ -42,28 +42,25 @@ export const emailSchema = Yup.object({
   details: Yup.string().min(10).required("Please enter detail"),
 });
 
-export const AddReviewSchema = Yup.object({
+export const NewBlogSchema = Yup.object({
   title: Yup.string().required('Title is required'),
-  category: Yup.array().required('Category is required').min(1, 'Select at least one category'),
-  image: Yup.string().required('Image is required'),
-  rating: Yup.number().required('Rating is required').min(0, 'Rating must be at least 0').max(10, 'Rating must be at most 10'),
-  trailer: Yup.string().required("Trailer link is required").matches(/^(\/|(https?|ftp):\/\/[^\s/$.?#].[^\s]*)$/, 'Please enter a valid URL. You can put / if Trailer not available'),
-  episodes: Yup.string().required('Episodes are required').min(1, 'Episodes must be at least 1').max(255, 'Episodes must be at most 255'),
-  detail: Yup.string().required('Details are required'),
-});
-
-export const EditReviewSchema = Yup.object({
-  title: Yup.string().required('Title is required'),
-  category: Yup.array().required('Category is required').min(1, 'Select at least one category'),
-  rating: Yup.number().required('Rating is required').min(0, 'Rating must be at least 0').max(10, 'Rating must be at most 10'),
-  trailer: Yup.string().required("Trailer link is required").matches(/^(\/|(https?|ftp):\/\/[^\s/$.?#].[^\s]*)$/, 'Please enter a valid URL. You can put / if Trailer not available'),
-  episodes: Yup.string().required('Episodes are required').min(1, 'Episodes must be at least 1').max(255, 'Episodes must be at most 255'),
-  detail: Yup.string().required('Details are required'),
+  category: Yup.array().min(1, 'Select at least one category').required('Category is required'),
+  keywords: Yup.array().of(Yup.string().required('Keyword cannot be empty')).min(1, 'Add at least one keyword'),
+  detail: Yup.string().required('Detail is required'),
+  images: Yup.array().required('atlist one image is required').min(1, 'Select at least one image').max(7,'You can put maximum 7 images')
+  .test('fileType', 'Invalid file type, only images are allowed', (value) => {
+    if (!value) return true; // If no file is provided, skip the test
+    return value.every((file) => ['image/jpeg', 'image/png', 'image/gif'].includes(file.type));
+  })
+  .test('fileSize', 'File size is too large, maximum 7MB allowed', (value) => {
+    if (!value) return true;
+    return value.every((file) => file.size <= 7 * 1024 * 1024); // 7MB
+  }),
 });
 
 export const ProfileSchema = Yup.object({
   name: Yup.string().min(2).max(25).required("Please enter Full Name"),
-  username: Yup.string().min(2).max(25).required("Please enter username"),
+  username: Yup.string().min(2).max(25).matches(/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores").required("Please enter username"),
   email: Yup.string().email().required("Please enter email"),
 });
 
@@ -72,3 +69,4 @@ export const PassSchema = Yup.object({
   newpassword: Yup.string().required("Please enter new password").min(8, 'Password must be 8 characters long').matches(/[0-9]/, 'Password requires a number').matches(/[a-z]/, 'Password requires a lowercase letter').matches(/[A-Z]/, 'Password requires an uppercase letter').matches(/[^\w]/, 'Password requires a symbol'),
   confirmpassword: Yup.string().required("Please confirm password").oneOf([Yup.ref('newpassword')], 'Confirm Password does not match with password'),
 });
+

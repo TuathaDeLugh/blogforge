@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+::-webkit-scrollbar-track {
+  background: transparent; 
+ }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+   
+  ::-webkit-scrollbar-thumb {
+    background: rgba(90, 90, 90,0.5)
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+ 
+  .ql-editor{
+    font-size: 1rem;
+    border: 0;
+  }
+  .ql-toolbar.ql-snow {
+    background-color: rgb(224, 224, 224);
+  }
+  .data h3{
+    margin: 1rem 0 1rem 0 ;
+    font-size: large;
+    font-weight: 450;
+  }
+  .data h2{
+    margin: 1rem 0 1rem 0 ;
+    font-size: larger;
+    font-weight: 450;
+  }
+  .data p{
+    margin: 0.4rem 0 0.4rem 0 ;
+  }

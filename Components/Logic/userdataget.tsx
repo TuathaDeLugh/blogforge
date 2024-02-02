@@ -21,6 +21,7 @@ const UserData: React.FC = () => {
         });
         const userData = await response.json();
         dispatch(setUser({
+          _id:userData.data._id,
           username: userData.data.username,
           name: userData.data.name,
           provider: userData.data.provider,

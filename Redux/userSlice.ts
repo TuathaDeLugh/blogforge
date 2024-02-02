@@ -6,6 +6,7 @@ interface UserState {
 }
 
 interface UserData {
+  _id:string|null;
   username: string | null;
   name: string | null;
   provider: string | null;

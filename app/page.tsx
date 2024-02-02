@@ -67,6 +67,7 @@ export default async function Home() {
       <Carousel trending = {images} />
       <AnimationList data={data}/>
       <ShareButton/>
+
     </section>
   )
 }

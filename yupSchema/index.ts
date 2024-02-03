@@ -56,6 +56,7 @@ export const NewBlogSchema = Yup.object({
     if (!value) return true;
     return value.every((file) => file.size <= 7 * 1024 * 1024); // 7MB
   }),
+  status: Yup.string().oneOf(['draft', 'published','archived'], 'Invalid status').required('Status is required'),
 });
 
 export const EditBlogSchema = Yup.object({
@@ -72,6 +73,7 @@ export const EditBlogSchema = Yup.object({
     if (!value) return true;
     return value.every((file) => file.size <= 7 * 1024 * 1024); // 7MB
   }),
+  status: Yup.string().oneOf(['draft', 'published','archived'], 'Invalid status').required('Status is required'),
 });
 
 export const ProfileSchema = Yup.object({

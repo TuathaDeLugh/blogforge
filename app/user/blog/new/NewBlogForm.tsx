@@ -59,7 +59,7 @@ const NewBlogForm: React.FC = () => {
             category: [],
             images: [],
             detail: '',
-            status: 'draft',
+            status: 'Select',
             keywords: [],
         },
         validationSchema: NewBlogSchema,
@@ -89,7 +89,7 @@ const NewBlogForm: React.FC = () => {
                         category: values.category,
                         images: uploadedImageUrls,
                         detail: values.detail,
-                        status: 'draft',
+                        status: values.status,
                         keywords: values.keywords,
                         creator: {
                             userid: user?._id,
@@ -378,6 +378,37 @@ const NewBlogForm: React.FC = () => {
                         </div>
                         {errors.detail && touched.detail ? (
                             <p className=" text-red-600 dark:text-red-500 text-sm mb-1">* {errors.detail}</p>
+                        ) : <p className='mb-6' />}
+                    </div>
+                    
+                    <div className="w-full inline-block">
+
+                        <div
+                            className={`outline ${errors.status && touched.status
+                                ? 'outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50'
+                                : 'outline-transparent'
+                                } flex items-center gap-2 w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
+                        >
+                            <label htmlFor="ststus" className={`${errors.status && touched.status ? "text-red-400 dark:text-red-600 " : " text-gray-400  "} block font-medium mr-2`}>Status:</label>
+
+                            <select
+                                id="status"
+                                name="status"
+                                value={values.status}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                className={`outline-transparent w-full bg-gray-100 dark:bg-gray-700 text-base focus:outline-none`}
+                            >
+                                <option value="select">select</option>
+                                <option value="draft">Draft</option>
+                                <option value="published">Published</option>
+                                <option value="archived">archived</option>
+                            </select>
+                        </div>
+                        {errors.status && touched.status ? (
+                            <p className="text-red-600 dark:text-red-500 text-sm mb-1">
+                                * {errors.status}
+                            </p>
                         ) : <p className='mb-6' />}
                     </div>
 

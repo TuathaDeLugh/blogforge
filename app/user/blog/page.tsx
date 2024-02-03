@@ -163,7 +163,7 @@ export default async function UserBlog(context: { searchParams: { page: string }
                   }
                 </tbody>
               </table>
-              :<div className='text-center text-lg'>Look Like You don't created any Blogs </div> 
+              :<div className='text-center text-lg'>Looks Like You don&apos;t created any Blogs </div> 
             }
             </div>
           </Div>

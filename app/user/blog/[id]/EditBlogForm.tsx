@@ -84,13 +84,23 @@ const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
             const postapi = async () => {
                 try {
                     // Delete images from Firebase Storage
-                    await Promise.all(deletedImages.map(async ({ name }) => {
-                        const imageRef = ref(storage, `blogimages/${name}`);
-                        await deleteObject(imageRef);
-                    }));
+                    try{
+            
+                        await Promise.all(deletedImages.map(async ({ name }) => {
+                            const imageRef = ref(storage, `blogimages/${name}`);
+                            await deleteObject(imageRef);
+                          }));
+                    }
+                    catch(error:any){
+                        toast.error('Firebase image deletion error report this issue to admin on contact page',
+                        {
+                            duration:10000
+                        })
+                    }
                     setDeletedImages([]);
 
                     // Upload images to Firebase Storage
+                    
                     const uploadedImageUrls = await Promise.all(
                         values.images.map(async (imageFile) => {
                             const imageRef = ref(storage, `blogimages/${imageFile.name}`);

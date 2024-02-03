@@ -29,7 +29,7 @@ export default function DelBlogBtn({ id , images , title }:DelBlogBtnProps) {
               }));
         }
         catch(error:any){
-            toast.error('firebase image deletion error report this issue to admin',
+            toast.error('Firebase image deletion error report this issue to admin on contact page',
             {
                 duration:10000
             })

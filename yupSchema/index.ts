@@ -58,6 +58,22 @@ export const NewBlogSchema = Yup.object({
   }),
 });
 
+export const EditBlogSchema = Yup.object({
+  title: Yup.string().required('Title is required'),
+  category: Yup.array().min(1, 'Select at least one category').required('Category is required'),
+  keywords: Yup.array().of(Yup.string().required('Keyword cannot be empty')).min(1, 'Add at least one keyword'),
+  detail: Yup.string().required('Detail is required'),
+  images: Yup.array().max(7,'You can put maximum 7 images')
+  .test('fileType', 'Invalid file type, only images are allowed', (value) => {
+    if (!value) return true; // If no file is provided, skip the test
+    return value.every((file) => ['image/jpeg', 'image/png', 'image/gif'].includes(file.type));
+  })
+  .test('fileSize', 'File size is too large, maximum 7MB allowed', (value) => {
+    if (!value) return true;
+    return value.every((file) => file.size <= 7 * 1024 * 1024); // 7MB
+  }),
+});
+
 export const ProfileSchema = Yup.object({
   name: Yup.string().min(2).max(25).required("Please enter Full Name"),
   username: Yup.string().min(2).max(25).matches(/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores").required("Please enter username"),

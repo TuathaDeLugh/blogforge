@@ -1,26 +1,20 @@
-import mongoose,{Schema} from "mongoose";
+import mongoose from "mongoose";
 
 const commentSchema = new mongoose.Schema({
   _id: {
     type: String,
-    required: true,
-    unique: true,
   },
   userid: {
     type: String,
-    required: true,
-    unique: true,
   },
   useravatar: {
     type: String,
   },
   username: {
     type: String,
-    required: true,
   },
   comment: {
     type: String,
-    required: true,
   },
 }, { timestamps: true });
 
@@ -33,11 +27,10 @@ const blogSchema = new mongoose.Schema({
     type: [String],
     required: true,
   },
-  image: [{
+  images: [{
     _id: {
         type: String,
         required: true,
-        unique: true,
       },
     name: String,
     link: String,
@@ -59,7 +52,7 @@ const blogSchema = new mongoose.Schema({
     enum: ['draft', 'published', 'archived'],
     default: 'draft',
   },
-  keyword: {
+  keywords: {
     type: [String],
   },
   comments: [commentSchema],
@@ -74,7 +67,6 @@ const blogSchema = new mongoose.Schema({
     },
     avatar: {
       type: String,
-      required: true,
     },
   },
 }, { timestamps: true });

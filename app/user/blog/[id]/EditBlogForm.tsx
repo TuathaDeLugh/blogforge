@@ -4,16 +4,16 @@ import { useFormik } from 'formik';
 import { RxCross1 } from "react-icons/rx";
 import { IoAdd } from "react-icons/io5";
 import { storage } from '@/util/firebase';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import Image from 'next/image';
-import { Div } from '../../../../Components/Motion/Motion';
-import RichTextEditor from '../../../../Components/layout/RichTextEditor';
+import { Div } from '@/Components/Motion/Motion';
+import RichTextEditor from '@/Components/layout/RichTextEditor';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/Redux/store';
 import { AiOutlineLoading3Quarters, AiOutlineUser } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import { NewBlogSchema } from '@/yupSchema';
+import { EditBlogSchema } from '@/yupSchema';
 
 
 
@@ -32,17 +32,30 @@ interface BlogFormValues {
     keywords: string[];
 }
 
-const NewBlogForm: React.FC = () => {
+interface EditBlogFormProps {
+    blog: {
+        _id: string;
+        title: string;
+        category: string[];
+        images: Image[];
+        detail: string;
+        status: string;
+        keywords: string[];
+    };
+}
+
+const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
     const [disabled, setDisabled] = useState(false);
     const router = useRouter();
     const user = useSelector((state: RootState) => state.user.data);
     const [imageUrls, setImageUrls] = useState<string[]>([]);
     const [isDragging, setIsDragging] = useState(false);
     const [keywordInput, setKeywordInput] = useState('')
+    const [remainingImages, setRemainingImages] = useState<{ link: string; name: string }[]>(blog.images.map(image => ({ link: image.link, name: image.name })));
+    const [deletedImages, setDeletedImages] = useState<{ link: string; name: string }[]>([]);
 
 
 
-    
 
 
     const {
@@ -55,21 +68,28 @@ const NewBlogForm: React.FC = () => {
         setFieldValue,
     } = useFormik<BlogFormValues>({
         initialValues: {
-            title: '',
-            category: [],
+            title: blog.title,
+            category: blog.category,
             images: [],
-            detail: '',
+            detail: blog.detail,
             status: 'draft',
-            keywords: [],
+            keywords: [...blog.keywords],
         },
-        validationSchema: NewBlogSchema,
+        validationSchema: EditBlogSchema,
 
         onSubmit: async (values, action) => {
+
             setDisabled(true);
 
             const postapi = async () => {
                 try {
-                    router.back()
+                    // Delete images from Firebase Storage
+                    await Promise.all(deletedImages.map(async ({ name }) => {
+                        const imageRef = ref(storage, `blogimages/${name}`);
+                        await deleteObject(imageRef);
+                    }));
+                    setDeletedImages([]);
+
                     // Upload images to Firebase Storage
                     const uploadedImageUrls = await Promise.all(
                         values.images.map(async (imageFile) => {
@@ -82,12 +102,12 @@ const NewBlogForm: React.FC = () => {
                             };
                         })
                     );
-            
-                    // Now that all images are uploaded, construct the data for the POST request
+
+                    // Now that all images are uploaded, construct the data for the PUT request
                     const data = {
                         title: values.title,
                         category: values.category,
-                        images: uploadedImageUrls,
+                        images: [...remainingImages, ...uploadedImageUrls],
                         detail: values.detail,
                         status: 'draft',
                         keywords: values.keywords,
@@ -97,33 +117,35 @@ const NewBlogForm: React.FC = () => {
                             avatar: user?.avatar,
                         },
                     };
-            
-                    // Make the POST request
-                    await fetch(`/api/blog`, {
-                        method: "POST",
+
+                    // Make the PUT request
+                    await fetch(`/api/blog/${blog._id}`, {
+                        method: "PUT",
                         headers: {
                             "Content-type": "application/json",
                         },
                         body: JSON.stringify(data),
                     });
-            
+
+                    router.back();
                     router.refresh();
                     setImageUrls([]);
                     setDisabled(false);
                     action.resetForm();
                 } catch (error) {
                     console.error("Error posting data:", error);
-                    // Handle error as needed
                 }
             };
-
+            if ([...remainingImages, ...values.images].length === 0) {
+                toast.error('Images cannot be empty');
+                setDisabled(false)
+                return;
+            }
             toast.promise((postapi()), {
                 loading: "Saving Blog",
                 success: "Blog Saved Successfully",
                 error: " Failed Save"
             });
-            setImageUrls([]);
-            setDisabled(false)
             action.resetForm()
 
 
@@ -149,6 +171,24 @@ const NewBlogForm: React.FC = () => {
         updatedUrls.splice(index, 1);
         setImageUrls(updatedUrls);
     };
+
+    const handleExImageDelete = (index: number) => {
+        const { link, name } = remainingImages[index];
+
+        // Update the deletedImages state with the deleted image info
+        setDeletedImages(prevDeletedImages => [...prevDeletedImages, { link, name }]);
+
+        // Update the remaining images in state
+        setRemainingImages(prevImages => {
+            const updatedImages = [...prevImages];
+            updatedImages.splice(index, 1);
+            return updatedImages;
+        });
+
+        toast.success('Image marked for deletion');
+    };
+
+
     const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
         setIsDragging(true);
@@ -312,8 +352,37 @@ const NewBlogForm: React.FC = () => {
                                         ))}
                                     </div>
                                 )}
+                                {remainingImages.length > 0 && (
+                                    <div className="mt-6 border-t border-gray-300 dark:border-gray-500 ">
+                                        <h4 className=" mt-2 text-lg font-semibold text-gray-400  mb-2 text-center">Existed Images:</h4>
+                                        <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
+                                            {remainingImages.map((image, index) => (
+
+                                                <div key={index} className="border dark:border-gray-500 p-1 rounded-md flex items-center space-x-2 relative">
+                                                    <Image
+                                                        width={256}
+                                                        height={160}
+                                                        src={image.link}
+                                                        alt={`Preview ${image.name}`}
+                                                        className=" h-20 w-32 object-cover rounded"
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleExImageDelete(index)}
+                                                        className=" absolute top-1 right-1 backdrop-blur-sm rounded-bl-xl rounded-tr text-red-500 p-2 hover:bg-red-600 hover:text-white focus:outline-none focus:shadow-outline-red active:bg-red-800"
+                                                    >
+                                                        <RxCross1 size={20} />
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
+
+
+
                         {errors.images && touched.images ? (
                             <p className="text-red-600 dark:text-red-500 text-sm mb-1">* {Array.isArray(errors.images) ? errors.images.join(', ') : errors.images}</p>
                         ) : <p className='mb-6' />}
@@ -336,7 +405,7 @@ const NewBlogForm: React.FC = () => {
                                     className={`outline ${errors.keywords && touched.keywords ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50' : ' outline-transparent '} w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
                                 />
                                 <button
-                                     type="button"
+                                    type="button"
                                     className="absolute right-2 text-white top-2 p-1 bg-orange-400 rounded-full"
                                     onClick={handleKeywordAdd}
                                 >
@@ -344,7 +413,7 @@ const NewBlogForm: React.FC = () => {
                                 </button>
                             </div>
                             {
-                                values.keywords.length > 0 ? (
+                                values.keywords?.length > 0 ? (
 
                                     <div className="flex flex-wrap gap-2 p-2 border-t border-gray-300 dark:border-gray-500 max-h-80 overflow-y-auto">
                                         {values.keywords.map((keyword: string, index: number) => (
@@ -362,6 +431,7 @@ const NewBlogForm: React.FC = () => {
                                     </div>
                                 ) : null
                             }
+
                         </div>
                         {errors.keywords && touched.keywords ? (
                             <p className=" text-red-600 dark:text-red-500 text-sm mb-1">* {errors.keywords}</p>
@@ -420,4 +490,4 @@ const NewBlogForm: React.FC = () => {
     );
 };
 
-export default NewBlogForm;
+export default EditBlogForm;

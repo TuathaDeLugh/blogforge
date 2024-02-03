@@ -106,13 +106,14 @@ const NewBlogForm: React.FC = () => {
                         },
                         body: JSON.stringify(data),
                     });
-            
                     router.refresh();
                     setImageUrls([]);
                     setDisabled(false);
                     action.resetForm();
                 } catch (error) {
                     console.error("Error posting data:", error);
+                    setDisabled(false);
+
                     // Handle error as needed
                 }
             };
@@ -122,8 +123,6 @@ const NewBlogForm: React.FC = () => {
                 success: "Blog Saved Successfully",
                 error: " Failed Save"
             });
-            setImageUrls([]);
-            setDisabled(false)
             action.resetForm()
 
 

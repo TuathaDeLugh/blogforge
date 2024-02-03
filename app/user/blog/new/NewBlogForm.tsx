@@ -69,7 +69,6 @@ const NewBlogForm: React.FC = () => {
 
             const postapi = async () => {
                 try {
-                    router.back()
                     // Upload images to Firebase Storage
                     const uploadedImageUrls = await Promise.all(
                         values.images.map(async (imageFile) => {
@@ -110,6 +109,7 @@ const NewBlogForm: React.FC = () => {
                     setImageUrls([]);
                     setDisabled(false);
                     action.resetForm();
+                    router.back()
                 } catch (error) {
                     console.error("Error posting data:", error);
                     setDisabled(false);
@@ -123,7 +123,6 @@ const NewBlogForm: React.FC = () => {
                 success: "Blog Saved Successfully",
                 error: " Failed Save"
             });
-            action.resetForm()
 
 
         },
@@ -434,13 +433,14 @@ const NewBlogForm: React.FC = () => {
                     <button
                         disabled={disabled}
                         type="submit"
-                        className="bg-orange-500 text-white w-32 h-10 rounded hover:bg-orange-600 focus:outline-none focus:shadow-outline-green active:bg-orange-800 disabled:opacity-30 flex justify-center items-center gap-2"
+                        className="bg-orange-500 text-white w-36 h-10 rounded hover:bg-orange-600 focus:outline-none focus:shadow-outline-green active:bg-orange-800 disabled:opacity-30 flex justify-center items-center gap-2"
                     >
-                        Post Blog
                         {
-                            disabled ?
+                            disabled ?<>
+                                Posting Blog
                                 <AiOutlineLoading3Quarters size={20} className='animate-spin' />
-                                : null
+                            </>
+                                : <>Post Blog</>
                         }
                     </button>
                 </form>

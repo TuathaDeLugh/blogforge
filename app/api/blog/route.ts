@@ -74,7 +74,7 @@ export async function DELETE(request: any) {
         const id = request.nextUrl.searchParams.get('id');
         await connectdb();
         await Blog.findByIdAndDelete(id);
-        return NextResponse.json({ message: "Project Deleted" }, { status: 200 });
+        return NextResponse.json({ message: "Blog Deleted" }, { status: 200 });
     } catch (error: any) {
         console.log(error)
     }

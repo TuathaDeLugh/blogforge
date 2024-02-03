@@ -11,7 +11,7 @@ interface EditBlogProps {
 
 export default async function EditBlog({ params: { id } }: EditBlogProps) {
   const blog = await getSingleblog(id)
-  console.log(blog);
+  // console.log(blog);
 
 
   return (

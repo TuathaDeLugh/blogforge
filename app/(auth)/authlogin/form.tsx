@@ -30,7 +30,6 @@ export default function AuthForm({user} : any ) {
           provider: "auth",
           avatar: user.image,
         }
-        console.log(data)
          const response = await fetch(`/api/user`, {
           method: "POST",
           headers: {

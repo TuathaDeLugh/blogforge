@@ -5,9 +5,9 @@ import { NextResponse } from "next/server";
 export async function POST(request: any) {
 
     try {
-        const { title,category,images,detail,status,keywords,creator } = await request.json();
+        const { title,category,images,detail,info,status,keywords,creator } = await request.json();
         await connectdb();
-        await Blog.create({ title, category, images, detail, status, keywords, creator });
+        await Blog.create({ title, category, images, detail,info , status, keywords, creator });
 
 
         return NextResponse.json(

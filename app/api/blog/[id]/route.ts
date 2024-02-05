@@ -4,9 +4,9 @@ import { NextResponse } from "next/server";
 
 export async function PUT(request:any,{params}:any){
     const { id } = params;
-    const { title,category,images,detail,status,keyword,creator }  = await request.json();
+    const { title,category,images,detail,info,status,keyword,creator }  = await request.json();
     await connectdb();
-    await Blog.findByIdAndUpdate(id, { title,category,images,detail,status,keyword,creator });
+    await Blog.findByIdAndUpdate(id, { title,category,images,detail,info,status,keyword,creator });
     return NextResponse.json({message:"Blog Updated"},{status:200});
 } 
 

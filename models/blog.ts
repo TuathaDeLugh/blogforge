@@ -35,6 +35,10 @@ const blogSchema = new mongoose.Schema({
     name: String,
     link: String,
   }],
+  info: {
+    type: String,
+    required: true,
+  },
   detail: {
     type: String,
     required: true,

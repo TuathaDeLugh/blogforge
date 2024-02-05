@@ -26,6 +26,7 @@ interface Image {
 interface BlogFormValues {
     title: string;
     category: string[];
+    info:string;
     images: File[];
     detail: string;
     status: string;
@@ -37,6 +38,7 @@ interface EditBlogFormProps {
         _id: string;
         title: string;
         category: string[];
+        info:string;
         images: Image[];
         detail: string;
         status: string;
@@ -70,6 +72,7 @@ const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
         initialValues: {
             title: blog.title,
             category: blog.category,
+            info:blog.info,
             images: [],
             detail: blog.detail,
             status: blog.status,
@@ -117,6 +120,7 @@ const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
                     const data = {
                         title: values.title,
                         category: values.category,
+                        info:values.info,
                         images: [...remainingImages, ...uploadedImageUrls],
                         detail: values.detail,
                         status: values.status,
@@ -312,6 +316,22 @@ const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
                             <p className=" text-red-600 dark:text-red-500 text-sm mb-1">* {errors.category}</p>
                         ) : <p className='mb-6' />}
                     </div>
+                    
+                    <div
+                            className="w-full inline-block">
+                                <textarea
+                                rows={3}
+                                name='info'
+                                placeholder='One Line Information'
+                                value={values.info}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                                        className={`outline  resize-none ${errors.info && touched.info ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50' : ' outline-transparent '} w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
+                                        ></textarea>
+                                {errors.info && touched.info ? (
+                                <p className=" text-red-600 dark:text-red-500 text-sm mb-1">* {errors.info}</p>
+                            ) : <p className='mb-6' />}
+                            </div>
 
                     <div
                         className="w-full inline-block">

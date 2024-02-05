@@ -45,6 +45,7 @@ export const emailSchema = Yup.object({
 export const NewBlogSchema = Yup.object({
   title: Yup.string().required('Title is required'),
   category: Yup.array().min(1, 'Select at least one category').required('Category is required'),
+  info:Yup.string().min(10).max(150).required('Info is required'),
   keywords: Yup.array().of(Yup.string().required('Keyword cannot be empty')).min(1, 'Add at least one keyword'),
   detail: Yup.string().required('Detail is required'),
   images: Yup.array().required('atlist one image is required').min(1, 'Select at least one image').max(7,'You can put maximum 7 images')
@@ -62,6 +63,7 @@ export const NewBlogSchema = Yup.object({
 export const EditBlogSchema = Yup.object({
   title: Yup.string().required('Title is required'),
   category: Yup.array().min(1, 'Select at least one category').required('Category is required'),
+  info:Yup.string().min(10).max(150).required('Info is required'),
   keywords: Yup.array().of(Yup.string().required('Keyword cannot be empty')).min(1, 'Add at least one keyword'),
   detail: Yup.string().required('Detail is required'),
   images: Yup.array().max(7,'You can put maximum 7 images')

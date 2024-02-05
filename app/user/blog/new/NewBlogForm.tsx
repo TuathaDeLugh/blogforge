@@ -26,6 +26,7 @@ interface Image {
 interface BlogFormValues {
     title: string;
     category: string[];
+    info:string;
     images: File[];
     detail: string;
     status: string;
@@ -42,7 +43,7 @@ const NewBlogForm: React.FC = () => {
 
 
 
-    
+
 
 
     const {
@@ -57,6 +58,7 @@ const NewBlogForm: React.FC = () => {
         initialValues: {
             title: '',
             category: [],
+            info:'',
             images: [],
             detail: '',
             status: 'Select',
@@ -81,11 +83,12 @@ const NewBlogForm: React.FC = () => {
                             };
                         })
                     );
-            
+
                     // Now that all images are uploaded, construct the data for the POST request
                     const data = {
                         title: values.title,
                         category: values.category,
+                        info:values.info,
                         images: uploadedImageUrls,
                         detail: values.detail,
                         status: values.status,
@@ -96,7 +99,7 @@ const NewBlogForm: React.FC = () => {
                             avatar: user?.avatar,
                         },
                     };
-            
+
                     // Make the POST request
                     await fetch(`/api/blog`, {
                         method: "POST",
@@ -260,7 +263,21 @@ const NewBlogForm: React.FC = () => {
                             <p className=" text-red-600 dark:text-red-500 text-sm mb-1">* {errors.category}</p>
                         ) : <p className='mb-6' />}
                     </div>
-
+                    <div
+                            className="w-full inline-block">
+                                <textarea
+                                rows={3}
+                                name='info'
+                                placeholder='One Line Information'
+                                value={values.info}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                                        className={`outline  resize-none ${errors.info && touched.info ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50' : ' outline-transparent '} w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
+                                        ></textarea>
+                                {errors.info && touched.info ? (
+                                <p className=" text-red-600 dark:text-red-500 text-sm mb-1">* {errors.info}</p>
+                            ) : <p className='mb-6' />}
+                            </div>
                     <div
                         className="w-full inline-block">
                         {/* Multiple Image Upload with Drag & Drop */}
@@ -316,55 +333,58 @@ const NewBlogForm: React.FC = () => {
                             <p className="text-red-600 dark:text-red-500 text-sm mb-1">* {Array.isArray(errors.images) ? errors.images.join(', ') : errors.images}</p>
                         ) : <p className='mb-6' />}
                     </div>
-                    <div
-                        className="w-full inline-block">
                         <div
-                            className={`outline ${errors.keywords && touched.keywords ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50' : ' outline-transparent '} w-full rounded-md bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
+                            className="w-full inline-block">
+                            <div
+                                className={`outline ${errors.keywords && touched.keywords ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50' : ' outline-transparent '} w-full rounded-md bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
 
-                        >
+                            >
 
-                            <div className="relative">
-                                <input
-                                    type="text"
-                                    id="keywords"
-                                    name="keywords"
-                                    value={keywordInput}
-                                    onChange={handleKeywordChange}
-                                    placeholder="Keywords"
-                                    className={`outline ${errors.keywords && touched.keywords ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50' : ' outline-transparent '} w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
-                                />
-                                <button
-                                     type="button"
-                                    className="absolute right-2 text-white top-2 p-1 bg-orange-400 rounded-full"
-                                    onClick={handleKeywordAdd}
-                                >
-                                    <IoAdd size={20} />
-                                </button>
-                            </div>
-                            {
-                                values.keywords.length > 0 ? (
 
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        id="keywords"
+                                        name="keywords"
+                                        value={keywordInput}
+                                        onChange={handleKeywordChange}
+                                        placeholder="Keywords"
+                                        className={`outline ${errors.keywords && touched.keywords ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50' : ' outline-transparent '} w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
+                                    />
+                                    <button
+                                        type="button"
+                                        className="absolute right-2 text-white top-2 p-1 bg-orange-400 rounded-full"
+                                        onClick={handleKeywordAdd}
+                                    >
+                                        <IoAdd size={20} />
+                                    </button>
+                                </div>
+                                    
+                                {
+                                            values.keywords.length > 0 ? (
                                     <div className="flex flex-wrap gap-2 p-2 border-t border-gray-300 dark:border-gray-500 max-h-80 overflow-y-auto">
-                                        {values.keywords.map((keyword: string, index: number) => (
-                                            <div key={index} className="flex items-center bg-orange-400/50 dark:bg-orange-400/50 p-2 rounded">
-                                                <div className="mr-2">{keyword}</div>
-                                                <button
-                                                    type="button"
-                                                    onClick={() => handleDeleteKeyword(index)}
-                                                    className="text-red-500 hover:text-red-700 focus:outline-none"
-                                                >
-                                                    <RxCross1 size={20} />
-                                                </button>
-                                            </div>
-                                        ))}
-                                    </div>
-                                ) : null
-                            }
+                                                {
+                                            values.keywords.map((keyword: string, index: number) => (
+                                                <div key={index} className="flex items-center bg-orange-400/50 dark:bg-orange-400/50 p-2 rounded">
+                                                    <div className="mr-2">{keyword}</div>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleDeleteKeyword(index)}
+                                                        className="text-red-500 hover:text-red-700 focus:outline-none"
+                                                    >
+                                                        <RxCross1 size={20} />
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : null
+                                }
+                            </div>
+                            {errors.keywords && touched.keywords ? (
+                                <p className=" text-red-600 dark:text-red-500 text-sm mb-1">* {errors.keywords}</p>
+                            ) : <p className='mb-6' />}
                         </div>
-                        {errors.keywords && touched.keywords ? (
-                            <p className=" text-red-600 dark:text-red-500 text-sm mb-1">* {errors.keywords}</p>
-                        ) : <p className='mb-6' />}
-                    </div>
+                        
                     <div className="w-full inline-block">
                         <div
                             className={`outline ${errors.detail && touched.detail ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50' : ' outline-transparent '} w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
@@ -379,7 +399,7 @@ const NewBlogForm: React.FC = () => {
                             <p className=" text-red-600 dark:text-red-500 text-sm mb-1">* {errors.detail}</p>
                         ) : <p className='mb-6' />}
                     </div>
-                    
+
                     <div className="w-full inline-block">
 
                         <div
@@ -436,7 +456,7 @@ const NewBlogForm: React.FC = () => {
                         className="bg-orange-500 text-white w-36 h-10 rounded hover:bg-orange-600 focus:outline-none focus:shadow-outline-green active:bg-orange-800 disabled:opacity-30 flex justify-center items-center gap-2"
                     >
                         {
-                            disabled ?<>
+                            disabled ? <>
                                 Posting Blog
                                 <AiOutlineLoading3Quarters size={20} className='animate-spin' />
                             </>

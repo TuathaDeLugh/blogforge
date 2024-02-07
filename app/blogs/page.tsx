@@ -43,7 +43,7 @@ export default async function Blogs( context : any) {
                         className="border bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-slate-500"
                       >
                         <div className="flex flex-col space-y-3 p-6 rounded-t-lg bg-white dark:bg-gray-800">
-                          <img
+                          <Image
                             src={blog.images[0].link}
                             alt="AI Image"
                             className="w-full h-48 object-cover mb-4 rounded bg-slate-200 dark:bg-slate-700"

@@ -16,7 +16,7 @@ export default async function Allblogs({context}:any) {
                 {
                     blogs.data.map((blog: any,index:number) => (
                         <AnimationData
-                        key={index}
+                        key={blog._id}
                         index={index}
                         className="border bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-slate-500"
                       >

@@ -38,7 +38,7 @@ export async function GET(req: any, res: any) {
         const pageSize = 15;
         const skip = (page - 1) * pageSize;
 
-        const emails = await Blog.find().sort({ createdAt: sort }).skip(skip).limit(pageSize);
+        const blogs = await Blog.find().sort({ createdAt: sort }).skip(skip).limit(pageSize);
 
         const totalDocuments = await Blog.countDocuments();
 
@@ -46,7 +46,7 @@ export async function GET(req: any, res: any) {
 
         return NextResponse.json(
             {
-                data: emails,
+                data: blogs,
                 meta: {
                     totalDocuments,
                     totalPages: Math.ceil(totalDocuments / pageSize),
@@ -60,7 +60,7 @@ export async function GET(req: any, res: any) {
         console.error('Error in GET handler:', error.message);
         return NextResponse.json(
             {
-                message: 'Failed to load mail',
+                message: 'Failed to load',
                 error: error.message,
             },
             { status: 500 }

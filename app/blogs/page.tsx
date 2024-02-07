@@ -11,7 +11,6 @@ export default async function Blogs( context : any) {
     const pageno = parseInt(context?.searchParams.page)
     
     const blogs = await getAllBlog(pageno);
-    console.log(pageno);
 
     return (
           <section className='px-5 max-w-[1500px] mx-auto mb-5 '>

@@ -68,7 +68,7 @@ export default async function Home() {
       <Carousel data = {images} />
       <Search/>
       <AnimationList data={data}/>
-      <ShareButton/>
+      <ShareButton link='/'/>
 
     </section>
   )

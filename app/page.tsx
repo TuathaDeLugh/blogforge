@@ -2,6 +2,7 @@ import React from 'react'
 import Carousel from '@/Components/Crousel';
 import AnimationList from '@/Components/Motion/AnimationList';
 import ShareButton from '@/Components/Sharebutton';
+import Search from '@/Components/Search';
 
 export default async function Home() {
   let images = [
@@ -65,6 +66,7 @@ export default async function Home() {
   return (
     <section className='max-w-[1500px] mx-auto'>
       <Carousel data = {images} />
+      <Search/>
       <AnimationList data={data}/>
       <ShareButton/>
 

@@ -3,6 +3,7 @@ import LoadingBlogs from '@/Components/layout/LoadinBlog';
 
 import React, { Suspense } from 'react'
 import Allblogs from './Allblogs';
+import Search from '@/Components/Search';
 
 export default function Blogs( context : any) {
 
@@ -25,7 +26,7 @@ export default function Blogs( context : any) {
               All Blogs
             </H1>
           </div>
-          
+          <Search/>
 
           
           <Suspense fallback={<LoadingBlogs/>}>

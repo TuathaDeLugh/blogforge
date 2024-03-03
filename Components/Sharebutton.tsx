@@ -2,10 +2,11 @@
 "use client"
 import React from 'react';
 import toast from 'react-hot-toast';
+import { IoMdShareAlt } from "react-icons/io";
 
-const ShareButton: React.FC = () => {
+const ShareButton: React.FC<{ link: string }> = ({ link }) => {
   const handleCopyToClipboard = () => {
-    const shareUrl: string = 'https://example.com';
+    const shareUrl: string = link;
 
     const textArea = document.createElement('textarea');
     textArea.value = shareUrl;
@@ -19,7 +20,7 @@ const ShareButton: React.FC = () => {
   };
 
   return (
-    <button onClick={handleCopyToClipboard} className='bg-orange-500 rounded px-5 py-2' >Share</button>
+    <button onClick={handleCopyToClipboard} className=' border text-orange-500 border-orange-500 rounded px-1 py-1 font-semibold hover:text-white hover:bg-orange-500 ' ><IoMdShareAlt size={20} /></button>
   );
 };
 

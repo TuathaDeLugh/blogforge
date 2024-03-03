@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import './globals.css'
 import SessionProvider from '@/Components/Logic/sessionPro'
 import Navbar from '@/Components/layout/Navbar'
@@ -8,7 +8,8 @@ import Footer from '@/Components/layout/Footer'
 import Toast from '@/Components/layout/Toast'
 import UserData from '@/Components/Logic/userdataget'
 
-const inter = Inter({ subsets: ['latin'] })
+const font = Poppins({ subsets: ['latin'],
+  weight:['100', '200', '300', '400', '500', '600', '700', '800', '900'] })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -24,7 +25,7 @@ export default function RootLayout({
     <StateProvider>
       
     <html lang="en">
-      <body className={`${inter.className} text-black bg-white dark:text-white dark:bg-gray-900`}>
+      <body className={`${font.className} text-gray-700 bg-white dark:text-white dark:bg-gray-900`}>
       <SessionProvider>
       <UserData/>
         <Toast/>

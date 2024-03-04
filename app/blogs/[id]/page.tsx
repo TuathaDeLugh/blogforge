@@ -5,6 +5,7 @@ import getSingleblog from '@/controllers/singleblog';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
+import "@/style/datadisplay.css"
 
 interface BlogProps {
   params: {
@@ -34,7 +35,7 @@ export default async function page({ params: { id } }: BlogProps) {
           {blog.title}
         </H1>
       </div>
-      <div className="flex flex-col gap-3 lg:flex-row justify-between mb-5 ">
+      <div className="flex flex-col gap-3 lg:flex-row justify-between mb-5 items-center ">
           {/* Images */}
         <div className=" w-full lg:w-[70%] xl:w-[77%] ">
 
@@ -130,7 +131,7 @@ export default async function page({ params: { id } }: BlogProps) {
             className={`data min-h-[80vh] text-justify`}
             dangerouslySetInnerHTML={{ __html: blog.detail.replace(/\n/g, '<br>') }}/>
         <div className='mt-5'>
-          <P className="flex gap-2 items-center"
+          <P className="flex gap-2 items-center text-slate-400 dark:text-slate-600"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}>
@@ -140,7 +141,10 @@ export default async function page({ params: { id } }: BlogProps) {
                 :
                 null
             }
-            {blog.creator.createdby + ' at ' + new Date(blog.updatedAt).toLocaleString()}
+            {blog.creator.createdby + ' at '}
+            
+            {new Date(blog.createdAt).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })}
+  {blog.createdAt !== blog.updatedAt && <span> | Updated at {new Date(blog.updatedAt).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })}</span>}
           </P>
 
         </div>

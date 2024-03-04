@@ -1,8 +1,8 @@
 "use client"
 import dynamic from 'next/dynamic';
 import React from 'react';
-import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
+import "@/style/texteditor.css"
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -27,7 +27,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ value, onChange, classN
 
   return (
     <DynamicReactQuill
-      theme = {'snow'}
+      theme = {'bubble'}
       value={value}
       onChange={onChange}
       modules={{

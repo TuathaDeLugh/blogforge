@@ -1,0 +1,23 @@
+.data blockquote{
+    display: block;
+    border:solid;
+    border:0;
+    padding-left: 1rem;
+    border-left: 0.3rem solid orange;
+    font-size: large;
+  }
+  .data h3{
+    color: orange;
+    margin: 1rem 0 1rem 0 ;
+    font-size: large;
+    font-weight: 450;
+  }
+  .data h2{
+    color: orange;
+    margin: 1rem 0 1rem 0 ;
+    font-size: larger;
+    font-weight: 450;
+  }
+  .data p{
+    margin: 0.4rem 0 0.4rem 0 ;
+  }

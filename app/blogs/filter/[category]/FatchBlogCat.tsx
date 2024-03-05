@@ -13,6 +13,9 @@ export default async function FatchBlogCat({context}:any) {
   return (
     <>
     <div className="min-h-[90vh]">
+    {
+         (blogs.data.length>0) ? (
+
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {
                     blogs.data.map((blog: any,index:number) => (
@@ -60,6 +63,11 @@ export default async function FatchBlogCat({context}:any) {
                 }
 
             </div>
+            ) : (
+            <h5 className="capitalize font-semibold text-lg w-full text-center ">
+        No Blogs avaliable for : <span className='text-orange-500'>{category}</span>
+        </h5>
+        )}
             </div>
             <Pagination pagedata={blogs.meta}/>
             </>

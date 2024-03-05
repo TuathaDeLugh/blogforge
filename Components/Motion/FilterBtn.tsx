@@ -54,7 +54,7 @@ const FilterDropDown = () => {
       
       {open ? (
         <motion.ul
-        className="mt-6 z-10 absolute right-0 list-none m-1 border overflow-y-auto max-h-60 md:max-h-96 dark:border-slate-700 w-max  rounded bg-gray-300/50 dark:bg-gray-600/50 backdrop-blur"
+        className="mt-6 z-10 absolute right-0 list-none m-1 border overflow-y-auto max-h-60 md:max-h-96 dark:border-slate-700 w-max  rounded bg-gray-300/50 dark:bg-slate-700/50 backdrop-blur"
         initial={{ opacity: 0, y: -20 , x:20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}

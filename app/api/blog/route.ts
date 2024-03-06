@@ -38,9 +38,9 @@ export async function GET(req: any, res: any) {
         const pageSize = 15;
         const skip = (page - 1) * pageSize;
 
-        const blogs = await Blog.find().sort({ createdAt: sort }).skip(skip).limit(pageSize);
+        const blogs = await Blog.find({status: 'published'}).sort({ createdAt: sort }).skip(skip).limit(pageSize);
 
-        const totalDocuments = await Blog.countDocuments();
+        const totalDocuments = await Blog.countDocuments({status: 'published'});
 
         const hasNextPage = skip + pageSize < totalDocuments;
 

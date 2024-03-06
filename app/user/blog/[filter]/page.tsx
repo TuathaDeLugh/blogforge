@@ -1,27 +1,62 @@
+import Pagination from '@/Components/Pagination'
+import { authOptions } from '@/app/api/auth/[...nextauth]/options'
+import getUserBlog from '@/controllers/userblog'
+import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import React, { Suspense } from 'react'
-import { HiPencilAlt } from 'react-icons/hi'
-import DelBlogBtn from './DeleteBlog'
+import { HiPencilAlt } from "react-icons/hi";
+import { Div} from '@/Components/Motion/Motion'
 import Image from 'next/image'
 import Tr from '@/Components/Motion/TableAnimation'
-import { Div } from '@/Components/Motion/Motion'
-import getUserBlog from '@/controllers/userblog'
-import Pagination from '@/Components/Pagination'
+import DelBlogBtn from '../DeleteBlog'
 
-interface UserBlogTableProps {
-    pageno?: number;
-    status?:string;
-    userid?: string | undefined ;
-}
+interface UserBlogFilterProps {
+    searchParams: {
+      page: string
+    }
+    params: {
+      filter: string
+    }
+  }
+  
+  export default async function UserBlogFilter(props: UserBlogFilterProps) {
+    const session = await getServerSession(authOptions)
+  const dbid = session?.user.dbid || ''
+  const page = parseInt(props.searchParams.page) || 1;
+  const blogs = await getUserBlog(dbid, page, props.params.filter)
 
-export default async function UserBlogTable({pageno,status,userid}:UserBlogTableProps) {
-    const dbid = userid || '';
-    const page = pageno || 1;
-    const filter = status || 'all';
-    const blogs = await getUserBlog(dbid, page, filter);
   return (
     <>
-    <Div
+    <div className="flex gap-4 mb-3">
+        <Link
+        href={'/user/blog'}
+          className={`py-2 px-4 focus:outline-none`}
+        >
+          All
+        </Link>
+        <Link
+        href={'/user/blog/published'}
+        className={`py-2 px-4 border-b-2 ${props.params.filter == 'published' ? 'border-orange-400' : 'border-transparent'} focus:outline-none`}
+
+        >
+          Published
+        </Link>
+        <Link
+        href={'/user/blog/archived'}
+        className={`py-2 px-4 border-b-2 ${props.params.filter == 'archived' ? 'border-orange-400' : 'border-transparent'} focus:outline-none`}
+
+        >
+          Archived
+        </Link>
+        <Link
+        href={'/user/blog/draft'}
+        className={`py-2 px-4 border-b-2 ${props.params.filter == 'draft' ? 'border-orange-400' : 'border-transparent'} focus:outline-none`}
+
+        >
+          Draft
+        </Link>
+      </div>
+        <Div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -30,7 +65,7 @@ export default async function UserBlogTable({pageno,status,userid}:UserBlogTable
 
           <div className=" block w-full rounded overflow-x-auto">
             {
-              blogs.data || blogs.data.length > 0  ?
+              blogs.data.length > 0 ?
                 <table className=" items-center w-full bg-transparent overflow-y-hidden ">
                   <thead>
                     <tr className='border border-l-0 border-r-0 bg-slate-200 dark:bg-slate-600 dark:border-slate-500 '>
@@ -115,7 +150,7 @@ export default async function UserBlogTable({pageno,status,userid}:UserBlogTable
                                 }
                               >
                                 <div className=' flex gap-2'>
-                                  <Link href={`/user/blog/edit/${blog._id}`} title="Edit" >
+                                  <Link href={`/user/blog/${blog._id}`} title="Edit" >
                                     <HiPencilAlt className='text-blue-600' size={25} />
                                   </Link>
                                   <DelBlogBtn id={blog._id} images={blog.images} title={blog.title} />
@@ -133,7 +168,7 @@ export default async function UserBlogTable({pageno,status,userid}:UserBlogTable
             }
           </div>
         </Div>
-        {blogs.data && (<Pagination pagedata={blogs.meta} />)}
-        </>
+        <Pagination pagedata={blogs.meta} />
+            </>
   )
 }

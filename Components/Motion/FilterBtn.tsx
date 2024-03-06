@@ -40,7 +40,7 @@ const FilterDropDown = () => {
   ];
 
   return (
-    <div className="relative w-1/5 p-3 md:p-4  " ref={dropdownRef}>
+    <div className="relative w-1/5 p-3 md:p-4 " ref={dropdownRef}>
         <div
         className="border-l w-full border-black dark:border-gray-500 ">
       <motion.button className='w-full'
@@ -54,7 +54,7 @@ const FilterDropDown = () => {
       
       {open ? (
         <motion.ul
-        className="mt-6 z-10 absolute right-0 list-none m-1 border overflow-y-auto max-h-60 md:max-h-96 dark:border-slate-700 w-max  rounded bg-gray-300/50 dark:bg-slate-700/50 backdrop-blur"
+        className=" bg-gray-300/70 dark:bg-slate-700/70 backdrop-blur mt-6 absolute right-0 list-none m-1 border overflow-y-auto max-h-60 md:max-h-96 dark:border-slate-700 w-max  rounded "
         initial={{ opacity: 0, y: -20 , x:20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}

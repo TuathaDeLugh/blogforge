@@ -22,7 +22,7 @@ export default async function FatchBlogCat({context}:any) {
                         <AnimationData
                         key={blog._id}
                         index={index}
-                        className="border bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-slate-500"
+                        className="border bg-white rounded-lg shadow dark:bg-gray-800 dark:border-slate-500"
                       >
                         <div className="flex flex-col space-y-3 p-6 rounded-t-lg bg-white dark:bg-gray-800">
                           <Image

@@ -40,7 +40,7 @@ const FilterDropDown = () => {
   ];
 
   return (
-    <div className="relative w-1/5 " ref={dropdownRef}>
+    <div className="relative w-1/5 p-3 md:p-4  " ref={dropdownRef}>
         <div
         className="border-l w-full border-black dark:border-gray-500 ">
       <motion.button className='w-full'

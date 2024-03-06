@@ -164,7 +164,7 @@ interface UserBlogFilterProps {
                     }
                   </tbody>
                 </table>
-                : <div className='text-center text-lg'>Looks Like You don&apos;t created any Blogs </div>
+                : <div className='text-center text-lg'>Looks Like You don&apos;t have any Blogs here </div>
             }
           </div>
         </Div>

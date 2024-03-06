@@ -7,13 +7,23 @@ export async function GET(req:any, { params }:any,res:any) {
         await connectdb();
         const sort = 1;
         const { id } = params;
+        const filter = req.nextUrl.searchParams.get('filter');
         const page = req.nextUrl.searchParams.get('page') || 1;
         const pageSize = 10;
         const skip = (page - 1) * pageSize;
 
-        const emails = await Blog.find({ "creator.userid": id }).sort({ title: sort }).select("_id title share pageview images status").skip(skip).limit(pageSize);
 
-        const totalDocuments = await Blog.countDocuments({ "creator.userid": id });
+        let emails;
+        let totalDocuments;
+
+        if (filter === 'all' || filter == undefined || filter == '') {
+            emails = await Blog.find({ "creator.userid": id }).sort({ title: sort }).select("_id title share pageview images status").skip(skip).limit(pageSize);
+            totalDocuments= await Blog.countDocuments({ "creator.userid": id });
+        } else {
+            emails = await Blog.find({ "creator.userid": id, "status": filter }).sort({ title: sort }).select("_id title share pageview images status").skip(skip).limit(pageSize);
+            totalDocuments= await Blog.countDocuments({ "creator.userid": id, "status": filter });
+        }
+
 
         const hasNextPage = skip + pageSize < totalDocuments;
 

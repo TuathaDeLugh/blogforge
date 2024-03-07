@@ -44,7 +44,6 @@ interface UserBlogFilterProps {
         <Link
         href={'/user/blog/archived'}
         className={`py-2 px-4 border-b-2 ${props.params.filter == 'archived' ? 'border-orange-400' : 'border-transparent'} focus:outline-none`}
-
         >
           Archived
         </Link>
@@ -150,7 +149,7 @@ interface UserBlogFilterProps {
                                 }
                               >
                                 <div className=' flex gap-2'>
-                                  <Link href={`/user/blog/${blog._id}`} title="Edit" >
+                                  <Link href={`/user/blog/edit/${blog._id}`} title="Edit" >
                                     <HiPencilAlt className='text-blue-600' size={25} />
                                   </Link>
                                   <DelBlogBtn id={blog._id} images={blog.images} title={blog.title} />

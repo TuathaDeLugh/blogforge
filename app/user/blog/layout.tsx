@@ -1,13 +1,16 @@
+import UserLayoutDisplay from '@/Components/Logic/UserLayoutDisplay'
 import { Div, H1 } from '@/Components/Motion/Motion'
 import Link from 'next/link'
 import React from 'react'
 
-export default function Bloglayout({
+export default function UserBloglayout({
     children,
   }: {
     children: React.ReactNode
   }) {
   return (<>
+  <UserLayoutDisplay
+  display={
   <section className="px-2 mx-auto max-w-[1500px]">
       <div className=" px-6 py-5 mx-auto">
         <div className="relative mt-5 md:mt-16 mx-2">
@@ -35,6 +38,8 @@ export default function Bloglayout({
     {children}
     </div>
     </section>
+  }
+  notdisplay={<>{children}</>}/>
   </>
   )
 }

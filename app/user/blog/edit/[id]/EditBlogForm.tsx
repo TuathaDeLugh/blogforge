@@ -546,6 +546,8 @@ const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
                                 : <>Post Blog</>
                         }
                     </button>
+                        
+
                 </form>
 
             </div>

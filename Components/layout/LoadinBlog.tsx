@@ -10,9 +10,8 @@ export default async function LoadingBlogs() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 animate-pulse duration-300 ">
             {
                 blogs.map((index: number) => (
-                    <AnimationData
+                    <div
                         key={index}
-                        index={index}
                         className="border bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-slate-500"
                     >
                         <div className="flex flex-col space-y-3 p-6 rounded-t-lg bg-white dark:bg-gray-800">
@@ -42,7 +41,7 @@ export default async function LoadingBlogs() {
                                 <span className='p-2 bg-slate-200/20 backdrop-blur-md rounded-full w-[4.5rem]' />
                             </div>
                         </div>
-                    </AnimationData>
+                    </div>
                 ))
 
             }

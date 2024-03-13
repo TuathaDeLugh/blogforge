@@ -10,47 +10,37 @@ import Image from 'next/image'
 import Tr from '@/Components/Motion/TableAnimation'
 import DelBlogBtn from '../DeleteBlog'
 
-interface UserBlogFilterProps {
-    searchParams: {
-      page: string
-    }
-    params: {
-      filter: string
-    }
-  }
-  
-  export default async function UserBlogFilter(props: UserBlogFilterProps) {
-    const session = await getServerSession(authOptions)
+export default async function UserBlog(context: { searchParams: { page: string } }) {
+  const session = await getServerSession(authOptions)
   const dbid = session?.user.dbid || ''
-  const page = parseInt(props.searchParams.page) || 1;
-  const blogs = await getUserBlog(dbid, page, props.params.filter)
+  const page = parseInt(context.searchParams.page) || 1;
+  const filter = ''
+  const blogs = await getUserBlog(dbid, page, filter);
 
   return (
     <>
     <div className="flex gap-4 mb-3">
         <Link
-        href={'/user/blog'}
-          className={`py-2 px-4 focus:outline-none`}
+        href={'/user/blog/tab/'}
+          className={`py-2 px-4 border-b-2 border-orange-400 focus:outline-none`}
         >
           All
         </Link>
         <Link
-        href={'/user/blog/published'}
-        className={`py-2 px-4 border-b-2 ${props.params.filter == 'published' ? 'border-orange-400' : 'border-transparent'} focus:outline-none`}
-
+        href={'/user/blog/tab/published'}
+          className={`py-2 px-4  focus:outline-none`}
         >
           Published
         </Link>
         <Link
-        href={'/user/blog/archived'}
-        className={`py-2 px-4 border-b-2 ${props.params.filter == 'archived' ? 'border-orange-400' : 'border-transparent'} focus:outline-none`}
+        href={'/user/blog/tab/archived'}
+          className={`py-2 px-4 focus:outline-none`}
         >
           Archived
         </Link>
         <Link
-        href={'/user/blog/draft'}
-        className={`py-2 px-4 border-b-2 ${props.params.filter == 'draft' ? 'border-orange-400' : 'border-transparent'} focus:outline-none`}
-
+        href={'/user/blog/tab/draft'}
+          className={`py-2 px-4  focus:outline-none`}
         >
           Draft
         </Link>
@@ -163,7 +153,7 @@ interface UserBlogFilterProps {
                     }
                   </tbody>
                 </table>
-                : <div className='text-center text-lg'>Looks Like You don&apos;t have any Blogs here </div>
+                : <div className='text-center text-lg'>Looks Like You don&apos;t created any Blogs </div>
             }
           </div>
         </Div>

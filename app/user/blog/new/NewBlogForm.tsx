@@ -6,14 +6,14 @@ import { IoAdd } from "react-icons/io5";
 import { storage } from '@/util/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import Image from 'next/image';
-import { Div } from '../../../../Components/Motion/Motion';
-import RichTextEditor from '../../../../Components/layout/RichTextEditor';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/Redux/store';
 import { AiOutlineLoading3Quarters, AiOutlineUser } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { NewBlogSchema } from '@/yupSchema';
+import { Div } from '@/Components/Motion/Motion';
+import RichTextEditor from '@/Components/layout/RichTextEditor';
 
 
 

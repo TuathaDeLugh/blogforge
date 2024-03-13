@@ -1,6 +1,6 @@
-import NewBlogForm from '@/app/user/blog/new/NewBlogForm'
 import { H1 } from '@/Components/Motion/Motion'
 import React from 'react'
+import NewBlogForm from './NewBlogForm'
 
 export default function NewBlog() {
   return (

@@ -35,7 +35,7 @@ const AuthLinks = () => {
   {
     dropdata = [
       { name: 'Profile', path: '/user', key: 1 },
-      { name: 'My blog', path: '/user/blog', key: 2 },
+      { name: 'My blog', path: '/user/blog/tab', key: 2 },
       { name: 'Saved blog', path: '/user/savedreview', key: 3 },
     ];
   }
@@ -45,7 +45,7 @@ const AuthLinks = () => {
     dropdata = [
       { name: 'Admin Panal', path: '/admin', key: 1 },
       { name: 'Profile', path: '/user', key: 2 },
-      { name: 'My blog', path: '/user/blog', key: 3 },
+      { name: 'My blog', path: '/user/blog/tab', key: 3 },
       { name: 'Saved blog', path: '/user/savedreview', key: 4 },
     ];
   }

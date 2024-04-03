@@ -1,12 +1,12 @@
 import Link from 'next/link'
 import React, { Suspense } from 'react'
 import { HiPencilAlt } from 'react-icons/hi'
-import DelBlogBtn from './DeleteBlog'
 import Image from 'next/image'
 import Tr from '@/Components/Motion/TableAnimation'
 import { Div } from '@/Components/Motion/Motion'
 import getUserBlog from '@/controllers/userblog'
 import Pagination from '@/Components/Pagination'
+import DelBlogBtn from '../DeleteBlog'
 
 interface UserBlogTableProps {
     pageno?: number;

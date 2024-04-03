@@ -9,7 +9,7 @@ export default function UserBloglayout({
   }) {
   return (<>
   <section className="px-2 mx-auto max-w-[1500px]">
-      <div className=" px-6 py-5 mx-auto">
+      <div className=" md:px-6 py-5 mx-auto">
         <div className="relative mt-5 md:mt-16 mx-2">
           <H1
             initial={{ opacity: 0, y: -20 }}

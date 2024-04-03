@@ -8,7 +8,20 @@ const userSchema = new Schema(
 		email: { type: String, required: true, unique: true },
 		password: String,
 		provider: String,
-		role: String,
+		isVerified:{
+			type:Boolean,
+			default:false,
+			unique: true
+		},
+		isAdmin:{
+			type:Boolean,
+			default:false,
+			unique: true
+		},
+		forgotPasswordToken: String,
+		forgotPasswordExpiry:  Date,
+		verifyToken: String,
+		verifyTokenExpiry: Date,
 		watchlist: {
 			type: [Schema.Types.ObjectId],
 			ref: 'blog',
@@ -18,4 +31,6 @@ const userSchema = new Schema(
 		timestamps: true,
 	}
 )
-export default models.User || model('User', userSchema)
+const User= models.users || model("users",userSchema)
+
+export default User

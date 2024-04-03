@@ -1,52 +1,65 @@
 import User from "@/models/user";
 import connectdb from "@/util/mongodb";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import { sendEmail } from "@/util/mailer";
 
-export async function POST(request:any)
-{
-    
-    try{
-       const{name,username,email,avatar,pass,provider} = await request.json();
-       const password = await bcrypt.hash(pass, 10);
+export async function POST(request: NextRequest) {
+
+    try {
+        const { name, username, email, avatar, pass, provider } = await request.json();
         await connectdb();
-        const user = await User.create({
-            name,
-            username,
-            email,
-            avatar,
-            password,
-            provider,
-            role : 'user',
-            watchlist: [],
-        });
-        
-        return NextResponse.json({
-            message: "Created",
-            user,
-        }, { status: 200 });
-   }
-    catch(error){
+        const user = await User.findOne({ email });
+        const existUsername = await User.findOne({ username });
+        if (user) {
+            return NextResponse.json({ error: "User already existed with this email" }, { status: 400 })
+        }
+        else {
+            if (existUsername) {
+                return NextResponse.json({ error: "Username Already Taken" }, { status: 401 })
+            }
+            const salt = await bcrypt.genSalt(10)
+            const hashedPassword = await bcrypt.hash(pass, salt)
+
+            const newUser =new User({
+                name,
+                username,
+                email,
+                avatar,
+                provider,
+                password:hashedPassword
+            })
+            const saveduser = await newUser.save();
+
+            await sendEmail({email,emailType:"VERIFY",userId:saveduser._id})
+            // await sendEmail({ email: 'ursailor@gmail.com', emailType: "RESET", userId: '660d3863568056189207d294' })
+            return NextResponse.json({
+                message: "Created",
+                saveduser,
+            }, { status: 200 });
+        }
+    }
+    catch (error) {
         console.log(error)
         return NextResponse.json(
             {
                 message: error,
             },
-            {status:500}
- 
-         );
+            { status: 500 }
+
+        );
     }
 }
 
 
-export async function GET(req:any,res:any) {
+export async function GET(request: any, res: any) {
     try {
         await connectdb();
-        const page = req.nextUrl.searchParams.get('page') || 1;
+        const page = request.nextUrl.searchParams.get('page') || 1;
         const pageSize = 15;
         const skip = (page - 1) * pageSize;
         const usernameFilter = { username: { $ne: 'admin' } };
-        const users = await User.find(usernameFilter).sort({role:1}).select("_id username name email role").skip(skip).limit(pageSize);
+        const users = await User.find(usernameFilter).sort({ isAdmin: 1 }).select("_id username name email isAdmin").skip(skip).limit(pageSize);
 
         const totalDocuments = await User.countDocuments(usernameFilter);
 
@@ -64,24 +77,24 @@ export async function GET(req:any,res:any) {
             },
             { status: 200 }
         );
-    } catch (error:any) {
+    } catch (error: any) {
         console.error('Error in GET handler:', error.message);
         return NextResponse.json(
             {
                 message: 'Failed to load mail',
-                error: error.message, 
+                error: error.message,
             },
             { status: 500 }
         );
     }
 }
 
-export async function DELETE(request:any){
+export async function DELETE(request: any) {
     try {
         const id = request.nextUrl.searchParams.get('id');
         await connectdb();
         await User.findByIdAndDelete(id);
-        return NextResponse.json({message:"User Deleted"},{status:200});
+        return NextResponse.json({ message: "User Deleted" }, { status: 200 });
     } catch (error) {
         console.log(error)
     }

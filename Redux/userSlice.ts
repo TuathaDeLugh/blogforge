@@ -12,7 +12,7 @@ interface UserData {
   provider: string | null;
   email: string | null;
   avatar: string | null;
-  role: string | null;
+  isAdmin: Boolean | null;
 } 
 
 const initialState: UserState = {

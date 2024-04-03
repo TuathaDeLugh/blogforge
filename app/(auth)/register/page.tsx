@@ -28,54 +28,45 @@ export default function Login() {
     const [conPassword, setConPassword] = useState(false);
     const router = useRouter()
 
-    const postapi = async (ogvalues: any) => {
-        try {
-            const response = await fetch(`/api/user`, {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json",
-                },
-                body: JSON.stringify(ogvalues),
-            });
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            router.refresh();
-            router.push("/login");
-        }
-        catch (err: any) {
-            console.error("Error:", err);
-        }
-    }
+   
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues,
-        validationSchema: SignupSchema,
+        // validationSchema: SignupSchema,
         onSubmit: (async (values, action) => {
-
+            
+            
             setDisabled(true);
             try {
-                const response = await fetch(`/api/validateusername?username=${values.username}`);
-                const { isUsernameTaken } = await response.json();
-
-                if (isUsernameTaken) {
-                    toast.error('Username is already taken.');
-                    values.username=''
-                    setDisabled(false);
-                } else {
-                    toast.promise(postapi(values), {
-                        loading: 'Creating Account',
-                        success: 'Account Created Successfully now you can login',
-                        error: 'Failed to create Account',
-                    });
-                    action.resetForm();
-
-
-
+                const response = await fetch(`/api/user`, {
+                    method: "POST",
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                    body: JSON.stringify(values),
+                });
+                const data = await response.json();
+                setDisabled(false);
+                console.log(data);
+                
+                if(response.status == 401)
+                {   
+                    values.username= "";
+                    toast.error(data.error);
                 }
-            } catch (error) {
-                console.error('Error validating username:', error);
+                else if(response.status == 400)
+                {   
+                    toast.error(data.error)
+                    setTimeout(()=>router.push('/login'),2000)
+                }
+                else{
+                    action.resetForm();
+                    toast.success('Account  created successfully!')
+                    router.push("/login");
+                }
             }
-
+            catch (err: any) {
+                console.error("Error:", err);
+            }
         }
         ),
     });

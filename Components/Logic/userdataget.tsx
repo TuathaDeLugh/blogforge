@@ -27,7 +27,7 @@ const UserData: React.FC = () => {
           provider: userData.data.provider,
           email: userData.data.email,
           avatar: userData.data.avatar,
-          role: userData.data.role
+          isAdmin: userData.data.isAdmin
         }));
       } catch (err: any) {
         console.log(err);

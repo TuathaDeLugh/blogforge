@@ -31,16 +31,14 @@ const AuthLinks = () => {
     { name: 'Register', path: '/register', key: 2 },
   ];
 
-  if  (user?.role == 'user')
-  {
+  if  (user){
     dropdata = [
       { name: 'Profile', path: '/user', key: 1 },
       { name: 'My blog', path: '/user/blog/tab', key: 2 },
       { name: 'Saved blog', path: '/user/savedreview', key: 3 },
     ];
   }
-
-  if  (user?.role == 'admin')
+  if  (user?.isAdmin)
   {
     dropdata = [
       { name: 'Admin Panal', path: '/admin', key: 1 },

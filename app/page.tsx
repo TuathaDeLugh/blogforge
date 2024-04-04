@@ -3,6 +3,8 @@ import Carousel from '@/Components/Crousel';
 import AnimationList from '@/Components/Motion/AnimationList';
 import ShareButton from '@/Components/Sharebutton';
 import Search from '@/Components/Search';
+import { authOptions } from './api/auth/[...nextauth]/options';
+import { getServerSession } from 'next-auth';
 
 export default async function Home() {
   let images = [
@@ -63,6 +65,11 @@ export default async function Home() {
   ]
   
   const  data = ['apple','mango','banana','pineapple','watermelon','melon','strowbarry','blueberry','raspberry','cherry','peach']
+
+  const session = await getServerSession(authOptions)
+
+  // console.log(session);
+  
   return (
     <section className='max-w-[1500px] mx-auto'>
       <Carousel data = {images} />

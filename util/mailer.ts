@@ -2,33 +2,53 @@ import nodemailer from 'nodemailer';
 import bcryptjs from 'bcryptjs'
 import User from '@/models/user';
 
-export const sendEmail = async({email,emailType,userId}:any) => {
+interface EmailData {
+    email: string;
+    emailType: string;
+}
+
+function generateRandomToken(length: number = 32): string {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let token = '';
+    for (let i = 0; i < length; i++) {
+        token += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return token;
+}
+
+export const sendEmail = async({email,emailType}:EmailData) => {
     try {
-        const hashToken = await bcryptjs.hash(userId.toString(),10)
+
+        const userdata = await  User.findOne({email});
+        if (!userdata) {
+            throw new Error("User not found");
+        }
+        const userId = await  userdata._id;
+        const hashToken = generateRandomToken()
         if(emailType === "VERIFY"){ 
-          await User.findByIdAndUpdate(userId,{verifyToken:hashToken,verifyTokenExpiry:Date.now() + 3600})
+          await User.findByIdAndUpdate(userId,{verifyToken:hashToken,verifyTokenExpiry:Date.now() + 360000})
         }
         else if(emailType === "RESET")
         {
-          await User.findByIdAndUpdate(userId,{forgotPasswordToken:hashToken,forgotPasswordTokenExpiry:Date.now() + 3600})
+          await User.findByIdAndUpdate(userId,{forgotPasswordToken:hashToken,forgotPasswordExpiry:Date.now() + 360000})
 
         }
         
-        // const transporter = nodemailer.createTransport({
-        //   host: "sandbox.smtp.mailtrap.io",
-        //   port: 2525,
-        //   auth: {
-        //     user: "8d8f9fefd0c453",
-        //     pass: "e420d9b073e57c"
-        //   }
-        // });
         const transporter = nodemailer.createTransport({
-          service: 'gmail',
+          host: "sandbox.smtp.mailtrap.io",
+          port: 2525,
           auth: {
-            user: 'sailorumang1@gmail.com',
-            pass: 'pvwf lafp cgrz nawv'
+            user: "8d8f9fefd0c453",
+            pass: "e420d9b073e57c"
           }
         });
+        // const transporter = nodemailer.createTransport({
+        //   service: 'gmail',
+        //   auth: {
+        //     user: process.env.MAILUSER,
+        //     pass: process.env.MAILPASS
+        //   }
+        // });
         
         const mailOption = {
           to: email,

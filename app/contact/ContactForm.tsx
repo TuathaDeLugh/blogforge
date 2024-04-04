@@ -1,15 +1,15 @@
 'use client'
-import { RootState } from '@/Redux/store';
 import { emailSchema } from '@/yupSchema';
 import { useFormik } from 'formik';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { useSelector } from 'react-redux';
 
 export default function ContactForm(){
-    const user = useSelector((state: RootState) => state.user.data);
+    const { data: session} = useSession();
+    const user = session?.user;
      const name = user?.name;
      const email = user?.email;
  return(

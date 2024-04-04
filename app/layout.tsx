@@ -3,10 +3,9 @@ import { Poppins } from 'next/font/google'
 import './globals.css'
 import SessionProvider from '@/Components/Logic/sessionPro'
 import Navbar from '@/Components/layout/Navbar'
-import StateProvider from '@/Components/layout/StateProvider'
 import Footer from '@/Components/layout/Footer'
 import Toast from '@/Components/layout/Toast'
-import UserData from '@/Components/Logic/userdataget'
+import SessionUpdate from '@/Components/Logic/updatesession'
 
 const font = Poppins({ subsets: ['latin'],
   weight:['100', '200', '300', '400', '500', '600', '700', '800', '900'] })
@@ -21,13 +20,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  
   return (
-    <StateProvider>
       
     <html lang="en">
       <body className={`${font.className} text-gray-700 bg-white dark:text-white dark:bg-gray-900`}>
       <SessionProvider>
-      <UserData/>
+        <SessionUpdate/>
         <Toast/>
         <Navbar/>
         <main className=' min-h-[93vh] md:min-h-[91vh] overflow-x-hidden '>
@@ -38,6 +37,5 @@ export default function RootLayout({
       </SessionProvider>
         </body>
     </html>
-    </StateProvider>
   )
 }

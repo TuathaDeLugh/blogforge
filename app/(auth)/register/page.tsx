@@ -64,8 +64,8 @@ export default function Login() {
                     router.push("/login");
                 }
             }
-            catch (err: any) {
-                console.error("Error:", err);
+            catch (error: any) {
+                console.error("Error:", error);
             }
         }
         ),

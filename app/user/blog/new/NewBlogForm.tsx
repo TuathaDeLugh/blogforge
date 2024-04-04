@@ -6,14 +6,13 @@ import { IoAdd } from "react-icons/io5";
 import { storage } from '@/util/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import Image from 'next/image';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/Redux/store';
 import { AiOutlineLoading3Quarters, AiOutlineUser } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { NewBlogSchema } from '@/yupSchema';
 import { Div } from '@/Components/Motion/Motion';
 import RichTextEditor from '@/Components/layout/RichTextEditor';
+import { useSession } from 'next-auth/react';
 
 
 
@@ -36,7 +35,8 @@ interface BlogFormValues {
 const NewBlogForm: React.FC = () => {
     const [disabled, setDisabled] = useState(false);
     const router = useRouter();
-    const user = useSelector((state: RootState) => state.user.data);
+    const { data: session} = useSession();
+    const user = session?.user;
     const [imageUrls, setImageUrls] = useState<string[]>([]);
     const [isDragging, setIsDragging] = useState(false);
     const [keywordInput, setKeywordInput] = useState('')
@@ -94,7 +94,7 @@ const NewBlogForm: React.FC = () => {
                         status: values.status,
                         keywords: values.keywords,
                         creator: {
-                            userid: user?._id,
+                            userid: user?.dbid,
                             createdby: user?.username,
                             avatar: user?.avatar,
                         },

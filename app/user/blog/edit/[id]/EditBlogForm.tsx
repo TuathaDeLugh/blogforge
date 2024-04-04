@@ -8,12 +8,11 @@ import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage
 import Image from 'next/image';
 import { Div } from '@/Components/Motion/Motion';
 import RichTextEditor from '@/Components/layout/RichTextEditor';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/Redux/store';
 import { AiOutlineLoading3Quarters, AiOutlineUser } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { EditBlogSchema } from '@/yupSchema';
+import { useSession } from 'next-auth/react';
 
 
 
@@ -49,7 +48,8 @@ interface EditBlogFormProps {
 const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
     const [disabled, setDisabled] = useState(false);
     const router = useRouter();
-    const user = useSelector((state: RootState) => state.user.data);
+    const { data: session} = useSession();
+    const user = session?.user;
     const [imageUrls, setImageUrls] = useState<string[]>([]);
     const [isDragging, setIsDragging] = useState(false);
     const [keywordInput, setKeywordInput] = useState('')
@@ -126,7 +126,7 @@ const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
                         status: values.status,
                         keywords: values.keywords,
                         creator: {
-                            userid: user?._id,
+                            userid: user?.dbid,
                             createdby: user?.username,
                             avatar: user?.avatar,
                         },

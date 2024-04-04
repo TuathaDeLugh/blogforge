@@ -3,15 +3,13 @@ import Link from 'next/link';
 import { AiOutlineUser } from 'react-icons/ai';
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/Redux/store';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 
 const AuthLinks = () => {
+  const { data: session} = useSession();
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const user = useSelector((state: RootState) => state.user.data);
   const handleOutsideClick = (event: MouseEvent) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
       setOpen(false);
@@ -31,14 +29,14 @@ const AuthLinks = () => {
     { name: 'Register', path: '/register', key: 2 },
   ];
 
-  if  (user){
+  if  (session?.user){
     dropdata = [
       { name: 'Profile', path: '/user', key: 1 },
       { name: 'My blog', path: '/user/blog/tab', key: 2 },
       { name: 'Saved blog', path: '/user/savedreview', key: 3 },
     ];
   }
-  if  (user?.isAdmin)
+  if  (session?.user?.isAdmin)
   {
     dropdata = [
       { name: 'Admin Panal', path: '/admin', key: 1 },
@@ -59,7 +57,7 @@ const AuthLinks = () => {
         transition={{ type: 'spring', stiffness: 300 }}
       >
         {
-          user?.avatar ? (<Image src={user?.avatar} width={25} height={25} alt='avatar' className='rounded-full'/>) :
+          session?.user?.avatar ? (<Image src={session.user?.avatar} width={25} height={25} alt='avatar' className='rounded-full'/>) :
           (<AiOutlineUser size={25} />)
         }
       </motion.button>
@@ -72,13 +70,13 @@ const AuthLinks = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
           >   {
-              user? 
+              session?.user? 
           
               <li
               key={0}
               className=" text-slate-800 dark:text-slate-300 border-b dark:border-slate-600 py-3 text-center"
               >
-                {user?.username}
+                {session.user?.username}
               </li>
                 : null  }
             {dropdata.map((link) => (
@@ -93,7 +91,7 @@ const AuthLinks = () => {
                 
               </motion.li>
             ))}
-              {user ? (
+              {session?.user ? (
               <motion.li
               whileHover={{ scale: 1.05 }}
                 className=" rounded-lg text-red-400 border border-red-400 p-1 m-2 text-center hover:bg-red-400   hover:text-slate-50 md:dark:hover:text-slate-200"

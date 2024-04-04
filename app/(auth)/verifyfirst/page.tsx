@@ -43,7 +43,7 @@ function verifyFirst() {
             <button className="text-white bg-orange-600/80 w-1/3 hover:opacity-60 font-semibold rounded-md text-sm px-4 py-3 flex gap-2 items-center justify-center"> Get Email </button>
           </div>
           <div className="md:w-[450px] mt-6 text-center text-sm">
-           If you don't get the email within a few minutes please check your spam folder.
+           If you don&apos;t get the email within a few minutes please check your spam folder.
           </div>
         </div>
         <Div

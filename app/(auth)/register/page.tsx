@@ -31,7 +31,7 @@ export default function Login() {
    
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues,
-        // validationSchema: SignupSchema,
+        validationSchema: SignupSchema,
         onSubmit: (async (values, action) => {
             
             

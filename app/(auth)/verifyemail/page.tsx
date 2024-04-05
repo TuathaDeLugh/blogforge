@@ -1,9 +1,67 @@
-import { Div, H1 } from '@/Components/Motion/Motion'
-import React from 'react'
+"use client"
+import React, { useEffect, useState } from 'react';
+import { Div, H1 } from '@/Components/Motion/Motion';
+import { signOut, useSession } from 'next-auth/react';
+import toast from 'react-hot-toast';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { useRouter } from 'next/navigation';
 
-function verifyEmail() {
+export default function VerifyFirst() {
+  const router = useRouter();
+  const { data: session } = useSession();
+  if (session?.user.isVerified) {
+    router.push('/')
+  }
+  const [disabled, setDisabled] = useState(false);
+  const [token, setToken] = useState("");
+
+
+  const handleVerifyEmail = async () => {
+    try {
+      setDisabled(true);
+      console.log(token);
+      
+      const values = {
+        token: token
+      };
+      const response = await fetch(`/api/user/verify`, {
+        method: "PATCH",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error to verify');
+      }
+
+      toast.success("Account verified");
+      if(session){
+        signOut({ callbackUrl: '/login' })
+      }
+      else{
+        router.push("/login")
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed verification email. Please try again later.');
+    } finally {
+      setDisabled(false);
+      
+
+    }
+  };
+
+  useEffect(() => {
+    const urlToken = window.location.search.split("=")[1];
+    setToken(urlToken || "");
+}, []);
+
+
+
   return (
-    <div className="flex min-h-[92vh] md:min-h-[90vh] items-center mx-auto max-w-[1500px] justify-center">
+    <div className="flex min-h-[92vh] md:min-h-[90vh] items-center mx-auto max-w-[1500px] justify-center p-3">
       <Div
         className="h-full flex items-center relative max-w-2xl md:mx-5"
         initial={{ opacity: 0, x: -30 }}
@@ -13,7 +71,7 @@ function verifyEmail() {
         <div
           className="mx-auto p-5 md:p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 min-h-[400px]"
         >
-          <div className="relative mt-5 md:mt-10 mb-10">
+          <div className="relative mt-5 md:mt-10 mb-16">
             <H1
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 0.1, x: 0 }}
@@ -32,19 +90,30 @@ function verifyEmail() {
             </H1>
           </div>
 
+          <Div className="md:w-[450px] text-center space-y-6"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}>
+            <p>
+              Click the button below to verifiy your email.
+            </p>
+            <div className="md:w-[450px] text-center flex items-center justify-center">
+              <button
+                disabled={disabled}
+                onClick={handleVerifyEmail}
+                className="text-white bg-orange-400 hover:bg-orange-600 disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-5 py-3 flex items-center justify-center gap-4"
+              >
+                Verify Email
+                {disabled && (
+                  <AiOutlineLoading3Quarters size={20} className='animate-spin' />
+                )}
+              </button>
+            </div>
+            <p className='text-sm'>
+              After Verifecation you will be redirected to login page and can start using our services!
 
-
-
-          
-          <div className="md:w-[450px] text-center">
-            Click the button  below to verifiy your email.
-          </div>
-          <div className="md:w-[450px] mt-6 text-center flex items-center justify-center">
-            <button className="text-white bg-orange-600/80 w-1/3 hover:opacity-60 font-semibold rounded-md text-sm px-4 py-3 flex gap-2 items-center justify-center"> Verify Email </button>
-          </div>
-          <div className="md:w-[450px] mt-6 text-center text-sm">
-           After Verifecation  you will be redirected to login page and <br/> can start using our services!
-          </div>
+            </p>
+          </Div>
         </div>
         <Div
           initial={{ opacity: 0, x: -20 }}
@@ -53,7 +122,5 @@ function verifyEmail() {
           className="absolute -z-10 hidden w-full h-full bg-orange-400/50 rounded-md -bottom-3 -right-3 md:block"></Div>
       </Div>
     </div>
-  )
+  );
 }
-
-export default verifyEmail

@@ -1,9 +1,67 @@
-import { Div, H1 } from '@/Components/Motion/Motion'
-import React from 'react'
+"use client"
+import React, { useState, useEffect } from 'react';
+import { Div, H1 } from '@/Components/Motion/Motion';
+import { useSession } from 'next-auth/react';
+import toast from 'react-hot-toast';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { redirect } from 'next/navigation';
 
-function verifyFirst() {
+export default function VerifyFirst() {
+  const { data: session } = useSession();
+  if (session?.user.isVerified) {
+    redirect('/')
+  }
+  const [disabled, setDisabled] = useState(false);
+  const [timer, setTimer] = useState<number | null>(null);
+
+
+  const handleVerifyEmail = async () => {
+    try {
+      setDisabled(true);
+      setTimer(59);
+      const values = {
+        email: session?.user.email,
+        emailType: "VERIFY",
+      };
+      const response = await fetch(`/api/email/sendmail`, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error sending verification link');
+      }
+
+      toast.success("Verification email sent to " + values.email);
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to send verification email. Please try again later.');
+    } finally {
+      setDisabled(false);
+    }
+  };
+
+  useEffect(() => {
+    if (timer) {
+      const timerId = setInterval(() => {
+        setTimer((prevTimer) => {
+          if (prevTimer === 1) {
+            clearInterval(timerId);
+            setDisabled(false);
+            return null;
+          }
+          return prevTimer! - 1;
+        });
+      }, 1000);
+      return () => clearInterval(timerId);
+    }
+  }, [timer]);
+
   return (
-    <div className="flex min-h-[92vh] md:min-h-[90vh] items-center mx-auto max-w-[1500px] justify-center">
+    <div className="flex min-h-[92vh] md:min-h-[90vh] items-center mx-auto max-w-[1500px] justify-center p-3">
       <Div
         className="h-full flex items-center relative max-w-2xl md:mx-5"
         initial={{ opacity: 0, x: -30 }}
@@ -31,20 +89,35 @@ function verifyFirst() {
               Verify Email
             </H1>
           </div>
+          <Div className="md:w-[450px] text-center space-y-6"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}>
+            <p>
+              Looks like you didn&apos;t verified! Just need to confirm your email address by clicking the button.
+            </p>
+            <div className="md:w-[450px] text-center flex items-center justify-center">
+              <button
+                disabled={disabled || timer !== null}
+                onClick={handleVerifyEmail}
+                className="text-white w-1/3 bg-orange-400 hover:bg-orange-600 disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 flex items-center justify-center gap-4"
+              >
+                Get Email
+                {disabled && (
+                  <AiOutlineLoading3Quarters size={20} className='animate-spin' />
+                )}
+              </button>
+            </div>
+            <p>
+              If you don&apos;t get the email within a few minutes please check your spam folder.
+              {timer && (
+                <span>
+                  {` or retry for email in 00:${timer < 10 ? `0${timer}` : timer}`}
+                </span>
 
-
-
-
-          
-          <div className="md:w-[450px] text-center">
-            Looks like  you didn&apos;t verified! Just need to confirm your email address by clicking the button.
-          </div>
-          <div className="md:w-[450px] mt-6 text-center flex items-center justify-center">
-            <button className="text-white bg-orange-600/80 w-1/3 hover:opacity-60 font-semibold rounded-md text-sm px-4 py-3 flex gap-2 items-center justify-center"> Get Email </button>
-          </div>
-          <div className="md:w-[450px] mt-6 text-center text-sm">
-           If you don&apos;t get the email within a few minutes please check your spam folder.
-          </div>
+              )}
+            </p>
+          </Div>
         </div>
         <Div
           initial={{ opacity: 0, x: -20 }}
@@ -53,7 +126,5 @@ function verifyFirst() {
           className="absolute -z-10 hidden w-full h-full bg-orange-400/50 rounded-md -bottom-3 -right-3 md:block"></Div>
       </Div>
     </div>
-  )
+  );
 }
-
-export default verifyFirst

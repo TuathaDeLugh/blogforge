@@ -68,7 +68,7 @@ export default async function Home() {
 
   const session = await getServerSession(authOptions)
 
-  // console.log(session);
+  console.log(session);
   
   return (
     <section className='max-w-[1500px] mx-auto'>

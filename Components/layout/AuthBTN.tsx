@@ -48,7 +48,7 @@ const AuthLinks = () => {
     }
     else {
       dropdata = [
-        { name: 'Verify Email', path: '/verifyfirst', key: 1 }
+        { name: 'Verify Email', path: '/verifyemail/request', key: 1 }
       ]
     }
   }

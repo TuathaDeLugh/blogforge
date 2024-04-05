@@ -8,7 +8,7 @@ import { redirect } from 'next/navigation';
 
 export default function VerifyFirst() {
   const { data: session } = useSession();
-  if (session?.user.isVerified) {
+  if (session?.user.isVerified || !session) {
     redirect('/')
   }
   const [disabled, setDisabled] = useState(false);

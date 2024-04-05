@@ -85,8 +85,7 @@ export const ProfileSchema = Yup.object({
 });
 
 export const PassSchema = Yup.object({
-  oldpassword: Yup.string().required('Old Password is required'),
-  newpassword: Yup.string().required("Please enter new password").min(8, 'Password must be 8 characters long').matches(/[0-9]/, 'Password requires a number').matches(/[a-z]/, 'Password requires a lowercase letter').matches(/[A-Z]/, 'Password requires an uppercase letter').matches(/[^\w]/, 'Password requires a symbol'),
+  pass: Yup.string().required("Please enter new password").min(8, 'Password must be 8 characters long').matches(/[0-9]/, 'Password requires a number').matches(/[a-z]/, 'Password requires a lowercase letter').matches(/[A-Z]/, 'Password requires an uppercase letter').matches(/[^\w]/, 'Password requires a symbol'),
   confirmpassword: Yup.string().required("Please confirm password").oneOf([Yup.ref('newpassword')], 'Confirm Password does not match with password'),
 });
 

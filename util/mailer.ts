@@ -62,7 +62,7 @@ export const sendEmail = async({email,emailType}:EmailData) => {
                           <a href="${process.env.API_URL!}verifyemail?token=${hashToken}" style="display: inline-block; padding: 12px 24px; background-color: #FFB347; color: #fff; border-radius: 4px; text-decoration: none;">Verify Email</a>
                       </div>
                       <p style="color: #555; text-align: center; margin-bottom: 20px;">Alternatively, you can click the link below:</p>
-                      <p style="color: #FFB347; text-align: center; margin-bottom: 20px; word-wrap: break-word;"><a href="${process.env.API_URL!}verifyemail?token=${hashToken}" style="color: #FFB347; text-decoration: none;">${process.env.DOMAIN!}/verifyemail?token=${hashToken}</a></p>
+                      <p style="color: #FFB347; text-align: center; margin-bottom: 20px; word-wrap: break-word;"><a href="${process.env.API_URL!}verifyemail?token=${hashToken}" style="color: #FFB347; text-decoration: none;">${process.env.API_URL!}/verifyemail?token=${hashToken}</a></p>
                       <p style="color: #555; text-align: center;">Thank you for choosing BlogForge!</p>
                   </div>
                   <div style="text-align: center; padding: 10px; background-color: #f9f9f9; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
@@ -79,7 +79,7 @@ export const sendEmail = async({email,emailType}:EmailData) => {
                           <a href="${process.env.API_URL!}resetpassword?token=${hashToken}" style="display: inline-block; padding: 12px 24px; background-color: #FFB347; color: #fff; border-radius: 4px; text-decoration: none;">Reset Password</a>
                       </div>
                       <p style="color: #555; text-align: center; margin-bottom: 20px;">Alternatively, you can click the link below:</p>
-                      <p style="color: #FFB347; text-align: center; margin-bottom: 20px; word-wrap: break-word;"><a href="${process.env.API_URL!}resetpassword?token=${hashToken}" style="color: #FFB347; text-decoration: none;">${process.env.DOMAIN!}/resetpassword?token=${hashToken}</a></p>
+                      <p style="color: #FFB347; text-align: center; margin-bottom: 20px; word-wrap: break-word;"><a href="${process.env.API_URL!}resetpassword?token=${hashToken}" style="color: #FFB347; text-decoration: none;">${process.env.API_URL!}/resetpassword?token=${hashToken}</a></p>
                       <p style="color: #555; text-align: center;">If you did not request this change, please ignore this email.</p>
                       <p style="color: #555; text-align: center;">Thank you,</p>
                       <p style="color: #555; text-align: center;">The BlogForge Team</p>

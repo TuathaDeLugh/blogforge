@@ -60,7 +60,7 @@ export default function Login() {
                 }
                 else{
                     action.resetForm();
-                    toast.success('Account  created successfully!')
+                    toast.success('Account  created ! Verify your account by clicking the link sent to your email');
                     router.push("/login");
                 }
             }

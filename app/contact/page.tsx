@@ -14,7 +14,7 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 
 
-export default function contact() {
+export default function Contact() {
   const { data: session} = useSession();
   const user = session?.user;
    const name = user?.name;

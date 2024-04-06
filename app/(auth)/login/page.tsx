@@ -60,9 +60,9 @@ export default function Login() {
 
 
   return (
-    <div className="flex min-h-[92vh] md:min-h-[90vh] items-center mx-auto max-w-[1500px] justify-center">
+    <div className="flex min-h-[92vh] md:min-h-[90vh] items-center mx-auto max-w-[1500px] justify-center px-3">
       <Div
-        className="h-full flex items-center relative max-w-2xl md:mx-5 px-3"
+        className="h-full flex items-center relative max-w-2xl md:mx-5"
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}

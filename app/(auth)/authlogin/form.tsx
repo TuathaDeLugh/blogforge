@@ -6,7 +6,6 @@ import { signOut } from 'next-auth/react';
 import toast from 'react-hot-toast';
 import { UsernameSchema } from '@/yupSchema';
 import { useFormik } from 'formik';
-import { useRouter } from 'next/navigation';
 
 const initialValues = {
   username: "",
@@ -18,12 +17,11 @@ export default function AuthForm({ user }: any) {
   const [disabled, setDisabled] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [conPassword, setConPassword] = useState(false);
-  const router = useRouter()
 
   
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues,
-    // validationSchema: UsernameSchema,
+    validationSchema: UsernameSchema,
     onSubmit: (async (values, action) => {
 
 

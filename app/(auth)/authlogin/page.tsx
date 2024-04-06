@@ -16,7 +16,7 @@ export default async function AuthLogin() {
     if (session?.user.dbid) {
         redirect('/')
     }
-    else {
+    if (!session?.user.dbid) {
         return (
             <div className="flex min-h-[92vh] md:min-h-[90vh] items-center mx-auto max-w-[1500px] justify-center">
                 <Div

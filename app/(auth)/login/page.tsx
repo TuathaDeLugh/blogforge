@@ -62,7 +62,7 @@ export default function Login() {
   return (
     <div className="flex min-h-[92vh] md:min-h-[90vh] items-center mx-auto max-w-[1500px] justify-center">
       <Div
-        className="h-full flex items-center relative max-w-2xl md:mx-5"
+        className="h-full flex items-center relative max-w-2xl md:mx-5 px-3"
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
@@ -163,8 +163,11 @@ export default function Login() {
               <FaGithub size={20} className="bg-slate-800 rounded-full" />
             </button>
           </div>
-          <div className="md:w-[450px] mt-6 text-center">
-            Don&apos;t have Account? <Link href={'/register'} className='text-orange-400 hover:text-orange-500'>Create one </Link>
+          <div className="md:w-[450px] text-center">
+            Forgot Password? <Link href={'/reset/request'} className='text-orange-400 hover:text-orange-500'>Reset here</Link>
+          </div>
+          <div className="md:w-[450px] mt-2 text-center">
+            Don&apos;t have Account? <Link href={'/register'} className='text-orange-400 hover:text-orange-500'>Sign up here </Link>
           </div>
         </div>
         <Div

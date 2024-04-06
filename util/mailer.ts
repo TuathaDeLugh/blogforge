@@ -33,21 +33,21 @@ export const sendEmail = async({email,emailType}:EmailData) => {
 
         }
         
-        // const transporter = nodemailer.createTransport({
-        //   host: "sandbox.smtp.mailtrap.io",
-        //   port: 2525,
-        //   auth: {
-        //     user: "8d8f9fefd0c453",
-        //     pass: "e420d9b073e57c"
-        //   }
-        // });
         const transporter = nodemailer.createTransport({
-          service: 'gmail',
+          host: "sandbox.smtp.mailtrap.io",
+          port: 2525,
           auth: {
-            user: process.env.MAILUSER,
-            pass: process.env.MAILPASS
+            user: "8d8f9fefd0c453",
+            pass: "e420d9b073e57c"
           }
         });
+        // const transporter = nodemailer.createTransport({
+        //   service: 'gmail',
+        //   auth: {
+        //     user: process.env.MAILUSER,
+        //     pass: process.env.MAILPASS
+        //   }
+        // });
         
         const mailOption = {
           to: email,
@@ -76,10 +76,10 @@ export const sendEmail = async({email,emailType}:EmailData) => {
                       <p style="color: #555; text-align: center; margin-bottom: 20px;">Dear user,</p>
                       <p style="color: #555; text-align: center;">You have requested to reset your password for your BlogForge account. Please click the button below to proceed with the password reset.</p>
                       <div style="text-align: center; margin-bottom: 20px;">
-                          <a href="${process.env.API_URL!}resetpassword?token=${hashToken}" style="display: inline-block; padding: 12px 24px; background-color: #FFB347; color: #fff; border-radius: 4px; text-decoration: none;">Reset Password</a>
+                          <a href="${process.env.API_URL!}reset?token=${hashToken}" style="display: inline-block; padding: 12px 24px; background-color: #FFB347; color: #fff; border-radius: 4px; text-decoration: none;">Reset Password</a>
                       </div>
                       <p style="color: #555; text-align: center; margin-bottom: 20px;">Alternatively, you can click the link below:</p>
-                      <p style="color: #FFB347; text-align: center; margin-bottom: 20px; word-wrap: break-word;"><a href="${process.env.API_URL!}resetpassword?token=${hashToken}" style="color: #FFB347; text-decoration: none;">${process.env.API_URL!}/resetpassword?token=${hashToken}</a></p>
+                      <p style="color: #FFB347; text-align: center; margin-bottom: 20px; word-wrap: break-word;"><a href="${process.env.API_URL!}reset?token=${hashToken}" style="color: #FFB347; text-decoration: none;">${process.env.API_URL!}/reset?token=${hashToken}</a></p>
                       <p style="color: #555; text-align: center;">If you did not request this change, please ignore this email.</p>
                       <p style="color: #555; text-align: center;">Thank you,</p>
                       <p style="color: #555; text-align: center;">The BlogForge Team</p>

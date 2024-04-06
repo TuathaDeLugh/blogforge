@@ -5,63 +5,17 @@ import { redirect, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { resetmailSchema } from '@/yupSchema';
 import { useSession } from 'next-auth/react';
+import * as Yup from "yup";
 
 export default function ResetReq() {
     const { data: session } = useSession();
-    // if (session?.user.isVerified || !session) {
-    //   redirect('/')
-    // }
-    const [disabled, setDisabled] = useState(false);
 
+    
+    const useremail = session?.user.email;
 
-    const initialValues = {
-        email: '',
-    };
-    const router = useRouter();
-
-    const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-        useFormik({
-            initialValues,
-            validationSchema: resetmailSchema,
-            onSubmit: (async (values, action) => {
-
-                try {
-                    setDisabled(true)
-                    const data = {
-                        email: values.email,
-                        emailType: "RESET",
-                      };
-                      const response = await fetch(`/api/email/sendmail`, {
-                        method: "POST",
-                        headers: {
-                          "Content-type": "application/json",
-                        },
-                        body: JSON.stringify(data),
-                      });
-                
-                      if (!response.ok) {
-                        throw new Error('Error sending verification link');
-                      }
-                
-                      toast.success("Reset Password email sent to " + values.email);
-
-                } catch (error) {
-                    console.log('Login Failed:', error)
-                }
-                finally{
-                    setDisabled(false)
-                    action.resetForm();
-                }
-
-            }
-            ),
-        });
-
-
-
+    
+    
 
     return (
         <div className="flex min-h-[92vh] md:min-h-[90vh] items-center mx-auto max-w-[1500px] justify-center px-5">
@@ -99,8 +53,72 @@ export default function ResetReq() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5, delay: 0.3 }}>
 
+                        <Form useremail={useremail} />
                     
-                    <form onSubmit={handleSubmit} autoComplete="off" className=' space-y-6 pt-10 pb-4 ' >
+                    </Div>
+                </div>
+                <Div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    className="absolute -z-10 hidden w-full h-full bg-orange-400/50 rounded-md -bottom-3 -right-3 md:block"></Div>
+            </Div>
+        </div>
+    );
+}
+
+
+
+function Form( {useremail}: { useremail?: string | null }) {
+    const [disabled, setDisabled] = useState(false);
+    
+    const router = useRouter()
+
+    const initialValues = {
+        email: useremail || '',
+    };
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+        useFormik({
+            initialValues,
+            validationSchema: Yup.object({
+                email: Yup.string().email().required("Please enter email")
+              }),
+            onSubmit: (async (values, action) => {
+
+                try {
+                    setDisabled(true)
+                    const data = {
+                        email: values.email,
+                        emailType: "RESET",
+                      };
+                      const response = await fetch(`/api/email/sendmail`, {
+                        method: "POST",
+                        headers: {
+                          "Content-type": "application/json",
+                        },
+                        body: JSON.stringify(data),
+                      });
+                
+                      if (!response.ok) {
+                        throw new Error('Error sending verification link');
+                      }
+                
+                      toast.success("Reset Password email sent to " + values.email);
+                      router.push('/')
+
+                } catch (error) {
+                    console.log('Login Failed:', error)
+                }
+                finally{
+                    setDisabled(false)
+                    action.resetForm();
+                }
+
+            }
+            ),
+        });
+  return (
+    <form onSubmit={handleSubmit} autoComplete="off" className=' space-y-6 pt-10 pb-4 ' >
                     <p>Enter your email we will send reset link by email
                     </p>
                         <div className="w-[85vw] md:w-[450px] h-14 text-left">
@@ -135,15 +153,5 @@ export default function ResetReq() {
                             </button>
                         </div>
                     </form>
-                    </Div>
-                </div>
-                <Div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                    className="absolute -z-10 hidden w-full h-full bg-orange-400/50 rounded-md -bottom-3 -right-3 md:block"></Div>
-            </Div>
-        </div>
-    );
+  )
 }
-

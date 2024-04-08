@@ -5,6 +5,7 @@ import ShareButton from '@/Components/Sharebutton';
 import Search from '@/Components/Search';
 import { authOptions } from './api/auth/[...nextauth]/options';
 import { getServerSession } from 'next-auth';
+import Link from 'next/link';
 
 export default async function Home() {
   let images = [
@@ -74,9 +75,9 @@ export default async function Home() {
     <section className='max-w-[1500px] mx-auto'>
       <Carousel data = {images} />
       <Search/>
+      <Link href={'/reset/request'}>Reset Password</Link>
       <AnimationList data={data}/>
       <ShareButton link='/'/>
-
     </section>
   )
 }

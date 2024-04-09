@@ -3,39 +3,52 @@ import React, { useEffect, useState } from 'react';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { MdComputer } from 'react-icons/md';
 import { motion } from 'framer-motion';
-import Cookies from 'js-cookie';
 
 const Darkmode: React.FC = () => {
-  const [isDarkMode, setIsDarkMode] = useState<string | null>(null);
-  const toggleDarkMode = (mode: 'dark' | 'light' | 'system') => {
-    if (mode === 'system') {
-      Cookies.remove('dark-mode');
-      const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setIsDarkMode(systemDarkMode ? 'dark' : 'light');
+  const [isDarkMode, setIsDarkMode] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const storedMode = localStorage.getItem('dark-mode');
+      if (storedMode === 'light' || storedMode === 'dark') {
+        return storedMode;
+      } else {
+        const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        return systemDarkMode ? 'dark' : 'light';
+      }
     } else {
-      setIsDarkMode(mode);
-      Cookies.set('dark-mode', mode, { expires: 365 });
+      return 'system'; // Fallback for non-browser environments
+    }
+  });
+
+  const toggleDarkMode = (mode: 'dark' | 'light' | 'system') => {
+    if (typeof window !== 'undefined') {
+      if (mode === 'system') {
+        localStorage.removeItem('dark-mode');
+        const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setIsDarkMode(systemDarkMode ? 'dark' : 'light');
+      } else {
+        setIsDarkMode(mode);
+        localStorage.setItem('dark-mode', mode);
+      }
     }
   };
 
   useEffect(() => {
-    const cookieDarkMode = Cookies.get('dark-mode');
+    const updateDarkMode = (e: MediaQueryListEvent) => {
+      setIsDarkMode(e.matches ? 'dark' : 'light');
+    };
 
-    if (cookieDarkMode === undefined) {
-      setIsDarkMode('system');
-      const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (systemDarkMode) {
-        toggleDarkMode('dark');
-      } else {
-        toggleDarkMode('light');
-      }
-    } else {
-      setIsDarkMode(cookieDarkMode);
+    if (typeof window !== 'undefined') {
+      const systemDarkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      systemDarkModeQuery.addEventListener('change', updateDarkMode);
+
+      return () => {
+        systemDarkModeQuery.removeEventListener('change', updateDarkMode);
+      };
     }
   }, []);
 
   useEffect(() => {
-    if (isDarkMode !== null) {
+    if (typeof window !== 'undefined') {
       if (isDarkMode === 'dark') {
         document.documentElement.classList.add('dark');
       } else {
@@ -43,20 +56,6 @@ const Darkmode: React.FC = () => {
       }
     }
   }, [isDarkMode]);
-
-  useEffect(() => {
-    const updateDarkMode = (e: MediaQueryListEvent) => {
-      setIsDarkMode(e.matches ? 'dark' : 'light');
-    };
-
-    const systemDarkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    systemDarkModeQuery.addEventListener('change', updateDarkMode);
-
-    return () => {
-      systemDarkModeQuery.removeEventListener('change', updateDarkMode);
-    };
-  }, []);
-
 
   return (
     <>

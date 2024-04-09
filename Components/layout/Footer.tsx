@@ -1,8 +1,10 @@
 import React from 'react'
-import Darkmode from './Darkmode'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { FaFacebook, FaGithub, FaInstagram, FaTwitter } from "react-icons/fa";
 import Link from 'next/link';
+
+const DarkmodeCSR = dynamic(() => import('./Darkmode'), { ssr: false })
 
 export default function Footer() {
   return (
@@ -73,7 +75,7 @@ export default function Footer() {
         </ul>
         <div className='mt-4 flex gap-3  items-center'>
           <p className='text-slate-500 dark:text-slate-300'>MODE</p>
-        <Darkmode/>
+        <DarkmodeCSR/>
         </div>
       </div>
 

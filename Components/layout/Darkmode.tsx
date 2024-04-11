@@ -5,12 +5,15 @@ import { MdComputer } from 'react-icons/md';
 import { motion } from 'framer-motion';
 
 const Darkmode: React.FC = () => {
+  const [modeDisplay, setModeDisplay] = useState<string>('');
   const [isDarkMode, setIsDarkMode] = useState<string>(() => {
     if (typeof window !== 'undefined') {
       const storedMode = localStorage.getItem('dark-mode');
       if (storedMode === 'light' || storedMode === 'dark') {
+        setModeDisplay(storedMode);
         return storedMode;
       } else {
+        setModeDisplay('system');
         const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         return systemDarkMode ? 'dark' : 'light';
       }
@@ -22,10 +25,12 @@ const Darkmode: React.FC = () => {
   const toggleDarkMode = (mode: 'dark' | 'light' | 'system') => {
     if (typeof window !== 'undefined') {
       if (mode === 'system') {
+        setModeDisplay('system')
         localStorage.removeItem('dark-mode');
         const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         setIsDarkMode(systemDarkMode ? 'dark' : 'light');
       } else {
+        setModeDisplay(mode)
         setIsDarkMode(mode);
         localStorage.setItem('dark-mode', mode);
       }
@@ -59,39 +64,36 @@ const Darkmode: React.FC = () => {
 
   return (
     <>
-      <div className='flex items-center text-white right-0 p-1 gap-2'>
-        <motion.div whileHover={{ opacity: 0.8, rotate: 30, scale: 1.1 }}>
-          {isDarkMode === 'dark' ? (
+      <div className='flex items-center text-black dark:text-white right-0 p-1 gap-2'>
+
             <motion.button
+            whileHover={{ opacity: 0.8, rotate: 30, scale: 1.1 }}
               onClick={() => toggleDarkMode('light')}
-              className={`rounded-full p-2 bg-orange-400 border dark:border-slate-400`}
+              className={` ${modeDisplay === 'light' && ' bg-slate-300' } rounded-full p-2 `}
               whileTap={{ scale: 0.9, rotate: 30 }}
               transition={{ type: 'spring', stiffness: 300 }}
             >
               <FiSun size={20} />
             </motion.button>
-          ) : (
             <motion.button
+            whileHover={{ opacity: 0.8, rotate: 30, scale: 1.1 }}
               onClick={() => toggleDarkMode('dark')}
-              className={`rounded-full p-2 bg-slate-700`}
+              className={` ${modeDisplay === 'dark' && ' dark:bg-slate-700' } rounded-full p-2`}
               whileTap={{ scale: 0.9, rotate: 30 }}
               transition={{ type: 'spring', stiffness: 300 }}
             >
               <FiMoon size={20} />
             </motion.button>
-          )}
-        </motion.div>
 
-        <motion.div whileHover={{ opacity: 0.8, scale: 1.1 }}>
           <motion.button
+          whileHover={{ opacity: 0.8, scale: 1.1 }}
             onClick={() => toggleDarkMode('system')}
-            className={`rounded-full p-2 bg-sky-400`}
+            className={` ${modeDisplay === 'system' && ' bg-slate-300 dark:bg-slate-700 ' } rounded-full p-2 `}
             whileTap={{ scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 300 }}
           >
             <MdComputer size={20} />
           </motion.button>
-        </motion.div>
       </div>
     </>
   );

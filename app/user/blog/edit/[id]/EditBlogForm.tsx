@@ -12,7 +12,6 @@ import { AiOutlineLoading3Quarters, AiOutlineUser } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { EditBlogSchema } from '@/yupSchema';
-import { useSession } from 'next-auth/react';
 
 
 
@@ -42,14 +41,13 @@ interface EditBlogFormProps {
         detail: string;
         status: string;
         keywords: string[];
+        creator: any;
     };
 }
 
 const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
     const [disabled, setDisabled] = useState(false);
     const router = useRouter();
-    const { data: session} = useSession();
-    const user = session?.user;
     const [imageUrls, setImageUrls] = useState<string[]>([]);
     const [isDragging, setIsDragging] = useState(false);
     const [keywordInput, setKeywordInput] = useState('')
@@ -124,12 +122,7 @@ const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
                         images: [...remainingImages, ...uploadedImageUrls],
                         detail: values.detail,
                         status: values.status,
-                        keywords: values.keywords,
-                        creator: {
-                            userid: user?.dbid,
-                            createdby: user?.username,
-                            avatar: user?.avatar,
-                        },
+                        keywords: values.keywords
                     };
 
                     // Make the PUT request
@@ -156,9 +149,9 @@ const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
                 return;
             }
             toast.promise((postapi()), {
-                loading: "Saving Blog",
-                success: "Blog Saved Successfully",
-                error: " Failed Save"
+                loading: "Updating Blog",
+                success: "Blog Updated Successfully",
+                error: " Failed Update"
             });
             action.resetForm()
 
@@ -515,10 +508,10 @@ const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
 
                     <span className='flex items-center text-base font-semibold  text-orange-500 dark:text-orange-400/70 mx-5 mb-6'>
                         Blog will be Post by :{' '}
-                        {user?.avatar ? (
+                        {blog?.creator.avatar ? (
                             <Image width={50} height={50}
-                                src={user?.avatar}
-                                alt={user?.username || 'user image'}
+                                src={blog?.creator.avatar}
+                                alt={blog?.creator.username || 'user image'}
                                 className='ml-3 mr-1 w-7 h-7 rounded-full border border-orange-500'
                             />
                         ) : (
@@ -527,7 +520,7 @@ const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
                                 className='ml-3 mr-1 w-7 h-7 rounded-full border border-orange-500'
                             />
                         )}{' '}
-                        {user?.username}
+                        {blog?.creator.username}
                     </span>
 
 
@@ -540,10 +533,10 @@ const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
                         
                         {
                             disabled ?<>
-                                Posting Blog
+                                Updateing Blog
                                 <AiOutlineLoading3Quarters size={20} className='animate-spin' />
                             </>
-                                : <>Post Blog</>
+                                : <>Update Blog</>
                         }
                     </button>
                         

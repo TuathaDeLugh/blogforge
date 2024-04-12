@@ -1,4 +1,5 @@
 import Blog from "@/models/blog";
+import User from '@/models/user'
 import connectdb from "@/util/mongodb";
 import { NextResponse } from "next/server";
 
@@ -7,21 +8,21 @@ export async function GET(req:any, { params }:any,res:any) {
         await connectdb();
         const sort = 1;
         const { id } = params;
-        const filter = req.nextUrl.searchParams.get('filter');
+        const filter = req.nextUrl.searchParams.get('filter')
         const page = req.nextUrl.searchParams.get('page') || 1;
         const pageSize = 10;
         const skip = (page - 1) * pageSize;
 
 
-        let emails;
+        let blogs;
         let totalDocuments;
 
         if (filter === 'all' || filter == undefined || filter == '') {
-            emails = await Blog.find({ "creator.userid": id }).sort({ title: sort }).select("_id title share pageview images status").skip(skip).limit(pageSize);
-            totalDocuments= await Blog.countDocuments({ "creator.userid": id });
+            blogs = await Blog.find({ "creator": id }).sort({ title: sort }).populate('creator','_id username avatar').select("_id title share pageview images status").skip(skip).limit(pageSize);
+            totalDocuments= await Blog.countDocuments({ "creator": id });
         } else {
-            emails = await Blog.find({ "creator.userid": id, "status": filter }).sort({ title: sort }).select("_id title share pageview images status").skip(skip).limit(pageSize);
-            totalDocuments= await Blog.countDocuments({ "creator.userid": id, "status": filter });
+            blogs = await Blog.find({ "creator": id, "status": filter }).sort({ title: sort }).populate('creator','_id username avatar').select("_id title share pageview images status").skip(skip).limit(pageSize);
+            totalDocuments= await Blog.countDocuments({ "creator": id, "status": filter });
         }
 
 
@@ -29,7 +30,7 @@ export async function GET(req:any, { params }:any,res:any) {
 
         return NextResponse.json(
             {
-                data: emails,
+                data: blogs,
                 meta: {
                     totalDocuments,
                     totalPages: Math.ceil(totalDocuments / pageSize),
@@ -43,7 +44,7 @@ export async function GET(req:any, { params }:any,res:any) {
         console.error('Error in GET handler:', error.message);
         return NextResponse.json(
             {
-                message: 'Failed to load mail',
+                message: 'Failed to load blogs',
                 error: error.message, 
             },
             { status: 500 }

@@ -43,7 +43,7 @@ export default async function Allblogs({context}:any) {
                               :
                               null
                             }
-                            {blog.creator.createdby +' at ' + new Date(blog.updatedAt).toLocaleString()}
+                            {blog.creator.username +' at ' + new Date(blog.updatedAt).toLocaleString()}
                           </p>
                           
                         </div>

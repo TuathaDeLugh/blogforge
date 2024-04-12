@@ -47,7 +47,7 @@ export default async function FatchBlogCat({context}:any) {
                               :
                               null
                             }
-                            {blog.creator.createdby +' at ' + new Date(blog.updatedAt).toLocaleString()}
+                            {blog.creator.username +' at ' + new Date(blog.updatedAt).toLocaleString()}
                           </p>
                           
                         </div>

@@ -93,11 +93,7 @@ const NewBlogForm: React.FC = () => {
                         detail: values.detail,
                         status: values.status,
                         keywords: values.keywords,
-                        creator: {
-                            userid: user?.dbid,
-                            createdby: user?.username,
-                            avatar: user?.avatar,
-                        },
+                        creator: user?.dbid,
                     };
 
                     // Make the POST request
@@ -122,9 +118,9 @@ const NewBlogForm: React.FC = () => {
             };
 
             toast.promise((postapi()), {
-                loading: "Saving Blog",
-                success: "Blog Saved Successfully",
-                error: " Failed Save"
+                loading: "Posting Blog",
+                success: "Blog Posted Successfully",
+                error: " Failed Post"
             });
 
 

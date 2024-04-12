@@ -113,7 +113,7 @@ export default async function page({ params: { id } }: BlogProps) {
                   :
                   null
               }
-              <Link href={`/writer/${blog.creator.userid}`} className=' hover:font-semibold hover:underline'>{blog.creator.createdby}</Link>
+              <Link href={`/writer/${blog.creator._id}`} className=' hover:font-semibold hover:underline'>{blog.creator.username}</Link>
             </P>
 
           </div>
@@ -141,7 +141,7 @@ export default async function page({ params: { id } }: BlogProps) {
                 :
                 null
             }
-            {blog.creator.createdby + ' at '}
+            {blog.creator.username + ' at '}
             
             {new Date(blog.createdAt).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })}
   {blog.createdAt !== blog.updatedAt && <span> | Updated at {new Date(blog.updatedAt).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })}</span>}

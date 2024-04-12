@@ -3,9 +3,11 @@ import mongoose from "mongoose";
 const commentSchema = new mongoose.Schema({
   _id: {
     type: String,
-  },
+    required: true,
+  }, 
   userid: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'users', // Reference to the User model
   },
   useravatar: {
     type: String,
@@ -29,9 +31,9 @@ const blogSchema = new mongoose.Schema({
   },
   images: [{
     _id: {
-        type: String,
-        required: true,
-      },
+      type: String,
+      required: true,
+    },
     name: String,
     link: String,
   }],
@@ -61,17 +63,8 @@ const blogSchema = new mongoose.Schema({
   },
   comments: [commentSchema],
   creator: {
-    userid: {
-      type: String,
-      required: true,
-    },
-    createdby: {
-      type: String,
-      required: true,
-    },
-    avatar: {
-      type: String,
-    },
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'users', // Reference to the User model
   },
 }, { timestamps: true });
 

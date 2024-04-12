@@ -1,6 +1,7 @@
 import Blog from "@/models/blog";
 import connectdb from "@/util/mongodb";
 import { NextResponse } from "next/server";
+import User from '@/models/user'
 
 export async function POST(request: any) {
 
@@ -38,7 +39,7 @@ export async function GET(req: any, res: any) {
         const pageSize = 15;
         const skip = (page - 1) * pageSize;
 
-        const blogs = await Blog.find({status: 'published'}).sort({ createdAt: sort }).skip(skip).limit(pageSize);
+        const blogs = await Blog.find({status: 'published'}).populate('creator','_id username avatar').sort({ createdAt: sort }).skip(skip).limit(pageSize);
 
         const totalDocuments = await Blog.countDocuments({status: 'published'});
 

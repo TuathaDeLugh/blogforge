@@ -82,9 +82,9 @@ export default async function page({ params: { id } }: BlogProps) {
               transition={{ duration: 0.5, delay: 0.3 }}>
               <span className=' text-orange-500 dark:text-orange-400  font-medium'>
                 {' '}
-                Views :{' '}
+               Users Save :{' '}
               </span>{' '}
-              {blog.pageview}
+              {blog.usersave}
             </P>
             <P className=' tracking-wider flex gap-3 items-center'
               initial={{ opacity: 0, x: 20 }}
@@ -95,7 +95,7 @@ export default async function page({ params: { id } }: BlogProps) {
                 Share :{' '}
               </span>{' '}
               {blog.share}
-              <ShareButton link={`https://blogforge.vercel.app/blogs/${blog._id}`} />
+              <ShareButton link={`${process.env.API_URL}blogs/${blog._id}`} />
             </P>
           </div>
           <div className='mt-5'>

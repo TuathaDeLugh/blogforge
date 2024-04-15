@@ -9,7 +9,7 @@ export default function Filterblogs( context : any) {
 
 
     return (
-          <section className='px-5 max-w-[1500px] mx-auto mb-5 '>
+          <section className='px-3 md:px-5 max-w-[1500px] mx-auto mb-5 '>
              <div className="relative my-5 md:mt-16">
           <H1
             initial={{ opacity: 0, y: -20 }}

@@ -12,6 +12,7 @@ import { AiOutlineLoading3Quarters, AiOutlineUser } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { EditBlogSchema } from '@/yupSchema';
+import { category } from '@/Components/Logic/Category';
 
 
 
@@ -223,24 +224,7 @@ const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
         setImageUrls([...imageUrls, ...urls]);
     };
 
-    const categoryOptions =
-        [
-            'Lifestyle',
-            'Personal Development',
-            'Technology',
-            'Business and Finance',
-            'Science and Nature',
-            'Entertainment',
-            'Books and Literature',
-            'Education',
-            'Parenting',
-            'Travel',
-            'Sports and Fitness',
-            'Home Improvement',
-            'Food and Cooking',
-            'Social Issues',
-            'Technology and Gaming'
-        ];
+    const categoryOptions = category;
 
 
     const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -17,7 +17,7 @@ export default async function EditBlog({ params: { id } }: EditBlogProps) {
 
   return (
     <>
-      <section className='max-w-[1500px] mx-auto px-5 '>
+      <section className='max-w-[1500px] mx-auto px-3 '>
 
       <div className="flex items-end my-5 md:mt-16">
 

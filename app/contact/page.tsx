@@ -24,7 +24,7 @@ export default function Contact() {
       className="flex md:min-h-[90vh] items-center"
     >
       <div
-        className="px-5 md:px-10 grid md:grid-cols-2 items-center gap-16 my-6 mx-auto max-w-[1500px]"
+        className="px-3 md:px-10 grid md:grid-cols-2 items-center gap-16 my-6 mx-auto max-w-[1500px]"
       >
 
         <Div

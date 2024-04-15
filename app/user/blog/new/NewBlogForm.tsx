@@ -13,6 +13,7 @@ import { NewBlogSchema } from '@/yupSchema';
 import { Div } from '@/Components/Motion/Motion';
 import RichTextEditor from '@/Components/layout/RichTextEditor';
 import { useSession } from 'next-auth/react';
+import { category } from '@/Components/Logic/Category';
 
 
 
@@ -173,24 +174,7 @@ const NewBlogForm: React.FC = () => {
         setImageUrls([...imageUrls, ...urls]);
     };
 
-    const categoryOptions =
-        [
-            'Lifestyle',
-            'Personal Development',
-            'Technology',
-            'Business and Finance',
-            'Science and Nature',
-            'Entertainment',
-            'Books and Literature',
-            'Education',
-            'Parenting',
-            'Travel',
-            'Sports and Fitness',
-            'Home Improvement',
-            'Food and Cooking',
-            'Social Issues',
-            'Technology and Gaming'
-        ];
+    const categoryOptions = category;
 
 
     const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {

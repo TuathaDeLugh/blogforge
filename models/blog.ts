@@ -45,7 +45,7 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  pageview: {
+  usersave: {
     type: Number,
     default: 0,
   },

@@ -12,7 +12,8 @@ export default function Footer() {
   <div className="mx-auto max-w-[1500px] space-y-8 px-4 pt-10 sm:px-6 lg:space-y-16 lg:px-8">
     <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-5">
     <div className="lg:col-span-2">
-        <div className="">
+        <div className=" flex items-center gap-3 ">
+          <Image src={'/BLogForge.png'} height={60} width={60} alt='LOGO' className='rounded-full' />
           <Image src={'/Logo.png'} height={100} width={200} alt='LOGO'/>
         </div>
 

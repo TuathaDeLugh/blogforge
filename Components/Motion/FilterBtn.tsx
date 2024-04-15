@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from 'framer-motion';
+import { category } from "../Logic/Category";
 
 const FilterDropDown = () => {
   const [open, setOpen] = useState(false);
@@ -21,23 +22,7 @@ const FilterDropDown = () => {
     };
   }, []);
 
-  let ddata: string[] = [
-    'Lifestyle',
-    'Personal_Development',
-    'Technology',
-    'Business_and_Finance',
-    'Science_and_Nature',
-    'Entertainment',
-    'Books_and_Literature',
-    'Education',
-    'Parenting',
-    'Travel',
-    'Sports_and_Fitness',
-    'Home_Improvement',
-    'Food_and_Cooking',
-    'Social_Issues',
-    'Technology_and_Gaming'
-  ];
+  const ddata= category;
 
   return (
     <div className="relative w-1/5  py-3 md:py-4 " ref={dropdownRef}>

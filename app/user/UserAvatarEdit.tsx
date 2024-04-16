@@ -109,8 +109,10 @@ export default function UserAvatarEdit({ userId }: AvatarModelProps) {
             </button>
           </div>
           {
-            session?.user.avatar == '' ? <AiOutlineUser size={30} className='h-40 w-40 rounded-full border border-slate-300' /> :
-          <Image src={session?.user.avatar!} className='h-40 w-40 rounded-full' width={200} height={200} alt='avatar' />
+            session?.user.avatar ?
+            <Image src={session?.user.avatar!} className=' h-28 w-28 rounded-full' width={200} height={200} alt='avatar' />
+            :
+            <AiOutlineUser size={30} className='h-28 w-28 rounded-full border border-slate-300' />
           }
         </div>
       </div>

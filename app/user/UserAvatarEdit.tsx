@@ -103,7 +103,7 @@ export default function UserAvatarEdit({ userId }: AvatarModelProps) {
     <>
       <div className='flex justify-center items-center'>
         <div className="relative">
-          <div className="absolute bottom-2 right-2">
+          <div className="absolute bottom-1 right-1">
             <button className='bg-orange-400 text-white rounded-full p-2 hover:bg-orange-500' ref={trigger} onClick={() => setModalOpen(true)}>
               <FaPencilAlt size={20} />
             </button>

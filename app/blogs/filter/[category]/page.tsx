@@ -2,7 +2,6 @@ import { H1 } from '@/Components/Motion/Motion';
 import LoadingBlogs from '@/Components/layout/LoadinBlog';
 import React, { Suspense } from 'react'
 import Search from '@/Components/Search';
-import Allblogs from '../../Allblogs';
 import FatchBlogCat from './FatchBlogCat';
 
 export default function Filterblogs( context : any) {

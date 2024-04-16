@@ -1,7 +1,7 @@
 'use client'
 import { Div, H1 } from '@/Components/Motion/Motion';
 import { useFormik } from "formik";
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
@@ -11,9 +11,6 @@ import * as Yup from "yup";
 
 export default function Reset() {
   const { data: session } = useSession();
-  if (session?.user.isVerified) {
-    redirect('/')
-  }
   const [disabled, setDisabled] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [conPassword, setConPassword] = useState(false);

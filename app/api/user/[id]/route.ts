@@ -15,45 +15,25 @@ export async function GET(request :any, { params }:any) {
 
 
 
-// export async function PUT(request:any, { params }:any) {
-//   const { id } = params;
-//   const { name, username, email, avatar,role } = await request.json();
-//   await connectdb();
-//   const updatedUser = await User.findByIdAndUpdate(
-//     id,
-//     { name, username, email, avatar,role },
-//     { new: true }
-//   );
+export async function PUT(request:any, { params }:any) {
+  const { id } = params;
+  const { name, username, email, avatar,role } = await request.json();
+  await connectdb();
+  const updatedUser = await User.findByIdAndUpdate(
+    id,
+    { name, username, email, avatar,role },
+    { new: true }
+  );
 
-//   await blog.updateMany(
-//     { 'creator.userid': id },
-//     {
-//       $set: {
-//         'creator.createdby': updatedUser.username,
-//         'creator.avatar': updatedUser.avatar,
-//       },
-//     }
-//   );
-
-//   await blog.updateMany(
-//     { 'comments.userid': id },
-//     {
-//       $set: {
-//         'comments.$.username': updatedUser.username,
-//         'comments.$.useravatar': updatedUser.avatar,
-//       },
-//     }
-//   );
-
-//   return NextResponse.json(
-//     { message: 'Profile and associated blogs updated', updatedUser },
-//     { status: 200 }
-//   );
-// }
+  return NextResponse.json(
+    { message: 'Profile and associated blogs updated', updatedUser },
+    { status: 200 }
+  );
+}
 
 
 
-// export async function PATCH(request, { params }) {
+// export async function PATCH(request:any, { params }:any) {
 //   const { id } = params
 //   const { type, id: rid } = await request.json()
 

@@ -15,20 +15,47 @@ export async function GET(request :any, { params }:any) {
 
 
 
-export async function PUT(request:any, { params }:any) {
-  const { id } = params;
-  const { name, username, email, avatar,role } = await request.json();
-  await connectdb();
-  const updatedUser = await User.findByIdAndUpdate(
-    id,
-    { name, username, email, avatar,role },
-    { new: true }
-  );
+export async function PUT(request: any, { params }: any) {
+  try {
+    const { id } = params;
+    const { name, username, email, avatar,isAdmin,type } = await request.json();
+    await connectdb();
+    const user = await User.findOne({ email, _id: { $ne: id } });
+    const existUsername = await User.findOne({ username,_id: { $ne: id } });
+    if (type === 'info')
+    {
+      if (user) {
+        return NextResponse.json(
+          { message: 'Email is already used by Other user' },
+          { status: 400 }
+        );
+      }
+      else{
+        if(existUsername){
+          return NextResponse.json(
+            { message: 'Username already exists' },
+            { status: 400 }
+          );
+        }
+      }
+    }
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { name, username, email, avatar,isAdmin},
+      { new: true }
+    );
+  
+    return NextResponse.json(
+      { message: 'Profile and associated blogs updated', updatedUser },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { message: 'Internal server error',error},
+      { status: 500 }
+    );
+  }
 
-  return NextResponse.json(
-    { message: 'Profile and associated blogs updated', updatedUser },
-    { status: 200 }
-  );
 }
 
 

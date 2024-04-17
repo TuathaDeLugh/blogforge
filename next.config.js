@@ -8,6 +8,8 @@ const nextConfig = {
           },
         ],
       },
+      // productionBrowserSourceMaps: false,
+      // optimizeFonts: false,
 }
 
 module.exports = nextConfig

@@ -45,7 +45,7 @@ export default function UserAvatarEdit({ userId }: AvatarModelProps) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ avatar: chosenAvatar }),
+        body: JSON.stringify({ avatar: chosenAvatar,type: "avatar" }),
       });
       const { updatedUser } = await response.json();
 
@@ -55,13 +55,13 @@ export default function UserAvatarEdit({ userId }: AvatarModelProps) {
           avatar:updatedUser.avatar,
         }
       })
+      router.refresh();
+      toast.success('Avatar Updated Successfully.');
       if (!response.ok) {
         throw new Error('Avatar update failed');
       }
 
 
-      router.refresh();
-      toast.success('Avatar Updated Successfully.');
     } catch (error: any) {
       console.error('Error updating avatar:', error.message);
     }
@@ -121,7 +121,7 @@ export default function UserAvatarEdit({ userId }: AvatarModelProps) {
         {modalOpen && (
           <motion.div
           initial={{ opacity: 0,  }}
-          animate={{ opacity: 1,  }}
+          animate={{ opacity: 1  }}
           exit={{ opacity: 0,  }}
           transition={{ duration: 0.3 }}
             className="fixed z-50 left-0 top-0 flex h-full min-h-screen w-full items-center justify-center bg-slate-900/50 px-4 py-5"

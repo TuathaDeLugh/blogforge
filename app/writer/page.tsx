@@ -1,13 +1,14 @@
 import AnimationData from '@/Components/Motion/AnimationData';
 import { H1 } from '@/Components/Motion/Motion';
 import Image from 'next/image'
+import Link from 'next/link';
 import React from 'react'
 import { FaShare } from 'react-icons/fa'
 import { IoHeartCircleOutline } from 'react-icons/io5'
 import { MdDateRange, MdDescription } from 'react-icons/md';
 
 export default function Writer() {
-    const writers = [1,2,3,4,5,6,7,8,9,0,1,2,3,4,5]
+    const writers = [1,2,3,4,5,6,7,8,9,1,2,3,4,5,6]
     return (
         <>
             <section className="max-w-[1500px] mx-auto px-2 md:px-4">
@@ -36,6 +37,8 @@ export default function Writer() {
                         key={1}
                         index={index}
                         className="border bg-white rounded-lg shadow overflow-hidden dark:bg-gray-800 dark:border-slate-500 hover:border-orange-500 dark:hover:border-orange-400 ">
+                            <Link href={'/writer/abc'}>
+
                     <div className="p-4">
                         <div className="flex items-center space-x-4">
                             <Image
@@ -70,12 +73,14 @@ export default function Writer() {
                         </div>
 
                     </div>
+                            </Link>
                 </AnimationData>
                             )
                         )
                             }
                                 </div>
             </section>
-        </>
-    )
-}
+            </>
+        )
+    }
+    

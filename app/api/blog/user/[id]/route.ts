@@ -18,10 +18,10 @@ export async function GET(req:any, { params }:any,res:any) {
         let totalDocuments;
 
         if (filter === 'all' || filter == undefined || filter == '') {
-            blogs = await Blog.find({ "creator": id }).sort({ title: sort }).populate('creator','_id username avatar').select("_id title share pageview images status").skip(skip).limit(pageSize);
+            blogs = await Blog.find({ "creator": id }).sort({ title: sort }).populate('creator','_id username avatar').select("_id title share usersave images status").skip(skip).limit(pageSize);
             totalDocuments= await Blog.countDocuments({ "creator": id });
         } else {
-            blogs = await Blog.find({ "creator": id, "status": filter }).sort({ title: sort }).populate('creator','_id username avatar').select("_id title share pageview images status").skip(skip).limit(pageSize);
+            blogs = await Blog.find({ "creator": id, "status": filter }).sort({ title: sort }).populate('creator','_id username avatar').select("_id title share usersave images status").skip(skip).limit(pageSize);
             totalDocuments= await Blog.countDocuments({ "creator": id, "status": filter });
         }
 

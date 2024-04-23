@@ -70,14 +70,14 @@ export default async function UserBlog(context: { searchParams: { page: string }
                           "hidden sm:table-cell  w-2/12 px-6    py-3 text-xs md:text-sm uppercase   font-semibold "
                         }
                       >
-                        Views
+                        Saves-Share
                       </th>
                       <th
                         className={
                           "hidden sm:table-cell  w-2/12 px-6    py-3 text-xs md:text-sm uppercase   font-semibold "
                         }
                       >
-                        Share
+                        Status
                       </th>
                       <th
                         className={
@@ -113,14 +113,14 @@ export default async function UserBlog(context: { searchParams: { page: string }
                                   "hidden sm:table-cell  pl-6 pr-1    py-3 text-xs md:text-sm "
                                 }
                               >
-                                {blog.pageview}
+                                {blog.usersave}-{blog.share}
                               </td>
                               <td
                                 className={
                                   "hidden sm:table-cell  pl-6 pr-1    py-3 text-xs md:text-sm "
                                 }
                               >
-                                {blog.share}
+                                {blog.status}
                               </td>
                               <td
                                 className={

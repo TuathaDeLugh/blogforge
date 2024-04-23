@@ -80,7 +80,7 @@ interface UserBlogFilterProps {
                           "hidden sm:table-cell  w-2/12 px-6    py-3 text-xs md:text-sm uppercase   font-semibold "
                         }
                       >
-                        Views
+                        Saves
                       </th>
                       <th
                         className={
@@ -123,7 +123,7 @@ interface UserBlogFilterProps {
                                   "hidden sm:table-cell  pl-6 pr-1    py-3 text-xs md:text-sm "
                                 }
                               >
-                                {blog.pageview}
+                                {blog.usersave}
                               </td>
                               <td
                                 className={

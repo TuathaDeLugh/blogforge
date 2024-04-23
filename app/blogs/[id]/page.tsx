@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
 import "@/style/datadisplay.css"
+import ErrorComponent from '@/app/error';
 
 interface BlogProps {
   params: {
@@ -18,6 +19,7 @@ export default async function page({ params: { id } }: BlogProps) {
   console.log(blog);
 
   return (<>
+  <ErrorComponent />
     <section className=" max-w-[1500px] mx-auto ">
       <div className="relative m-5 md:mt-16 mx-2">
         <H1

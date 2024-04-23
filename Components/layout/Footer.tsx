@@ -159,12 +159,12 @@ export default function Footer() {
 
             <li>
               <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                My blog
+                All Writer
               </a>
             </li>
             <li>
               <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                My Saved blog
+                My blog
               </a>
             </li>
           </ul>

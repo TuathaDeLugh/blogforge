@@ -7,7 +7,7 @@ export default function Error() {
     return (
         <>
             <section className="max-w-[1500px] mx-auto">
-                <div className="lg:px-24 lg:py-24 md:py-20 md:px-44 px-4 py-24 min-h-[93vh] md:min-h-[91vh]  items-center flex justify-center flex-col-reverse lg:flex-row md:gap-28 gap-16">
+                <div className="lg:px-24 lg:py-24 md:py-20 md:px-44 px-4 py-24 min-h-[93vh] md:min-h-[91vh]  items-center flex justify-center flex-col lg:flex-row md:gap-28 gap-16">
                     <div className="xl:pt-24 w-full xl:w-1/2 relative pb-12 lg:pb-0">
                         <Div className="mx-auto"
                             initial={{ opacity: 0, x: -40 }}

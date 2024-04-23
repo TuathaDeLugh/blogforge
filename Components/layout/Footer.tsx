@@ -23,7 +23,7 @@ export default function Footer() {
 
         <ul className="mt-2 flex gap-6">
           <li>
-            <a
+            <Link
               href="/"
               rel="noreferrer"
               target="_blank"
@@ -32,11 +32,11 @@ export default function Footer() {
               <span className="sr-only">Facebook</span>
 
               <FaFacebook size={25} />
-            </a>
+            </Link>
           </li>
 
           <li>
-            <a
+            <Link
               href="/"
               rel="noreferrer"
               target="_blank"
@@ -45,11 +45,11 @@ export default function Footer() {
               <span className="sr-only">Instagram</span>
 
               <FaInstagram size={25} />
-            </a>
+            </Link>
           </li>
 
           <li>
-            <a
+            <Link
               href="/"
               rel="noreferrer"
               target="_blank"
@@ -58,11 +58,11 @@ export default function Footer() {
               <span className="sr-only">Twitter</span>
 
               <FaTwitter size={25} />
-            </a>
+            </Link>
           </li>
 
           <li>
-            <a
+            <Link
               href="/"
               rel="noreferrer"
               target="_blank"
@@ -71,7 +71,7 @@ export default function Footer() {
               <span className="sr-only">GitHub</span>
 
               <FaGithub size={25} />
-            </a>
+            </Link>
           </li>
         </ul>
         <div className='mt-4 flex gap-3  items-center'>
@@ -114,27 +114,27 @@ export default function Footer() {
 
           <ul className="mt-6 space-y-4 text-sm">
             <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+              <Link href="/blogs/filter/lifestyle" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
               Lifestyle
-              </a>
+              </Link>
             </li>
 
             <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+              <Link href="/blogs/filter/food" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
               Food
-              </a>
+              </Link>
             </li>
 
             <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+              <Link href="/blogs/filter/educational" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
               Educational
-              </a>
+              </Link>
             </li>
 
             <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+              <Link href="/blogs/filter/gaming" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
               Gaming
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -146,26 +146,26 @@ export default function Footer() {
 
           <ul className="mt-6 space-y-4 text-sm">
             <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+              <Link href="/" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
                 Home
-              </a>
+              </Link>
             </li>
 
             <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+              <Link href="/blogs" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
                 All blog
-              </a>
+              </Link>
             </li>
 
             <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+              <Link href="/writer" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
                 All Writer
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+              <Link href="/user/blog/tab" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
                 My blog
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

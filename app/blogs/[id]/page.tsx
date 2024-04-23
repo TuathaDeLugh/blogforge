@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
 import "@/style/datadisplay.css"
-import ErrorComponent from '@/app/error';
+import Error from '@/app/not-found';
 
 interface BlogProps {
   params: {
@@ -16,10 +16,9 @@ interface BlogProps {
 
 export default async function page({ params: { id } }: BlogProps) {
   const blog = await getSingleblog(id)
-  console.log(blog);
 
+if(blog){
   return (<>
-  <ErrorComponent />
     <section className=" max-w-[1500px] mx-auto ">
       <div className="relative m-5 md:mt-16 mx-2">
         <H1
@@ -163,4 +162,11 @@ export default async function page({ params: { id } }: BlogProps) {
   </>
 
   )
+}
+  else
+  {
+    return(
+      <Error/>
+    )
+  }
 }

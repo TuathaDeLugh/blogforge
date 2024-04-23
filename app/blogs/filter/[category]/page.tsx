@@ -22,7 +22,7 @@ export default function Filterblogs( context : any) {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3}} className="pl-2 text-3xl font-bold border-l-8 border-orange-400 md:text-5xl dark:text-white">
-              {context.params.category.split('_').join(' ')} Blogs
+              {decodeURIComponent(context.params.category)} Blogs
             </H1>
           </div>
           <Search/>

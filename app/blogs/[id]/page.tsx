@@ -114,7 +114,7 @@ if(blog){
                   :
                   null
               }
-              <Link href={`/writer/${blog.creator._id}`} className=' hover:font-semibold hover:underline'>{blog.creator.username}</Link>
+              <Link href={`/writer/${blog.creator.username}`} className=' hover:font-semibold hover:underline'>{blog.creator.username}</Link>
             </P>
 
           </div>

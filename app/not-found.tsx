@@ -16,7 +16,7 @@ export default function Error() {
 
                             <div>
                                 <div 
-                                className=" lg:absolute left-0 -top-20 text-[100px] lg:text-[200px] font-black text-slate-300 lg:opacity-30 lg:dark:opacity-10 "
+                                className=" lg:absolute left-0 md:-top-16 lg:-top-20 text-[100px] lg:text-[200px] font-black text-slate-300 lg:opacity-30 lg:dark:opacity-10 "
                                 >404</div>
                                 <div className="">
                                     <h1 className="my-2 text-orange-400  font-bold text-2xl">

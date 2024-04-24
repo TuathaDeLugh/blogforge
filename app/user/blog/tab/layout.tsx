@@ -15,7 +15,7 @@ export default function UserBloglayout({
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 0.1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="absolute -top-20   left-0 text-[80px] lg:text-[100px] text-gray-900 font-bold  dark:text-gray-200 opacity-5 md:block hidden"
+            className="absolute md:-top-16 lg:-top-20   left-0 text-[80px] lg:text-[100px] text-gray-900 font-bold  dark:text-gray-200 opacity-5 md:block hidden"
           >
             User
           </H1>

@@ -7,8 +7,8 @@ export async function GET(request: any, res: any) {
     try {
         await connectdb();
 
-        const page = request.nextUrl.searchParams.get('page') || 1;
-        const pageSize = 10;
+        const page = parseInt(request.nextUrl.searchParams.get('page')) || 1;
+        const pageSize = 9;
         const skip = (page - 1) * pageSize;
 
         const userData = await Blog.aggregate([
@@ -31,26 +31,56 @@ export async function GET(request: any, res: any) {
                 username: "$userDetails.username",
                 name: "$userDetails.name",
                 avatar: "$userDetails.avatar",
-                joined:"$userDetails.createdAt",
+                joined: "$userDetails.createdAt",
                 totalBlogs: 1,
                 totalShares: 1,
                 totalSaves: 1
             }},
+            { $sort: { totalBlogs: -1, totalShares: -1, totalSaves: -1 } }, // Sort by total blogs, shares, and saves in descending order
             { $skip: skip }, 
             { $limit: pageSize } 
         ]);
 
-        const totalWriters = userData.length;
+        const totalWritersCount = await Blog.aggregate([
+            { $match: { status: "published" } },
+            { $group: {
+                _id: "$creator"
+            }},
+            { $count: "totalWriters" }
+        ]);
+
+        const totalWriters = totalWritersCount.length > 0 ? totalWritersCount[0].totalWriters : 0;
+
         const totalPages = Math.ceil(totalWriters / pageSize);
-        const hasNextPage = parseInt(page) < totalPages;
+        const hasNextPage = page < totalPages;
+
+        const formatJoinedDate = (joined: Date): string => {
+            const now = new Date();
+            const joinedDate = new Date(joined);
+            const diff = Math.abs(now.getTime() - joinedDate.getTime());
+            const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+
+            if (diffDays < 14) {
+                return `${diffDays} days ago`;
+            } else if (diffDays < 28) {
+                return `${Math.floor(diffDays / 7)} weeks ago`;
+            } else if (diffDays < 365) {
+                return `${Math.floor(diffDays / 30)} months ago`;
+            } else {
+                return joinedDate.toLocaleDateString(); 
+            }
+        };
 
         return NextResponse.json({
             success: true,
-            data: userData,
+            data: userData.map(writer => ({
+                ...writer,
+                joined: formatJoinedDate(writer.joined)
+            })),
             meta: {
                 totalWriters,
                 totalPages,
-                currentPage: parseInt(page),
+                currentPage: page,
                 hasNextPage
             }
         }, { status: 200 });

@@ -1,6 +1,7 @@
 import AnimationData from '@/Components/Motion/AnimationData';
 import { H1 } from '@/Components/Motion/Motion';
 import Pagination from '@/Components/Pagination';
+import getAllWriter from '@/controllers/allwriter';
 import Image from 'next/image'
 import Link from 'next/link';
 import React from 'react'
@@ -8,8 +9,11 @@ import { FaShare } from 'react-icons/fa'
 import { IoHeartCircleOutline } from 'react-icons/io5'
 import { MdDateRange, MdDescription } from 'react-icons/md';
 
-export default function Writer() {
-    const writers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6]
+export default async function Writer( context :any) {
+    const pageno = parseInt(context?.searchParams.page)
+    
+    const writers = await getAllWriter(pageno)
+    
     return (
         <>
             <section className="max-w-[1500px] mx-auto px-2 md:px-4">
@@ -33,28 +37,28 @@ export default function Writer() {
 
                     {/* LOOP */}
                     {
-                        writers.map((writer: any, index: number) => (
+                        writers.data.map((writer: any, index: number) => (
                             <AnimationData
                                 key={1}
                                 index={index}
                                 className="border bg-white rounded-lg shadow overflow-hidden dark:bg-gray-800 dark:border-slate-500 hover:border-orange-500 dark:hover:border-orange-400 ">
-                                <Link href={'/writer/abc'}>
+                                <Link href={`/writer/${writer.username}`}>
 
                                     <div className="p-4">
                                         <div className="flex items-center space-x-4">
                                             <Image
-                                                alt="User Avatar"
+                                                alt={writer.username}
                                                 className="rounded-full object-cover w-24 h-24"
                                                 height={100}
                                                 width={100}
-                                                src="https://firebasestorage.googleapis.com/v0/b/blog-forge-sailor.appspot.com/o/Avatars%2FAvatar%20(1).png?alt=media"
+                                                src={writer.avatar}
                                             />
                                             <div className="space-y-1">
-                                                <p className="font-medium">John Doe</p>
-                                                <p className="text-sm text-orange-500 dark:text-orange-400">@johndoe</p>
+                                                <p className="font-medium">{writer.name}</p>
+                                                <p className="text-sm text-orange-500 dark:text-orange-400">@{writer.username}</p>
                                                 <div className="flex text-xs items-center space-x-1 text-gray-500 dark:text-gray-400">
                                                     <MdDateRange className="w-4 h-4" />
-                                                    <span className="text-sm">joined 2 months</span>
+                                                    <span className="text-sm">Joined : {writer.joined}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -62,17 +66,16 @@ export default function Writer() {
                                     <div className="bg-gray-100 dark:bg-gray-900 px-4 py-3 flex items-center justify-between">
                                         <div className="flex items-center space-x-1">
                                             <FaShare size={18} className="w-4 h-4 text-orange-500" />
-                                            <span className="text-sm font-medium">1.2K</span>
+                                            <span className="text-sm font-medium">{writer.totalShares}</span>
                                         </div>
                                         <div className="flex items-center space-x-1">
                                             <MdDescription size={18} className="w-4 h-4 text-orange-500" />
-                                            <span className="text-sm font-medium">25</span>
+                                            <span className="text-sm font-medium">{writer.totalBlogs}</span>
                                         </div>
                                         <div className="flex items-center space-x-1">
                                             <IoHeartCircleOutline size={18} className="w-4 h-4 text-orange-500" />
-                                            <span className="text-sm font-medium">500</span>
+                                            <span className="text-sm font-medium">{writer.totalSaves}</span>
                                         </div>
-
                                     </div>
                                 </Link>
                             </AnimationData>

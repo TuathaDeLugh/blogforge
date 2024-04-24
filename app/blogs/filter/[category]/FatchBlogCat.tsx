@@ -43,7 +43,7 @@ export default async function FatchBlogCat({context}:any) {
                           <p className="text-sm text-gray-500 dark:text-gray-400 flex gap-2">
                             {
                               blog.creator.avatar ?
-                              <Image className='rounded-full border dark:border-slate-500' src={blog.creator.avatar} width={23} height={23} alt={blog.creator.createdby}/>
+                              <Image className='rounded-full border dark:border-slate-500' src={blog.creator.avatar} width={23} height={23} alt={blog.creator.username}/>
                               :
                               null
                             }

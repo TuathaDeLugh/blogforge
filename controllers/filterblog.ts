@@ -7,8 +7,8 @@ export default async function getFilterBlog(category:string,page?:number) {
     const response = await fetch(apiEndpoint, {
       cache: "no-store",
     });
-      const reviews = await response.json();
-      return reviews;
+      const blogs = await response.json();
+      return blogs;
     } catch (error) {
       console.log(error);
     }

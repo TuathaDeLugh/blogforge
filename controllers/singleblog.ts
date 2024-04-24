@@ -6,8 +6,8 @@ export default async function getSingleblog(id:string) {
       {
         cache: "no-store",
       });
-      const review = await response.json();
-      return review.data;
+      const oneblog = await response.json();
+      return oneblog.data;
     } catch (error) {
       console.log(error);
     }

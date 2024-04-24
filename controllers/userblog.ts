@@ -5,8 +5,8 @@ export default async function getUserBlog(id:string,page:number|null,filter:stri
       {
         cache: "no-store",
       });
-      const reviews = await response.json();
-      return reviews;
+      const userblogs = await response.json();
+      return userblogs;
     } catch (error) {
       console.log(error);
     }

@@ -4,7 +4,7 @@ export default function LoadingBlogs() {
     const blogs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
     return (
-        <section className='px-3 md:px-5 max-w-[1500px] mx-auto mb-5 '>
+        <section className='px-4 lg:px-8 max-w-[1500px] mx-auto mb-5 '>
             <div className="relative my-5 md:mt-16 animate-pulse duration-300">
                 <h1
                     className="absolute -top-16 -z-10 px-32 py-10  left-0 text-[80px] lg:text-[100px] bg-gray-900 font-bold  dark:bg-gray-200 rounded-full opacity-5 md:block hidden"

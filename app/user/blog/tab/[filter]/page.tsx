@@ -60,7 +60,7 @@ interface UserBlogFilterProps {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className={
-            "relative  m-3 flex flex-col min-w-0 break-words w-full mb-6 rounded "}>
+            "relative  my-3 flex flex-col min-w-0 break-words w-full mb-6 rounded "}>
 
           <div className=" block w-full rounded overflow-x-auto">
             {

@@ -34,7 +34,7 @@ export default function About() {
   
   return (
     <section className="flex items-center lg:py-10">
-      <div className="justify-center flex-1 max-w-[1500px] py-4 mx-auto lg:py-6 md:px-6">
+      <div className="justify-center flex-1 max-w-[1500px] py-4 mx-auto lg:py-6 px-4 lg:px-8">
         <Div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}

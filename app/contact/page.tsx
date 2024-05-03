@@ -21,10 +21,10 @@ export default function Contact() {
    const email = user?.email;
   return (
     <div
-      className="flex md:min-h-[90vh] items-center"
+      className=" max-w-[1500px] flex md:min-h-[90vh] items-center"
     >
       <div
-        className="px-3 md:px-10 grid md:grid-cols-2 items-center gap-16 my-6 mx-auto max-w-[1500px]"
+        className="px-4 md:px-10 grid md:grid-cols-2 items-center gap-16 my-6 mx-auto "
       >
 
         <Div

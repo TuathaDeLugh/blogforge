@@ -92,7 +92,7 @@ const Carousel: React.FC<CarouselProps> = ({ data }) => {
   }, [currentIndex]);
   return (
     <div className=" w-full  max-w-[1500px] mx-auto lg:h-auto px-2 ">
-      <div className={`relative w-full ${data[currentIndex].title ? 'h-[28rem]' : 'h-[36rem]'}   m-auto overflow-hidden rounded-lg `}>
+      <div className={`relative w-full ${data[currentIndex].title ? 'h-[28rem]' : ' h-[20rem] md:h-[36rem]'}   m-auto overflow-hidden rounded-lg `}>
         <AnimatePresence>
           <motion.div
             key={currentIndex}

@@ -18,7 +18,7 @@ export default function ResetReq() {
     
 
     return (
-        <div className="flex min-h-[92vh] md:min-h-[90vh] items-center mx-auto max-w-[1500px] justify-center px-3 md:px-5">
+        <div className="flex min-h-[92vh] md:min-h-[90vh] items-center mx-auto max-w-[1500px] justify-center px-4 lg:px-8">
             <Div
                 className="h-full flex items-center relative max-w-2xl md:mx-5"
                 initial={{ opacity: 0, x: -30 }}

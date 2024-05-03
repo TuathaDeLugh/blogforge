@@ -16,7 +16,7 @@ export default async function Writer( context :any) {
     
     return (
         <>
-            <section className="max-w-[1500px] mx-auto px-2 md:px-4">
+            <section className="max-w-[1500px] mx-auto px-4 lg:px-8">
                 <div className="relative my-5 md:mt-16">
                     <H1
                         initial={{ opacity: 0, y: -20 }}

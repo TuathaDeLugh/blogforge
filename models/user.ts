@@ -1,34 +1,37 @@
-import mongoose from "mongoose";
+import mongoose, { Schema, Document, Model, Types } from "mongoose";
 
-const userSchema = new mongoose.Schema(
-	{
-		username: { type: String, required: true, unique: true },
-		name: String,
-		avatar: String,
-		email: { type: String, required: true, unique: true },
-		password: String,
-		provider: String,
-		isVerified:{
-			type:Boolean,
-			default:false,
-		},
-		isAdmin:{
-			type:Boolean,
-			default:false,
-		},
-		forgotPasswordToken: String,
-		forgotPasswordExpiry:  Date,
-		verifyToken: String,
-		verifyTokenExpiry: Date,
-		savelist: {
-			type: [mongoose.Schema.Types.ObjectId],
-			ref: 'blog',
-		},
-	},
-	{
-		timestamps: true,
-	}
-)
-const User= mongoose.models.users || mongoose.model("users",userSchema)
+interface IUser extends Document {
+    username: string;
+    name?: string;
+    avatar?: string;
+    email: string;
+    password?: string;
+    provider?: string;
+    isVerified: boolean;
+    isAdmin: boolean;
+    forgotPasswordToken?: string;
+    forgotPasswordExpiry?: Date;
+    verifyToken?: string;
+    verifyTokenExpiry?: Date;
+    savelist: Types.ObjectId[];
+}
 
-export default User
+const userSchema: Schema<IUser> = new mongoose.Schema({
+    username: { type: String, required: true, unique: true },
+    name: String,
+    avatar: String,
+    email: { type: String, required: true, unique: true },
+    password: String,
+    provider: String,
+    isVerified: { type: Boolean, default: false },
+    isAdmin: { type: Boolean, default: false },
+    forgotPasswordToken: String,
+    forgotPasswordExpiry: Date,
+    verifyToken: String,
+    verifyTokenExpiry: Date,
+    savelist: [{ type: Schema.Types.ObjectId, ref: 'Blog' }],
+}, { timestamps: true });
+
+export const User: Model<IUser> = mongoose.models.User || mongoose.model<IUser>("User", userSchema);
+
+export default User;

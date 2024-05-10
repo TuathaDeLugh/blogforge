@@ -1,30 +1,30 @@
 'use client'
 
-import { addToWatchlist } from '@/controller/watchlist'
+import { addToSavelist } from '@/controllers/savelist'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 
-interface WatchListBtnProps {
+interface SaveListBtnProps {
   uid: string
   rid: string
 }
 
-const WatchListBtn = ({ uid, rid }: WatchListBtnProps) => {
+const SaveBlogBtn = ({ uid, rid }: SaveListBtnProps) => {
   const router = useRouter()
 
-  const handleWatchlist = async () => {
-    await addToWatchlist(uid, rid)
-    toast.success('Added to the Watchlist')
+  const handleSavelist = async () => {
+    await addToSavelist(uid, rid)
+    toast.success('Added to the Savelist')
     router.refresh()
   }
   return (
     <button
-      className='inline-block text-white w-full text-center mt-5 py-2 px-5 rounded-full border text-lg bg-purple-500 dark:bg-purple-400 hover:text-purple-400 hover:border-purple-400 hover:bg-transparent dark:hover:bg-transparent  font-medium'
-      onClick={handleWatchlist}
+      className='inline-block text-white w-full text-center mt-3 py-2 px-5 rounded-full border text-lg bg-orange-500 dark:bg-orange-400 hover:text-orange-400 hover:border-orange-400 hover:bg-transparent dark:hover:bg-transparent  font-medium'
+      onClick={handleSavelist}
     >
-      Add to watchlist
+      Add to Save Blog
     </button>
   )
 }
 
-export default WatchListBtn
+export default SaveBlogBtn

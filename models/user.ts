@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema(
 		forgotPasswordExpiry:  Date,
 		verifyToken: String,
 		verifyTokenExpiry: Date,
-		watchlist: {
+		savelist: {
 			type: [mongoose.Schema.Types.ObjectId],
 			ref: 'blog',
 		},

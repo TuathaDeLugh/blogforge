@@ -60,27 +60,27 @@ export async function PUT(request: any, { params }: any) {
 
 
 
-// export async function PATCH(request:any, { params }:any) {
-//   const { id } = params
-//   const { type, id: rid } = await request.json()
+export async function PATCH(request:any, { params }:any) {
+  const { id } = params
+  const { type, id: rid } = await request.json()
 
-//   switch (type) {
-//     case 'addToWatchlist':
-//       await User.findByIdAndUpdate(id, {
-//         $push: { watchlist: rid },
-//       })
-//       break
-//     case 'removeWatchlist':
-//       const user = await User.findById(id)
+  switch (type) {
+    case 'addToSavelist':
+      await User.findByIdAndUpdate(id, {
+        $push: { savelist: rid },
+      })
+      break
+    case 'removeSavelist':
+      const user = await User.findById(id)
 
-//       const index = user.watchlist.find(blog => {
-//         return blog === rid
-//       })
-//       user.watchlist.splice(index, 1)
-//       user.save()
-//     default:
-//       break
-//   }
+      const index = user.savelist.find((blog: any) => {
+        return blog === rid
+      })
+      user.savelist.splice(index, 1)
+      user.save()
+    default:
+      break
+  }
 
-//   return NextResponse.json({ message: 'Success' }, { status: 200 })
-// }
+  return NextResponse.json({ message: 'Success' }, { status: 200 })
+}

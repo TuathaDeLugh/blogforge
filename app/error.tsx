@@ -2,13 +2,11 @@
 
 import { Div } from "@/Components/Motion/Motion";
 import Image from "next/image";
-
-interface ErrorComponentProps {
-    error: Error | undefined | null;
-    reset: () => void | undefined | null;
-}
+import { usePathname } from "next/navigation";
 
 const ErrorComponent = () => {
+    const path = usePathname()
+    
     return (<>
          <section className="max-w-[1500px] mx-auto">
                 <div className="lg:px-24 lg:py-24 md:py-20 md:px-44 px-4 py-24 min-h-[93vh] md:min-h-[91vh]  items-center flex justify-center flex-col lg:flex-row md:gap-28 gap-16">
@@ -28,7 +26,7 @@ const ErrorComponent = () => {
                                     </h1>
                                     <p className="my-2 text-gray-800 dark:text-gray-400">Sorry about that! Please visit our hompage or refresh.</p>
                                     <div className="grid grid-flow-col grid-cols-2 w-[80%] gap-5">
-                                    <a href="/" className=" block my-2 border rounded md py-4 text-center bg-orange-400 text-white hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-700 focus:ring-opacity-50">Refresh Page</a>
+                                    <a href={path} className=" block my-2 border rounded md py-4 text-center bg-orange-400 text-white hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-700 focus:ring-opacity-50">Refresh Page</a>
                                     <a href="/" className=" block my-2 border rounded md py-4 text-center bg-orange-400 text-white hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-700 focus:ring-opacity-50">GO Home!</a>
                                     </div>
                                 </div>

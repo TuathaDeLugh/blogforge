@@ -7,6 +7,13 @@ import Link from 'next/link';
 import React from 'react'
 import "@/style/datadisplay.css"
 import Error from '@/app/not-found';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/options';
+import getSingleUser from '@/controllers/singleuser';
+import RemoveFromSaveBtn from '@/Components/RemoveFromSaveBTN';
+import SaveBlogBtn from '@/Components/SaveBlogBTN';
+import LoadingOneBlog from './loading';
+import Head from 'next/head';
 
 interface BlogProps {
   params: {
@@ -15,10 +22,24 @@ interface BlogProps {
 }
 
 export default async function page({ params: { id } }: BlogProps) {
+  const session = await getServerSession(authOptions)
   const blog = await getSingleblog(id)
+  let user ;
+  if (session && session.user.dbid)
+   {
+  user =  await getSingleUser(session?.user?.dbid)
+  }
 
   if (blog) {
     return (<>
+    <Head>
+          <title>{blog.title}</title>
+          <meta name="description" content={blog.info} />
+          <meta property="og:title" content={blog.title} />
+          <meta property="og:description" content={blog.info} />
+          <meta property="og:image" content={blog.images[0]} />
+          <meta property="og:url" content={`${process.env.API_URL}blogs/${blog._id}`} />
+        </Head>
       <section className=" max-w-[1500px] mx-auto px-4 lg:px-8 ">
         <div className="relative m-5 md:mt-16 mx-2">
           <H1
@@ -44,7 +65,7 @@ export default async function page({ params: { id } }: BlogProps) {
             <Carousel data={blog.images} />
           </div>
             {/* header section */}
-            <div className='w-full P-2 lg:P-0 px-2'>
+            <div className='w-full p-2 lg:P-0 px-2'>
             <Div className='flex tracking-wider '
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -62,7 +83,7 @@ export default async function page({ params: { id } }: BlogProps) {
                 )) as JSX.Element[]
               }</div>
             </Div>
-            <P className='mt-5  tracking-wider  white-space-pre-wrap text-wrap inline-block'
+            <P className='mt-3  tracking-wider  white-space-pre-wrap text-wrap inline-block'
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}>
@@ -73,9 +94,9 @@ export default async function page({ params: { id } }: BlogProps) {
                 {blog.info}
             </P>
 
-              <div className="flex flex-wrap items-center justify-between gap-3 mt-5">
+              <div className="flex flex-wrap items-center justify-between gap-3 ">
 
-              <P className='  tracking-wider'
+              <P className='  tracking-wider mt-3'
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}>
@@ -85,7 +106,7 @@ export default async function page({ params: { id } }: BlogProps) {
                 </span>{' '}
                 {blog.usersave}
               </P>
-              <P className=' tracking-wider flex gap-3 items-center'
+              <P className=' tracking-wider flex gap-3 items-center mt-3'
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}>
@@ -102,14 +123,26 @@ export default async function page({ params: { id } }: BlogProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
               >
-              <button
+                { session ? (
+            session?.user?.dbid &&
+              (user.savelist.indexOf(blog._id) >= 0 ? (
+                <RemoveFromSaveBtn
+                  uid={session.user.dbid}
+                  rid={blog._id}
+                />
+              ) : (
+                <SaveBlogBtn uid={session.user.dbid} rid={blog._id} />
+              ))
+            ) : (<p className=' text-base mt-3' >Please <Link href={'/login'} className='text-orange-500 hover:underline' >Login</Link> For add to savelist</p>)
+            }
+              {/* <button
                         className="bg-orange-500 text-white px-7  w-full sm:w-36 h-10 rounded hover:bg-orange-600 focus:outline-none focus:shadow-outline-green active:bg-orange-800 disabled:opacity-30 flex justify-center items-center gap-2"
                         >
                         Save Blog
-              </button>
+              </button> */}
               </Div>
                           </div>
-            <div className='mt-5'>
+            <div className='mt-3'>
               <P className="flex gap-2 items-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

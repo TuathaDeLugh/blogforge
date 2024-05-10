@@ -92,7 +92,9 @@ const Carousel: React.FC<CarouselProps> = ({ data }) => {
   }, [currentIndex]);
   return (
     <div className=" w-full  max-w-[1500px] mx-auto lg:h-auto px-2 ">
-      <div className={`relative w-full ${data[currentIndex].title ? 'h-[28rem]' : ' h-[20rem] md:h-[36rem]'}   m-auto overflow-hidden rounded-lg `}>
+      <div className={`relative w-full ${
+  data[currentIndex].title ? 'h-[28rem]' : 'h-48 sm:h-[30rem] md:h-[35rem] lg:h-[40rem]'} m-auto overflow-hidden rounded-lg`}>
+      {/* <div className={`relative w-full ${data[currentIndex].title ? 'h-[28rem]' : ' h-48 md:h-[40rem]'}   m-auto overflow-hidden rounded-lg `}> */}
         <AnimatePresence>
           <motion.div
             key={currentIndex}
@@ -103,7 +105,7 @@ const Carousel: React.FC<CarouselProps> = ({ data }) => {
             variants={slideVariants}
             className={` w-full h-full relative grid ${data[currentIndex].title && 'lg:grid-cols-2 gap-3 bg-slate-800 '} lg:bg-transparent`}
           >
-            <div className={`h-full ${data[currentIndex].title ? 'md:max-h-[28rem]' : 'md:max-h-[36rem]'}  w-full absolute lg:relative lg:py-2`}>
+            <div className={`h-full ${data[currentIndex].title ? 'md:max-h-[28rem]' : 'max-h-48 sm:max-h-[30rem] md:max-h-[35rem] lg:max-h-[40rem]'}  w-full absolute lg:relative lg:py-2`}>
               <Image
                 src={imageLink !== undefined ? imageLink : "/image.png"}
                 height={data[currentIndex].title ? 600 : 800}

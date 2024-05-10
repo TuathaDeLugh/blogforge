@@ -32,14 +32,6 @@ export default async function page({ params: { id } }: BlogProps) {
 
   if (blog) {
     return (<>
-    <Head>
-          <title>{blog.title}</title>
-          <meta name="description" content={blog.info} />
-          <meta property="og:title" content={blog.title} />
-          <meta property="og:description" content={blog.info} />
-          <meta property="og:image" content={blog.images[0]} />
-          <meta property="og:url" content={`${process.env.API_URL}blogs/${blog._id}`} />
-        </Head>
       <section className=" max-w-[1500px] mx-auto px-4 lg:px-8 ">
         <div className="relative m-5 md:mt-16 mx-2">
           <H1

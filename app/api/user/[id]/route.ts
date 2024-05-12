@@ -58,39 +58,38 @@ export async function PUT(request: NextRequest, { params }: any) {
 
 }
 
-
-
 export async function PATCH(request: NextRequest, { params }: any) {
   const { id } = params;
-  const { type, rid } = await request.json();
+  const { type, id: rid } = await request.json();
 
   try {
-      switch (type) {
-          case 'addToSavelist':
-              await User.findByIdAndUpdate(id, {
-                  $push: { savelist: rid },
-              });
-              break;
-          case 'removeSavelist':
-              const user = await User.findById(id);
-              if (!user) {
-                  return NextResponse.json({ message: 'User not found' }, { status: 404 });
-              } else {
-                  const index = user.savelist.indexOf(rid);
-                  if (index > -1) {
-                      user.savelist.splice(index, 1);
-                      await user.save();
-                  }
-              }
-              break;
-          default:
-              break;
-      }
+    await connectdb();
 
-      return NextResponse.json({ message: 'Success' }, { status: 200 });
+    switch (type) {
+      case 'addToSavelist':
+        await User.findByIdAndUpdate(id, {
+          $push: { savelist: rid },
+        });
+        break;
+      case 'removeSavelist':
+        const user = await User.findById(id);
+        if (!user) {
+          return NextResponse.json({ message: 'User not found' }, { status: 404 });
+        } else {
+          const index = user.savelist.indexOf(rid);
+          if (index > -1) {
+            user.savelist.splice(index, 1);
+            await user.save();
+          }
+        }
+        break;
+      default:
+        return NextResponse.json({ message: 'Invalid action type' }, { status: 400 });
+    }
+
+    return NextResponse.json({ message: 'Success' }, { status: 200 });
   } catch (error: any) {
-      console.error('Error in PATCH handler:', error.message);
-      return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    console.error('Error in PATCH handler:', error.message);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
-

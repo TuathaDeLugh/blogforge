@@ -1,9 +1,9 @@
 import Blog from "@/models/blog";
 import connectdb from "@/util/mongodb";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import User from '@/models/user'
 
-export async function POST(request: any) {
+export async function POST(request: NextRequest) {
 
     try {
         const { title,category,images,detail,info,status,keywords,creator } = await request.json();
@@ -31,11 +31,12 @@ export async function POST(request: any) {
     }
 }
 
-export async function GET(req: any, res: any) {
+export async function GET(request: NextRequest, response: NextResponse) {
     try {
         await connectdb();
         const sort = -1;
-        const page = req.nextUrl.searchParams.get('page') || 1;
+        const pageParam = request.nextUrl.searchParams.get('page');
+        const page = parseInt(pageParam as string) || 1;
         const pageSize = 15;
         const skip = (page - 1) * pageSize;
 
@@ -51,7 +52,7 @@ export async function GET(req: any, res: any) {
                 meta: {
                     totalDocuments,
                     totalPages: Math.ceil(totalDocuments / pageSize),
-                    currentPage: parseInt(page),
+                    currentPage: page,
                     hasNextPage,
                 },
             },
@@ -70,7 +71,7 @@ export async function GET(req: any, res: any) {
 }
 
 
-export async function DELETE(request: any) {
+export async function DELETE(request: NextRequest) {
     try {
         const id = request.nextUrl.searchParams.get('id');
         await connectdb();

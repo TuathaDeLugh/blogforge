@@ -1,14 +1,15 @@
 import Blog from "@/models/blog";
 import User from '@/models/user'
 import connectdb from "@/util/mongodb";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: any, res: any) {
+export async function GET(request: NextRequest, response: NextResponse) {
     try {
         await connectdb();
         const sort = -1;
-        const filter = req.nextUrl.searchParams.get('category');
-        const page = req.nextUrl.searchParams.get('page') || 1;
+        const filter = request.nextUrl.searchParams.get('category');
+        const pageParam = request.nextUrl.searchParams.get('page');
+        const page = parseInt(pageParam as string) || 1;
         const pageSize = 15;
         const skip = (page - 1) * pageSize;
 
@@ -24,7 +25,7 @@ export async function GET(req: any, res: any) {
                 meta: {
                     totalDocuments,
                     totalPages: Math.ceil(totalDocuments / pageSize),
-                    currentPage: parseInt(page),
+                    currentPage: page,
                     hasNextPage,
                 },
             },

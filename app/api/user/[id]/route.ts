@@ -1,8 +1,8 @@
 import User from '@/models/user'
 import connectdb from '@/util/mongodb'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET(request :any, { params }:any) {
+export async function GET(request : NextRequest, { params }:any) {
 
   
   const { id } = params
@@ -15,7 +15,7 @@ export async function GET(request :any, { params }:any) {
 
 
 
-export async function PUT(request: any, { params }: any) {
+export async function PUT(request: NextRequest, { params }: any) {
   try {
     const { id } = params;
     const { name, username, email, avatar,isAdmin,type } = await request.json();
@@ -60,27 +60,37 @@ export async function PUT(request: any, { params }: any) {
 
 
 
-export async function PATCH(request:any, { params }:any) {
-  const { id } = params
-  const { type, id: rid } = await request.json()
+export async function PATCH(request: NextRequest, { params }: any) {
+  const { id } = params;
+  const { type, rid } = await request.json();
 
-  switch (type) {
-    case 'addToSavelist':
-      await User.findByIdAndUpdate(id, {
-        $push: { savelist: rid },
-      })
-      break
-    case 'removeSavelist':
-      const user = await User.findById(id)
+  try {
+      switch (type) {
+          case 'addToSavelist':
+              await User.findByIdAndUpdate(id, {
+                  $push: { savelist: rid },
+              });
+              break;
+          case 'removeSavelist':
+              const user = await User.findById(id);
+              if (!user) {
+                  return NextResponse.json({ message: 'User not found' }, { status: 404 });
+              } else {
+                  const index = user.savelist.indexOf(rid);
+                  if (index > -1) {
+                      user.savelist.splice(index, 1);
+                      await user.save();
+                  }
+              }
+              break;
+          default:
+              break;
+      }
 
-      const index = user.savelist.find((blog: any) => {
-        return blog === rid
-      })
-      user.savelist.splice(index, 1)
-      user.save()
-    default:
-      break
+      return NextResponse.json({ message: 'Success' }, { status: 200 });
+  } catch (error: any) {
+      console.error('Error in PATCH handler:', error.message);
+      return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
-
-  return NextResponse.json({ message: 'Success' }, { status: 200 })
 }
+

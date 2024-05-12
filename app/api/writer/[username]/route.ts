@@ -1,1 +1,3 @@
-export async function GET(request: any, res: any) {}
+import { NextRequest, NextResponse } from "next/server";
+
+export async function GET(request: NextRequest, response:NextResponse) {}

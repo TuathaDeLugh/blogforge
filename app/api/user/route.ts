@@ -52,10 +52,11 @@ export async function POST(request: NextRequest) {
 }
 
 
-export async function GET(request: any, res: any) {
+export async function GET(request: NextRequest, response: NextResponse) {
     try {
         await connectdb();
-        const page = request.nextUrl.searchParams.get('page') || 1;
+        const pageParam = request.nextUrl.searchParams.get('page');
+        const page = parseInt(pageParam as string) || 1;
         const pageSize = 15;
         const skip = (page - 1) * pageSize;
         const usernameFilter = { username: { $ne: 'admin' } };
@@ -71,7 +72,7 @@ export async function GET(request: any, res: any) {
                 meta: {
                     totalDocuments,
                     totalPages: Math.ceil(totalDocuments / pageSize),
-                    currentPage: parseInt(page),
+                    currentPage: page,
                     hasNextPage,
                 },
             },
@@ -89,7 +90,7 @@ export async function GET(request: any, res: any) {
     }
 }
 
-export async function DELETE(request: any) {
+export async function DELETE(request: NextRequest) {
     try {
         const id = request.nextUrl.searchParams.get('id');
         await connectdb();

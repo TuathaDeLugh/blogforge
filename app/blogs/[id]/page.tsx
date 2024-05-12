@@ -119,6 +119,7 @@ export default async function page({ params: { id } }: BlogProps) {
             session?.user?.dbid &&
               (user.savelist.indexOf(blog._id) >= 0 ? (
                 <RemoveFromSaveBtn
+                  name={blog.title}
                   uid={session.user.dbid}
                   rid={blog._id}
                 />

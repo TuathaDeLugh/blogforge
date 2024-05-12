@@ -73,7 +73,7 @@ const SaveList = async () => {
                           href={`/blogs/${blog._id}`}>
                             Read Blog
                           </Link>
-                          <RemoveFromSaveBtn uid={session?.user.dbid!} rid={blog._id} page='saveist'/>
+                          <RemoveFromSaveBtn name={blog.title} uid={session?.user.dbid!} rid={blog._id} page='saveist'/>
                         </div>
                       </AnimationData>
                     ))

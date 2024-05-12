@@ -3,14 +3,17 @@
 import { removeSavelist } from '@/controllers/savelist'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
+import DModal from './layout/Model'
+import Image from 'next/image'
 
 interface SaveListBtnProps {
+  name?: string
   uid: string
   rid: string
   page?: string
 }
 
-const RemoveFromSaveBtn = ({ uid, rid, page = 'read_review' }: SaveListBtnProps) => {
+const RemoveFromSaveBtn = ({ name, uid, rid, page = 'read_review' }: SaveListBtnProps) => {
   const router = useRouter()
 
   const classes = {
@@ -26,9 +29,12 @@ const RemoveFromSaveBtn = ({ uid, rid, page = 'read_review' }: SaveListBtnProps)
     router.refresh()
   }
   return (
-    <button className={page === 'read_review' ? classes.read_review : classes.savelist} onClick={handleSavelist}>
+    <DModal btn={<div className={page === 'read_review' ? classes.read_review : classes.savelist} >
       Remove from Saved
-    </button>
+    </div>} header={'Are You Sure?'} submit={<button className='w-full h-full inline-block p-3' onClick={handleSavelist}>Remove</button>}>
+      <Image src={'/delete.svg'} alt='delete person' width={200} height={200}/>
+     <p> You want to remove <span className='text-orange-500'>{name}</span> from savelist ? </p>
+      </DModal>
   )
 }
 

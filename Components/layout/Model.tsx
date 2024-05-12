@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 interface DModalProps {
   btn: React.ReactNode | null | undefined;
   header: React.ReactNode | null | undefined;
-  children: React.ReactNode | null | undefined;
+  children?: React.ReactNode | null | undefined;
   submit: React.ReactNode | null | undefined;
 }
 
@@ -79,7 +79,7 @@ const DModal: React.FC<DModalProps> = ({ btn, header, children, submit }) => {
               <span
                 className={`mx-auto mb-6 inline-block h-1 w-[90px] rounded bg-primary`}
               ></span>
-              <div className="mb-10 text-base leading-relaxed text-body-color dark:text-dark-6">
+              <div className="mb-10 text-base leading-relaxed flex flex-col items-center gap-5">
                 {children}
               </div>
               <div className="-mx-3 flex flex-wrap">

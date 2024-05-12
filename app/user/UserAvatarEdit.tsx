@@ -141,7 +141,7 @@ export default function UserAvatarEdit({ userId }: AvatarModelProps) {
               <span
                 className={`mx-auto mb-6 inline-block h-1 w-[90px] rounded bg-primary`}
               ></span>
-              <div className="mb-10 text-base leading-relaxed text-body-color dark:text-dark-6">
+              <div className="mb-10 text-base leading-relaxed  ">
                 <div className="flex flex-wrap gap-4 max-h-72 overflow-auto justify-center">
                   <AiOutlineUser
                     key={'clear'}

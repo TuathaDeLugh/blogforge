@@ -512,7 +512,7 @@ const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
                     <button
                         disabled={disabled}
                         type="submit"
-                        className="bg-orange-500 text-white w-36 h-10 rounded hover:bg-orange-600 focus:outline-none focus:shadow-outline-green active:bg-orange-800 disabled:opacity-30 flex justify-center items-center gap-2"
+                        className="bg-orange-500 text-white w-44 h-10 rounded hover:bg-orange-600 focus:outline-none focus:shadow-outline-green active:bg-orange-800 disabled:opacity-30 flex justify-center items-center gap-2"
                     >
                         
                         {

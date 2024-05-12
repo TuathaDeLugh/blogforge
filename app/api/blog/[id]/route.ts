@@ -4,6 +4,9 @@ import connectdb from "@/util/mongodb";
 import { NextResponse } from "next/server";
 
 export async function PUT(request:any,{params}:any){
+    if (!User) {
+        throw new Error('User model is not registered');
+    }
     const { id } = params;
     const { title,category,images,detail,info,status,keyword}  = await request.json();
     await connectdb();

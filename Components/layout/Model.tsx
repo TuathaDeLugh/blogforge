@@ -88,7 +88,7 @@ const DModal: React.FC<DModalProps> = ({ btn, header, children, submit }) => {
                     onClick={() => setModalOpen(false)}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="block w-full rounded-md border border-stroke dark:border-slate-600 p-3 text-center text-base font-medium text-dark transition hover:border-red-500/70 hover:bg-red-500/70 hover:text-white dark:text-white"
+                    className="block w-full rounded-md border border-stroke dark:border-slate-600 p-3 text-center text-base font-medium  transition hover:border-red-500/70 dark:hover:border-red-500  hover:text-red-500/70 dark:hover:text-red-500"
                   >
                     Cancel
                   </motion.button>

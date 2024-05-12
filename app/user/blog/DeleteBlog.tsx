@@ -48,7 +48,7 @@ export default function DelBlogBtn({ id , images , title }:DelBlogBtnProps) {
     });
   }
   return (
-    <DModal btn={<MdOutlineDelete size={25} className='text-red-600 ' />} header={'Are You Sure ?'} submit={<button className='w-full h-full inline-block p-3' onClick={handleDelete}>Delete</button>}>
+    <DModal btn={<MdOutlineDelete size={25} className='text-red-600 ' />} header={'Are You Sure ?'} submit={<button className='w-full h-full rounded bg-red-500/70 dark:bg-red-400/90 hover:bg-red-600 dark:hover:bg-red-600 inline-block p-3' onClick={handleDelete}>Delete</button>}>
          <Image src={'/delete.svg'} alt='delete person' width={200} height={200}/>
          <p>
           You want to delete this blog : <span className="text-orange-500">{title}</span> ?

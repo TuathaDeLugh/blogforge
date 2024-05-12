@@ -1,39 +1,38 @@
-import { H1 } from '@/Components/Motion/Motion';
-import React from 'react'
-import Search from '@/Components/Search';
-import Pagination from '@/Components/Pagination';
-import Link from 'next/link';
-import Image from 'next/image';
-import AnimationData from '@/Components/Motion/AnimationData';
-import getAllBlog from '@/controllers/allblog';
+import AnimationData from '@/Components/Motion/AnimationData'
+import { H1 } from '@/Components/Motion/Motion'
+import Pagination from '@/Components/Pagination'
+import RemoveFromSaveBtn from '@/Components/RemoveFromSaveBTN'
+import { authOptions } from '@/app/api/auth/[...nextauth]/options'
+import { getBlogs } from '@/controllers/savelist'
+import { getServerSession } from 'next-auth'
+import Image from 'next/image'
+import Link from 'next/link'
 
-export default async function Blogs( context : any) {
-  const pageno = parseInt(context?.searchParams.page)
-    
-  const blogs = await getAllBlog(pageno);
+const SaveList = async () => {
+  const session = await getServerSession(authOptions)
+  // const user = await getSingleUser(session.user.id)
+  const blogs = await getBlogs(session?.user.dbid!)
+  
 
-    return (
-          <section className='px-4 lg:px-8 max-w-[1500px] mx-auto mb-5 '>
-             <div className="relative my-5 md:mt-16">
+  return (
+    <section className='px-3 mx-auto max-w-[1500px] '>
+        <div className="relative m-5 md:mt-16 mx-2">
           <H1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 0.1, y: 0 }}
-            transition={{ duration: 0.3 }}
-              className="absolute md:-top-16 lg:-top-20   left-0 text-[80px] lg:text-[100px] text-gray-900 font-bold  dark:text-gray-200 opacity-5 md:block hidden"
-              >
-              Blogs
-            </H1>
-            <H1
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="absolute md:-top-16 lg:-top-20   left-0 text-[80px] lg:text-[100px] text-gray-900 font-bold  dark:text-gray-200 opacity-5 md:block hidden"
+          >
+            User
+          </H1>
+          <H1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3}} className="pl-2 text-3xl font-bold border-l-8 border-orange-400 md:text-5xl dark:text-white">
-              All Blogs
-            </H1>
-          </div>
-          <Search/>
-
-          
-          <div className="min-h-[90vh]">
+            transition={{ duration: 0.5, delay: 0.3 }} className="pl-2 text-3xl font-bold border-l-8 border-orange-400 md:text-5xl dark:text-white">
+            Saved Blogs
+          </H1>
+        </div>
+        <div className="min-h-[90vh]">
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {
                     blogs.data.map((blog: any,index:number) => (
@@ -69,11 +68,12 @@ export default async function Blogs( context : any) {
                           </p>
                           
                         </div>
-                        <div className=" flex items-center p-6 rounded-b-lg bg-white dark:bg-gray-800">
-                        <Link className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground h-9 rounded-md px-3 text-white bg-orange-400 hover:bg-orange-400/80 dark:bg-orange-500/80 dark:hover:bg-orange-500/50 "
+                        <div className=" flex items-center p-6 rounded-b-lg justify-between bg-white dark:bg-gray-800">
+                          <Link className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50  h-9 rounded-md px-3 text-white bg-orange-400 hover:bg-orange-400/80 dark:bg-orange-500/80 dark:hover:bg-orange-500/50 "
                           href={`/blogs/${blog._id}`}>
                             Read Blog
                           </Link>
+                          <RemoveFromSaveBtn uid={session?.user.dbid!} rid={blog._id} page='saveist'/>
                         </div>
                       </AnimationData>
                     ))
@@ -83,7 +83,8 @@ export default async function Blogs( context : any) {
             </div>
             </div>
             <Pagination pagedata={blogs.meta}/>
-
-          </section>
-    )
+    </section>
+  )
 }
+
+export default SaveList

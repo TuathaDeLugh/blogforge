@@ -54,7 +54,7 @@ export async function addToSavelist(uid:string, rid:string) {
   
       const blogs = await response.json()
   
-      return blogs.data
+      return blogs
     } catch (error) {
       console.log(error)
     }

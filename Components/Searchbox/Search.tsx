@@ -47,12 +47,12 @@ export default function Search() {
     }, [query]);
 
     return (
-        <Div className="my-5 flex items-center justify-center gap-3"
+        <Div className="my-5 flex  items-center justify-center gap-3 px-3"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
         >
-            <div className="relative" ref={searchRef}>
+            <div className="relative grow md:grow-0" ref={searchRef} >
                 <div className="bg-gray-300/50 dark:bg-slate-700/50 rounded-lg w-full md:w-[30rem] flex shadow dark:shadow-slate-700 backdrop-blur-md">
                     <form className="search-container inline-block relative w-4/5">
                         <input

@@ -26,8 +26,9 @@ export default async function SearchbarResult({query}:ResultProp) {
                                             src={blog.image.link}
                                             alt={blog.title}
                                             />
-                                        <div>
-                                            <h2 className="font-semibold">{blog.title}</h2>
+                                        <div className=' space-y-2'>
+                                            <h2 className="font-semibold ">{blog.title}</h2>
+                                            <p className="flex gap-2 items-center text-sm"><Image src={blog.creator.avatar} alt='userimage' width={50} height={50} className=' w-5 h-5 rounded-full'/><span className=' opacity-80'>{blog.creator.username}</span></p>
                                         </div>
                                     </Link>
                                 ))}

@@ -23,14 +23,20 @@ export async function GET(request: NextRequest) {
             { $project: {
                 _id: 1,
                 title: 1,
-                image: { $arrayElemAt: ["$images", 0] }
+                image: { $arrayElemAt: ["$images", 0] },
+                creator:1
             }},
             { 
                 $sort: { 
                     title: 1,
                     keyword:1
                 } }
-        ]);
+                
+        ]).exec();
+        await Blog.populate(blogs, {
+            path: 'creator',
+            select: 'username avatar'
+        });
         return NextResponse.json({ data: blogs }, { status: 200 });
     }
     catch (error: any) {

@@ -1,6 +1,6 @@
 import { H1 } from '@/Components/Motion/Motion';
 import React from 'react'
-import Search from '@/Components/Search';
+import Search from '@/Components/Searchbox/Search';
 import Pagination from '@/Components/Pagination';
 import Link from 'next/link';
 import Image from 'next/image';

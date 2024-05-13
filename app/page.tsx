@@ -2,7 +2,7 @@ import React from 'react'
 import Carousel from '@/Components/Crousel';
 import AnimationList from '@/Components/Motion/AnimationList';
 import ShareButton from '@/Components/Sharebutton';
-import Search from '@/Components/Search';
+import Search from '@/Components/Searchbox/Search';
 import { authOptions } from './api/auth/[...nextauth]/options';
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';

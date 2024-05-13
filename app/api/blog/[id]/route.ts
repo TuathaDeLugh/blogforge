@@ -1,20 +1,20 @@
 import Blog from "@/models/blog";
 import User from '@/models/user';
 import connectdb from "@/util/mongodb";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function PUT(request:any,{params}:any){
+export async function PUT(request:NextRequest,{params}:any){
     if (!User) {
         throw new Error('User model is not registered');
     }
     const { id } = params;
-    const { title,category,images,detail,info,status,keyword}  = await request.json();
+    const { title,category,images,detail,info,status,keywords}  = await request.json();
     await connectdb();
-    await Blog.findByIdAndUpdate(id, { title,category,images,detail,info,status,keyword});
+    await Blog.findByIdAndUpdate(id, { title,category,images,detail,info,status,keywords});
     return NextResponse.json({message:"Blog Updated"},{status:200});
 } 
 
-export async function GET(request:any, { params }:any) {
+export async function GET(request:NextRequest, { params }:any) {
     try {
         const { id } = params;
         await connectdb();

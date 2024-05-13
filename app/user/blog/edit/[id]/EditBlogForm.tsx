@@ -134,6 +134,8 @@ const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
                         },
                         body: JSON.stringify(data),
                     });
+                    console.log(values.keywords);
+                    
 
                     router.back();
                     router.refresh();
@@ -491,7 +493,7 @@ const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
                     </div>
 
                     <span className='flex items-center text-base font-semibold  text-orange-500 dark:text-orange-400/70 mx-5 mb-6'>
-                        Blog will be Post by :{' '}
+                        Blog Posted by :{' '}
                         {blog?.creator.avatar ? (
                             <Image width={50} height={50}
                                 src={blog?.creator.avatar}

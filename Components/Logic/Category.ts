@@ -15,6 +15,5 @@ export const category =
     'Social Issues',
     'Sports and Fitness',
     'Technology',
-    'Technology',
     'Travel'
 ];

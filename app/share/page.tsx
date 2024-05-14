@@ -2,18 +2,18 @@ import { redirect } from 'next/navigation';
 import { Metadata } from 'next';
 import React from 'react'
 
-type Props = {
-    params: {
-        blog: string
-    }
-}
+// type Props = {
+//     params: {
+//         blog: string
+//     }
+// }
 
 
-export const generatemetadata = ({params}:Props): Metadata =>{
-    return {
-        title: params.blog,
-    }
-}
+// export const generatemetadata = ({params}:Props): Metadata =>{
+//     return {
+//         title: params.blog,
+//     }
+// }
 
 
 export default async function SharePage(context : any) {

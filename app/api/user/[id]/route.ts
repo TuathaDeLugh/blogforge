@@ -1,3 +1,4 @@
+import Blog from '@/models/blog'
 import User from '@/models/user'
 import connectdb from '@/util/mongodb'
 import { NextRequest, NextResponse } from 'next/server'
@@ -70,6 +71,9 @@ export async function PATCH(request: NextRequest, { params }: any) {
         await User.findByIdAndUpdate(id, {
           $push: { savelist: rid },
         });
+        await Blog.findByIdAndUpdate(rid, {
+          $inc: { usersave: 1 },
+        });
         break;
       case 'removeSavelist':
         const user = await User.findById(id);
@@ -80,6 +84,9 @@ export async function PATCH(request: NextRequest, { params }: any) {
           if (index > -1) {
             user.savelist.splice(index, 1);
             await user.save();
+            await Blog.findByIdAndUpdate(rid, {
+              $inc: { usersave: -1 },
+            });
           }
         }
         break;

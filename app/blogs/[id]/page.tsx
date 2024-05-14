@@ -12,8 +12,6 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/options';
 import getSingleUser from '@/controllers/singleuser';
 import RemoveFromSaveBtn from '@/Components/RemoveFromSaveBTN';
 import SaveBlogBtn from '@/Components/SaveBlogBTN';
-import LoadingOneBlog from './loading';
-import Head from 'next/head';
 
 interface BlogProps {
   params: {
@@ -107,7 +105,7 @@ export default async function page({ params: { id } }: BlogProps) {
                   Share :{' '}
                 </span>{' '}
                 {blog.share}
-                <ShareButton link={`${process.env.API_URL}blogs/${blog._id}`} />
+                <ShareButton link={`${process.env.API_URL}share?blog=${blog.title}`} />
               </P>
               <Div
               className=' grow sm:grow-0'
@@ -128,11 +126,6 @@ export default async function page({ params: { id } }: BlogProps) {
               ))
             ) : (<p className=' text-base mt-3' >Please <Link href={'/login'} className='text-orange-500 hover:underline' >Login</Link> For add to savelist</p>)
             }
-              {/* <button
-                        className="bg-orange-500 text-white px-7  w-full sm:w-36 h-10 rounded hover:bg-orange-600 focus:outline-none focus:shadow-outline-green active:bg-orange-800 disabled:opacity-30 flex justify-center items-center gap-2"
-                        >
-                        Save Blog
-              </button> */}
               </Div>
                           </div>
             <div className='mt-3'>

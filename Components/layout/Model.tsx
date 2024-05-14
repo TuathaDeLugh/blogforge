@@ -50,6 +50,7 @@ const DModal: React.FC<DModalProps> = ({ btn, header, children, submit }) => {
   return (
     <>
       <button
+      className="w-full"
         ref={trigger}
         onClick={() => setModalOpen(true)}
       >

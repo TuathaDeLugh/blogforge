@@ -77,7 +77,7 @@ export default function Search() {
                                 <div className="flex gap-2 flex-wrap w-full">
                                     {Array.from({ length: 3 }).map((_, i) => (
                                         <div key={i} className="flex w-full items-center p-2 border border-slate-300 dark:border-slate-500 rounded-md animate-pulse duration-300">
-                                            <div className="w-20 h-20 mr-2 object-cover border dark:border-slate-500 bg-slate-200 dark:bg-slate-700 rounded" />
+                                            <div className="w-28 h-20 mr-2 object-cover border dark:border-slate-500 bg-slate-200 dark:bg-slate-700 rounded" />
                                             <div className='grow'>
                                                 <h2 className="font-semibold p-3 mb-2 w-[95%] rounded-full bg-slate-300 dark:bg-slate-600"></h2>
                                                 <p className="text-gray-400 p-2 w-16 rounded-full bg-slate-300 dark:bg-slate-600"></p>

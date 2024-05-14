@@ -22,7 +22,7 @@ export default async function SearchbarResult({query}:ResultProp) {
                                         <Image
                                             width={200}
                                             height={200}
-                                            className="w-20 h-20 mr-2 object-cover rounded border dark:border-slate-500 bg-slate-200/50 dark:bg-slate-600"
+                                            className="w-28 h-20 mr-2 object-cover rounded border dark:border-slate-500 bg-slate-200/50 dark:bg-slate-600"
                                             src={blog.image.link}
                                             alt={blog.title}
                                             />

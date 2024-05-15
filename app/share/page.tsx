@@ -1,37 +1,40 @@
 import { redirect } from 'next/navigation';
-import { Metadata } from 'next';
 import React from 'react'
+import type { Metadata} from 'next'
 
-// type Props = {
-//     params: {
-//         blog: string
-//     }
-// }
+const api = process.env.API_URL;
+
+async function fetchData(id: string, increment: boolean = false) {
+    const request = await fetch(`${api}api/share?blog=${id}&increment=${increment}`);
+    return request.json();
+  }
+
+export async function generateMetadata(context: any): Promise<Metadata> {
+  const blog = context?.searchParams.blog;
 
 
-// export const generatemetadata = ({params}:Props): Metadata =>{
-//     return {
-//         title: params.blog,
-//     }
-// }
-
+  const blogdata = await fetchData(blog);
+    
+  return {
+    title: blogdata.title,
+    description:blogdata.info,
+    openGraph: {
+      images: [blogdata.images[0].link],
+    },
+  };
+}
 
 export default async function SharePage(context : any) {
     const blog = context?.searchParams.blog
-    const api = process.env.API_URL;
     if (blog)
         {
-            
-            const request =  await fetch(`${api}api/share?blog=${blog}`, {
-                cache: "no-store",
-            }); 
-            const blogdata = await request.json();
-            redirect(`/blogs/${blogdata._id}`)
+            const request =  await fetchData(blog, true);
+            redirect(`/blogs/${request._id}`)
             
         }
         
         return (
-            <div>page</div>
+            <div>Redirecting...🥸</div>
         )
     }
     

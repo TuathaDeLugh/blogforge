@@ -1,11 +1,12 @@
+import { NextRequest, NextResponse } from "next/server";
+import connectdb from "@/util/mongodb";
 import Blog from "@/models/blog";
-import connectdb from "@/util/mongodb"
-import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(request: NextRequest) {
     try {
         await connectdb();
         const blog = request.nextUrl.searchParams.get('blog');
+        const incrementShare = request.nextUrl.searchParams.get('increment') === 'true'; 
         if (!blog) {
             return NextResponse.json(
                 { message: 'Query parameter is missing' },
@@ -13,12 +14,12 @@ export async function GET(request: NextRequest) {
             );
         }
         const blogdata = await Blog.findOne({ title : blog}).select('title category images info');
-        if (blogdata){
+        if (blogdata && incrementShare) {
             await Blog.findByIdAndUpdate(blogdata._id, {
                 $inc: { share: 1 },
-              });
+            });
         }
-        return NextResponse.json( blogdata , { status: 200 });
+        return NextResponse.json(blogdata, { status: 200 });
     }
     catch (error: any) {
         console.error('Error in GET handler:', error.message);

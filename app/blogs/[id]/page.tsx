@@ -12,10 +12,26 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/options';
 import getSingleUser from '@/controllers/singleuser';
 import RemoveFromSaveBtn from '@/Components/RemoveFromSaveBTN';
 import SaveBlogBtn from '@/Components/SaveBlogBTN';
+import { Metadata } from 'next';
 
 interface BlogProps {
   params: {
     id: string;
+  };
+}
+
+export async function generateMetadata({ params: { id }}: BlogProps ): Promise<Metadata> {
+  const blogdata = await getSingleblog(id)
+   const blogTitle = blogdata.title||"Blog is not avaliable"
+   const blogInfo = blogdata.info || "Blog is not avaliable"
+   const images = blogdata.images || [];
+   const imageLink = images.length > 0 ? images[0].link : 'default_image_link';
+  return {
+    title: blogTitle,
+    description:blogInfo,
+    openGraph: {
+      images: [imageLink],
+    },
   };
 }
 

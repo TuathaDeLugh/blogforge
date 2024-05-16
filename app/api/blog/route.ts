@@ -79,6 +79,13 @@ export async function DELETE(request: NextRequest) {
         return NextResponse.json({ message: "Blog Deleted" }, { status: 200 });
     } catch (error: any) {
         console.log(error)
+        return NextResponse.json(
+            {
+                message: 'Failed to load',
+                error: error.message,
+            },
+            { status: 500 }
+        );
     }
 }
 
@@ -91,7 +98,7 @@ export async function PATCH(request: NextRequest) {
         const foundBlog = await Blog.findById(blog).exec();
         if (!foundBlog) {
             console.error("Review not found");
-            return NextResponse.json({ message: "Review not found" }, { status: 404 });
+            return NextResponse.json({ message: "not found" }, { status: 404 });
         }
     switch (action) {
         
@@ -112,5 +119,12 @@ export async function PATCH(request: NextRequest) {
 
     } catch (error: any) {
         console.log(error)
+        return NextResponse.json(
+            {
+                message: 'Failed to load',
+                error: error.message,
+            },
+            { status: 500 }
+        );
     }
 }

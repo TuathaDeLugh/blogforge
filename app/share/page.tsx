@@ -5,7 +5,11 @@ import type { Metadata} from 'next'
 const api = process.env.API_URL;
 
 async function fetchData(id: string, increment: boolean = false) {
-    const request = await fetch(`${api}api/share?blog=${id}&increment=${increment}`);
+    const request = await fetch(`${api}api/share?blog=${id}&increment=${increment}`,
+    {
+      cache: "no-store",
+    }
+    );
     return request.json();
   }
 

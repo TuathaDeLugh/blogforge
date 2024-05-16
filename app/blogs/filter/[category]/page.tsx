@@ -69,7 +69,7 @@ export default async function Filterblogs( context : any) {
                               :
                               null
                             }
-                            {blog.creator.username +' at ' + new Date(blog.updatedAt).toLocaleString()}
+                            {blog.creator.username +' at ' + new Date(blog.updatedAt).toLocaleString('en-IN', {timeZone: 'Asia/Kolkata'})}
                           </p>
                           
                         </div>

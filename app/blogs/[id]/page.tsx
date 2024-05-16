@@ -186,7 +186,7 @@ export default async function page({ params: { id } }: BlogProps) {
                       null
                   }
                   {blog.creator.username + (blog.createdAt !== blog.updatedAt ? ', Last Updated at ' : ' at ') +
-                    new Date(blog.createdAt).toLocaleString()}
+                    new Date(blog.createdAt).toLocaleString('en-IN', {timeZone: 'Asia/Kolkata'})}
                 </P>
 
               </div>

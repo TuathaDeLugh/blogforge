@@ -121,7 +121,7 @@ export default async function page({ params: { id } }: BlogProps) {
                   Share :{' '}
                 </span>{' '}
                 {blog.share}
-                <ShareButton link={`${process.env.API_URL}share?blog=${blog.title}`} />
+                <ShareButton link={`${process.env.API_URL}share?blog=${encodeURIComponent(blog.title)}`} />
               </P>
               <Div
               className=' grow sm:grow-0'

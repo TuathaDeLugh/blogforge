@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Tr from '@/Components/Motion/TableAnimation'
 import { Div } from '@/Components/Motion/Motion'
 import getUserBlog from '@/controllers/userblog'
-import Pagination from '@/Components/Pagination'
+import Pagination from '@/Components/layout/Pagination'
 import DelBlogBtn from '../DeleteBlog'
 
 interface UserBlogTableProps {

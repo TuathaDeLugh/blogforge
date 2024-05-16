@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import Image from "next/image";
-import { H1, P } from "./Motion/Motion";
+import { H1, P } from "../Motion/Motion";
 import Link from "next/link";
 
 interface CarouselProps {

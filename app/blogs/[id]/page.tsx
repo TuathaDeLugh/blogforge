@@ -1,4 +1,4 @@
-import Carousel from '@/Components/Crousel';
+import Carousel from '@/Components/layout/Crousel';
 import { Div, H1, P } from '@/Components/Motion/Motion';
 import ShareButton from '@/Components/Sharebutton';
 import getSingleblog from '@/controllers/singleblog';

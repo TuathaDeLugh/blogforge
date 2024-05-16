@@ -1,6 +1,6 @@
 import AnimationData from '@/Components/Motion/AnimationData'
 import { H1 } from '@/Components/Motion/Motion'
-import Pagination from '@/Components/Pagination'
+import Pagination from '@/Components/layout/Pagination'
 import RemoveFromSaveBtn from '@/Components/RemoveFromSaveBTN'
 import { authOptions } from '@/app/api/auth/[...nextauth]/options'
 import { getBlogs } from '@/controllers/savelist'

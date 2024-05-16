@@ -1,7 +1,7 @@
 import { H1 } from '@/Components/Motion/Motion';
 import React from 'react'
 import Search from '@/Components/Searchbox/Search';
-import Pagination from '@/Components/Pagination';
+import Pagination from '@/Components/layout/Pagination';
 import getFilterBlog from '@/controllers/filterblog';
 import Image from 'next/image';
 import AnimationData from '@/Components/Motion/AnimationData';

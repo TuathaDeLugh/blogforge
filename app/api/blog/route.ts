@@ -81,3 +81,36 @@ export async function DELETE(request: NextRequest) {
         console.log(error)
     }
 }
+
+export async function PATCH(request: NextRequest) {
+    try {
+        const { blog, user, comment,action } = await request.json()
+
+        await connectdb();
+        
+        const foundBlog = await Blog.findById(blog).exec();
+        if (!foundBlog) {
+            console.error("Review not found");
+            return NextResponse.json({ message: "Review not found" }, { status: 404 });
+        }
+    switch (action) {
+        
+        case 'add':
+            {
+            foundBlog.comments.push({user,comment});
+            await foundBlog.save();
+            return NextResponse.json({ message: "Comment created" }, { status: 200 });
+        }
+        case 'remove':
+            {
+                foundBlog.comments.pull({user});
+                await foundBlog.save();
+                return NextResponse.json({ message: "Comment removed" }, { status: 200 });
+            }
+            
+    }
+
+    } catch (error: any) {
+        console.log(error)
+    }
+}

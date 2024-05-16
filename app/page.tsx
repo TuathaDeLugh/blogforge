@@ -1,5 +1,5 @@
 import React from 'react'
-import Carousel from '@/Components/Crousel';
+import Carousel from '@/Components/layout/Crousel';
 import AnimationList from '@/Components/Motion/AnimationList';
 import ShareButton from '@/Components/Sharebutton';
 import Search from '@/Components/Searchbox/Search';

@@ -1,4 +1,4 @@
-import Pagination from '@/Components/Pagination'
+import Pagination from '@/Components/layout/Pagination'
 import { authOptions } from '@/app/api/auth/[...nextauth]/options'
 import getUserBlog from '@/controllers/userblog'
 import { getServerSession } from 'next-auth'

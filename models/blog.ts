@@ -1,16 +1,15 @@
 import mongoose, { Schema } from "mongoose";
 
 const commentSchema = new mongoose.Schema({
-    userid: { type: Schema.Types.ObjectId, ref: 'User' },
-    useravatar: String,
-    username: String,
+    commentid: { type: Schema.Types.ObjectId},
+    user: { type: Schema.Types.ObjectId, ref: 'User' },
     comment: String,
 }, { timestamps: true });
 
 const blogSchema = new mongoose.Schema({
     title: { type: String, required: true },
     category: { type: [String], required: true },
-    images: [{ _id: { type: String, required: true }, name: String, link: String }],
+    images: [{ _id: { type: Schema.Types.ObjectId, required: true }, name: String, link: String }],
     info: { type: String, required: true },
     detail: { type: String, required: true },
     usersave: { type: Number, default: 0 },

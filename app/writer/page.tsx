@@ -1,6 +1,6 @@
 import AnimationData from '@/Components/Motion/AnimationData';
 import { H1 } from '@/Components/Motion/Motion';
-import Pagination from '@/Components/Pagination';
+import Pagination from '@/Components/layout/Pagination';
 import getAllWriter from '@/controllers/allwriter';
 import Image from 'next/image'
 import Link from 'next/link';

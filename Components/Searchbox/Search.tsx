@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, Suspense } from 'react';
 import { FaSearch } from "react-icons/fa";
-import FilterDropDown from '../Motion/FilterBtn';
+import FilterDropDown from '../FilterBtn';
 import { Div } from '../Motion/Motion';
 import SearchbarResult from './Result';
 

@@ -14,7 +14,6 @@ import RemoveFromSaveBtn from '@/Components/RemoveFromSaveBTN';
 import SaveBlogBtn from '@/Components/SaveBlogBTN';
 import { Metadata } from 'next';
 import CommentForm from '@/Components/Comment/CommentForm';
-import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import { AiOutlineUser } from 'react-icons/ai';
 import DelCommentBtn from '@/Components/Comment/DelCommentBtn';
 
@@ -42,7 +41,6 @@ export async function generateMetadata({ params: { id } }: BlogProps): Promise<M
 export default async function page({ params: { id } }: BlogProps) {
   const session = await getServerSession(authOptions)
   const blog = await getSingleblog(id)
-  console.log(blog.comments);
 
   let user;
   if (session && session.user.dbid) {
@@ -191,7 +189,7 @@ export default async function page({ params: { id } }: BlogProps) {
                     null
                 }
                 {blog.creator.username + (blog.createdAt !== blog.updatedAt ? ', Last Updated at ' : ' at ') +
-                  new Date(blog.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
+                  new Date(blog.updatedAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
               </P>
 
             </div>
@@ -217,10 +215,10 @@ export default async function page({ params: { id } }: BlogProps) {
                     return (
                       <div
                         key={comment._id}
-                        className=' rounded-lg bg-slate-100 dark:bg-gray-800 p-3 w-[98%] '
+                        className=' rounded-lg bg-slate-100 dark:bg-gray-800 p-3 w-[98%] relative '
                       >
-                        <div className='py-1 px-2 flex border-b dark:border-gray-500 justify-between'>
-                          <div className='flex items-center'>
+                        <div className='py-1 px-2 flex justify-between'>
+                          <div className='flex items-center gap-2'>
                             {comment.useravatar ? (
                               <Image width={50} height={50}
                                 src={comment.useravatar}
@@ -233,13 +231,16 @@ export default async function page({ params: { id } }: BlogProps) {
                                 className='border dark:border-slate-400 mr-1 w-7 h-7 rounded-full'
                               />
                             )}{' '}
-                            {comment.username}
+                              <div className='flex flex-col justify-start'>
+                           <p> {comment.username} </p>
+                          <p className=' text-xs opacity-75'>at {new Date(comment.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}</p>
+                          </div>
                           </div>
                           {session &&
                           (blog.creator.userid == session.user?.dbid ||
                             comment.user == session.user?.dbid ||
                             session.user.isAdmin==true) ? (
-                            <div>
+                            <div className=' absolute right-0 top-0' >
                               <DelCommentBtn
                                 blogid={blog._id}
                                 commid={comment._id}

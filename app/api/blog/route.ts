@@ -91,7 +91,7 @@ export async function DELETE(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
     try {
-        const { blog, user, comment,action } = await request.json()
+        const { blog, user, comment,action,commid } = await request.json()
 
         await connectdb();
         
@@ -104,13 +104,14 @@ export async function PATCH(request: NextRequest) {
         
         case 'add':
             {
-            foundBlog.comments.push({user,comment});
+            const id = Math.floor(Math.random() * 1000000).toString();
+            foundBlog.comments.push({_id:id,user,comment});
             await foundBlog.save();
             return NextResponse.json({ message: "Comment created" }, { status: 200 });
         }
         case 'remove':
             {
-                foundBlog.comments.pull({user});
+                foundBlog.comments.pull({_id:commid});
                 await foundBlog.save();
                 return NextResponse.json({ message: "Comment removed" }, { status: 200 });
             }

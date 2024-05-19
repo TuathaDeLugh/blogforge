@@ -15,14 +15,12 @@ export default function CommentForm({ blogid }:CommentFormPrp) {
   const router = useRouter();
   const { data: session } = useSession()
   const initialValues = {
-    _id:"",
-    username: "",
-    useravatar:"",
+    user:"",
     comment: "",
   };
   const postapi = async (ogvalues:any) => {
-    await fetch(`/api/review/comment/${blogid}`, {
-      method: "POST",
+    await fetch(`/api/blog`, {
+      method: "PATCH",
       headers: {
         "Content-type": "application/json",
       },
@@ -36,11 +34,10 @@ export default function CommentForm({ blogid }:CommentFormPrp) {
     initialValues,
     onSubmit: (async (values, action) => {
       const data =  {
-        _id: Math.floor(Math.random() * 1000000),
-        userid:session?.user.dbid,
-        username:session?.user.username,
-        useravatar:session?.user.avatar,
-        comment:values.comment
+        user:session?.user.dbid,
+        blog:blogid,
+        comment:values.comment,
+        action:'add'
       }
       toast.promise((postapi(data)), {
         loading: "Adding Comment",
@@ -56,7 +53,7 @@ export default function CommentForm({ blogid }:CommentFormPrp) {
     return (
       <div className=' mt-5'>
                 <form className='flex justify-between' onSubmit={handleSubmit} autoComplete="off">
-                  <input type="text" className='w-[80%] bg-transparent border rounded-full px-3 py-1 border-gray-400 focus:outline-none focus:ring focus:ring-orange-700' placeholder='Comment' required name="comment"
+                  <input type="text" className='w-[80%] bg-transparent border rounded-full px-3 py-1 border-gray-400 focus:outline-none focus:ring focus:ring-orange-700' placeholder='Your Comment' required name="comment"
                   value={values.comment}
                   onChange={handleChange} id="" />
                   <button type="submit" value="Submit" className='rounded-full p-2 bg-orange-400 text-white '><IoAddSharp size={25}/></button>

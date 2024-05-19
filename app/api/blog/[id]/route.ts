@@ -18,7 +18,7 @@ export async function GET(request:NextRequest, { params }:any) {
     try {
         const { id } = params;
         await connectdb();
-        const blog = await Blog.findById(id).populate('creator','_id username avatar');
+        const blog = await Blog.findById(id).populate({path:'creator',select:'_id username avatar'}).populate({path:'comments.user',select:'username avatar'});
         return NextResponse.json({ data:blog }, { status: 200 });
         
     } catch (error:any) {

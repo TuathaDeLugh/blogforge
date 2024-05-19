@@ -41,7 +41,7 @@ export async function generateMetadata({ params: { id } }: BlogProps): Promise<M
 export default async function page({ params: { id } }: BlogProps) {
   const session = await getServerSession(authOptions)
   const blog = await getSingleblog(id)
-
+  
   let user;
   if (session && session.user.dbid) {
     user = await getSingleUser(session?.user?.dbid)
@@ -168,37 +168,27 @@ export default async function page({ params: { id } }: BlogProps) {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-3 lg:flex-row justify-between border-t dark:border-slate-600 mx-2 mb-6">
+        <div
+        className="flex flex-col gap-3 lg:flex-row justify-between items-start border-t dark:border-slate-600 mx-2 mb-6"
+        >
           <Div className=" w-full lg:w-[70%] xl:w-[77%] mt-5"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}>
+            transition={{ duration: 0.5, delay: 0.3 }}
+            >
             {/* Blog content */}
             <div
               className={`data min-h-[80vh] text-justify`}
               dangerouslySetInnerHTML={{ __html: blog.detail.replace(/\n/g, '<br>') }} />
-            <div className='mt-5'>
-              <P className="flex gap-2 items-center text-slate-400 dark:text-slate-600"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}>
-                {
-                  blog.creator.avatar ?
-                    <Image className='rounded-full border dark:border-slate-500 h-7 w-7' src={blog.creator.avatar} width={23} height={23} alt={blog.creator.createdby} />
-                    :
-                    null
-                }
-                {blog.creator.username + (blog.createdAt !== blog.updatedAt ? ', Last Updated at ' : ' at ') +
-                  new Date(blog.updatedAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
-              </P>
-
-            </div>
           </Div>
           {/* comments */}
-          <Div className='w-full lg:w-[30%] xl:w-[20%] mt-5 '
+          <Div
+          className='w-full lg:w-[25%] xl:w-[20%] sticky top-[70px]' 
+
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}>
+            transition={{ duration: 0.5, delay: 0.3 }}
+            >
 
             <P className='  tracking-wider mt-3 text-orange-500 dark:text-orange-400  font-medium'
               initial={{ opacity: 0, y: 20 }}
@@ -206,39 +196,40 @@ export default async function page({ params: { id } }: BlogProps) {
               transition={{ duration: 0.5, delay: 0.3 }}>
               Comments
             </P>
-            <CommentForm blogid={blog._id} />
+            
 
-            <div>
+            <div className=' pt-3'>
               {blog.comments.length > 0 ? (
-                <div className='mt-3 max-h-[50vh] lg:max-h-[75vh] overflow-y-auto flex flex-col gap-4'>
+                <div className='max-h-[50vh] lg:max-h-[80dvh] overflow-y-auto flex flex-col gap-2'>
                   {blog.comments?.map((comment: any) => {
                     return (
                       <div
                         key={comment._id}
-                        className=' rounded-lg bg-slate-100 dark:bg-gray-800 p-3 w-[98%] relative '
+                        className=' rounded-lg bg-slate-100 dark:bg-gray-800 p-1 w-[98%] relative '
                       >
                         <div className='py-1 px-2 flex justify-between'>
                           <div className='flex items-center gap-2'>
-                            {comment.useravatar ? (
+                            {comment.user.avatar ? (
                               <Image width={50} height={50}
-                                src={comment.useravatar}
-                                alt={comment.createdby}
+                                src={comment.user.avatar}
+                                alt={comment.user.username}
                                 className='border dark:border-slate-400 mr-1 w-7 h-7 rounded-full'
                               />
-                            ) : (
+                             ) : (
                               <AiOutlineUser
                                 size={20}
                                 className='border dark:border-slate-400 mr-1 w-7 h-7 rounded-full'
                               />
-                            )}{' '}
+                            )} 
+                            {' '}
                               <div className='flex flex-col justify-start'>
-                           <p> {comment.username} </p>
+                           <p> {comment.user.username} </p>
                           <p className=' text-xs opacity-75'>at {new Date(comment.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}</p>
                           </div>
                           </div>
                           {session &&
-                          (blog.creator.userid == session.user?.dbid ||
-                            comment.user == session.user?.dbid ||
+                          (blog.creator._id == session.user?.dbid ||
+                            comment.user._id == session.user?.dbid ||
                             session.user.isAdmin==true) ? (
                             <div className=' absolute right-0 top-0' >
                               <DelCommentBtn
@@ -257,8 +248,25 @@ export default async function page({ params: { id } }: BlogProps) {
                 <p className='mt-5'>No comments avaliable become the first</p>
               )}
             </div>
+            <CommentForm blogid={blog._id} />
           </Div>
         </div>
+        <div className='my-5'>
+              <P className="flex gap-2 items-center text-slate-400 dark:text-slate-600"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}>
+                {
+                  blog.creator.avatar ?
+                    <Image className='rounded-full border dark:border-slate-500 h-7 w-7' src={blog.creator.avatar} width={23} height={23} alt={blog.creator.createdby} />
+                    :
+                    null
+                }
+                {blog.creator.username + (blog.createdAt !== blog.updatedAt ? ', Last Updated at ' : ' at ') +
+                  new Date(blog.updatedAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
+              </P>
+
+            </div>
       </section >
     </>
 

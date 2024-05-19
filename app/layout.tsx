@@ -29,8 +29,7 @@ export default function RootLayout({
         <SessionUpdate/>
         <Toast/>
         <Navbar/>
-        <main className=' min-h-[93vh] md:min-h-[91vh] overflow-x-hidden '>
-
+        <main className=' min-h-[93vh] md:min-h-[91vh] '>
         {children}
         </main>
         <Footer/>

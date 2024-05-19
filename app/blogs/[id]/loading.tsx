@@ -9,7 +9,7 @@ export default function LoadingOneBlog() {
       1, 2, 3
     ],
     comments: [
-      1, 2, 3, 4, 5, 6, 7
+      1, 2, 3, 4, 5, 6, 7,8
     ]
   }
   return (
@@ -63,7 +63,6 @@ export default function LoadingOneBlog() {
               </p>
               <p className='rounded-full tracking-wider flex gap-3 items-center mt-3 bg-slate-300 dark:bg-slate-600 py-3 px-20'>
 
-                {/* <ShareButton link={`${process.env.API_URL}blogs/${blog._id}`} /> */}
               </p>
               <div
                 className=' grow sm:grow-0'>
@@ -74,8 +73,7 @@ export default function LoadingOneBlog() {
 
               </div>
             </div>
-            {/* <div className="w-full mt-5 py-5 px-5 rounded-full bg-slate-400 dark:bg-slate-700 " />
-            <div className="w-full mt-5 py-5 px-5 rounded-full bg-slate-400 dark:bg-slate-700  " /> */}
+
             <div className="mt-3 w-44 bg-slate-300 dark:bg-slate-600 rounded-full p-3 " />
 
           </div>
@@ -106,17 +104,21 @@ export default function LoadingOneBlog() {
             <div>
 
 
-              <div className='mt-5 max-h-[50vh] lg:max-h-[75vh] overflow-hidden'>
+              <div className='pt-2 max-h-[50vh] lg:max-h-[75vh] overflow-hidden flex flex-col gap-2'>
 
                 {
                   review.comments?.map((comment) => {
 
                     return (
-                      <div key={comment} className=' mt-4 rounded-lg bg-slate-100 dark:bg-gray-700 p-3'>
+                      <div key={comment} className='rounded-lg bg-slate-100 dark:bg-gray-700 p-2'>
 
-                        <div className='py-1 px-2 flex border-b dark:border-gray-500 justify-between'>
-                          <div className='flex items-center'><div className="border bg-slate-400 dark:bg-slate-700 dark:border-slate-400 mr-1 w-7 h-7 rounded-full" />
-                            <div className=" w-36  bg-slate-300 dark:bg-slate-600 rounded-full p-2" />
+                        <div className='py-1 px-2 flex justify-between'>
+                          <div className='flex items-center'>
+                            <div className="border bg-slate-400 dark:bg-slate-700 dark:border-slate-400 mr-1 w-7 h-7 rounded-full" />
+                            <div className="flex flex-col gap-2">
+                            <div className=" w-36  bg-slate-300 dark:bg-slate-600 rounded-full p-3" />
+                            <div className=" w-24  bg-slate-300 dark:bg-slate-600 rounded-full p-1" />
+                            </div>
                           </div>
                         </div>
                         <div className=" w-46 mt-2 bg-slate-300 dark:bg-slate-600 rounded-full p-2" />

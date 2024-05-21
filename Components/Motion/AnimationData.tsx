@@ -6,9 +6,11 @@ interface Props{
     children: React.ReactNode| null;
     className:string| '';
     index:number;
+    style?: React.CSSProperties;
+
 }
 
-export default function AnimationData({children,className,index}:Props) {
+export default function AnimationData({children,className,index,style}:Props) {
     const variants = {
         initial : {
             opacity : 0,
@@ -33,8 +35,12 @@ export default function AnimationData({children,className,index}:Props) {
                 whileInView='animate'
                 viewport={{once:true, amount:0}}
                 custom={index}
+                style={style}
                 >
                 {children}
     </motion.div>
   )
 }
+
+
+

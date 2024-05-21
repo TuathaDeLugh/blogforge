@@ -4,10 +4,8 @@ import Search from '@/Components/Searchbox/Search';
 import Pagination from '@/Components/layout/Pagination';
 import Link from 'next/link';
 import Image from 'next/image';
-import AnimationData from '@/Components/Motion/AnimationData';
 import getAllBlog from '@/controllers/allblog';
 import BlogCards from '@/Components/BlogCard';
-
 export default async function Blogs( context : any) {
   const pageno = parseInt(context?.searchParams.page)
     
@@ -35,8 +33,7 @@ export default async function Blogs( context : any) {
 
           <div className="min-h-[90vh]">
           <BlogCards data={blogs.data}/>
-      </div>
-
+      </div> 
             <Pagination pagedata={blogs.meta}/>
 
           </section>

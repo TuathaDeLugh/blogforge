@@ -183,7 +183,7 @@ export default async function page({ params: { id } }: BlogProps) {
           </Div>
           {/* comments */}
           <Div
-          className='w-full lg:w-[25%] xl:w-[20%] sticky top-[70px]' 
+          className='w-full lg:w-[25%] xl:w-[20%] sticky top-[73px]' 
 
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -196,6 +196,7 @@ export default async function page({ params: { id } }: BlogProps) {
               transition={{ duration: 0.5, delay: 0.3 }}>
               Comments
             </P>
+            <CommentForm blogid={blog._id} />
             
 
             <div className=' pt-3'>
@@ -248,7 +249,6 @@ export default async function page({ params: { id } }: BlogProps) {
                 <p className='mt-5'>No comments avaliable become the first</p>
               )}
             </div>
-            <CommentForm blogid={blog._id} />
           </Div>
         </div>
         <div className='my-5'>
@@ -263,7 +263,7 @@ export default async function page({ params: { id } }: BlogProps) {
                     null
                 }
                 {blog.creator.username + (blog.createdAt !== blog.updatedAt ? ', Last Updated at ' : ' at ') +
-                  new Date(blog.updatedAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
+                  new Date(blog.updatedAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })+' IST'}
               </P>
 
             </div>

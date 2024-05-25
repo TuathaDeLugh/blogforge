@@ -5,6 +5,8 @@
     padding-left: 1rem;
     border-left: 0.3rem solid rgb(255, 132, 59);
     font-size: large;
+    margin-bottom: 5px;
+    margin-top: 5px;
   }
   .data h3{
     color: rgb(255, 132, 59);

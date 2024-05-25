@@ -2,9 +2,16 @@
 import { motion } from 'framer-motion';
 import React from 'react'
 
-export function H1({children,className,initial,animate,transition}:{
-    children: React.ReactNode| null,className:string| '',initial:{},animate:{},transition:{}
-  }) 
+interface proops{
+  children?: React.ReactNode,
+  className?:string,
+  initial?:{},
+  animate?:{},
+  transition?:{}
+
+}
+
+export function H1({children,className,initial,animate,transition}:proops) 
   {
     return (
         <motion.h1
@@ -18,9 +25,7 @@ export function H1({children,className,initial,animate,transition}:{
     )
   }
 
-  export function Div({children,className,initial,animate,transition}:{
-    children ? : React.ReactNode| null,className:string| '',initial? :{} ,animate:{},transition:{}
-  }) 
+  export function Div({children,className,initial,animate,transition}:proops) 
   {
     return (
         <motion.div
@@ -34,9 +39,7 @@ export function H1({children,className,initial,animate,transition}:{
     )
   }
 
-  export function P({children,className,initial,animate,transition}:{
-    children: React.ReactNode| null,className:string|'',initial:{},animate:{},transition:{}
-  }) 
+  export function P({children,className,initial,animate,transition}:proops) 
   {
     return (
         <motion.p

@@ -252,7 +252,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
       <div className="relative">
         <button 
           id="prev-slide" 
-          className="absolute top-1/2 transform -translate-y-1/2 outline-none border-none h-12 w-12 z-10 text-white flex cursor-pointer text-4xl bg-black items-center justify-center rounded-full hover:bg-gray-800 hidden md:flex" 
+          className="absolute top-1/2 transform -translate-y-1/2 outline-none border-none h-12 w-12 z-10 text-white cursor-pointer text-4xl bg-black items-center justify-center rounded-full hover:bg-gray-800 hidden md:flex" 
           onClick={() => handleSlideButtonClick(-1)}
         >
           chevron_left
@@ -274,7 +274,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
         </ul>
         <button 
           id="next-slide" 
-          className="absolute top-1/2 transform -translate-y-1/2 right-0 outline-none border-none h-12 w-12 z-10 text-white flex cursor-pointer text-4xl bg-black items-center justify-center rounded-full hover:bg-gray-800 hidden md:flex" 
+          className="absolute top-1/2 transform -translate-y-1/2 right-0 outline-none border-none h-12 w-12 z-10 text-white cursor-pointer text-4xl bg-black items-center justify-center rounded-full hover:bg-gray-800 hidden md:flex" 
           onClick={() => handleSlideButtonClick(1)}
         >
           chevron_right

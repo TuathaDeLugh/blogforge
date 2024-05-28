@@ -63,7 +63,7 @@ const DModal: React.FC<DModalProps> = ({ btn, header, children, submit }) => {
             animate={{ opacity: 1,  }}
             exit={{ opacity: 0,  }}
             transition={{ duration: 0.3 }}
-            className={`fixed z-50 left-0 top-0 flex h-full min-h-screen w-full items-center justify-center bg-slate-900/50 px-4 py-5`}
+            className={`fixed z-50 left-0 top-0 flex backdrop-blur-xl h-full min-h-screen w-full items-center justify-center bg-slate-900/50 px-4 py-5`}
           >
             <motion.div
               ref={modal}

@@ -63,7 +63,7 @@ const DModal: React.FC<DModalProps> = ({ btn, header, children, submit }) => {
             animate={{ opacity: 1,  }}
             exit={{ opacity: 0,  }}
             transition={{ duration: 0.3 }}
-            className={`fixed z-50 left-0 top-0 flex backdrop-blur-md h-full min-h-screen w-full items-center justify-center bg-slate-900/50 px-4 py-5`}
+            className={`fixed z-50 left-0 top-0 flex backdrop-blur-md h-full min-h-screen w-full items-center justify-center px-4 py-5`}
           >
             <motion.div
               ref={modal}
@@ -72,7 +72,7 @@ const DModal: React.FC<DModalProps> = ({ btn, header, children, submit }) => {
               exit={{ y: -50, opacity: 0,scale: 0.8 }}
               onFocus={() => setModalOpen(true)}
               onBlur={() => setModalOpen(false)}
-              className="w-full max-w-[570px] rounded-[20px] bg-gray-50 dark:bg-gray-800 border dark:border-slate-600 px-8 py-12 text-center dark:bg-dark-2 md:px-[70px] md:py-[60px]"
+              className="w-full max-w-[570px] rounded-[20px] bg-gray-50 dark:bg-gray-800 border dark:border-slate-600 px-8 py-12 text-center md:px-[70px] md:py-[60px]"
             >
               <h3 className="pb-[18px] text-xl font-semibold sm:text-2xl text-orange-500 dark:text-orange-400">
                 {header}

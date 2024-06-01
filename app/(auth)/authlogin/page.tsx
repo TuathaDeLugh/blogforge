@@ -69,4 +69,9 @@ export default async function AuthLogin() {
             </div>
         );
     }
+    else{
+        return(
+            <div>Redirecting</div>
+        )
+    }
 }

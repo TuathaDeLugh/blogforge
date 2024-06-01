@@ -86,19 +86,19 @@ export default function Footer() {
           <ul className="mt-6 space-y-4 text-sm">
             <li>
               <Link href="/about" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                About
+                About BlogForge
               </Link>
             </li>
 
             <li>
-              <Link href="/about#feature" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                Features
+              <Link href="/terms" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+                Terms & Condation
               </Link>
             </li>
 
             <li>
               <Link href="/contact" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-              Contact
+              Contact Us
               </Link>
             </li>
             <li>

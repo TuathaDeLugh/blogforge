@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 interface Props{
     children: React.ReactNode| null;
-    className:string| '';
+    className?:string| '';
     index:number;
     style?: React.CSSProperties;
 

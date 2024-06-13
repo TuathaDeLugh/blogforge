@@ -10,7 +10,7 @@ export default async function Blogs( context : any) {
   const pageno = parseInt(context?.searchParams.page)
     
   const blogs = await getAllBlog(pageno);
-
+  
     return (
           <section className='px-4 lg:px-8 max-w-[1500px] mx-auto mb-5 '>
              <div className="relative my-5 md:mt-16">
@@ -35,7 +35,7 @@ export default async function Blogs( context : any) {
           <BlogCards data={blogs.data}/>
       </div> 
             <Pagination pagedata={blogs.meta}/>
-
           </section>
     )
 }
+  

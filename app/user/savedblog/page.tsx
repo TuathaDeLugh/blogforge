@@ -7,6 +7,7 @@ import { getBlogs } from '@/controllers/savelist'
 import { getServerSession } from 'next-auth'
 import Image from 'next/image'
 import Link from 'next/link'
+import ToastInfo from '@/Components/layout/ToastInfo'
 
 const SaveList = async () => {
   const session = await getServerSession(authOptions)
@@ -31,6 +32,7 @@ const SaveList = async () => {
           className="pl-2 text-3xl font-bold border-l-8 border-orange-400 md:text-5xl dark:text-white"
         >
           Saved Blogs
+               <ToastInfo message={'This tab display your saved blogs those are publically avaliable. Deleted or Private blogs are not shown here'} duration={10000}/>
         </H1>
       </div>
       <div className="min-h-[90vh]">

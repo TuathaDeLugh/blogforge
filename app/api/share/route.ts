@@ -13,12 +13,16 @@ export async function GET(request: NextRequest) {
                 { status: 400 }
             );
         }
-        const blogdata = await Blog.findOne({ title : blog}).select('title category images info');
+        const blogdata = await Blog.findOne({ title : blog , status : 'published'}).select('title category images info');
         if (blogdata && incrementShare) {
             await Blog.findByIdAndUpdate(blogdata._id, {
                 $inc: { share: 1 },
             });
         }
+        if (!blogdata)
+            {
+                return NextResponse.json({message: 'Blog is either deleted or private'},{status:404})
+            }
         return NextResponse.json(blogdata, { status: 200 });
     }
     catch (error: any) {

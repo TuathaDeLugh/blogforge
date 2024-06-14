@@ -47,7 +47,7 @@ export default async function page({ params: { id } }: BlogProps) {
     user = await getSingleUser(session?.user?.dbid)
   }
 
-  if (blog) {
+  if (blog && blog.status=="published") {
     return (<>
       <section className=" max-w-[1500px] mx-auto px-4 lg:px-8 ">
         <div className="relative m-5 md:mt-16 mx-2">

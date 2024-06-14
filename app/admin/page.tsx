@@ -32,7 +32,7 @@ function Sidebar({ sideBar, setSideBar }: SidebarProps) {
             <h2 className="text-4xl capitalize leading-loose">hello!</h2>
             <p className="leading-relaxed">
               Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
+              industry. Lorem Ipsum has been the industry standard dummy text
               ever since the 1500s.
             </p>
           </motion.div>
@@ -89,7 +89,7 @@ function Content({ sideBar, setSideBar, modal, setModal }: ContentProps) {
 
       <p>
         Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
+        industry. Lorem Ipsum has been the industry standard dummy text ever
         since the 1500s, when an unknown printer took a galley of type and
         scrambled it to make a type specimen book.
       </p>
@@ -127,7 +127,7 @@ function Modal({ modal, setModal }: ModalProps) {
               &times;
             </button>
             <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.
             </p>
           </motion.div>
           <motion.div

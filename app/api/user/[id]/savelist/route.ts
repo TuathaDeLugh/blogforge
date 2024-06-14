@@ -24,9 +24,15 @@ export async function GET(request: NextRequest, { params: { id } }: { params: { 
         const savelist = await User.findById(id)
             .populate({
                 path: 'savelist',
+                match: { status: 'published' },
+                select: 'title info images updatedAt',
                 options: {
                     limit: pageSize,
                     skip: skip
+                },
+                populate: {
+                    path: 'creator',
+                    select: 'username avatar'
                 }
             });
 

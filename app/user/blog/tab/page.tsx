@@ -99,7 +99,7 @@ export default async function UserBlog(context: { searchParams: { page: string }
                     {
                       blogs.data?.map((blog: any,index:number) => {
                         return (
-                          <Tr index={index} key={blog._id} className='border-b dark:border-slate-500 text-center'>
+                          <Tr index={index} key={blog._id} className='border-b dark:border-slate-500 text-center odd:bg-transparent even:bg-slate-100 dark:even:bg-slate-800/50'>
                             <Suspense fallback={<p>Loading</p>}>
 
                               <td

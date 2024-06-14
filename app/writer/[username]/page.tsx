@@ -43,7 +43,7 @@ export default async function OneWriter({ params: { username } }: BlogProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
           <h3 className="text-xl font-semibold mb-2">Most Shared</h3>
-          <Link href={`/blogs/${writer.blogs.mostShared._id}`} className="bg-white p-4 rounded-lg shadow mb-4">
+          <Link href={`/blogs/${writer.blogs.mostShared._id}`} className="block bg-white p-4 rounded-lg shadow mb-4">
             <img src={writer.blogs.mostShared.images[0].link} alt={writer.blogs.mostShared.title} className="w-full h:32 lg:h-48 object-cover rounded-lg" />
             <h4 className="text-lg font-bold mt-2">{writer.blogs.mostShared.title}</h4>
             <p className="text-gray-600 mt-1">{writer.blogs.mostShared.info}</p>
@@ -51,7 +51,7 @@ export default async function OneWriter({ params: { username } }: BlogProps) {
         </div>
         <div>
           <h3 className="text-xl font-semibold mb-2">Most Saved</h3>
-          <Link href={`/blogs/${writer.blogs.mostSaved._id}`} className="bg-white p-4 rounded-lg shadow mb-4">
+          <Link href={`/blogs/${writer.blogs.mostSaved._id}`} className=" block bg-white p-4 rounded-lg shadow mb-4">
             <img src={writer.blogs.mostSaved.images[0].link} alt={writer.blogs.mostSaved.title} className="w-full h-32 lg:h-48 object-cover rounded-lg" />
             <h4 className="text-lg font-bold mt-2">{writer.blogs.mostSaved.title}</h4>
             <p className="text-gray-600 mt-1">{writer.blogs.mostSaved.info}</p>

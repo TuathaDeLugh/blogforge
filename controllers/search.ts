@@ -1,6 +1,6 @@
 export async function getSearchbarBlogs(title:string) {
     try {
-      const response = await fetch(`api/search?query=${title}`,
+      const response = await fetch(`/api/search?query=${title}`,
       {
         cache: "no-store",
       });

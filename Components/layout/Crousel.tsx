@@ -108,8 +108,8 @@ const Carousel: React.FC<CarouselProps> = ({ data }) => {
             <div className={`h-full ${data[currentIndex].title ? 'md:max-h-[28rem]' : 'max-h-48 sm:max-h-[30rem] md:max-h-[35rem] lg:max-h-[40rem]'}  w-full absolute lg:relative lg:py-2`}>
               <Image
                 src={imageLink !== undefined ? imageLink : "/image.png"}
-                height={data[currentIndex].title ? 600 : 800}
-                width={data[currentIndex].title ? 800 : 1000}
+                height={data[currentIndex].title ? 600 : 1000}
+                width={data[currentIndex].title ? 800 : 1300}
                 alt="image"
                 className={`h-full w-full bg-slate-200 dark:bg-slate-600 ${data[currentIndex].title && 'opacity-20'} lg:opacity-100 object-cover lg:rounded-xl shadow-md border dark:border-slate-500/50 dark:shadow-slate-600/50`}
               />

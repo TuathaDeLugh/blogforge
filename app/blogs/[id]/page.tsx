@@ -16,6 +16,7 @@ import { Metadata } from 'next';
 import CommentForm from '@/Components/Comment/CommentForm';
 import { AiOutlineUser } from 'react-icons/ai';
 import DelCommentBtn from '@/Components/Comment/DelCommentBtn';
+import ToastInfo from '@/Components/layout/ToastInfo';
 
 interface BlogProps {
   params: {
@@ -121,7 +122,9 @@ export default async function page({ params: { id } }: BlogProps) {
                 transition={{ duration: 0.5, delay: 0.3 }}>
                 <span className=' text-orange-500 dark:text-orange-400  font-medium'>
                   {' '}
-                  Share :{' '}
+                  Share 
+                <ToastInfo ClassName=' border-orange-500 mx-2' message={<><p>User revive : +1</p><p>User Open Link : +1</p><p>User revive & open : +2</p></>}/>
+                  :{' '}
                 </span>{' '}
                 {blog.share}
                 <ShareButton link={`${process.env.API_URL}share?blog=${encodeURIComponent(blog.title)}`} />

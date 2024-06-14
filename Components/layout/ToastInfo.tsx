@@ -3,7 +3,7 @@ import React from 'react'
 import toast from 'react-hot-toast';
 
 interface ToastInfoProps{
-    message: string;
+    message: React.ReactNode;
     duration?: number;
     ClassName?: string;
     name? : string;

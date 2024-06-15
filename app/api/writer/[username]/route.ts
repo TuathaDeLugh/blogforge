@@ -20,8 +20,8 @@ export async function GET(request : NextRequest, { params }:any) {
         }
 
         // Fetch all blogs created by the user
-        const allBlogs = await Blog.find({ creator: user._id }).exec();
-        const blogs = await Blog.find({ creator: user._id }).skip(skip).limit(pageSize);
+        const allBlogs = await Blog.find({ creator: user._id , status:'published' }).select('title images info createdAt usersave share').exec();
+        const blogs = await Blog.find({ creator: user._id , status:'published' }).select('title images info createdAt usersave share').sort({ title: 1 }).skip(skip).limit(pageSize);
         const totalDocuments = await Blog.countDocuments({status: 'published'});
         const hasNextPage = skip + pageSize < totalDocuments;
 

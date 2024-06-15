@@ -4,32 +4,47 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import React from 'react'
 
+export async function generateMetadata({ params: { username } }: any): Promise<Metadata> {
+  const writer = await getSingleWriter(username,1);
+  const user = writer?.user.username || "Blogforge Single User"
+  const name = writer?.user.info || "Writer Name not found"
+  const usersave = writer?.stats.totalSaves || "not found"
+  const share = writer?.stats.share || "not found"
+  const avatar = writer?.user.avatar;
+  return {
+    title: user,
+    description: `name: ${name}, total saves: ${usersave} , total share: ${share}`,
+    openGraph: {
+      images: [avatar],
+    },
+  };
+}
+
 export default async function OneWriter(context : any) {
   const username =  context?.params.username;
   const pageno = parseInt(context?.searchParams.page);
-  
   const writer = await getSingleWriter(username,pageno);
 
   return (
-    <div className="container mx-auto px-4 py-8 dark:bg-gray-900">
+    <div className="py-4 lg:py-6 max-w-[1500px] mx-auto px-4 dark:bg-gray-900">
     <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg mb-8 text-center">
       <div className="flex flex-col items-center">
         <img src={writer.user.avatar} alt={writer.user.name} className="w-32 h-32 rounded-full object-cover mb-4" />
-        <h1 className="text-3xl font-bold text-orange-500 dark:text-orange-400">{writer.user.name}</h1>
-        <p className="text-gray-600 dark:text-gray-400">@{writer.user.username}</p>
+        <h1 className="text-3xl font-bold text-orange-500 dark:text-orange-400">@{writer.user.username}</h1>
+        <p className="text-gray-600 dark:text-gray-400">{writer.user.name}</p>
         <p className="text-gray-600 dark:text-gray-400">{writer.user.email}</p>
       </div>
       <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow hover">
-          <h3 className="text-lg font-semibold dark:text-gray-300">Total Blogs</h3>
+        <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow ">
+          <h3 className="text-lg font-semibold text-orange-500 dark:text-orange-400">Published Blogs</h3>
           <p className="text-gray-800 dark:text-gray-400">{writer.stats.totalblogs}</p>
         </div>
         <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow ">
-          <h3 className="text-lg font-semibold dark:text-gray-300">Joined</h3>
-          <p className="text-gray-800 dark:text-gray-400">{writer.user.createdAt}</p>
+          <h3 className="text-lg font-semibold text-orange-500 dark:text-orange-400">Joined</h3>
+          <p className="text-gray-800 dark:text-gray-400">{new Date(writer.user.createdAt).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric',timeZone: 'Asia/Kolkata',})}</p>
         </div>
         <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow ">
-          <h3 className="text-lg font-semibold dark:text-gray-300">Shares & Saves</h3>
+          <h3 className="text-lg font-semibold text-orange-500 dark:text-orange-400">Shares & Saves</h3>
           <p className="text-gray-800 dark:text-gray-400">Saves: {writer.stats.totalSaves}, Shares: {writer.stats.totalShares}</p>
         </div>
       </div>
@@ -42,6 +57,8 @@ export default async function OneWriter(context : any) {
           <img src={writer.blogs.mostShared.images[0].link} alt={writer.blogs.mostShared.title} className="w-full h-48 object-cover rounded-lg mb-4" />
           <h4 className="text-lg font-bold text-orange-500 dark:text-orange-400">{writer.blogs.mostShared.title}</h4>
           <p className="text-gray-600 dark:text-gray-400">{writer.blogs.mostShared.info}</p>
+          <p className="text-gray-600 dark:text-gray-400">{writer.blogs.mostShared.share + " shares"}</p>
+          
         </Link>
       </div>
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow ">
@@ -50,6 +67,7 @@ export default async function OneWriter(context : any) {
           <img src={writer.blogs.mostSaved.images[0].link} alt={writer.blogs.mostSaved.title} className="w-full h-48 object-cover rounded-lg mb-4" />
           <h4 className="text-lg font-bold text-orange-500 dark:text-orange-400">{writer.blogs.mostSaved.title}</h4>
           <p className="text-gray-600 dark:text-gray-400">{writer.blogs.mostSaved.info}</p>
+          <p className="text-gray-600 dark:text-gray-400">{writer.blogs.mostShared.usersave + " saves"}</p>
         </Link>
       </div>
     </div>
@@ -111,7 +129,7 @@ export default async function OneWriter(context : any) {
                   <img src={blog.images[0].link} alt={blog.title} className="w-20 h-20 object-cover rounded-lg" />
                 </td>
                 <td className="py-2 px-4 border-b dark:border-gray-700 text-center">{blog.usersave+" - "+blog.share}</td>
-                <td className="py-2 px-4 border-b dark:border-gray-700 text-center hidden md:table-cell">{new Date(blog.createdAt).toLocaleDateString()}</td>
+                <td className="py-2 px-4 border-b dark:border-gray-700 text-center hidden md:table-cell">{new Date(blog.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata',})}</td>
               </tr>
             ))}
           </tbody>

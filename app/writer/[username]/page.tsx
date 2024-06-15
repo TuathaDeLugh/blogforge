@@ -24,6 +24,8 @@ export default async function OneWriter(context : any) {
   const username =  context?.params.username;
   const pageno = parseInt(context?.searchParams.page);
   const writer = await getSingleWriter(username,pageno);
+  console.log(writer.blogs.mostShared);
+  
 
   return (
     <div className="py-4 lg:py-6 max-w-[1500px] mx-auto px-4 dark:bg-gray-900">
@@ -57,7 +59,6 @@ export default async function OneWriter(context : any) {
           <img src={writer.blogs.mostShared.images[0].link} alt={writer.blogs.mostShared.title} className="w-full h-48 object-cover rounded-lg mb-4" />
           <h4 className="text-lg font-bold text-orange-500 dark:text-orange-400">{writer.blogs.mostShared.title}</h4>
           <p className="text-gray-600 dark:text-gray-400">{writer.blogs.mostShared.info}</p>
-          <p className="text-gray-600 dark:text-gray-400">{writer.blogs.mostShared.share + " shares"}</p>
           
         </Link>
       </div>
@@ -67,7 +68,6 @@ export default async function OneWriter(context : any) {
           <img src={writer.blogs.mostSaved.images[0].link} alt={writer.blogs.mostSaved.title} className="w-full h-48 object-cover rounded-lg mb-4" />
           <h4 className="text-lg font-bold text-orange-500 dark:text-orange-400">{writer.blogs.mostSaved.title}</h4>
           <p className="text-gray-600 dark:text-gray-400">{writer.blogs.mostSaved.info}</p>
-          <p className="text-gray-600 dark:text-gray-400">{writer.blogs.mostShared.usersave + " saves"}</p>
         </Link>
       </div>
     </div>

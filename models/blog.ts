@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const commentSchema = new mongoose.Schema({
-    _id: { type: String, required: true },
+    _id: { type: String },
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     comment: String,
 }, { timestamps: true });

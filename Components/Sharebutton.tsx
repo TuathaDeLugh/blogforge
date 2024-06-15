@@ -4,7 +4,7 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import { IoMdShareAlt } from "react-icons/io";
 
-const ShareButton: React.FC<{ link: string }> = ({ link }) => {
+const ShareButton: React.FC<{ link: string,className?:string }> = ({ link,className }) => {
   const handleCopyToClipboard = () => {
     const shareUrl: string = link;
 
@@ -20,7 +20,7 @@ const ShareButton: React.FC<{ link: string }> = ({ link }) => {
   };
 
   return (
-    <button onClick={handleCopyToClipboard} className=' border text-orange-500 border-orange-500 rounded px-1 py-1 font-semibold hover:text-white hover:bg-orange-500 ' ><IoMdShareAlt size={20} /></button>
+    <button onClick={handleCopyToClipboard} className={` ${className} border text-orange-500 border-orange-500 rounded px-1 py-1 font-semibold hover:text-white hover:bg-orange-500 `} ><IoMdShareAlt size={20} /></button>
   );
 };
 

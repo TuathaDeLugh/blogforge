@@ -9,8 +9,8 @@ export async function generateMetadata({ params: { username } }: any): Promise<M
   const writer = await getSingleWriter(username,1);
   const user = writer?.user.username || "Blogforge Single User"
   const name = writer?.user.name || "Writer Name not found"
-  const usersave = writer?.stats.totalSaves || "not found"
-  const share = writer?.stats.totalShares || "not found"
+  const usersave = writer.stats.totalSaves || "0"
+  const share = writer?.stats.totalShares || "0"
   const avatar = writer?.user.avatar;
   return {
     title: `BlogForge Writer : ${user}`,
@@ -25,7 +25,6 @@ export default async function OneWriter(context : any) {
   const username =  context?.params.username;
   const pageno = parseInt(context?.searchParams.page);
   const writer = await getSingleWriter(username,pageno);
-  console.log(writer.blogs.mostShared);
   
 
   return (

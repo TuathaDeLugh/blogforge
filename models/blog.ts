@@ -9,7 +9,7 @@ const commentSchema = new mongoose.Schema({
 const blogSchema = new mongoose.Schema({
     title: { type: String, required: true },
     category: { type: [String], required: true },
-    images: [{ _id: { type: String, required: true }, name: String, link: String }],
+    images: [{ _id: { type: String }, name: String, link: String }],
     info: { type: String, required: true },
     detail: { type: String, required: true },
     usersave: { type: Number, default: 0 },

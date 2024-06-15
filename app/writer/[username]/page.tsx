@@ -7,13 +7,13 @@ import React from 'react'
 export async function generateMetadata({ params: { username } }: any): Promise<Metadata> {
   const writer = await getSingleWriter(username,1);
   const user = writer?.user.username || "Blogforge Single User"
-  const name = writer?.user.info || "Writer Name not found"
+  const name = writer?.user.name || "Writer Name not found"
   const usersave = writer?.stats.totalSaves || "not found"
-  const share = writer?.stats.share || "not found"
+  const share = writer?.stats.totalShares || "not found"
   const avatar = writer?.user.avatar;
   return {
     title: user,
-    description: `name: ${name}, total saves: ${usersave} , total share: ${share}`,
+    description: `Name: ${name}, Total saves: ${usersave} , Total share: ${share}`,
     openGraph: {
       images: [avatar],
     },

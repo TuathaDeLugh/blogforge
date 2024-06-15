@@ -1,7 +1,9 @@
-export default async function getSingleWriter(id:string) {
+export default async function getSingleWriter(id:string,pageno:number) {
     try {
+      console.log(pageno);
+      
       const api = process.env.API_URL;
-      const response = await fetch(`${api}/api/writer/${id}`, 
+      const response = await fetch(`${api}/api/writer/${id}?page=${pageno}`, 
       {
         cache: "no-store",
       });

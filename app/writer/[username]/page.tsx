@@ -31,7 +31,7 @@ export default async function OneWriter(context : any) {
   return (
     <div className="py-4 lg:py-6 max-w-[1500px] mx-auto px-4 dark:bg-gray-900">
     <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg mb-8 text-center relative">
-    <ShareButton link={`${process.env.API_URL}/writer/${encodeURIComponent(writer.user.username)}`} className=' absolute right-0 top-0 m-2' />
+    <ShareButton link={`${process.env.API_URL}writer/${encodeURIComponent(writer.user.username)}`} className=' absolute right-0 top-0 m-2' />
       <div className="flex flex-col items-center">
         <img src={writer.user.avatar} alt={writer.user.name} className="w-32 h-32 rounded-full object-cover mb-4" />
         <h1 className="text-3xl font-bold text-orange-500 dark:text-orange-400">@{writer.user.username}</h1>

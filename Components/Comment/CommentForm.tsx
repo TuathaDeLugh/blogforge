@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import React from 'react'
 import toast from 'react-hot-toast';
 import { IoAddSharp } from "react-icons/io5";
-import { motion } from 'framer-motion';
 
 interface CommentFormPrp{
     blogid: string
@@ -57,8 +56,7 @@ export default function CommentForm({ blogid }:CommentFormPrp) {
                   <input type="text" className='w-[80%] bg-transparent border rounded-full px-3 py-1 border-gray-400 focus:outline-none focus:ring focus:ring-orange-700' placeholder='Your Comment' required name="comment"
                   value={values.comment}
                   onChange={handleChange} id="" />
-                  <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}} type="submit" value="Submit" className='rounded-full p-2 bg-orange-400 text-white '><IoAddSharp size={25}/></motion.button>
+                  <button type="submit" value="Submit" className='rounded-full p-2 bg-orange-400 text-white '><IoAddSharp size={25}/></button>
                 </form>
     </div>
   )

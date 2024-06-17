@@ -8,7 +8,6 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { FaEye, FaEyeSlash} from 'react-icons/fa';
 import { signOut, useSession } from 'next-auth/react';
 import * as Yup from "yup";
-import { motion } from 'framer-motion';
 
 export default function Reset() {
   const { data: session } = useSession();
@@ -157,8 +156,7 @@ export default function Reset() {
                                 ) : null}
                             </div>
             <div className="md:w-[450px] mt-8 mb-2">
-              <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
+              <button
                 disabled={disabled}
                 type="submit"
                 className="text-white bg-orange-400 hover:bg-orange-600 disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 w-full flex items-center justify-center gap-4"
@@ -169,7 +167,7 @@ whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
                     <AiOutlineLoading3Quarters size={20} className='animate-spin' />
                     : null
                 }
-              </motion.button>
+              </button>
             </div>
           </form>
         </div>

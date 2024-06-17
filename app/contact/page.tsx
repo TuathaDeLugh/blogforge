@@ -11,7 +11,6 @@ import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 import { RiQuestionAnswerLine } from "react-icons/ri";
 import { Div, H1, P } from '@/Components/Motion/Motion';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { motion } from 'framer-motion';
 
 
 
@@ -261,8 +260,7 @@ function Form({ name , email}: FormProps) {
                   </span>
               ) : null}
           </div>
-          <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
+          <button
                                   disabled={disabled}
                                   type="submit"
                                   className="text-white bg-orange-400 hover:bg-orange-600  disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 w-full flex items-center justify-center gap-4"
@@ -273,7 +271,7 @@ whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
                                           <AiOutlineLoading3Quarters size={20} className='animate-spin' />
                                           : null
                                   }
-                              </motion.button>
+                              </button>
       </form>
   )
 }

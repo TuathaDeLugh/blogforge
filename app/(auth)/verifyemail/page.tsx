@@ -5,7 +5,6 @@ import { signOut, useSession } from 'next-auth/react';
 import toast from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
 
 export default function VerifyFirst() {
   const router = useRouter();
@@ -99,8 +98,7 @@ export default function VerifyFirst() {
               Click the button below to verifiy your email.
             </p>
             <div className="md:w-[450px] text-center flex items-center justify-center">
-              <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
+              <button
                 disabled={disabled}
                 onClick={handleVerifyEmail}
                 className="text-white bg-orange-400 hover:bg-orange-600 disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-5 py-3 flex items-center justify-center gap-4"
@@ -109,7 +107,7 @@ whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
                 {disabled && (
                   <AiOutlineLoading3Quarters size={20} className='animate-spin' />
                 )}
-              </motion.button>
+              </button>
             </div>
             <p className='text-sm'>
               After Verifecation you will be redirected to login page and can start using our services!

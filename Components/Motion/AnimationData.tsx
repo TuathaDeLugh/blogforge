@@ -36,8 +36,6 @@ export default function AnimationData({children,className,index,style}:Props) {
                 viewport={{once:true, amount:0}}
                 custom={index}
                 style={style}
-                whileTap={{ scale: 0.95 }}
-                whileHover={{ scale: 1.05 }}
                 >
                 {children}
     </motion.div>

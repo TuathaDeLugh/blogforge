@@ -14,7 +14,6 @@ import { Div } from '@/Components/Motion/Motion';
 import RichTextEditor from '@/Components/layout/RichTextEditor';
 import { useSession } from 'next-auth/react';
 import { category } from '@/Components/Logic/Category';
-import { motion } from 'framer-motion';
 
 
 
@@ -297,14 +296,13 @@ const NewBlogForm: React.FC = () => {
                                                     alt={`Preview ${index}`}
                                                     className=" h-20 w-32 object-cover rounded"
                                                 />
-                                                <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
+                                                <button
                                                     type="button"
                                                     onClick={() => handleImageDelete(index)}
                                                     className=" absolute top-1 right-1 backdrop-blur-sm rounded-bl-xl rounded-tr text-red-500 p-2 hover:bg-red-600 hover:text-white focus:outline-none focus:shadow-outline-red active:bg-red-800"
                                                 >
                                                     <RxCross1 size={20} />
-                                                </motion.button>
+                                                </button>
                                             </div>
                                         ))}
                                     </div>
@@ -333,14 +331,13 @@ whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
                                         placeholder="Keywords"
                                         className={`outline ${errors.keywords && touched.keywords ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50' : ' outline-transparent '} w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
                                     />
-                                    <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
+                                    <button
                                         type="button"
                                         className="absolute right-2 text-white top-2 p-1 bg-orange-400 rounded-full"
                                         onClick={handleKeywordAdd}
                                     >
                                         <IoAdd size={20} />
-                                    </motion.button>
+                                    </button>
                                 </div>
                                     
                                 {
@@ -350,14 +347,13 @@ whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
                                             values.keywords.map((keyword: string, index: number) => (
                                                 <div key={index} className="flex items-center bg-orange-400/50 dark:bg-orange-400/50 p-2 rounded">
                                                     <div className="mr-2">{keyword}</div>
-                                                    <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
+                                                    <button
                                                         type="button"
                                                         onClick={() => handleDeleteKeyword(index)}
                                                         className="text-red-500 hover:text-red-700 focus:outline-none"
                                                     >
                                                         <RxCross1 size={20} />
-                                                    </motion.button>
+                                                    </button>
                                                 </div>
                                             ))}
                                         </div>
@@ -434,8 +430,7 @@ whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
 
 
 
-                    <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
+                    <button
                         disabled={disabled}
                         type="submit"
                         className="bg-orange-500 text-white w-36 h-10 rounded hover:bg-orange-600 focus:outline-none focus:shadow-outline-green active:bg-orange-800 disabled:opacity-30 flex justify-center items-center gap-2"
@@ -447,7 +442,7 @@ whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
                             </>
                                 : <>Post Blog</>
                         }
-                    </motion.button>
+                    </button>
                 </form>
 
             </div>

@@ -10,7 +10,6 @@ import toast from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { FaEye, FaEyeSlash, FaGithub } from 'react-icons/fa';
 import { loginSchema } from '@/yupSchema';
-import { motion } from 'framer-motion';
 
 export default function Login() {
   const [disabled, setDisabled] = useState(false);
@@ -132,8 +131,7 @@ export default function Login() {
               ) : null}
             </div>
             <div className="md:w-[450px] mt-8 mb-2">
-              <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
+              <button
                 disabled={disabled}
                 type="submit"
                 className="text-white bg-orange-400 hover:bg-orange-600 disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 w-full flex items-center justify-center gap-4"
@@ -144,28 +142,26 @@ whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
                     <AiOutlineLoading3Quarters size={20} className='animate-spin' />
                     : null
                 }
-              </motion.button>
+              </button>
             </div>
           </form>
           <div className="md:w-[450px] text-center">
             OR
           </div>
           <div className="md:w-[450px] mb-8 mt-2 grid grid-cols-2 gap-3 ">
-            <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
+            <button
               onClick={() => signIn('google', { callbackUrl: '/authlogin' })}
               className="text-black bg-slate-200 hover:opacity-50 border border-slate-500 font-semibold rounded-md text-sm px-4 py-3 w-full flex gap-2 items-center justify-center"
             >
               Login With <FcGoogle size={20} className="bg-white rounded-full" />
-            </motion.button>
-            <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
+            </button>
+            <button
               onClick={() => signIn('github', { callbackUrl: '/authlogin' })}
               className="text-white bg-slate-600 hover:opacity-50 font-semibold rounded-md text-sm px-4 py-3 w-full flex gap-2 items-center justify-center"
             >
               Login With
               <FaGithub size={20} className="bg-slate-800 rounded-full" />
-            </motion.button>
+            </button>
           </div>
           <div className="md:w-[450px] text-center">
             Forgot Password? <Link href={'/reset/request'} className='text-orange-400 hover:text-orange-500'>Reset here</Link>

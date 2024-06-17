@@ -104,10 +104,9 @@ export default function UserAvatarEdit({ userId }: AvatarModelProps) {
       <div className='flex justify-center items-center'>
         <div className="relative">
           <div className="absolute bottom-1 right-1">
-            <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}} className='bg-orange-400 text-white rounded-full p-2 hover:bg-orange-500' ref={trigger} onClick={() => setModalOpen(true)}>
+            <button className='bg-orange-400 text-white rounded-full p-2 hover:bg-orange-500' ref={trigger} onClick={() => setModalOpen(true)}>
               <FaPencilAlt size={20} />
-            </motion.button>
+            </button>
           </div>
           {
             session?.user.avatar ?

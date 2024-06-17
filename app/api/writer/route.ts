@@ -9,7 +9,7 @@ export async function GET(request: NextRequest, response : NextResponse) {
 
         const pageParam = request.nextUrl.searchParams.get('page');
         const page = parseInt(pageParam as string) || 1;
-        const pageSize = 15;
+        const pageSize = 9;
         const skip = (page - 1) * pageSize;
 
         const userData = await Blog.aggregate([
@@ -68,7 +68,7 @@ export async function GET(request: NextRequest, response : NextResponse) {
             } else if (diffDays < 365) {
                 return `${Math.floor(diffDays / 30)} months ago`;
             } else {
-                return joinedDate.toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric',timeZone: 'Asia/Kolkata',}); 
+                return joinedDate.toLocaleDateString(); 
             }
         };
 

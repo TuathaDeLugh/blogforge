@@ -49,14 +49,13 @@ const DModal: React.FC<DModalProps> = ({ btn, header, children, submit }) => {
 
   return (
     <>
-      <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
+      <button
       className="w-full"
         ref={trigger}
         onClick={() => setModalOpen(true)}
       >
         {btn}
-      </motion.button>
+      </button>
       <AnimatePresence>
         {modalOpen && (
           <motion.div

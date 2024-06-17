@@ -7,7 +7,9 @@ interface proops{
   className?:string,
   initial?:{},
   animate?:{},
-  transition?:{}
+  transition?:{},
+  whileTap?:{};
+  whileHover?:{};
 
 }
 
@@ -25,13 +27,15 @@ export function H1({children,className,initial,animate,transition}:proops)
     )
   }
 
-  export function Div({children,className,initial,animate,transition}:proops) 
+  export function Div({children,className,initial,animate,transition,whileTap,whileHover}:proops) 
   {
     return (
         <motion.div
         initial={initial}
         animate={animate}
         transition={transition}
+        whileHover={whileHover}
+        whileTap={whileTap}
         className={className}
           >
           {children}
@@ -39,7 +43,7 @@ export function H1({children,className,initial,animate,transition}:proops)
     )
   }
 
-  export function P({children,className,initial,animate,transition}:proops) 
+  export function P({children,className,initial,animate,transition,}:proops) 
   {
     return (
         <motion.p

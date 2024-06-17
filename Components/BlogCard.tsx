@@ -35,6 +35,8 @@ export default function BlogCards({ data }: BlogProps) {
         <AnimationData
           key={blog._id}
           index={index}
+          whileTap={{ scale: 0.99 }}
+          whileHover={{ scale: 1.05}}
           className="overflow-hidden rounded-lg shadow-lg hover:scale-105 bg-white dark:bg-gray-800 border border-transparent hover:border-orange-500 hover:bg-orange-500/10 hover:dark:bg-orange-400/10"
         >
           <div className="block group">

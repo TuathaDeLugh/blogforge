@@ -58,7 +58,7 @@ export default function CommentForm({ blogid }:CommentFormPrp) {
                   value={values.comment}
                   onChange={handleChange} id="" />
                   <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}} type="submit" value="Submit" className='rounded-full p-2 bg-orange-400 text-white '><IoAddSharp size={25}/></motion.button>
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.05}} type="submit" value="Submit" className='rounded-full p-2 bg-orange-400 text-white '><IoAddSharp size={25}/></motion.button>
                 </form>
     </div>
   )

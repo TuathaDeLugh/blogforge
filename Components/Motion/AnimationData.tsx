@@ -7,10 +7,12 @@ interface Props{
     className?:string| '';
     index:number;
     style?: React.CSSProperties;
+    whileTap?:{ };
+    whileHover?:{};
 
 }
 
-export default function AnimationData({children,className,index,style}:Props) {
+export default function AnimationData({children,className,index,style,whileHover,whileTap}:Props) {
     const variants = {
         initial : {
             opacity : 0,
@@ -36,8 +38,8 @@ export default function AnimationData({children,className,index,style}:Props) {
                 viewport={{once:true, amount:0}}
                 custom={index}
                 style={style}
-                whileTap={{ scale: 0.95 }}
-                whileHover={{ scale: 1.05 }}
+                whileHover={whileHover}
+                whileTap={whileTap}
                 >
                 {children}
     </motion.div>

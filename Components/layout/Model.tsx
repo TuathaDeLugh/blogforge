@@ -50,7 +50,7 @@ const DModal: React.FC<DModalProps> = ({ btn, header, children, submit }) => {
   return (
     <>
       <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.05}}
       className="w-full"
         ref={trigger}
         onClick={() => setModalOpen(true)}

@@ -99,7 +99,7 @@ export default function VerifyFirst() {
             </p>
             <div className="md:w-[450px] text-center flex items-center justify-center">
               <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.05}}
                 disabled={disabled || timer !== null}
                 onClick={handleVerifyEmail}
                 className="text-white w-1/3 bg-orange-400 hover:bg-orange-600 disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 flex items-center justify-center gap-4"

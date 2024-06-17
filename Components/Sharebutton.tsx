@@ -22,7 +22,7 @@ const ShareButton: React.FC<{ link: string,className?:string }> = ({ link,classN
 
   return (
     <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}} onClick={handleCopyToClipboard} className={` ${className} border text-orange-500 border-orange-500 rounded px-1 py-1 font-semibold hover:text-white hover:bg-orange-500 `} ><IoMdShareAlt size={20} /></motion.button>
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.05}} onClick={handleCopyToClipboard} className={` ${className} border text-orange-500 border-orange-500 rounded px-1 py-1 font-semibold hover:text-white hover:bg-orange-500 `} ><IoMdShareAlt size={20} /></motion.button>
   );
 };
 

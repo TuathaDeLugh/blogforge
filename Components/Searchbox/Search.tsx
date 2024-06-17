@@ -68,7 +68,7 @@ export default function Search() {
                             required
                         />
                         <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}} type="submit" className='absolute right-5 top-0 bottom-0 opacity-50'><FaSearch size={20} /></motion.button>
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.05}} type="submit" className='absolute right-5 top-0 bottom-0 opacity-50'><FaSearch size={20} /></motion.button>
                     </form>
                     <FilterDropDown />
                 </div>

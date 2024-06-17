@@ -116,14 +116,14 @@
 //     <div className="relative overflow-hidden w-full h-full p-4">
 //       <div className="flex items-center justify-between absolute top-1/2 transform left-0 -translate-y-1/2 w-full z-10 p-2">
 //         <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.05}}
 //           onClick={prevSlide}
 //           className="rounded-full px-2 shadow-md bg-slate-500"
 //         >
 //           &lt;
 //         </motion.button>
 //         <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.05}}
 //           onClick={nextSlide}
 //           className="rounded-full px-2 shadow-md bg-slate-500"
 //         >

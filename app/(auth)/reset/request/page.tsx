@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { useSession } from 'next-auth/react';
 import * as Yup from "yup";
+import { motion } from 'framer-motion';
 
 export default function ResetReq() {
     const { data: session } = useSession();
@@ -139,7 +140,8 @@ function Form( {useremail}: { useremail?: string | null }) {
                         </div>
 
                         <div className="md:w-[450px] mt-8 mb-2 text-center">
-                            <button
+                            <motion.button
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
                                 disabled={disabled}
                                 type="submit"
                                 className="w-full text-white bg-orange-400 hover:bg-orange-600 disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 flex items-center justify-center gap-4"
@@ -150,7 +152,7 @@ function Form( {useremail}: { useremail?: string | null }) {
                                         <AiOutlineLoading3Quarters size={20} className='animate-spin' />
                                         : null
                                 }
-                            </button>
+                            </motion.button>
                         </div>
                     </form>
   )

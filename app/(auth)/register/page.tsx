@@ -10,6 +10,7 @@ import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { SignupSchema } from '@/yupSchema';
+import { motion } from 'framer-motion';
 
 
 let initialValues = {
@@ -204,7 +205,8 @@ export default function Login() {
                             </div>
 
                             <div className="w-[85vw] md:w-[450px] mb-2">
-                                <button
+                                <motion.button
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
                                     disabled={disabled}
                                     type="submit"
                                     className="text-white bg-orange-400 hover:bg-orange-600  disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 w-full flex items-center justify-center gap-4"
@@ -215,27 +217,29 @@ export default function Login() {
                                             <AiOutlineLoading3Quarters size={20} className='animate-spin' />
                                             : null
                                     }
-                                </button>
+                                </motion.button>
                             </div>
                         </form>
                         <div className="md:w-[450px] text-center">
                             OR
                         </div>
                         <div className="md:w-[450px] mb-8 mt-2 grid grid-cols-2 gap-3 ">
-                            <button
+                            <motion.button
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
                                 onClick={() => signIn('google', { callbackUrl: '/authlogin' })}
                                 className="text-black bg-slate-200 hover:opacity-50 border border-slate-500 font-semibold rounded-md text-sm px-4 py-3 w-full flex gap-2 items-center justify-center"
                             >
                                 Sign Up With
                                 <FcGoogle size={20} className="bg-white rounded-full" />
-                            </button>
-                            <button
+                            </motion.button>
+                            <motion.button
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
                                 onClick={() => signIn('github', { callbackUrl: '/authlogin' })}
                                 className="text-white bg-slate-600 hover:opacity-50 font-semibold rounded-md text-sm px-4 py-3 w-full flex gap-2 items-center justify-center"
                             >
                                 Sign Up With
                                 <FaGithub size={20} className="bg-slate-800 rounded-full" />
-                            </button>
+                            </motion.button>
                         </div>
                         <div className="md:w-[450px] mt-6 text-center">
                             Already have Account? <Link href={'/login'} className='text-orange-400 hover:text-orange-500'>Sign In </Link>

@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef, useCallback, Suspense } from 'react
 import { FaSearch } from "react-icons/fa";
 import FilterDropDown from '../FilterBtn';
 import { Div } from '../Motion/Motion';
+import { motion } from 'framer-motion';
 import SearchbarResult from './Result';
 
 export default function Search() {
@@ -66,7 +67,8 @@ export default function Search() {
                             onChange={(e) => handleChange(e.target.value)}
                             required
                         />
-                        <button type="submit" className='absolute right-5 top-0 bottom-0 opacity-50'><FaSearch size={20} /></button>
+                        <motion.button
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}} type="submit" className='absolute right-5 top-0 bottom-0 opacity-50'><FaSearch size={20} /></motion.button>
                     </form>
                     <FilterDropDown />
                 </div>

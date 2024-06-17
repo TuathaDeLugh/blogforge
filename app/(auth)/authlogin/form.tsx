@@ -6,6 +6,7 @@ import { signOut } from 'next-auth/react';
 import toast from 'react-hot-toast';
 import { UsernameSchema } from '@/yupSchema';
 import { useFormik } from 'formik';
+import { motion } from 'framer-motion';
 
 const initialValues = {
   username: "",
@@ -135,7 +136,8 @@ export default function AuthForm({ user }: any) {
         </div>
 
         <div className="w-[85vw] md:w-[450px] mt-4 mb-2">
-          <button
+          <motion.button
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
             disabled={disabled}
             type="submit"
             className="text-white bg-orange-400 hover:bg-orange-600  disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 w-full flex items-center justify-center gap-4"
@@ -146,11 +148,12 @@ export default function AuthForm({ user }: any) {
                 <AiOutlineLoading3Quarters size={20} className='animate-spin' />
                 : null
             }
-          </button>
+          </motion.button>
         </div>
       </form>
       <div className="md:w-[450px] mt-6 text-center">
-        Want To  <button onClick={() => signOut({ callbackUrl: '/login' })} className='text-orange-400 hover:text-orange-500'>Change  Auth/Email </button>
+        Want To  <motion.button
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}} onClick={() => signOut({ callbackUrl: '/login' })} className='text-orange-400 hover:text-orange-500'>Change  Auth/Email </motion.button>
       </div>
     </>
   )

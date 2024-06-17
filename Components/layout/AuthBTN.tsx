@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 
+
 const AuthLinks = () => {
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
@@ -103,7 +104,8 @@ const AuthLinks = () => {
                 whileHover={{ scale: 1.05 }}
                 className=" rounded-lg text-red-400 border border-red-400 p-1 m-2 text-center hover:bg-red-400   hover:text-slate-50 md:dark:hover:text-slate-200"
               >
-                <button onClick={() => signOut({ callbackUrl: '/' })}>Log Out</button>
+                <motion.button
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}} onClick={() => signOut({ callbackUrl: '/' })}>Log Out</motion.button>
               </motion.li>
             ) : null}
           </motion.ul>

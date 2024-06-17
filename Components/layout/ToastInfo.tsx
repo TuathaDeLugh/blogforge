@@ -1,6 +1,7 @@
 'use client'
 import React from 'react'
 import toast from 'react-hot-toast';
+import { motion } from 'framer-motion';
 
 interface ToastInfoProps{
     message: React.ReactNode;
@@ -22,9 +23,10 @@ export default function ToastInfo({message,duration,ClassName,name}:ToastInfoPro
               {message}
               </div>
               <div className='flex items-center justify-center'>
-              <button className=' shadow rounded px-2 py-1 text-sm border text-white bg-red-500/70 ' onClick={() => toast.dismiss(t.id)}>
+              <motion.button
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}} className=' shadow rounded px-2 py-1 text-sm border text-white bg-red-500/70 ' onClick={() => toast.dismiss(t.id)}>
                 Dismiss
-              </button>
+              </motion.button>
               </div>
             </div>
           ),
@@ -35,6 +37,7 @@ export default function ToastInfo({message,duration,ClassName,name}:ToastInfoPro
           );
     }
   return (
-    <button onClick={display} className={`${ClassName} ml-2 shadow rounded-full h-5 w-5 text-xs border`}>{name ? name : "i"}</button>
+    <motion.button
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}} onClick={display} className={`${ClassName} ml-2 shadow rounded-full h-5 w-5 text-xs border`}>{name ? name : "i"}</motion.button>
   )
 }

@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 import { ProfileSchema} from '@/yupSchema';
 import UserAvatarEdit from './UserAvatarEdit';
 import Link from 'next/link';
-
+import { motion } from 'framer-motion';
 
 
 
@@ -134,12 +134,13 @@ function Form({ user }: { user: User }) {
   return (
     <>
     <div className="text-orange-400 text-sm mt-2 flex justify-between ">
-        <button
+        <motion.button
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
           className="text-orange-400 hover:underline underline-offset-4"
           onClick={()=>setformdisable(!formdisable)}
           >
             Need Update?
-        </button>
+        </motion.button>
         <Link
           href="/reset/request"
           className="text-orange-400 hover:underline underline-offset-4"
@@ -198,7 +199,8 @@ function Form({ user }: { user: User }) {
 
     <div
      className="w-[85vw] md:w-[450px] mb-2">
-      <button
+      <motion.button
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
         disabled={disabled}
         type="submit"
         className={`${formdisable && 'hidden'} text-white bg-orange-400 hover:bg-orange-600  disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 w-full flex items-center justify-center gap-4`}
@@ -209,7 +211,7 @@ function Form({ user }: { user: User }) {
             <AiOutlineLoading3Quarters size={20} className='animate-spin' />
             : null
         }
-      </button>
+      </motion.button>
     </div>
   </form>
   </>

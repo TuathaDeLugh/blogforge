@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import toast from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { redirect } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 export default function VerifyFirst() {
   const { data: session } = useSession();
@@ -97,7 +98,8 @@ export default function VerifyFirst() {
               Looks like you didn&apos;t verified! Just need to confirm your email address by clicking the button.
             </p>
             <div className="md:w-[450px] text-center flex items-center justify-center">
-              <button
+              <motion.button
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
                 disabled={disabled || timer !== null}
                 onClick={handleVerifyEmail}
                 className="text-white w-1/3 bg-orange-400 hover:bg-orange-600 disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 flex items-center justify-center gap-4"
@@ -106,7 +108,7 @@ export default function VerifyFirst() {
                 {disabled && (
                   <AiOutlineLoading3Quarters size={20} className='animate-spin' />
                 )}
-              </button>
+              </motion.button>
             </div>
             <p>
               If you don&apos;t get the email within a few minutes please check your spam folder.

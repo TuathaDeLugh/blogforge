@@ -158,7 +158,7 @@ export default function Reset() {
                             </div>
             <div className="md:w-[450px] mt-8 mb-2">
               <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.05}}
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
                 disabled={disabled}
                 type="submit"
                 className="text-white bg-orange-400 hover:bg-orange-600 disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 w-full flex items-center justify-center gap-4"

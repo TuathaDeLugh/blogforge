@@ -105,7 +105,7 @@ const AuthLinks = () => {
                 className=" rounded-lg text-red-400 border border-red-400 p-1 m-2 text-center hover:bg-red-400   hover:text-slate-50 md:dark:hover:text-slate-200"
               >
                 <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.05}} onClick={() => signOut({ callbackUrl: '/' })}>Log Out</motion.button>
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}} onClick={() => signOut({ callbackUrl: '/' })}>Log Out</motion.button>
               </motion.li>
             ) : null}
           </motion.ul>

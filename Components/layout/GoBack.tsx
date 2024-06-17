@@ -12,7 +12,7 @@ export default function Goback() {
   };
   return (
 <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.05}}
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
       onClick={handleGoBack}
       className="group inline-flex items-center h-12 space-x-2 p-2 rounded-lg hover:bg-orange-500 dark:hover:bg-orange-400 hover:mr-4 ease-in-out duration-300"
     >

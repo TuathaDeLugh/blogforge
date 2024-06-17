@@ -24,7 +24,7 @@ function Sidebar({ sideBar, setSideBar }: SidebarProps) {
             className="fixed bg-indigo-600 text-white shadow-lg top-0 left-0 w-full max-w-sm h-screen p-5 pt-24"
           >
             <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.05}}
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
               onClick={() => setSideBar((sideBar) =>!sideBar)}
               className="bg-white text-black h-8 w-8 block mb-2 rounded-full"
             >
@@ -74,7 +74,7 @@ function Content({ sideBar, setSideBar, modal, setModal }: ContentProps) {
       <h2 className="text-4xl capitalize">hello there</h2>
       <div className="flex items-center space-x-2">
         <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.05}}
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
           className="bg-indigo-600 my-3 text-white uppercase text-sm px-4 h-10 rounded"
           onClick={() => setSideBar((sideBar) =>!sideBar)}
         >
@@ -82,7 +82,7 @@ whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.05}}
         </motion.button>
 
         <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.05}}
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
           className="bg-indigo-600 my-3 text-white uppercase text-sm px-4 h-10 rounded"
           onClick={() => setModal((modal) =>!modal)}
         >
@@ -124,7 +124,7 @@ function Modal({ modal, setModal }: ModalProps) {
             className="absolute z-10 p-5 bg-indigo-600 h-auto w-full max-w-md rounded text-white"
           >
             <motion.button
-whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.05}}
+whileTap={{ scale: 0.95 }}				whileHover={{ scale: 1.1}}
               onClick={() => setModal((modal) =>!modal)}
               className="absolute top-0 right-0 -mt-4 -mr-4 bg-white text-indigo-600 border border-indigo-600 h-8 w-8 block mb-2 rounded-full"
             >

@@ -5,6 +5,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest, response: NextResponse) {
   try {
+    let sort = request.nextUrl.searchParams.get('sort');
+
+    if(!sort){
+        sort = '-1'
+    }
+
     await connectdb();
 
     // Fetch all published blogs

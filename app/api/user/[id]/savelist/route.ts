@@ -25,7 +25,7 @@ export async function GET(request: NextRequest, { params: { id } }: { params: { 
             .populate({
                 path: 'savelist',
                 match: { status: 'published' },
-                select: 'title info images updatedAt',
+                select: 'title category info images updatedAt',
                 options: {
                     limit: pageSize,
                     skip: skip

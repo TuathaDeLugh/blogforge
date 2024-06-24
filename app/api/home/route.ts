@@ -14,7 +14,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
     await connectdb();
 
     // Fetch all published blogs
-    const allBlogs = await Blog.find({ status: 'published' })
+    const allBlogs = await Blog.find({ status: 'published' }).populate('creator','_id username avatar')
       .sort({ createdAt: -1 })
       .select('title category images info createdAt updatedAt usersave share creator')
       .exec();

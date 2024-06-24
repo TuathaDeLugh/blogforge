@@ -1,83 +1,55 @@
 import React from 'react'
 import Carousel from '@/Components/layout/Crousel';
-import AnimationList from '@/Components/Motion/AnimationList';
-import ShareButton from '@/Components/Sharebutton';
 import Search from '@/Components/Searchbox/Search';
 import { authOptions } from './api/auth/[...nextauth]/options';
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
+import BlogList from '@/Components/BlogList';
+import UserList from '@/Components/UserList';
+import getHomeData from '@/controllers/homedata';
 
 export default async function Home() {
-  let images = [
-    {
-      "_id":"1",
-      "title": "Lorem Ipsum",
-      "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.",
-      "images": [{
-        "link": "https://images.pexels.com/photos/169647/pexels-photo-169647.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "name": "Lorem Ipsum Image 1"
-      }]
-    },
-    {
-      "_id":"1",
-      "title": "Dolor Sit Amet",
-      "data": "Dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.",
-      "images": [{
-        "link": "https://images.pexels.com/photos/313782/pexels-photo-313782.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "name": "Dolor Sit Amet Image 2"
-      }]
-    },
-    {
-      "_id":"1",
-      "title": "Consectetur Adipiscing",
-      "data": "Consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.",
-      "images": [{
-        "link": "https://images.pexels.com/photos/773471/pexels-photo-773471.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "name": "Consectetur Adipiscing Image 3"
-      }]
-    },
-    {
-      "_id":"1",
-      "title": "Sed Cursus Ante",
-      "data": "Sed cursus ante dapibus diam.",
-      "images": [{
-        "link": "https://images.pexels.com/photos/672532/pexels-photo-672532.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "name": "Sed Cursus Ante Image 4"
-      }]
-    },
-    {
-      "_id":"1",
-      "title": "Integer Nec Odio",
-      "data": "Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.",
-      "images": [{
-        "link": "https://images.pexels.com/photos/632522/pexels-photo-632522.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "name": "Integer Nec Odio Image 5"
-      }]
-    },
-    {
-      "_id":"1",
-      "title": "Praesent Libero",
-      "data": "Praesent libero. Sed cursus ante dapibus diam.",
-      "images": [{
-        "link": "https://images.pexels.com/photos/777059/pexels-photo-777059.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "name": "Praesent Libero Image 6"
-      }]
-    }
-  ]
   
-  const  data = ['apple','mango','banana','pineapple','watermelon','melon','strowbarry','blueberry','raspberry','cherry','peach']
-
   const session = await getServerSession(authOptions)
-
-  // console.log(session);
+  const data = await getHomeData()
+  console.log(data.trending);
   
   return (
     <section className='max-w-[1500px] mx-auto'>
-      <Carousel data = {images} />
+      <Carousel data = {data.trending} />
       <Search/>
-      <Link href={'/reset/request'}>Reset Password</Link>
-      <AnimationList data={data}/>
-      <ShareButton link='/'/>
+      <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-6 text-center">Welcome to Our Blog</h1>
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold mb-4">Recent Blogs</h2>
+        <BlogList blogs={data?.recent || []} />
+      </section>
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold mb-4">Popular Blogs</h2>
+        <BlogList blogs={data?.popular || []} />
+      </section>
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold mb-4">Trending Blogs</h2>
+        <BlogList blogs={data?.trending || []} />
+      </section>
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold mb-4">Popular Blogs by Category</h2>
+        <BlogList blogs={data?.category || []} />
+      </section>
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold mb-4">Most Shared Blogs</h2>
+        <BlogList blogs={data?.mostShared || []} />
+      </section>
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold mb-4">Most Saved Blogs</h2>
+        <BlogList blogs={data?.mostSaved || []} />
+      </section>
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold mb-4">Top Writers</h2>
+        <UserList users={data?.topWriters || []} />
+      </section>
+    </div>
+
     </section>
   )
 }

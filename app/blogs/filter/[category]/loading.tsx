@@ -1,8 +1,8 @@
-import LoadingBlogs from '@/Components/layout/LoadinBlog'
 import React from 'react'
+import LoadingBlog from '../../loading'
 
 export default function Filterloading() {
   return (
-    <LoadingBlogs/>
+    <LoadingBlog/>
   )
 }

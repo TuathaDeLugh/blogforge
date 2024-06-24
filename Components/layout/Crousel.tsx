@@ -9,7 +9,15 @@ import Link from "next/link";
 interface CarouselProps {
   data: {
     title?: string;
-    data?: string;
+    info?: string;
+    creator? : {
+      _id: string,
+      username: string,
+      avatar: string
+    };
+    category?: string[];
+    createdAt?: any;
+
     images?: {
       link: string;
       name: string;
@@ -135,13 +143,40 @@ const Carousel: React.FC<CarouselProps> = ({ data }) => {
                     {data[currentIndex].title}
                   </H1>
                 </div>
+                <div className="my-3">
+
+                {data[currentIndex].category?.map((cat:any) => (
+                  <span key={cat} className="my-3 text-sm  bg-orange-200 dark:bg-orange-400/50 rounded-full px-2 py-1 mr-1">
+                  {cat}
+                </span>
+              ))}
+              </div>
                 <P
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.6 }}
                   className="mt-6 mb-10 text-base leading-7 text-gray-500 dark:text-gray-400 text-justify">
-                  {data[currentIndex].data}
+                  {data[currentIndex].info}
                 </P>
+                <div className=" absolute bottom-16 flex items-center">
+                {data[currentIndex].creator?.avatar ? (
+                    <Image
+                      className="rounded-full border-2 border-gray-300 dark:border-gray-600"
+                      src={data[currentIndex].creator!.avatar}
+                      width={40}
+                      height={40}
+                      alt={data[currentIndex].creator!.username}
+                    />
+                  ) : null}
+                  <div className="ml-3">
+                    <p className="text-gray-700 dark:text-gray-400">{data[currentIndex].creator?.username}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-500">
+                      {new Date(data[currentIndex].createdAt).toLocaleString('en-IN', {
+                        timeZone: 'Asia/Kolkata',
+                      })}
+                    </p>
+                  </div>
+                </div>
                 <Link href={`/blogs/${data[currentIndex]._id}`} className="rounded p-1 text-sm absolute bottom-5 bg-orange-500 text-white" >View Article</Link>
               </div>
             }

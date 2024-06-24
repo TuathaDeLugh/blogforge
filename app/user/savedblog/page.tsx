@@ -58,6 +58,14 @@ const SaveList = async () => {
                     <h3 className="text-2xl font-semibold mb-2 text-orange-500 dark:text-orange-400">
                       {blog.title}
                     </h3>
+                    <p className='my-3'>
+
+                {blog.category?.map((cat:any) => (
+                  <span key={cat} className="my-3 text-sm  bg-slate-200 dark:bg-slate-600/70 rounded-full px-2 py-1 mr-1">
+                  {cat}
+                </span>
+              ))}
+              </p>
                     <p className="text-gray-600 dark:text-gray-300 mb-4">
                       {blog.info}
                     </p>

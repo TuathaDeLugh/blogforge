@@ -32,10 +32,10 @@ export async function GET(request : NextRequest, { params }:any) {
          const totalShares = allBlogs.reduce((sum, blog) => sum + blog.share, 0);
 
         // Sort blogs by creation date (most recent first)
-        const recentBlogs = allBlogs.sort((a, b) => b.createdAt - a.createdAt).slice(0, 4);
+        const recentBlogs = allBlogs.sort((a, b) => b.createdAt - a.createdAt).slice(0, 3);
 
         // Sort blogs by 'usersave' (most popular)
-        const popularBlogs = allBlogs.sort((a, b) => b.usersave - a.usersave).slice(0, 4);
+        const popularBlogs = allBlogs.sort((a, b) => b.usersave - a.usersave).slice(0, 3);
 
         // Find the most shared blog
         const mostSharedBlog = allBlogs.sort((a, b) => b.share - a.share)[0];

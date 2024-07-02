@@ -54,44 +54,41 @@ export async function GET(request: NextRequest, response: NextResponse) {
     const popularBlogsByCategory = await Blog.aggregate([
       { $match: { status: 'published' } },
       { $unwind: "$category" },
+      { $addFields: {
+          score: { $add: ["$share", { $multiply: ["$usersave", 2] }] }
+        }
+      },
+      { $sort: { score: -1 } },
       { $group: {
           _id: "$category",
-          blogs: {
-            $push: {
-              _id: "$_id",
-              title: "$title",
-              category: "$category",
-              images: "$images",
-              info: "$info",
-              createdAt: "$createdAt",
-              updatedAt: "$updatedAt",
-              usersave: "$usersave",
-              share: "$share",
-              creator: "$creator",
-              score: { $add: ["$share", { $multiply: ["$usersave", 2] }] }
-            }
-          }
+          blog: { $first: "$$ROOT" }
         }
       },
+      { $lookup: {
+          from: 'users',
+          localField: 'blog.creator',
+          foreignField: '_id',
+          as: 'creator'
+        }
+      },
+      { $unwind: "$creator" },
       { $project: {
-          _id: 1,
-          blogs: {
-            $slice: [
-              {
-                $filter: {
-                  input: { $sortArray: { input: "$blogs", sortBy: { score: -1 } } },
-                  as: "blog",
-                  cond: { $eq: ["$$blog.status", "published"] }
-                }
-              },
-              1
-            ]
+          _id: "$blog._id",
+          title: "$blog.title",
+          images:"$blog.images",
+          category: "$blog.category",
+          info: "$blog.info",
+          creator: {
+            _id: "$creator._id",
+            username: "$creator.username",
+            name: "$creator.name",
+            email: "$creator.email",
+            avatar: "$creator.avatar"
           }
         }
-      },
-      { $unwind: "$blogs" },
-      { $replaceRoot: { newRoot: "$blogs" } }
+      }
     ]);
+    
 
     // Top writers: Fetch users sorted by the custom logic considering only published blogs
     const topWriters = await User.aggregate([

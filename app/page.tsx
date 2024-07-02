@@ -32,10 +32,10 @@ export default async function Home() {
         <h2 className="text-2xl font-semibold mb-4">Trending Blogs</h2>
         <BlogList blogs={data?.trending || []} />
       </section>
-      <section className="mb-8">
+      {/* <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">Popular Blogs by Category</h2>
         <BlogList blogs={data?.category || []} />
-      </section>
+      </section> */}
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">Most Shared Blogs</h2>
         <BlogList blogs={data?.mostShared || []} />

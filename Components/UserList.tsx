@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 interface User {
@@ -38,7 +39,7 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
   const UserCard: React.FC<UserCardProps> = ({ username, name, avatar, email, score }) => {
     return (
         <div className="max-w-xs mx-auto bg-white rounded-xl shadow-md overflow-hidden">
-        <img className="h-32 w-full object-cover" src={avatar} alt={name} />
+        <Image height={100} width={100} className="h-32 w-full object-cover" src={avatar} alt={name} />
         <div className="p-6">
           <h3 className="text-lg leading-tight font-medium text-black">{name}</h3>
           <p className="text-gray-500">@{username}</p>

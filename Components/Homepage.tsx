@@ -166,7 +166,7 @@ const HomePageContent: React.FC<HomePageProps> = ({ data }) => {
             <div className=" grid grid-cols-2 gap-4">
               {data.topWriters.map(writer => (
                 <Link href={`/writer/${writer.username}`} key={writer._id} className="flex flex-col  items-center bg-white dark:bg-gray-600/50 p-4 rounded-lg shadow hover:ring-2 hover:ring-orange-500">
-                  <img src={writer.avatar} alt={writer.name} className="w-12 h-12 rounded-full" />
+                  <Image width={100} height={100} src={writer.avatar} alt={writer.name} className="w-12 h-12 rounded-full" />
                   <h3 className="font-semibold text-orange-500 dark:text-orange-400">@{writer.username}</h3>
                   <div className='grid grid-cols-3 gap-2'>
                     <p className="text-sm text-gray-600 dark:text-gray-300 flex items-center"><MdDescription/>{writer.totalBlogs}</p>

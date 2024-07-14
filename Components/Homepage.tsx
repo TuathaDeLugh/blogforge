@@ -186,9 +186,9 @@ const HomePageContent: React.FC<HomePageProps> = ({ data }) => {
         <h2 className="text-3xl md:text-4xl px-2 border-l-8 border-orange-500 dark:border-orange-400  font-bold mb-6 ">Popular In Category</h2>
         <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {data.mostSaved.map(blog => (
-          <div>
+          <div key={blog._id} >
           <h3 className='text-lg font-semibold mb-3 text-center'>{blog.category[0]}</h3>
-          <BlogCard key={blog._id} blog={blog} />
+          <BlogCard  blog={blog} />
           </div>
         )
           )}

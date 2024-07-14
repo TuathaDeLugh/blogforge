@@ -15,13 +15,13 @@ interface Creator {
 }
 
 interface Blog {
+  createdAt: string | number | Date;
   category: string[];
   _id: string;
   title: string;
   info: string;
   images: Image[];
   creator: Creator;
-  updatedAt: string;
 }
 
 interface BlogProps {
@@ -79,7 +79,7 @@ export default function BlogCards({ data }: BlogProps) {
                   <div className="ml-3">
                     <p className="text-gray-700 dark:text-gray-400">{blog.creator.username}</p>
                     <p className="text-sm text-gray-500 dark:text-gray-500">
-                      {new Date(blog.updatedAt).toLocaleString('en-IN', {
+                      {new Date(blog.createdAt).toLocaleString('en-IN', {
                         timeZone: 'Asia/Kolkata',
                       })}
                     </p>

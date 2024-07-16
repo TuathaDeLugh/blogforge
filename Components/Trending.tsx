@@ -4,7 +4,9 @@ import getHomeData from '@/controllers/homedata'
 
 export default async function Trending() {
   const data = await getHomeData()
-  return (
-    <Carousel data = {data.trending} />
-  )
+  if (data){
+    return (
+      <Carousel data = {data?.trending} />
+    )
+  }
 }

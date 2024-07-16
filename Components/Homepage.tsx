@@ -50,9 +50,12 @@ interface HomePageProps {
 
 export default async function Homepage() {
   const blogs = await getHomeData()
-  return (
-      <HomePageContent data={blogs}/>
-  )
+
+  if (blogs){
+    return (
+        <HomePageContent data={blogs}/>
+    )
+  }
 }
 
 

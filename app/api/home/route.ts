@@ -32,7 +32,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
       const createdAt = new Date(blog.createdAt);
       const now = new Date();
       const timeDiff = now.getTime() - createdAt.getTime();
-      return timeDiff < 30 * 24 * 60 * 60 * 1000; // 1 month in milliseconds
+      return timeDiff < 30 * 24 * 60 * 60 * 10000; // 1 month in milliseconds
     });
 
     // Trending blogs: Same score as popular but only for recent blogs

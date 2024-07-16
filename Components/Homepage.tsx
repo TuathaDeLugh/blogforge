@@ -1,7 +1,7 @@
 import getHomeData from '@/controllers/homedata';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { Suspense } from 'react';
+import React from 'react';
 import { FaShare } from 'react-icons/fa';
 import { IoHeartCircleOutline } from 'react-icons/io5';
 import { MdDescription } from 'react-icons/md';

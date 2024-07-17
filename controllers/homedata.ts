@@ -3,7 +3,6 @@ export default async function getHomeData() {
       const api = process.env.API_URL;
       
       const apiEndpoint = `${api}api/home`;
-      console.log('API Endpoint:', apiEndpoint);
     const response = await fetch(apiEndpoint, {
       cache: "no-store",
     });

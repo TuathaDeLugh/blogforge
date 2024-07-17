@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     }
 }
 
-export async function GET(request: NextRequest, response: NextResponse) {
+export async function GET(request: NextRequest) {
     try {
         await connectdb();
         const sort = -1;
@@ -40,33 +40,27 @@ export async function GET(request: NextRequest, response: NextResponse) {
         const pageSize = 15;
         const skip = (page - 1) * pageSize;
 
-        const blogs = await Blog.find({status: 'published'}).populate('creator','_id username avatar').sort({ createdAt: sort }).skip(skip).limit(pageSize);
+        const blogs = await Blog.find({ status: 'published' })
+            .populate('creator', '_id username avatar')
+            .sort({ createdAt: sort })
+            .skip(skip)
+            .limit(pageSize);
 
-        const totalDocuments = await Blog.countDocuments({status: 'published'});
-
+        const totalDocuments = await Blog.countDocuments({ status: 'published' });
         const hasNextPage = skip + pageSize < totalDocuments;
 
-        return NextResponse.json(
-            {
-                data: blogs,
-                meta: {
-                    totalDocuments,
-                    totalPages: Math.ceil(totalDocuments / pageSize),
-                    currentPage: page,
-                    hasNextPage,
-                },
+        return NextResponse.json({
+            data: blogs,
+            meta: {
+                totalDocuments,
+                totalPages: Math.ceil(totalDocuments / pageSize),
+                currentPage: page,
+                hasNextPage,
             },
-            { status: 200 }
-        );
+        }, { status: 200 });
     } catch (error: any) {
         console.error('Error in GET handler:', error.message);
-        return NextResponse.json(
-            {
-                message: 'Failed to load',
-                error: error.message,
-            },
-            { status: 500 }
-        );
+        return NextResponse.json({ message: 'Failed to load', error: error.message }, { status: 500 });
     }
 }
 
@@ -78,54 +72,37 @@ export async function DELETE(request: NextRequest) {
         await Blog.findByIdAndDelete(id);
         return NextResponse.json({ message: "Blog Deleted" }, { status: 200 });
     } catch (error: any) {
-        console.log(error)
-        return NextResponse.json(
-            {
-                message: 'Failed to load',
-                error: error.message,
-            },
-            { status: 500 }
-        );
+        console.log(error);
+        return NextResponse.json({ message: 'Failed to load', error: error.message }, { status: 500 });
     }
 }
 
 export async function PATCH(request: NextRequest) {
     try {
-        const { blog, user, comment,action,commid } = await request.json()
+        const { blog, user, comment, action, commid } = await request.json();
 
         await connectdb();
-        
+
         const foundBlog = await Blog.findById(blog).exec();
         if (!foundBlog) {
-            console.error("Review not found");
+            console.error("Blog not found");
             return NextResponse.json({ message: "not found" }, { status: 404 });
         }
-    switch (action) {
-        
-        case 'add':
-            {
-            const id = Math.floor(Math.random() * 1000000).toString();
-            foundBlog.comments.push({_id:id,user,comment});
-            await foundBlog.save();
-            return NextResponse.json({ message: "Comment created" }, { status: 200 });
-        }
-        case 'remove':
-            {
-                foundBlog.comments.pull({_id:commid});
+        switch (action) {
+            case 'add': {
+                const id = Math.floor(Math.random() * 1000000).toString();
+                foundBlog.comments.push({ _id: id, user, comment });
+                await foundBlog.save();
+                return NextResponse.json({ message: "Comment created" }, { status: 200 });
+            }
+            case 'remove': {
+                foundBlog.comments.pull({ _id: commid });
                 await foundBlog.save();
                 return NextResponse.json({ message: "Comment removed" }, { status: 200 });
             }
-            
-    }
-
+        }
     } catch (error: any) {
-        console.log(error)
-        return NextResponse.json(
-            {
-                message: 'Failed to load',
-                error: error.message,
-            },
-            { status: 500 }
-        );
+        console.log(error);
+        return NextResponse.json({ message: 'Failed to load', error: error.message }, { status: 500 });
     }
 }

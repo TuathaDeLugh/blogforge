@@ -5,10 +5,7 @@ export default function LoadingTrending() {
 <div className="w-full max-w-[1500px] mx-auto lg:h-auto px-2">
       <div className="relative w-full h-[28rem] m-auto overflow-hidden rounded-lg animate-pulse">
         <div className="absolute inset-0 lg:flex lg:gap-3">
-          {/* Image skeleton */}
           <div className="w-full h-full lg:w-1/2 bg-gray-300 dark:bg-gray-700 animate-pulse"></div>
-          
-          {/* Content skeleton */}
           <div className="hidden lg:flex lg:flex-col lg:gap-3 lg:w-1/2 p-4">
             <div className="w-3/4 h-10 bg-gray-300 dark:bg-gray-700  mb-2 animate-pulse rounded-full"></div>
             <div className="w-1/3 h-8 bg-gray-300 dark:bg-gray-700 rounded-full mb-2 animate-pulse"></div>

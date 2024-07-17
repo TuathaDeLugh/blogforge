@@ -10,6 +10,7 @@ interface proops{
   transition?:{},
   whileTap?:{};
   whileHover?:{};
+  whileInView?:boolean;
 
 }
 
@@ -27,9 +28,27 @@ export function H1({children,className,initial,animate,transition}:proops)
     )
   }
 
-  export function Div({children,className,initial,animate,transition,whileTap,whileHover}:proops) 
+  export function Div({children,className,initial,animate,transition,whileTap,whileHover,whileInView}:proops) 
   {
-    return (
+
+    if(whileInView){
+      return (
+          <motion.div
+          initial={initial}
+          animate={animate}
+          transition={transition}
+          whileHover={whileHover}
+          whileInView='animate'
+          viewport={{once:true, amount:0}}
+          whileTap={whileTap}
+          className={className}
+            >
+            {children}
+          </motion.div>
+      )
+    }
+    else{
+      return (
         <motion.div
         initial={initial}
         animate={animate}
@@ -42,6 +61,7 @@ export function H1({children,className,initial,animate,transition}:proops)
         </motion.div>
     )
   }
+}
 
   export function P({children,className,initial,animate,transition,}:proops) 
   {

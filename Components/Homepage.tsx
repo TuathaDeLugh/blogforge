@@ -121,7 +121,8 @@ const HomePageContent: React.FC<HomePageProps> = ({ data }) => {
                             className="lg:col-span-2"
                             initial={{ opacity: 0, x: -40 }}
                             animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}>
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            whileInView={true}>
           <section className="mb-12">
             <div className="flex justify-between items-end mb-6">
             <h2 className="text-3xl md:text-4xl px-2 border-l-8 border-orange-500 dark:border-orange-400 font-bold   ">Recent Blogs</h2>
@@ -148,13 +149,13 @@ const HomePageContent: React.FC<HomePageProps> = ({ data }) => {
         <Div
                             initial={{ opacity: 0, x: 40 }}
                             animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}>
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            whileInView={true}>
         <section className="mb-12">
             <h2 className="text-3xl md:text-4xl px-2 border-l-8 border-orange-500 dark:border-orange-400  font-bold mb-6">Popular Blogs</h2>
             <div className="space-y-6">
               {data.popular.map(blog =>
-                <>
-                <Link href={`/blogs/${blog._id}`} className="bg-white dark:bg-gray-800 border border-slate-100 dark:border-transparent rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col sm:flex-row hover:ring-2 hover:ring-orange-500">
+                <Link href={`/blogs/${blog._id}`} key={blog._id} className="bg-white dark:bg-gray-800 border border-slate-100 dark:border-transparent rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col sm:flex-row hover:ring-2 hover:ring-orange-500">
     <div className="sm:w-1/3 h-48 sm:h-auto">
       <Image height={400} width={400} src={blog.images[0].link} alt={blog.title} className="w-full h-full object-cover" />
     </div>
@@ -179,7 +180,6 @@ const HomePageContent: React.FC<HomePageProps> = ({ data }) => {
       </div>
     </div>
   </Link>
-                </>
               )}
             </div>
           </section>
@@ -210,7 +210,8 @@ const HomePageContent: React.FC<HomePageProps> = ({ data }) => {
       <Div
                             initial={{ opacity: 0, y: -40 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}>
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            whileInView={true}>
       <section className="mb-12">
         <h2 className="text-3xl md:text-4xl px-2 border-l-8 border-orange-500 dark:border-orange-400  font-bold mb-6 ">Popular In Category</h2>
         <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ">
@@ -226,7 +227,8 @@ const HomePageContent: React.FC<HomePageProps> = ({ data }) => {
       <Div
                             initial={{ opacity: 0, x: -40 }}
                             animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}>
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            whileInView={true}>
         <section>
           <h2 className="text-3xl md:text-4xl px-2 border-l-8 border-orange-500 dark:border-orange-400  font-bold mb-4">Most Shared Blogs</h2>
           <div className="space-y-6">
@@ -237,7 +239,8 @@ const HomePageContent: React.FC<HomePageProps> = ({ data }) => {
         <Div
                             initial={{ opacity: 0, x: 40 }}
                             animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}>
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            whileInView={true}>
 
         <section>
           <h2 className="text-3xl md:text-4xl px-2 border-l-8 border-orange-500 dark:border-orange-400  font-bold mb-4">Most Saved Blogs</h2>

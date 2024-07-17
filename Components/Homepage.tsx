@@ -5,6 +5,7 @@ import React from 'react';
 import { FaShare } from 'react-icons/fa';
 import { IoHeartCircleOutline } from 'react-icons/io5';
 import { MdDescription } from 'react-icons/md';
+import { Div } from './Motion/Motion';
 
 interface BlogPost {
   _id: string;
@@ -74,26 +75,35 @@ const BlogCard: React.FC<{ blog: BlogPost }> = ({ blog }) => (
       <div>
         <h3 className="font-bold text-lg mb-2 truncate text-orange-500 dark:text-orange-400">{blog.title}</h3>
         <div className="flex flex-wrap gap-2 mb-2">
-              {blog?.category.map(category => (
-                <span key={category} className="bg-slate-200 dark:bg-slate-600/70 px-3 py-1 rounded-full text-xs">
-                  {category}
-                </span>
-              ))}
-            </div>
+  {typeof blog.category === 'string'
+    ? <span className="bg-slate-200 dark:bg-slate-600/70 px-3 py-1 rounded-full text-xs">
+        {blog.category}
+      </span>
+    : blog.category.map(category => (
+      <span key={category} className="bg-slate-200 dark:bg-slate-600/70 px-3 py-1 rounded-full text-xs">
+        {category}
+      </span>
+    ))}
+</div>
         <p className="text-gray-600 dark:text-slate-300 mb-2 line-clamp-2">{blog.info}</p>
       </div>
       <div className=' flex items-center gap-2'>
         <Image src={blog.creator.avatar} width={50} height={50} className='rounded-full h-10 w-10' alt='image hai'/>
         <div className='flex flex-col'>
         <p className="text-gray-600 dark:text-slate-300 ">{blog.creator.username}</p>
-        <p className="text-gray-600 dark:text-slate-300 text-xs ">{new Date(blog.createdAt).toLocaleString('en-IN', {  hour: '2-digit', minute: '2-digit',hour12: true, year: 'numeric', month: 'long', day: 'numeric',timeZone: 'Asia/Kolkata',})+' IST'}</p>
-
+        {blog.createdAt && <p className="text-gray-600 dark:text-slate-300 text-xs ">{new Date(blog.createdAt).toLocaleString('en-IN', {  hour: '2-digit', minute: '2-digit',hour12: true, year: 'numeric', month: 'long', day: 'numeric',timeZone: 'Asia/Kolkata',})+' IST'}</p>}
         </div>
       </div>
-      <div className="flex justify-between items-center text-sm text-gray-500 dark:text-slate-300 mt-2">
-        <span>Saves: {blog.usersave}</span>
-        <span>Shares: {blog.share}</span>
-      </div>
+
+{
+  (blog.usersave !== undefined && blog.usersave >= 0 && blog.share) ?
+
+  <div className="flex justify-between items-center text-sm text-gray-500 dark:text-slate-300 mt-2">
+    <span>Saves: {blog.usersave}</span>
+    <span>Shares: {blog.share}</span>
+  </div>
+  : ''
+}
     </div>
   </Link>
 );
@@ -102,11 +112,16 @@ const BlogCard: React.FC<{ blog: BlogPost }> = ({ blog }) => (
 const HomePageContent: React.FC<HomePageProps> = ({ data }) => {
   const categories = Array.from(new Set(data.category.flatMap(blog => blog.category)));
 
-  return (
+  return (<>
+    
     <div className="mx-auto px-4 py-8">
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2">
+      <Div
+                            className="lg:col-span-2"
+                            initial={{ opacity: 0, x: -40 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}>
           <section className="mb-12">
             <div className="flex justify-between items-end mb-6">
             <h2 className="text-3xl md:text-4xl px-2 border-l-8 border-orange-500 dark:border-orange-400 font-bold   ">Recent Blogs</h2>
@@ -128,9 +143,12 @@ const HomePageContent: React.FC<HomePageProps> = ({ data }) => {
             </div>
           </section>
           
-        </div>
+        </Div>
 
-        <div>
+        <Div
+                            initial={{ opacity: 0, x: 40 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}>
         <section className="mb-12">
             <h2 className="text-3xl md:text-4xl px-2 border-l-8 border-orange-500 dark:border-orange-400  font-bold mb-6">Popular Blogs</h2>
             <div className="space-y-6">
@@ -187,36 +205,49 @@ const HomePageContent: React.FC<HomePageProps> = ({ data }) => {
           </section>
 
           
-        </div>
+        </Div>
       </div>
-
+      <Div
+                            initial={{ opacity: 0, y: -40 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}>
       <section className="mb-12">
         <h2 className="text-3xl md:text-4xl px-2 border-l-8 border-orange-500 dark:border-orange-400  font-bold mb-6 ">Popular In Category</h2>
-        <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        {data.mostSaved.map(blog => (
-          <div key={blog._id} >
-          <h3 className='text-lg font-semibold mb-3 text-center'>{blog.category[0]}</h3>
-          <BlogCard  blog={blog} />
-          </div>
+        <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ">
+        {data.category?.map(blog => (
+          <BlogCard key={blog._id}  blog={blog} />
+
         )
-          )}
+      )}
         </div>
       </section>
-
+      </Div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+      <Div
+                            initial={{ opacity: 0, x: -40 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}>
         <section>
           <h2 className="text-3xl md:text-4xl px-2 border-l-8 border-orange-500 dark:border-orange-400  font-bold mb-4">Most Shared Blogs</h2>
           <div className="space-y-6">
             {data.mostShared.map(blog => <BlogCard key={blog._id} blog={blog} />)}
           </div>
         </section>
+        </Div>
+        <Div
+                            initial={{ opacity: 0, x: 40 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}>
+
         <section>
           <h2 className="text-3xl md:text-4xl px-2 border-l-8 border-orange-500 dark:border-orange-400  font-bold mb-4">Most Saved Blogs</h2>
           <div className="space-y-6">
             {data.mostSaved.map(blog => <BlogCard key={blog._id} blog={blog} />)}
           </div>
         </section>
+                            </Div>
       </div>
     </div>
+      </>
   );
 };

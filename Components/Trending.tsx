@@ -9,4 +9,9 @@ export default async function Trending() {
       <Carousel data = {data?.trending} />
     )
   }
+  else{
+    return (
+      <div>loading</div>
+    )
+  }
 }

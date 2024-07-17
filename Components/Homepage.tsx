@@ -56,6 +56,11 @@ export default async function Homepage() {
         <HomePageContent data={blogs}/>
     )
   }
+  else{
+    return (
+      <div>loading</div>
+    )
+  }
 }
 
 

@@ -146,7 +146,7 @@ const Carousel: React.FC<CarouselProps> = ({ data }) => {
                 <div className="my-3">
 
                 {data[currentIndex].category?.map((cat:any) => (
-                  <span key={cat} className="my-3 text-sm  bg-orange-200 dark:bg-orange-400/50 rounded-full px-2 py-1 mr-1">
+                  <span key={cat} className="my-3 text-sm bg-orange-400/50  md:bg-orange-200 md:dark:bg-orange-400/50 text-white md:text-slate-700 md:dark:text-white rounded-full px-2 py-1 mr-1">
                   {cat}
                 </span>
               ))}

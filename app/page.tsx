@@ -10,7 +10,6 @@ export default async function Home() {
   
   return (
     <section className='max-w-[1500px] mx-auto'>
-      <LoadingTrending/>
       <Suspense fallback={<LoadingTrending/>}>
       <Trending/>
       </Suspense>

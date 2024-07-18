@@ -8,9 +8,11 @@ import Link from "next/link";
 
 interface CarouselProps {
   data: {
+    usersave?: string;
+    share?: string;
     title?: string;
     info?: string;
-    creator? : {
+    creator?: {
       _id: string,
       username: string,
       avatar: string
@@ -33,8 +35,8 @@ const Carousel: React.FC<CarouselProps> = ({ data }) => {
   const [direction, setDirection] = useState<string | null>(null);
 
   const imageLink = data[currentIndex]?.title
-  ? data[currentIndex]?.images?.[0]?.link
-  : data[currentIndex]?.link;
+    ? data[currentIndex]?.images?.[0]?.link
+    : data[currentIndex]?.link;
 
   const slideVariants = {
     fromright: {
@@ -100,9 +102,8 @@ const Carousel: React.FC<CarouselProps> = ({ data }) => {
   }, [currentIndex]);
   return (
     <div className=" w-full  max-w-[1500px] mx-auto lg:h-auto px-2 ">
-      <div className={`relative w-full ${
-  data[currentIndex].title ? 'h-[28rem]' : 'h-48 sm:h-[30rem] md:h-[35rem] lg:h-[40rem]'} m-auto overflow-hidden rounded-lg`}>
-      {/* <div className={`relative w-full ${data[currentIndex].title ? 'h-[28rem]' : ' h-48 md:h-[40rem]'}   m-auto overflow-hidden rounded-lg `}> */}
+      <div className={`relative w-full ${data[currentIndex].title ? 'h-[28rem]' : 'h-48 sm:h-[30rem] md:h-[35rem] lg:h-[40rem]'} m-auto overflow-hidden rounded-lg`}>
+        {/* <div className={`relative w-full ${data[currentIndex].title ? 'h-[28rem]' : ' h-48 md:h-[40rem]'}   m-auto overflow-hidden rounded-lg `}> */}
         <AnimatePresence>
           <motion.div
             key={currentIndex}
@@ -125,7 +126,7 @@ const Carousel: React.FC<CarouselProps> = ({ data }) => {
             {
               data[currentIndex].title &&
 
-              <div className="z-10 text-slate-200 lg:dark:text-slate-200  lg:text-slate-700 px-10 lg:p-4 mt-7 lg:mt-10">
+              <div className="z-10 text-slate-200 lg:dark:text-slate-200  lg:text-slate-700 px-10 lg:p-4 mt-7 lg:mt-10 sm:space-y-8">
                 <div className="relative ">
                   <H1
                     initial={{ opacity: 0, x: -20 }}
@@ -145,12 +146,12 @@ const Carousel: React.FC<CarouselProps> = ({ data }) => {
                 </div>
                 <div className="my-3">
 
-                {data[currentIndex].category?.map((cat:any) => (
-                  <span key={cat} className="my-3 text-sm bg-orange-400/50  md:bg-orange-200 md:dark:bg-orange-400/50 text-white md:text-slate-700 md:dark:text-white rounded-full px-2 py-1 mr-1">
-                  {cat}
-                </span>
-              ))}
-              </div>
+                  {data[currentIndex].category?.map((cat: any) => (
+                    <span key={cat} className="my-3 text-sm bg-orange-400/50  md:bg-orange-200 md:dark:bg-orange-400/50 text-white md:text-slate-700 md:dark:text-white rounded-full px-2 py-1 mr-1">
+                      {cat}
+                    </span>
+                  ))}
+                </div>
                 <P
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -158,14 +159,20 @@ const Carousel: React.FC<CarouselProps> = ({ data }) => {
                   className="mt-6 mb-10 text-base leading-7 text-gray-500 dark:text-gray-400 text-justify">
                   {data[currentIndex].info}
                 </P>
-                <div className=" absolute bottom-16 flex items-center">
-                {data[currentIndex].creator?.avatar ? (
+                <div className="absolute bottom-16">
+
+                <div className="flex gap-4 items-center text-sm text-gray-500 dark:text-slate-300 my-2">
+    <span>Saves: {data[currentIndex].usersave}</span>
+    <span>Shares: {data[currentIndex].share}</span>
+  </div>
+                <div className=" flex items-center">
+                  {data[currentIndex].creator?.avatar ? (
                     <Image
-                      className="rounded-full border-2 border-gray-300 dark:border-gray-600"
-                      src={data[currentIndex].creator!.avatar}
-                      width={40}
-                      height={40}
-                      alt={data[currentIndex].creator!.username}
+                    className="rounded-full border-2 border-gray-300 dark:border-gray-600"
+                    src={data[currentIndex].creator!.avatar}
+                    width={40}
+                    height={40}
+                    alt={data[currentIndex].creator!.username}
                     />
                   ) : null}
                   <div className="ml-3">
@@ -177,6 +184,7 @@ const Carousel: React.FC<CarouselProps> = ({ data }) => {
                     </p>
                   </div>
                 </div>
+                      </div>
                 <Link href={`/blogs/${data[currentIndex]._id}`} className="rounded p-1 text-sm absolute bottom-5 bg-orange-500 text-white" >View Article</Link>
               </div>
             }

@@ -114,25 +114,25 @@ export default function Footer() {
 
           <ul className="mt-6 space-y-4 text-sm">
             <li>
-              <Link href="/blogs/filter/lifestyle" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+              <Link href="/blogs/filter/Lifestyle" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
               Lifestyle
               </Link>
             </li>
 
             <li>
-              <Link href="/blogs/filter/food" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-              Food
+              <Link href="/blogs/filter/Food%20and%20Cooking" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+              Food And Cooking
               </Link>
             </li>
 
             <li>
-              <Link href="/blogs/filter/educational" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-              Educational
+              <Link href="/blogs/filter/Education" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+              Education
               </Link>
             </li>
 
             <li>
-              <Link href="/blogs/filter/gaming" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+              <Link href="/blogs/filter/Gaming" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
               Gaming
               </Link>
             </li>

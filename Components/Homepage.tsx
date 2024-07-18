@@ -85,7 +85,7 @@ const BlogCard: React.FC<{ blog: BlogPost }> = ({ blog }) => (
       </span>
     ))}
 </div>
-        <p className="text-gray-600 dark:text-slate-300 mb-2 line-clamp-2">{blog.info}</p>
+        <p className="text-gray-600 dark:text-slate-300 mb-2 line-clamp-2 h-12">{blog.info.substring(0, 100) + (blog.info.length > 100 ? '...' : '')}</p>
       </div>
       <div className=' flex items-center gap-2'>
         <Image src={blog.creator.avatar} width={50} height={50} className='rounded-full h-10 w-10' alt='image hai'/>
@@ -121,8 +121,7 @@ const HomePageContent: React.FC<HomePageProps> = ({ data }) => {
                             className="lg:col-span-2"
                             initial={{ opacity: 0, x: -40 }}
                             animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
-                            whileInView={true}>
+                            transition={{ duration: 0.5, delay: 0.2 }}>
           <section className="mb-12">
             <div className="flex justify-between items-end mb-6">
             <h2 className="text-3xl md:text-4xl px-2 border-l-8 border-orange-500 dark:border-orange-400 font-bold   ">Recent Blogs</h2>
@@ -149,8 +148,7 @@ const HomePageContent: React.FC<HomePageProps> = ({ data }) => {
         <Div
                             initial={{ opacity: 0, x: 40 }}
                             animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
-                            whileInView={true}>
+                            transition={{ duration: 0.5, delay: 0.2 }}>
         <section className="mb-12">
             <h2 className="text-3xl md:text-4xl px-2 border-l-8 border-orange-500 dark:border-orange-400  font-bold mb-6">Popular Blogs</h2>
             <div className="space-y-6">
@@ -210,8 +208,7 @@ const HomePageContent: React.FC<HomePageProps> = ({ data }) => {
       <Div
                             initial={{ opacity: 0, y: -40 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
-                            whileInView={true}>
+                            transition={{ duration: 0.5, delay: 0.2 }}>
       <section className="mb-12">
         <h2 className="text-3xl md:text-4xl px-2 border-l-8 border-orange-500 dark:border-orange-400  font-bold mb-6 ">Popular In Category</h2>
         <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ">
@@ -227,8 +224,7 @@ const HomePageContent: React.FC<HomePageProps> = ({ data }) => {
       <Div
                             initial={{ opacity: 0, x: -40 }}
                             animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
-                            whileInView={true}>
+                            transition={{ duration: 0.5, delay: 0.2 }}>
         <section>
           <h2 className="text-3xl md:text-4xl px-2 border-l-8 border-orange-500 dark:border-orange-400  font-bold mb-4">Most Shared Blogs</h2>
           <div className="space-y-6">
@@ -239,8 +235,7 @@ const HomePageContent: React.FC<HomePageProps> = ({ data }) => {
         <Div
                             initial={{ opacity: 0, x: 40 }}
                             animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
-                            whileInView={true}>
+                            transition={{ duration: 0.5, delay: 0.2 }}>
 
         <section>
           <h2 className="text-3xl md:text-4xl px-2 border-l-8 border-orange-500 dark:border-orange-400  font-bold mb-4">Most Saved Blogs</h2>

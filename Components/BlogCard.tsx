@@ -63,8 +63,8 @@ export default function BlogCards({ data }: BlogProps) {
                 </span>
               ))}
               </p>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  {blog.info}
+                <p className="text-gray-600 dark:text-gray-300 h-12 mb-4">
+                {blog.info.substring(0, 100) + (blog.info.length > 100 ? '...' : '')}
                 </p>
                 <div className="flex items-center">
                   {blog.creator.avatar ? (

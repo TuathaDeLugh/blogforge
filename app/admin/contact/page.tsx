@@ -66,7 +66,7 @@ export default async function AdminContact(context:any) {
               </tr>
             </thead>
             <tbody>
-              {emails.data?.map((email) => {
+              {emails.data?.map((email:any) => {
                 return (
                   <tr key={email._id} className='border-y dark:border-slate-500'>
                     <Suspense fallback={<p>Loading</p>}>

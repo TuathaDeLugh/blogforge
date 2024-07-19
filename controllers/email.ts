@@ -1,4 +1,4 @@
-export default async function getEmails(page: string) {
+export default async function getEmails(page: number) {
     try {
       const api = process.env.API_URL;
       const response = await fetch(`${api}/api/email?page=${page || 1}`, {

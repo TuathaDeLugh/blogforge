@@ -1,15 +1,18 @@
+import DelmailBtn from '@/Components/Delmail';
+import Pagination from '@/Components/layout/Pagination';
+import getEmails from '@/controllers/email';
 import Link from 'next/link';
 import React, { Suspense } from 'react'
 import { AiOutlineEye } from 'react-icons/ai';
 
 export default async function AdminContact(context:any) {
-  // const emails = await getEmails(parseInt(context.searchParams.page));
-  // let i = 1;
+  const emails = await getEmails(parseInt(context.searchParams.page));
+  let i = 1;
   return (
     <><span className="mb-4 block text-base font-semibold  text-purple-700 dark:text-purple-400">
     Contact Request
   </span>
-  {/* <h2 className="mb-6 text-[32px] font-bold capitalize text-dark lg:text-[4xl]">
+  <h2 className="mb-6 text-[32px] font-bold capitalize text-dark lg:text-[4xl]">
     Total Request : {emails.meta.totalDocuments}
   </h2>
   <div className="block mt-10 w-full overflow-x-auto rounded">
@@ -107,7 +110,7 @@ export default async function AdminContact(context:any) {
                       <div className='md:flex'>
 
                       <Link href={`/admin/contact/${email._id}`} title="View " >
-                        <AiOutlineEye className='text-green-600 md:mr-3' size={25} />
+                        <AiOutlineEye className='text-green-600 m-2 backdrop-blur-xl' size={25} />
                       </Link>
                       <DelmailBtn id={email._id} subject={email.subject} />
                       </div>
@@ -121,7 +124,7 @@ export default async function AdminContact(context:any) {
           <Pagination pagedata={emails.meta}/></>
       ) : null
             }
-        </div> */}
+        </div>
   </>
   )
 }

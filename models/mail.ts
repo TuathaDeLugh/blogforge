@@ -2,7 +2,7 @@ import mongoose,{Schema} from "mongoose";
 
 const MailSchema = new Schema(
     { 
-        fullname : String,
+        name : String,
         email:String,
         subject:String,
         details:String 

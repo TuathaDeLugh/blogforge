@@ -1,4 +1,4 @@
-import getHomeData from '@/controllers/homedata';
+import getHomeData, { getRecommendedData } from '@/controllers/homedata';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -6,6 +6,8 @@ import { FaShare } from 'react-icons/fa';
 import { IoHeartCircleOutline } from 'react-icons/io5';
 import { MdDescription } from 'react-icons/md';
 import { Div } from './Motion/Motion';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/options';
 
 interface BlogPost {
   _id: string;
@@ -45,18 +47,24 @@ interface HomePageProps {
     mostSaved: BlogPost[];
     topWriters: Writer[];
   };
+  recommended?:BlogPost[];
 }
 
 
 
 export default async function Homepage() {
   const blogs = await getHomeData()
+  const session = await getServerSession(authOptions)
+  const userId = session?.user?.dbid || ''
+
+      const recommended = await getRecommendedData(userId)
+      
 
   if (blogs){
-    return (
-        <HomePageContent data={blogs}/>
-    )
-  }
+      return (
+        <HomePageContent data={blogs} recommended={recommended}/>
+      )
+    }
   else{
     return (
       <div>loading</div>
@@ -109,7 +117,7 @@ const BlogCard: React.FC<{ blog: BlogPost }> = ({ blog }) => (
 );
 
 
-const HomePageContent: React.FC<HomePageProps> = ({ data }) => {
+const HomePageContent: React.FC<HomePageProps> = ({ data , recommended}) => {
   const categories = Array.from(new Set(data.category.flatMap(blog => blog.category)));
 
   return (<>
@@ -205,6 +213,25 @@ const HomePageContent: React.FC<HomePageProps> = ({ data }) => {
           
         </Div>
       </div>
+{
+   recommended && recommended.length > 0 &&
+
+      <Div
+                            initial={{ opacity: 0, y: -40 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}>
+      <section className="mb-12">
+        <h2 className="text-3xl md:text-4xl px-2 border-l-8 border-orange-500 dark:border-orange-400  font-bold mb-6 ">You May Like</h2>
+        <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ">
+        {recommended?.map((blog) => (
+          <BlogCard key={blog._id}  blog={blog} />
+
+        )
+      )}
+        </div>
+      </section>
+      </Div>
+}
       <Div
                             initial={{ opacity: 0, y: -40 }}
                             animate={{ opacity: 1, y: 0 }}

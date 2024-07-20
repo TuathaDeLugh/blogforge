@@ -11,14 +11,10 @@ export default async function layout({ children }:{children: React.ReactNode}) {
 
         return (<>
         <section>
-      <AdminNav/>
   </section>
-    <section className="mx-auto max-w-[1500px]">
-            <div className="ml-16 2xl:ml-0 px-3 md:px-6 py-5 mx-auto">
+      <AdminNav>
       { children }
-      
-      </div>
-      </section>
+      </AdminNav>
   </>
   )
 }

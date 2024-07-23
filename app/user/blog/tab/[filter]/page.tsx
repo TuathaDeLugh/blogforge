@@ -5,7 +5,7 @@ import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import React, { Suspense } from 'react'
 import { HiPencilAlt } from "react-icons/hi";
-import { Div} from '@/Components/Motion/Motion'
+import { Animation, Div} from '@/Components/Motion/Motion'
 import Image from 'next/image'
 import Tr from '@/Components/Motion/TableAnimation'
 import DelBlogBtn from '../../DeleteBlog'
@@ -61,51 +61,51 @@ interface UserBlogFilterProps {
           transition={{ duration: 0.5 }}
           className={
             "relative  my-3 flex flex-col min-w-0 break-words w-full mb-6 rounded "}>
-
           <div className=" block w-full rounded overflow-x-auto">
             {
               blogs.data.length > 0 ?
-                <table className=" items-center w-full bg-transparent overflow-y-hidden ">
+              <table className=" items-center w-full bg-transparent overflow-y-hidden ">
                   <thead>
                     <tr className='border border-l-0 border-r-0 bg-slate-200 dark:bg-slate-600 dark:border-slate-500 '>
                       <th
                         className={
                           "px-6 table-cell  w-6/12 py-3 text-xs md:text-sm uppercase   font-semibold "
                         }
-                      >
+                        >
                         Title
                       </th>
                       <th
                         className={
                           "hidden sm:table-cell  w-2/12 px-6    py-3 text-xs md:text-sm uppercase   font-semibold "
                         }
-                      >
+                        >
                         Saves
                       </th>
                       <th
                         className={
                           "hidden sm:table-cell  w-2/12 px-6    py-3 text-xs md:text-sm uppercase   font-semibold "
                         }
-                      >
+                        >
                         Share
                       </th>
                       <th
                         className={
                           "hidden sm:table-cell w-2/12 px-6    py-3 text-xs md:text-sm uppercase   font-semibold  "
                         }
-                      >
+                        >
                         Image
                       </th>
                       <th
                         className={
                           " px-6 w-1/12 py-3 text-xs md:text-sm uppercase   font-semibold "
                         }
-                      >
+                        >
                         Action
                       </th>
                     </tr>
                   </thead>
                   <tbody>
+                    <Animation>
                     {
                       blogs.data?.map((blog: any,index:number) => {
                         return (
@@ -116,27 +116,27 @@ interface UserBlogFilterProps {
                                 className={
                                   "table-cell pl-6 pr-1    py-3 text-xs md:text-sm    text-left "
                                 }
-                              >
+                                >
                                 {blog.title}
                               </td><td
                                 className={
                                   "hidden sm:table-cell  pl-6 pr-1    py-3 text-xs md:text-sm "
                                 }
-                              >
+                                >
                                 {blog.usersave}
                               </td>
                               <td
                                 className={
                                   "hidden sm:table-cell  pl-6 pr-1    py-3 text-xs md:text-sm "
                                 }
-                              >
+                                >
                                 {blog.share}
                               </td>
                               <td
                                 className={
                                   "hidden sm:table-cell pl-6 pr-1    py-3 text-xs md:text-sm "
                                 }
-                              >
+                                >
                                 <Image src={blog.images[0].link}
                                   height={100}
                                   width={300}
@@ -147,7 +147,7 @@ interface UserBlogFilterProps {
                                 className={
                                   "table-cell px-6 align-middle   py-3 text-xs md:text-sm flex-grow "
                                 }
-                              >
+                                >
                                 <div className=' flex gap-2'>
                                   <Link href={`/user/blog/edit/${blog._id}`} title="Edit" >
                                     <HiPencilAlt className='text-blue-600' size={25} />
@@ -158,13 +158,14 @@ interface UserBlogFilterProps {
                             </Suspense>
                           </Tr>
 
-                        )
-                      })
-                    }
+)
+})
+}
+</Animation>
                   </tbody>
                 </table>
                 : <div className='text-center text-lg'>Looks Like You don&apos;t have any Blogs here </div>
-            }
+              }
           </div>
         </Div>
         <Pagination pagedata={blogs.meta} />

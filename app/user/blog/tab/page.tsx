@@ -5,7 +5,7 @@ import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import React, { Suspense } from 'react'
 import { HiPencilAlt } from "react-icons/hi";
-import { Div} from '@/Components/Motion/Motion'
+import { Animation, Div} from '@/Components/Motion/Motion'
 import Image from 'next/image'
 import Tr from '@/Components/Motion/TableAnimation'
 import DelBlogBtn from '../DeleteBlog'
@@ -96,6 +96,8 @@ export default async function UserBlog(context: { searchParams: { page: string }
                     </tr>
                   </thead>
                   <tbody>
+                    <Animation>
+
                     {
                       blogs.data?.map((blog: any,index:number) => {
                         return (
@@ -112,21 +114,21 @@ export default async function UserBlog(context: { searchParams: { page: string }
                                 className={
                                   "hidden sm:table-cell  pl-6 pr-1    py-3 text-xs md:text-sm "
                                 }
-                              >
+                                >
                                 {blog.usersave}-{blog.share}
                               </td>
                               <td
                                 className={
                                   "hidden sm:table-cell  pl-6 pr-1    py-3 text-xs md:text-sm "
                                 }
-                              >
+                                >
                                 {blog.status}
                               </td>
                               <td
                                 className={
                                   "hidden sm:table-cell pl-6 pr-1    py-3 text-xs md:text-sm "
                                 }
-                              >
+                                >
                                 <Image src={blog.images[0].link}
                                   height={100}
                                   width={300}
@@ -137,7 +139,7 @@ export default async function UserBlog(context: { searchParams: { page: string }
                                 className={
                                   "table-cell px-6 align-middle   py-3 text-xs md:text-sm flex-grow "
                                 }
-                              >
+                                >
                                 <div className=' flex gap-2'>
                                   <Link href={`/user/blog/edit/${blog._id}`} title="Edit" >
                                     <HiPencilAlt className='text-blue-600' size={25} />
@@ -148,9 +150,10 @@ export default async function UserBlog(context: { searchParams: { page: string }
                             </Suspense>
                           </Tr>
 
-                        )
-                      })
-                    }
+)
+})
+}
+</Animation>
                   </tbody>
                 </table>
                 : <div className='text-center text-lg'>Looks Like You don&apos;t created any Blogs </div>

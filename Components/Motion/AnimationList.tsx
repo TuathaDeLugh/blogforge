@@ -16,7 +16,11 @@ export default function AnimationList({data}:any) {
                 delay: 0.1 * index,
                 staggerDirection : -1
             }
-        })
+        }),
+        exit: {
+            opacity: 0,
+            x: -20
+          }
     }
   return (
     <ul className='flex gap-4 flex-wrap items-center justify-start p-2'>
@@ -24,10 +28,12 @@ export default function AnimationList({data}:any) {
             items.map((item: any,index: number) => (
 
                 <motion.li key={index}
+                layout
                 className=' w-full md:w-[32%] h-56 border rounded'
                 variants={variants}
                 initial='initial'
                 whileInView='animate'
+                exit='exit'
                 viewport={{once:true, amount:0}}
                 custom={index}
                 >

@@ -1,5 +1,5 @@
 import Carousel from '@/Components/layout/Crousel';
-import { Div, H1, P } from '@/Components/Motion/Motion';
+import { Animation, Div, H1, P } from '@/Components/Motion/Motion';
 import ShareButton from '@/Components/Sharebutton';
 import getSingleblog from '@/controllers/singleblog';
 import Image from 'next/image';
@@ -205,24 +205,38 @@ export default async function page({ params: { id } }: BlogProps) {
             <div className=' pt-3'>
               {blog.comments.length > 0 ? (
                 <div className='max-h-[50vh] lg:max-h-[80dvh] overflow-y-auto flex flex-col gap-2'>
+                  <Animation>
                   {blog.comments?.map((comment: any) => {
                     return (
-                      <div
-                        key={comment._id}
+                      <Div
+                      initial={{
+                        opacity: 0,
+                        y: -20
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0
+                      }}
+                      exit={{
+                        opacity: 0,
+                        y: -20
+                      }}
+                      layout={true}
+                      key={comment._id}
                         className=' rounded-lg bg-slate-100 dark:bg-gray-800 p-1 w-[98%] relative '
                       >
                         <div className='py-1 px-2 flex justify-between'>
                           <div className='flex items-center gap-2'>
                             {comment.user.avatar ? (
                               <Image width={50} height={50}
-                                src={comment.user.avatar}
-                                alt={comment.user.username}
-                                className='border dark:border-slate-400 mr-1 w-7 h-7 rounded-full'
+                              src={comment.user.avatar}
+                              alt={comment.user.username}
+                              className='border dark:border-slate-400 mr-1 w-7 h-7 rounded-full'
                               />
-                             ) : (
+                            ) : (
                               <AiOutlineUser
-                                size={20}
-                                className='border dark:border-slate-400 mr-1 w-7 h-7 rounded-full'
+                              size={20}
+                              className='border dark:border-slate-400 mr-1 w-7 h-7 rounded-full'
                               />
                             )} 
                             {' '}
@@ -235,24 +249,25 @@ export default async function page({ params: { id } }: BlogProps) {
                           (blog.creator._id == session.user?.dbid ||
                             comment.user._id == session.user?.dbid ||
                             session.user.isAdmin==true) ? (
-                            <div className=' absolute right-0 top-0' >
+                              <div className=' absolute right-0 top-0' >
                               <DelCommentBtn
                                 blogid={blog._id}
                                 commid={comment._id}
-                              />
+                                />
                             </div>
                           ) : null}
                         </div>
                         <div className={`py-1 px-2 overflow-x-scroll`}>{comment.comment}</div>
-                      </div>
+                      </Div>
                     )
                   })}
+                  </Animation>
                 </div>
               ) : (
                 <p className='mt-5'>No comments avaliable become the first</p>
               )}
             </div>
-          </Div>
+            </Div>
         </div>
         <div className='my-5'>
               <P className="flex gap-2 items-center text-slate-400 dark:text-slate-600"

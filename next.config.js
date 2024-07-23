@@ -1,12 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  theme: {
-    extend: {
-      transitionProperty: {
-        'padding-left': 'padding-left',
-      },
-    },
-  },
     images: {
         remotePatterns: [
           {

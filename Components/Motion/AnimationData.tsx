@@ -26,7 +26,11 @@ export default function AnimationData({children,className,index,style,whileTap,w
                 staggerDirection : -1,
                 amount:0
             }
-        })
+        }),
+        exit: {
+            opacity: 0,
+            x: -20
+          }
     }
   return (
 
@@ -35,6 +39,8 @@ export default function AnimationData({children,className,index,style,whileTap,w
                 variants={variants}
                 initial='initial'
                 whileInView='animate'
+                exit='exit'
+                layout
                 viewport={{once:true, amount:0}}
                 whileHover={whileHover}
                 whileTap={whileTap}

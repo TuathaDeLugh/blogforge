@@ -1,5 +1,5 @@
 import AnimationData from '@/Components/Motion/AnimationData'
-import { H1 } from '@/Components/Motion/Motion'
+import { Animation, H1 } from '@/Components/Motion/Motion'
 import Pagination from '@/Components/layout/Pagination'
 import RemoveFromSaveBtn from '@/Components/RemoveFromSaveBTN'
 import { authOptions } from '@/app/api/auth/[...nextauth]/options'
@@ -37,11 +37,13 @@ const SaveList = async () => {
       </div>
       <div className="min-h-[90vh]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <Animation>
+
           {blogs.data.map((blog: any, index: number) => (
             <AnimationData
-              key={blog._id}
-              index={index}
-              className="relative overflow-hidden rounded-lg shadow-lg bg-white dark:bg-gray-800"
+            key={blog._id}
+            index={index}
+            className="relative overflow-hidden rounded-lg shadow-lg bg-white dark:bg-gray-800"
             >
               <div className="block group">
                 <div className="">
@@ -51,7 +53,7 @@ const SaveList = async () => {
                     className="w-full h-48 object-cover"
                     width={300}
                     height={200}
-                  />
+                    />
 
                 </div>
                 <div className="p-6 mb-16">
@@ -72,11 +74,11 @@ const SaveList = async () => {
                   <div className="flex items-center">
                     {blog.creator.avatar ? (
                       <Image
-                        className="rounded-full border-2 border-gray-300 dark:border-gray-600"
-                        src={blog.creator.avatar}
-                        width={40}
-                        height={40}
-                        alt={blog.creator.createdby}
+                      className="rounded-full border-2 border-gray-300 dark:border-gray-600"
+                      src={blog.creator.avatar}
+                      width={40}
+                      height={40}
+                      alt={blog.creator.createdby}
                       />
                     ) : null}
                     <div className="ml-3">
@@ -94,13 +96,14 @@ const SaveList = async () => {
                 <Link
                   className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-9 rounded-md px-3 text-white bg-orange-400 hover:bg-orange-400/80 dark:bg-orange-500/80 dark:hover:bg-orange-500/50"
                   href={`/blogs/${blog._id}`}
-                >
+                  >
                   Read Blog
                 </Link>
                 <RemoveFromSaveBtn name={blog.title} uid={session?.user.dbid!} rid={blog._id} page="saveist" />
               </div>
             </AnimationData>
           ))}
+          </Animation>
         </div>
       </div>
       <Pagination pagedata={blogs.meta} />

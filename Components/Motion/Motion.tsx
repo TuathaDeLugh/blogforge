@@ -1,5 +1,5 @@
 'use client'
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react'
 
 interface proops{
@@ -8,8 +8,10 @@ interface proops{
   initial?:{},
   animate?:{},
   transition?:{},
-  whileTap?:{};
-  whileHover?:{};
+  whileTap?:{},
+  whileHover?:{},
+  exit?:{},
+  layout?:boolean,
 }
 
 export function H1({children,className,initial,animate,transition}:proops) 
@@ -26,12 +28,14 @@ export function H1({children,className,initial,animate,transition}:proops)
     )
   }
 
-  export function Div({children,className,initial,animate,transition,whileTap,whileHover}:proops) 
+  export function Div({children,className,initial,animate,transition,whileTap,whileHover,exit,layout}:proops) 
   {
       return (
         <motion.div
         initial={initial}
         animate={animate}
+        exit={exit}
+        layout={layout}
         transition={transition}
         whileHover={whileHover}
         whileTap={whileTap}
@@ -55,3 +59,12 @@ export function H1({children,className,initial,animate,transition}:proops)
         </motion.p>
     )
   }
+  
+  export  function Animation({children}:proops) {
+    return (
+      <AnimatePresence>
+          {children}
+      </AnimatePresence>
+    )
+  }
+  

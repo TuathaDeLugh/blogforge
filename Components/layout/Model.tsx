@@ -111,7 +111,7 @@ const DModal: React.FC<DModalProps> = ({ btn, header, children, submit, timerDur
                 {header}
               </h3>
               
-              <div className="mb-10 text-base font-normal leading-relaxed flex flex-col items-center gap-5">
+              <div className="mb-10 text-base font-normal leading-relaxed flex flex-col items-center gap-5 text-black dark:text-white">
                 {children}
               </div>
               <div className="-mx-3 flex flex-wrap">
@@ -144,7 +144,7 @@ const DModal: React.FC<DModalProps> = ({ btn, header, children, submit, timerDur
                   whileTap={{ scale: 0.95 }}>
 <motion.button
   onClick={() => setModalOpen(false)}
-  className="block w-full bg-gradient-to-r from-orange-500 to-orange-500/60 rounded-md border border-stroke dark:border-slate-600 p-3 text-center text-base font-medium transition hover:border-orange-500/70 dark:hover:border-orange-500 hover:text-black dark:hover:text-white relative"
+  className="block w-full bg-gradient-to-r from-orange-500 to-orange-500/60 rounded-md border border-stroke dark:border-slate-600 p-3 text-center text-base font-medium transition hover:border-orange-500/70 dark:hover:border-orange-500 text-black dark:text-white relative"
   style={{
     backgroundSize: `${((timeLeft / (timerDuration || 1)) * 100)}% 100%`,
     backgroundPosition: '0% 50%',

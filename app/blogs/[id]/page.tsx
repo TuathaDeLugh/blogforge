@@ -124,14 +124,16 @@ export default async function page({ params: { id } }: BlogProps) {
                 <span className=' text-orange-500 dark:text-orange-400 flex items-center  font-medium'>
                   {' '}
                   Share 
+
                   <DModal
-        btn={<IoIosInformationCircleOutline size={20} className=' shadow-md rounded-full m-2 backdrop-blur-xl'/>}
-        header="Important Information"
+        btn={<IoIosInformationCircleOutline size={20} className='text-orange-500 dark:text-orange-400 shadow-md rounded-full m-2 backdrop-blur-xl'/>}
+        header="How it count ?"
         timerDuration={10}
         >
         <Image src={'/info.svg'} alt='info person' width={200} height={200}/>
-        <><p>User revive : +1</p><p>User Open Link : +1</p><p>User revive & open : +2</p></>
-      </DModal>:{' '}
+        <div><p>User receive : +1</p><p>User Open Link : +1</p><p>User receive & open : +2</p></div>
+      </DModal>
+      :{' '}
                 </span>{' '}
                 {blog.share}
                 <ShareButton link={`${process.env.API_URL}share?blog=${encodeURIComponent(blog.title)}`} />

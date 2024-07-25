@@ -7,7 +7,8 @@ import { getBlogs } from '@/controllers/savelist'
 import { getServerSession } from 'next-auth'
 import Image from 'next/image'
 import Link from 'next/link'
-import ToastInfo from '@/Components/layout/ToastInfo'
+import DModal from '@/Components/layout/Model'
+import { IoIosInformationCircleOutline } from 'react-icons/io'
 
 const SaveList = async () => {
   const session = await getServerSession(authOptions)
@@ -29,13 +30,23 @@ const SaveList = async () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="pl-2 text-3xl font-bold border-l-8 border-orange-400 md:text-5xl dark:text-white"
+          className="pl-2 text-3xl font-bold border-l-8 border-orange-400 md:text-5xl dark:text-white flex"
         >
           Saved Blogs
-          <ToastInfo message={'This tab display your saved blogs those are publically avaliable. Deleted or Private blogs are not shown here'} duration={10000} />
+          <div className="w-10">
+
+      <DModal
+        btn={<IoIosInformationCircleOutline size={20} className=' shadow-md rounded-full m-2 backdrop-blur-xl'/>}
+        header="Important Information"
+        timerDuration={10}
+        >
+        <Image src={'/info.svg'} alt='info person' width={200} height={200}/>
+        <p>This tab display your saved blogs those are publically avaliable. Deleted or Private blogs are not shown here</p>
+      </DModal>
+        </div>
         </H1>
       </div>
-      <div className="min-h-[90vh]">
+      <div className="min-h-[90vh] pb-5">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <Animation>
 

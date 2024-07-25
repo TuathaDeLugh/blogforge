@@ -16,7 +16,8 @@ import { Metadata } from 'next';
 import CommentForm from '@/Components/Comment/CommentForm';
 import { AiOutlineUser } from 'react-icons/ai';
 import DelCommentBtn from '@/Components/Comment/DelCommentBtn';
-import ToastInfo from '@/Components/layout/ToastInfo';
+import DModal from '@/Components/layout/Model';
+import { IoIosInformationCircleOutline } from 'react-icons/io';
 
 interface BlogProps {
   params: {
@@ -120,11 +121,17 @@ export default async function page({ params: { id } }: BlogProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}>
-                <span className=' text-orange-500 dark:text-orange-400  font-medium'>
+                <span className=' text-orange-500 dark:text-orange-400 flex items-center  font-medium'>
                   {' '}
                   Share 
-                <ToastInfo ClassName=' border-orange-500 mx-2' message={<><p>User revive : +1</p><p>User Open Link : +1</p><p>User revive & open : +2</p></>}/>
-                  :{' '}
+                  <DModal
+        btn={<IoIosInformationCircleOutline size={20} className=' shadow-md rounded-full m-2 backdrop-blur-xl'/>}
+        header="Important Information"
+        timerDuration={10}
+        >
+        <Image src={'/info.svg'} alt='info person' width={200} height={200}/>
+        <><p>User revive : +1</p><p>User Open Link : +1</p><p>User revive & open : +2</p></>
+      </DModal>:{' '}
                 </span>{' '}
                 {blog.share}
                 <ShareButton link={`${process.env.API_URL}share?blog=${encodeURIComponent(blog.title)}`} />

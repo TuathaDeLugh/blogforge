@@ -4,9 +4,9 @@ import { HiPencilAlt } from 'react-icons/hi'
 import Image from 'next/image'
 import Tr from '@/Components/Motion/TableAnimation'
 import { Div } from '@/Components/Motion/Motion'
-import getUserBlog from '@/controllers/userblog'
 import Pagination from '@/Components/layout/Pagination'
 import DelBlogBtn from '../DeleteBlog'
+import { getUserBlog } from '@/controllers/user'
 
 interface UserBlogTableProps {
     pageno?: number;

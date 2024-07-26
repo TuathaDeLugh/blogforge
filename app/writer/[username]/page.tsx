@@ -1,6 +1,6 @@
 import ShareButton from '@/Components/Sharebutton';
 import Pagination from '@/Components/layout/Pagination';
-import getSingleWriter from '@/controllers/singlewriter';
+import { getSingleWriter } from '@/controllers/writer';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';

@@ -1,7 +1,7 @@
 import AnimationData from '@/Components/Motion/AnimationData';
 import { H1 } from '@/Components/Motion/Motion';
 import Pagination from '@/Components/layout/Pagination';
-import getAllWriter from '@/controllers/allwriter';
+import getAllWriter from '@/controllers/writer';
 import Image from 'next/image'
 import Link from 'next/link';
 import React from 'react'

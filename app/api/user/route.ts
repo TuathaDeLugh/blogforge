@@ -82,7 +82,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
         console.error('Error in GET handler:', error.message);
         return NextResponse.json(
             {
-                message: 'Failed to load mail',
+                message: 'Failed to load users',
                 error: error.message,
             },
             { status: 500 }

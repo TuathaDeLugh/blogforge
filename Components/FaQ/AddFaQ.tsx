@@ -45,7 +45,7 @@ const AddFAQ: React.FC = () => {
 
   return (
     <DModal
-      btn={<span className="text-res-500 hover:text-orange-500/60 flex items-center"><IoAddSharp size={20} className="mr-1" /> Add New FAQ</span>}
+      btn={<span className=" hover:text-orange-500/60 flex items-center"><IoAddSharp size={20} className="mr-1" /> Add New FAQ</span>}
       header="Add New FAQ"
       form
       isOpen={modalOpen}

@@ -4,7 +4,7 @@ import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import React, { Suspense } from 'react'
 import { HiPencilAlt } from "react-icons/hi";
-import { Animation, Div} from '@/Components/Motion/Motion'
+import { Animation, Div, H1} from '@/Components/Motion/Motion'
 import Image from 'next/image'
 import Tr from '@/Components/Motion/TableAnimation'
 import DelBlogBtn from '../../DeleteBlog'
@@ -55,6 +55,13 @@ interface UserBlogFilterProps {
           Draft
         </Link>
       </div>
+      <H1 
+  initial={{ opacity: 0, y: -20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5}}
+  className="my-2 text-xl font-semibold capitalize text-orange-500 dark:text-orange-400 lg:text-[4xl]">
+    Total blogs : {blogs.meta.totalDocuments}
+  </H1>
         <Div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

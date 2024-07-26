@@ -1,6 +1,7 @@
 import { Div, H1 } from '@/Components/Motion/Motion'
 import Link from 'next/link'
 import React from 'react'
+import { IoAddSharp } from 'react-icons/io5'
 
 export default function UserBloglayout({
     children,
@@ -30,7 +31,7 @@ export default function UserBloglayout({
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}>
-          <Link href={"/user/blog/new"} className='bg-orange-500/90 hover:opacity-80 my-5 font-bold text-white py-3 px-6 rounded'>Add blog</Link>
+          <Link href={"/user/blog/new"} className=" hover:text-orange-500/60 flex items-center mt-5 mb-2"> <IoAddSharp size={20} className="mr-1" /> New blog</Link>
         </Div>
     {children}
     </div>

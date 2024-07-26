@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { Suspense } from 'react'
 import { HiPencilAlt } from 'react-icons/hi';
+import { IoAddSharp } from 'react-icons/io5';
 
 export default async function AdminReview(context:any) {
   const blogs = await getAllBlog(parseInt(context.searchParams.page));
@@ -31,11 +32,18 @@ export default async function AdminReview(context:any) {
             Published Blogs
           </H1>
         </div>
+        <H1 
+  initial={{ opacity: 0, y: -20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5, delay: 0.3 }}
+  className="mt-2 text-xl font-bold capitalize text-orange-500 dark:text-orange-400 lg:text-[4xl]">
+    Total blogs : {blogs.meta.totalDocuments}
+  </H1>
         <Div className='flex gap-2 w-full mx-2'
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}>
-          <Link href={"/user/blog/new"} className='bg-orange-500/90 hover:opacity-80 my-5 font-bold text-white py-3 px-6 rounded'>Add blog</Link>
+          <Link href={"/user/blog/new"} className=" my-3 hover:text-orange-500/60 flex items-center"> <IoAddSharp size={20} className="mr-1" /> New blog</Link>
         </Div>
     <Div
       initial={{ opacity: 0, y: 20 }}

@@ -11,7 +11,7 @@ export default function RoleBtn({ user }:any) {
     const postapi = async () => {
         try {
           const rolevalue = {
-            role: user.role === 'user' ? 'admin' : 'user'
+            isAdmin: user.isAdmin ? false : true
           };
       
           const response = await fetch(`/api/user/${user._id}`, {
@@ -52,11 +52,14 @@ export default function RoleBtn({ user }:any) {
       {
           session?.user?.dbid == user._id ? null :(
               
-              <div className="p-2 flex items-center bg-purple-500 rounded text-white disabled:bg-slate-500/40">
+              <div className="p-2 flex items-center bg-orange-500/80 rounded text-white">
         <Dmodal
-        btn={<AiOutlineRetweet size={17} />}
-        header={`Are you sure you want to change ${user.username}'s role to ${user.role === 'user' ? 'admin' : 'user'}?`}
-        submit={<button className="w-full" onClick={handleConfirm}>Confirm</button>}
+        btn={<span className="flex items-center justify-center gap-2">
+          {user.isAdmin ? 'Admin' : 'User'} <AiOutlineRetweet size={17} /> 
+        </span>
+        }
+        header={`Are you sure you want to change ${user.username}'s role to ${user.isAdmin ? 'User' : 'Admin'}?`}
+        submit={<button className="w-full h-full p-3" onClick={handleConfirm}>Confirm</button>}
         />
         </div>
       )

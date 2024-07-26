@@ -1,4 +1,3 @@
-import getHomeData, { getRecommendedData } from '@/controllers/homedata';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -8,6 +7,7 @@ import { MdDescription } from 'react-icons/md';
 import { Div } from './Motion/Motion';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/options';
+import { getHomeData, getRecommendedData } from '@/controllers/blog';
 
 interface BlogPost {
   _id: string;

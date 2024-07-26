@@ -1,12 +1,28 @@
+import { H1 } from '@/Components/Motion/Motion';
 import React, { Suspense } from 'react'
 
 export default async function AdminUsers(context: { searchParams: { page: string; }; }) {
   // const users = await getAllUsers(parseInt(context.searchParams.page));
   // let i = 1;
   return (
-    <><span className="mb-4 block text-base font-semibold  text-purple-700 dark:text-purple-400">
-    Manage Users
-  </span>
+    <><section className='md:my-6'>
+    <div className="md:relative -z-10">
+      <H1
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 0.1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="absolute md:-top-14 left-0 text-[70px] text-gray-900 font-bold  dark:text-gray-200 opacity-5 md:block hidden"
+      >
+        Admin
+      </H1>
+      <H1
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }} className="pl-2 text-2xl md:text-4xl font-bold border-l-8 border-orange-400 dark:text-white">
+        All Users
+      </H1>
+    </div>
+    </section>
   {/* <h2 className="mb-6 text-[32px] font-bold capitalize text-dark lg:text-[4xl]">
     Total Users : {users.meta.totalDocuments}
   </h2>

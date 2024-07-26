@@ -3,7 +3,7 @@ import DeleteFaQ from '@/Components/FaQ/DeleteFaQ';
 import UpdateFAQ from '@/Components/FaQ/UpdateFaQ';
 import { Animation, Div, H1 } from '@/Components/Motion/Motion'
 import Tr from '@/Components/Motion/TableAnimation';
-import getFaQs from '@/controllers/allfaq'
+import getFaQs from '@/controllers/faq';
 import React, { Suspense } from 'react'
 
 export default async function Adminfaq() {

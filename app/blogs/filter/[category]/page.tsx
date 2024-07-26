@@ -2,8 +2,8 @@ import { H1 } from '@/Components/Motion/Motion';
 import React from 'react'
 import Search from '@/Components/Searchbox/Search';
 import Pagination from '@/Components/layout/Pagination';
-import getFilterBlog from '@/controllers/filterblog';
 import BlogCards from '@/Components/BlogCard';
+import { getFilterBlog } from '@/controllers/blog';
 
 export default async function Filterblogs( context : any) {
   const category = context.params.category;

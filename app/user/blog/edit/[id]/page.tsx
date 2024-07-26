@@ -1,8 +1,8 @@
 import { H1 } from '@/Components/Motion/Motion'
-import getSingleblog from '@/controllers/singleblog'
 import React from 'react'
 import EditBlogForm from './EditBlogForm';
 import Goback from '@/Components/layout/GoBack';
+import { getSingleblog } from '@/controllers/blog';
 
 interface EditBlogProps {
   params: {

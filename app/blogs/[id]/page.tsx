@@ -1,7 +1,6 @@
 import Carousel from '@/Components/layout/Crousel';
 import { Animation, Div, H1, P } from '@/Components/Motion/Motion';
 import ShareButton from '@/Components/Sharebutton';
-import getSingleblog from '@/controllers/singleblog';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
@@ -9,7 +8,6 @@ import "@/style/datadisplay.css"
 import Error from '@/app/not-found';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/options';
-import getSingleUser from '@/controllers/singleuser';
 import RemoveFromSaveBtn from '@/Components/RemoveFromSaveBTN';
 import SaveBlogBtn from '@/Components/SaveBlogBTN';
 import { Metadata } from 'next';
@@ -18,6 +16,8 @@ import { AiOutlineUser } from 'react-icons/ai';
 import DelCommentBtn from '@/Components/Comment/DelCommentBtn';
 import DModal from '@/Components/layout/Model';
 import { IoIosInformationCircleOutline } from 'react-icons/io';
+import { getSingleblog } from '@/controllers/blog';
+import { getSingleUser } from '@/controllers/user';
 
 interface BlogProps {
   params: {

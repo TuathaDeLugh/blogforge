@@ -1,6 +1,5 @@
 import Pagination from '@/Components/layout/Pagination'
 import { authOptions } from '@/app/api/auth/[...nextauth]/options'
-import getUserBlog from '@/controllers/userblog'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import React, { Suspense } from 'react'
@@ -9,6 +8,7 @@ import { Animation, Div} from '@/Components/Motion/Motion'
 import Image from 'next/image'
 import Tr from '@/Components/Motion/TableAnimation'
 import DelBlogBtn from '../../DeleteBlog'
+import { getUserBlog } from '@/controllers/user'
 
 interface UserBlogFilterProps {
     searchParams: {

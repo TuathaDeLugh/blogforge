@@ -2,8 +2,8 @@ import { H1 } from '@/Components/Motion/Motion';
 import React from 'react'
 import Search from '@/Components/Searchbox/Search';
 import Pagination from '@/Components/layout/Pagination';
-import getAllBlog from '@/controllers/allblog';
 import BlogCards from '@/Components/BlogCard';
+import getAllBlog from '@/controllers/blog';
 
 
 export default async function Blogs( context : any) {

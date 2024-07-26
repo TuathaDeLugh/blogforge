@@ -17,7 +17,7 @@ export default async function Admin() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }} className="pl-2 text-2xl md:text-4xl font-bold border-l-8 border-orange-400 dark:text-white">
-        All Users
+        Admin Panal
       </H1>
     </div>
     </section>

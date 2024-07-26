@@ -85,7 +85,7 @@ export const ProfileSchema = Yup.object({
 });
 
 export const faQSchema = Yup.object({
-  title: Yup.string().min(2).max(25).required("Please enter FaQ title"),
+  title: Yup.string().min(2).max(100).required("Please enter FaQ title"),
   info: Yup.string().min(10).required("Please enter Full Name"),
 });
 

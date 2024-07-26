@@ -8,7 +8,7 @@ const DarkmodeCSR = dynamic(() => import('./Darkmode'), { ssr: false })
 
 export default function Footer() {
   return (
-    <footer className="sticky bg-white dark:bg-gray-900 border-t dark:border-slate-700 z-50" >
+    <footer className="sticky bg-white dark:bg-gray-900 border-t dark:border-slate-700 z-10" >
   <div className="mx-auto max-w-[1500px] space-y-8 px-4 pt-10 sm:px-6 lg:space-y-16 lg:px-8">
     <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-5">
     <div className="lg:col-span-2">

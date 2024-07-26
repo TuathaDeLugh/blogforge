@@ -56,7 +56,7 @@ export default function AdminNav({
         initial={{ x: 0 }}
         animate={{ x: isNavOpen ? 0 : '-100%' }}
         transition={{ duration: 0.3 }}
-        className={`fixed z-10 bottom-0 left-0 h-[calc(100dvh-4rem)] md:h-[calc(100dvh-5rem)] w-56 p-2 lg:translate-x-0 ${isNavOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`fixed z-20 lg:z-10 bottom-0 left-0 h-[calc(100dvh-4rem)] md:h-[calc(100dvh-5rem)] w-56 p-2 lg:translate-x-0 ${isNavOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <div className="flex flex-col h-full bg-white/80 dark:bg-slate-800/80 dark:border-slate-600 shadow dark:shadow-slate-500/50 backdrop-blur-sm border rounded-xl p-4">
           <div className="text-2xl font-bold mb-8 bg-gradient-to-r from-orange-500 to-orange-400 text-transparent bg-clip-text">Admin Panel</div>
@@ -96,7 +96,7 @@ export default function AdminNav({
       {!isNavOpen && (
         <button
           onClick={toggleNav}
-          className="fixed bottom-4 left-4 z-50 p-3 bg-gradient-to-r from-orange-500 to-orange-400 text-white rounded-full hover:opacity-90 transition-opacity duration-200"
+          className="fixed bottom-4 left-4 z-20 lg:z-10 p-3 bg-gradient-to-r from-orange-500 to-orange-400 text-white rounded-full hover:opacity-90 transition-opacity duration-200"
         >
           <FiMenu size={24} />
         </button>

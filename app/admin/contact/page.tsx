@@ -1,6 +1,6 @@
 import DelmailBtn from '@/Components/Delmail';
 import Pagination from '@/Components/layout/Pagination';
-import { Div, H1 } from '@/Components/Motion/Motion';
+import { Animation, Div, H1 } from '@/Components/Motion/Motion';
 import Tr from '@/Components/Motion/TableAnimation';
 import getEmails from '@/controllers/email';
 import Link from 'next/link';
@@ -97,6 +97,7 @@ export default async function AdminContact(context:any) {
               </tr>
             </thead>
             <tbody>
+            <Animation>
               {emails.data?.map((email:any,index:number) => {
                 return (
                   <Tr index={index} key={email._id} className='border-y dark:border-slate-500 odd:bg-transparent even:bg-slate-100 dark:even:bg-slate-800/50'>
@@ -150,6 +151,7 @@ export default async function AdminContact(context:any) {
                   </Tr>
                 )
               })}
+              </Animation>
             </tbody>
           </table>
           <Pagination pagedata={emails.meta}/></>

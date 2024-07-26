@@ -8,11 +8,17 @@ interface DModalProps {
   children?: React.ReactNode | null | undefined;
   submit?: React.ReactNode | null | undefined;
   timerDuration?: number;
+  form?: boolean;
+  isOpen?: boolean;
+  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DModal: React.FC<DModalProps> = ({ btn, header, children, submit, timerDuration }) => {
-  const [modalOpen, setModalOpen] = useState(false);
+const DModal: React.FC<DModalProps> = ({ btn, header, children, submit, timerDuration, form, isOpen, setIsOpen }) => {
+  const [internalOpen, setInternalOpen] = useState(false);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
+
+  const modalOpen = isOpen !== undefined ? isOpen : internalOpen;
+  const setModalOpen = setIsOpen !== undefined ? setIsOpen : setInternalOpen;
 
   const trigger = useRef<HTMLButtonElement>(null);
   const modal = useRef<HTMLDivElement>(null);
@@ -111,10 +117,13 @@ const DModal: React.FC<DModalProps> = ({ btn, header, children, submit, timerDur
                 {header}
               </h3>
               
-              <div className="mb-10 text-base font-normal leading-relaxed flex flex-col items-center gap-5 text-black dark:text-white">
+              <div className=" text-base font-normal leading-relaxed flex flex-col items-center gap-5 text-black dark:text-white">
                 {children}
               </div>
-              <div className="-mx-3 flex flex-wrap">
+              {
+                !form &&
+              
+              <div className="mt-10 -mx-3 flex flex-wrap">
                 {timeLeft === null ? (
                   <>
                     <div className="w-1/2 px-3">
@@ -159,6 +168,7 @@ const DModal: React.FC<DModalProps> = ({ btn, header, children, submit, timerDur
                   </motion.div>
                 )}
               </div>
+}
             </motion.div>
             
           </motion.div>

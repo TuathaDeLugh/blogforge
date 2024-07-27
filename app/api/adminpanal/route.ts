@@ -60,13 +60,13 @@ export async function GET(request: Request) {
             },
         ]);
 
-        const mostSavedBlogs = await Blog.find().sort({ usersave: -1 }).limit(5).select('title usersave');
+        const mostSavedBlogs = await Blog.find().sort({ usersave: -1 }).limit(5)
 
-        const mostSharedBlogs = await Blog.find().sort({ share: -1 }).limit(5).select('title share');
+        const mostSharedBlogs = await Blog.find().sort({ share: -1 }).limit(5)
 
-        const recentBlogs = await Blog.find().sort({ createdAt: -1 }).limit(5).select('title createdAt');
+        const recentBlogs = await Blog.find().sort({ createdAt: -1 }).limit(5)
 
-        const popularBlogs = await Blog.find().sort({ usersave: -1 }).limit(5).select('title images usersave');
+        const popularBlogs = await Blog.find().sort({ usersave: -1 }).limit(5)
 
         const popularCategories = await Blog.aggregate([
             {

@@ -1,16 +1,17 @@
 import Blog from "@/models/blog";
 import User from "@/models/user";
 import connectdb from "@/util/mongodb";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(request : NextRequest, { params }:any) {
+export async function GET(request : Request, { params }:any) {
     const { username } = params ;   
 
     try {
         await connectdb();
+        const { searchParams } = new URL(request.url);
         // Fetch the user by username
         const user = await User.findOne({ username }).exec();
-        const pageParam = request.nextUrl.searchParams.get('page');
+        const pageParam = searchParams.get('page');
         const page = parseInt(pageParam as string) || 1;
         const pageSize = 15;
         const skip = (page - 1) * pageSize;

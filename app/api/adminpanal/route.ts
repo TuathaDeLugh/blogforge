@@ -1,11 +1,11 @@
 import Blog from "@/models/blog";
 import User from "@/models/user";
 import connectdb from "@/util/mongodb";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
-
-    const sortDirection = req.nextUrl.searchParams.get('sort') === '1' ? 1 : -1;
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url);
+    const sortDirection = searchParams.get('sort') === '1' ? 1 : -1;
 
     try {
         await connectdb();

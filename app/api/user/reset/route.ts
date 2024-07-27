@@ -1,9 +1,9 @@
 import User from "@/models/user";
 import bcrypt from "bcryptjs";
 import connectdb from "@/util/mongodb";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 
-export async function PATCH(request: NextRequest) {
+export async function PATCH(request: Request) {
         try {
             const {token,newpassword} = await request.json();
             await connectdb();

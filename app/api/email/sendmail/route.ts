@@ -1,7 +1,7 @@
 import { sendEmail } from "@/util/mailer";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
     try {
         const {email,emailType} = await request.json();
         console.log(email,emailType);

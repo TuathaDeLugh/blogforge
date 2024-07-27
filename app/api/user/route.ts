@@ -1,10 +1,10 @@
 import User from "@/models/user";
 import connectdb from "@/util/mongodb";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { sendEmail } from "@/util/mailer";
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
 
     try {
         const { name, username, email, avatar, pass, provider } = await request.json();
@@ -52,10 +52,11 @@ export async function POST(request: NextRequest) {
 }
 
 
-export async function GET(request: NextRequest, response: NextResponse) {
+export async function GET(request: Request, response: Response) {
     try {
         await connectdb();
-        const pageParam = request.nextUrl.searchParams.get('page');
+        const { searchParams } = new URL(request.url);
+        const pageParam = searchParams.get('page');
         const page = parseInt(pageParam as string) || 1;
         const pageSize = 15;
         const skip = (page - 1) * pageSize;
@@ -90,9 +91,10 @@ export async function GET(request: NextRequest, response: NextResponse) {
     }
 }
 
-export async function DELETE(request: NextRequest) {
+export async function DELETE(request: Request) {
     try {
-        const id = request.nextUrl.searchParams.get('id');
+        const { searchParams } = new URL(request.url);
+        const id = searchParams.get('id');
         await connectdb();
         await User.findByIdAndDelete(id);
         return NextResponse.json({ message: "User Deleted" }, { status: 200 });

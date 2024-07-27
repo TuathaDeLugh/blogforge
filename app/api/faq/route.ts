@@ -1,8 +1,8 @@
 import FaQ from "@/models/faq";
 import connectdb from "@/util/mongodb";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
 
     try {
         const { title,info } = await request.json();
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     }
 }
 
-export async function GET(request: NextRequest, response:NextResponse) {
+export async function GET(request: Request, response:Response) {
     try {
         await connectdb();
         const sort = -1;
@@ -54,9 +54,10 @@ export async function GET(request: NextRequest, response:NextResponse) {
 }
 
 
-export async function DELETE(request: NextRequest) {
+export async function DELETE(request: Request) {
     try {
-        const id = request.nextUrl.searchParams.get('id');
+        const { searchParams } = new URL(request.url);
+        const id = searchParams.get('id');
         await connectdb();
         await FaQ.findByIdAndDelete(id);
         return NextResponse.json({ message: "FaQ Deleted" }, { status: 200 });

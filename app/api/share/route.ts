@@ -1,12 +1,13 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import connectdb from "@/util/mongodb";
 import Blog from "@/models/blog";
 
-export async function GET(request: NextRequest) {
+export async function GET(request: Request) {
     try {
         await connectdb();
-        const blog = request.nextUrl.searchParams.get('blog');
-        const incrementShare = request.nextUrl.searchParams.get('increment') === 'true'; 
+        const { searchParams } = new URL(request.url);
+        const blog = searchParams.get('blog');
+        const incrementShare = searchParams.get('increment') === 'true'; 
         if (!blog) {
             return NextResponse.json(
                 { message: 'Query parameter is missing' },

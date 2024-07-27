@@ -1,8 +1,8 @@
 import Email from "@/models/mail";
 import connectdb from "@/util/mongodb";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 
-export async function GET(request:NextRequest, { params }:any) {
+export async function GET(request:Request, { params }:any) {
     const { id } = params;
     await connectdb();
     const email = await Email.findOne({ _id: id });

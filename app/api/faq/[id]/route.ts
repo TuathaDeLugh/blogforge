@@ -1,15 +1,15 @@
 import FaQ from "@/models/faq";
 import connectdb from "@/util/mongodb";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 
-export async function GET(request:NextRequest, { params }:any) {
+export async function GET(request:Request, { params }:any) {
     const { id } = params;
     await connectdb();
     const email = await FaQ.findOne({ _id: id });
     return NextResponse.json({ data:email }, { status: 200 });
 }
 
-export async function PUT(request:NextRequest,{params}:any){
+export async function PUT(request:Request,{params}:any){
     try {
         const { id } = params;
         const { title,info}  = await request.json();

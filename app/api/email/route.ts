@@ -1,8 +1,8 @@
 import Email from "@/models/mail";
 import connectdb from "@/util/mongodb";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
 
     try {
         const { name, email, subject, details } = await request.json();
@@ -29,11 +29,12 @@ export async function POST(request: NextRequest) {
     }
 }
 
-export async function GET(request: NextRequest, response:NextResponse) {
+export async function GET(request: Request, response:Response) {
     try {
         await connectdb();
         const sort = -1;
-        const pageParam = request.nextUrl.searchParams.get('page');
+        const { searchParams } = new URL(request.url);
+        const pageParam = searchParams.get('page');
         const page = parseInt(pageParam as string) || 1;
         const pageSize = 15;
         const skip = (page - 1) * pageSize;
@@ -69,9 +70,10 @@ export async function GET(request: NextRequest, response:NextResponse) {
 }
 
 
-export async function DELETE(request: NextRequest) {
+export async function DELETE(request: Request) {
     try {
-        const id = request.nextUrl.searchParams.get('id');
+        const { searchParams } = new URL(request.url);
+        const id = searchParams.get('id');
         await connectdb();
         await Email.findByIdAndDelete(id);
         return NextResponse.json({ message: "Project Deleted" }, { status: 200 });

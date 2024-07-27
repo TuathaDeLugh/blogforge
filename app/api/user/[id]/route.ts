@@ -1,9 +1,9 @@
 import Blog from '@/models/blog'
 import User from '@/models/user'
 import connectdb from '@/util/mongodb'
-import { NextRequest, NextResponse } from 'next/server'
+import {  NextResponse } from 'next/server'
 
-export async function GET(request : NextRequest, { params }:any) {
+export async function GET(request : Request, { params }:any) {
 
   
   const { id } = params
@@ -16,7 +16,7 @@ export async function GET(request : NextRequest, { params }:any) {
 
 
 
-export async function PUT(request: NextRequest, { params }: any) {
+export async function PUT(request: Request, { params }: any) {
   try {
     const { id } = params;
     const { name, username, email, avatar,isAdmin,type } = await request.json();
@@ -59,7 +59,7 @@ export async function PUT(request: NextRequest, { params }: any) {
 
 }
 
-export async function PATCH(request: NextRequest, { params }: any) {
+export async function PATCH(request: Request, { params }: any) {
   const { id } = params;
   const { type, id: rid } = await request.json();
 

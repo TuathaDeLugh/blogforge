@@ -1,9 +1,9 @@
 import Blog from "@/models/blog";
 import User from '@/models/user';
 import connectdb from "@/util/mongodb";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function PUT(request:NextRequest,{params}:any){
+export async function PUT(request:Request,{params}:any){
     if (!User) {
         throw new Error('User model is not registered');
     }
@@ -14,7 +14,7 @@ export async function PUT(request:NextRequest,{params}:any){
     return NextResponse.json({message:"Blog Updated"},{status:200});
 } 
 
-export async function GET(request:NextRequest, { params }:any) {
+export async function GET(request:Request, { params }:any) {
     try {
         const { id } = params;
         await connectdb();

@@ -1,8 +1,8 @@
 import User from "@/models/user";
 import connectdb from "@/util/mongodb";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function PATCH(request: NextRequest) {
+export async function PATCH(request: Request) {
         try {
             const {token} = await request.json();
             await connectdb();

@@ -1,17 +1,17 @@
 import connectdb from '@/util/mongodb';
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { User } from "@/models/user"; 
 import { Blog } from "@/models/blog"; 
 
-export async function GET(request: NextRequest, { params: { id } }: { params: { id: string } }) {
+export async function GET(request: Request, { params: { id } }: { params: { id: string } }) {
     try {
         await connectdb();
         
         if (!Blog) {
             throw new Error('Blog model is not registered');
         }
-
-        const pageParam = request.nextUrl.searchParams.get('page');
+        const { searchParams } = new URL(request.url);
+        const pageParam = searchParams.get('page');
         const page = parseInt(pageParam as string) || 1;
         const pageSize = 15;
         const skip = (page - 1) * pageSize;

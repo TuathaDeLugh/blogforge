@@ -3,7 +3,7 @@ import { getStats } from '@/controllers/blog'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { FaComments, FaEnvelope, FaFileAlt, FaStar, FaUser, FaUsers } from 'react-icons/fa'
+import { FaEnvelope, FaFileAlt, FaUsers } from 'react-icons/fa'
 
 export default async function Admin() {
   const stats = await getStats()
@@ -30,94 +30,99 @@ export default async function Admin() {
     </div>
     {stats && (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {/* Total Users */}
-            <div className="bg-white shadow-lg p-4 rounded-lg">
-              <h2 className="text-xl font-semibold mb-2">Total Users</h2>
-              <p className="text-3xl">{stats.totalUsers}</p>
-            </div>
 
-            {/* Total Blogs */}
-            <div className="bg-white shadow-lg p-4 rounded-lg">
-              <h2 className="text-xl font-semibold mb-2">Total Blogs</h2>
-              <p className="text-3xl">{stats.totalBlogs}</p>
+        <div className="flex justify-around gap-4 w-full border-b pb-2 md:pb-5 dark:border-slate-400 mt-5">
+              <div className=" relative items-center border border-blue-500 rounded-md p-4 bg-blue-50 dark:bg-blue-600/50 mb-4 sm:mb-0 w-1/3 ">
+                <FaFileAlt className=" absolute text-blue-500 text-3xl mb-2 right-3 hidden sm:block" />
+                <p className='text-5xl mb-2'>{stats.totalBlogs}</p>
+                <p>Total Blogs</p>
+              </div>
+              <div className="w-1/3 relative items-center border border-green-500 rounded-md p-4 bg-green-50 dark:bg-green-600/50 mb-4 sm:mb-0 ">
+                <FaEnvelope className="absolute text-green-500 text-3xl mb-2 right-3 hidden sm:block" />
+                <p className='text-5xl mb-2'>{stats.totalEmails}</p>
+                <p>Total Emails</p>
+              </div>
+              <div className="w-1/3 relative items-center border border-purple-500 rounded-md p-4 bg-purple-50 dark:bg-purple-600/50 mb-4 sm:mb-0 ">
+                <FaUsers className="absolute text-purple-500 text-3xl mb-2 right-3 hidden sm:block" />
+                <p className='text-5xl mb-2'>{stats.totalUsers}</p>
+                <p>Total Users</p>
+              </div>
             </div>
 
             {/* Popular Categories */}
-            <div className="bg-white shadow-lg p-4 rounded-lg">
-              <h2 className="text-xl font-semibold mb-2">Popular Categories</h2>
-              <ul>
-                {stats.popularCategories.map((category:any) => (
-                  <li key={category._id} className="flex justify-between">
-                    <span>{category._id}</span>
-                    <span>{category.count}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+            <div className="bg-white dark:bg-slate-700/60 shadow-lg p-4 rounded-lg mt-8">
+  <h2 className="text-xl font-semibold text-orange-500 dark:text-orange-400 mb-2">Popular Categories</h2>
+  <div className="flex flex-wrap justify-center">
+    {stats.popularCategories.map((category: any) => (
+      <div key={category._id} className="bg-orange-100 dark:bg-orange-400/20 p-4 rounded-lg m-2 w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
+        <h3 className="text-lg font-bold">{category._id}</h3>
+        <p className="text-sm">{category.count} posts</p>
+      </div>
+    ))}
+  </div>
+</div>
 
           {/* Top Writers */}
           <div className="mt-8">
-            <h2 className="text-xl font-semibold mb-4">Top Writers</h2>
+            <h2 className="text-xl font-semibold text-orange-500 dark:text-orange-400 mb-4">Top Writers</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr>
-                    <th className="py-2 px-4 border-b">Avatar</th>
-                    <th className="py-2 px-4 border-b">Username</th>
-                    <th className="py-2 px-4 border-b">Name</th>
-                    <th className="py-2 px-4 border-b">Email</th>
-                    <th className="py-2 px-4 border-b">Total Blogs</th>
-                    <th className="py-2 px-4 border-b">Total Saves</th>
-                    <th className="py-2 px-4 border-b">Total Shares</th>
-                    <th className="py-2 px-4 border-b">Score</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600">Avatar</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600">Username</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600">Name</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600">Email</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600">Total Blogs</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600">Total Saves</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600">Total Shares</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600">Score</th>
                   </tr>
                 </thead>
                 <tbody>
                   {stats.topWriters.map((writer:any) => (
                     <tr key={writer._id}>
-                      <td className="py-2 px-4 border-b">
-                        <img src={writer.avatar} alt={writer.name} className="w-12 h-12 rounded-full" />
+                      <td className="py-2 px-4 border-b dark:border-slate-600">
+                        <Image height={100} width={100} src={writer.avatar} alt={writer.name} className="w-12 h-12 rounded-full" />
                       </td>
-                      <td className="py-2 px-4 border-b">{writer.username}</td>
-                      <td className="py-2 px-4 border-b">{writer.name}</td>
-                      <td className="py-2 px-4 border-b">{writer.email}</td>
-                      <td className="py-2 px-4 border-b text-center">{writer.totalBlogs}</td>
-                      <td className="py-2 px-4 border-b text-center">{writer.totalUsersave}</td>
-                      <td className="py-2 px-4 border-b text-center">{writer.totalShare}</td>
-                      <td className="py-2 px-4 border-b text-center">{writer.score}</td>
+                      <td className="py-2 px-4 border-b dark:border-slate-600">{writer.username}</td>
+                      <td className="py-2 px-4 border-b dark:border-slate-600">{writer.name}</td>
+                      <td className="py-2 px-4 border-b dark:border-slate-600">{writer.email}</td>
+                      <td className="py-2 px-4 border-b dark:border-slate-600 text-center">{writer.totalBlogs}</td>
+                      <td className="py-2 px-4 border-b dark:border-slate-600 text-center">{writer.totalUsersave}</td>
+                      <td className="py-2 px-4 border-b dark:border-slate-600 text-center">{writer.totalShare}</td>
+                      <td className="py-2 px-4 border-b dark:border-slate-600 text-center">{writer.score}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           </div>
-
+          <div className="grid md:grid-cols-2 gap-5">
           {/* Most Commented Blogs */}
           <div className="mt-8">
-            <h2 className="text-xl font-semibold mb-4">Most Commented Blogs</h2>
+            <h2 className="text-xl font-semibold text-orange-500 dark:text-orange-400 mb-4">Most Commented Blogs</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr>
-                    <th className="py-2 px-4 border-b">Image</th>
-                    <th className="py-2 px-4 border-b">Title</th>
-                    <th className="py-2 px-4 border-b">Comments</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600">Image</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600">Title</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600 text-center">Comments</th>
                   </tr>
                 </thead>
                 <tbody>
                   {stats.mostCommentedBlogs.map((blog:any) => (
                     <tr key={blog._id}>
-                      <td className="py-2 px-4 border-b">
-                        <img src={blog.images[0].link} alt={blog.title} className="w-12 h-12 rounded" />
+                      <td className="py-2 px-4 border-b dark:border-slate-600">
+                        <Image height={100} width={100} src={blog.images[0].link} alt={blog.title} className="w-12 h-12 rounded object-cover" />
                       </td>
-                      <td className="py-2 px-4 border-b">
+                      <td className="py-2 px-4 border-b dark:border-slate-600">
                         <Link href={`/blog/${blog._id}`} className="text-blue-500 hover:underline">
                           {blog.title}
                         </Link>
                       </td>
-                      <td className="py-2 px-4 border-b text-center">{blog.commentsCount}</td>
+                      <td className="py-2 px-4 border-b dark:border-slate-600 text-center">{blog.commentsCount}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -127,51 +132,59 @@ export default async function Admin() {
 
           {/* Most Saved Blogs */}
           <div className="mt-8">
-            <h2 className="text-xl font-semibold mb-4">Most Saved Blogs</h2>
+            <h2 className="text-xl font-semibold text-orange-500 dark:text-orange-400 mb-4">Most Saved Blogs</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr>
-                    <th className="py-2 px-4 border-b">Title</th>
-                    <th className="py-2 px-4 border-b">Saves</th>
+                  <th className="py-2 px-4 border-b dark:border-slate-600">Image</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600">Title</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600 text-center">Saves</th>
                   </tr>
                 </thead>
                 <tbody>
                   {stats.mostSavedBlogs.map((blog:any) => (
                     <tr key={blog._id}>
-                      <td className="py-2 px-4 border-b">
+                      <td className="py-2 px-4 border-b dark:border-slate-600">
+                        <Image height={100} width={100} src={blog.images[0].link} alt={blog.title} className="w-12 h-12 rounded object-cover" />
+                      </td>
+                      <td className="py-2 px-4 border-b dark:border-slate-600">
                         <Link href={`/blog/${blog._id}`} className="text-blue-500 hover:underline">
                           {blog.title}
                         </Link>
                       </td>
-                      <td className="py-2 px-4 border-b text-center">{blog.usersave}</td>
+                      <td className="py-2 px-4 border-b dark:border-slate-600 text-center">{blog.usersave}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           </div>
-
+            </div>
           {/* Most Shared Blogs */}
           <div className="mt-8">
-            <h2 className="text-xl font-semibold mb-4">Most Shared Blogs</h2>
+            <h2 className="text-xl font-semibold text-orange-500 dark:text-orange-400 mb-4">Most Shared Blogs</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr>
-                    <th className="py-2 px-4 border-b">Title</th>
-                    <th className="py-2 px-4 border-b">Shares</th>
+                  <th className="py-2 px-4 border-b dark:border-slate-600">Image</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600">Title</th>
+                    <th className="py-2 px-4 border-b text-center dark:border-slate-600">Shares</th>
                   </tr>
                 </thead>
                 <tbody>
                   {stats.mostSharedBlogs.map((blog:any) => (
                     <tr key={blog._id}>
-                      <td className="py-2 px-4 border-b">
+                      <td className="py-2 px-4 border-b dark:border-slate-600">
+                        <Image height={100} width={100} src={blog.images[0].link} alt={blog.title} className="w-12 h-12 rounded object-cover" />
+                      </td>
+                      <td className="py-2 px-4 border-b dark:border-slate-600">
                         <Link href={`/blog/${blog._id}`} className="text-blue-500 hover:underline">
                           {blog.title}
                         </Link>
                       </td>
-                      <td className="py-2 px-4 border-b text-center">{blog.share}</td>
+                      <td className="py-2 px-4 border-b dark:border-slate-600 text-center">{blog.share}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -181,30 +194,28 @@ export default async function Admin() {
 
           {/* Recent Blogs */}
           <div className="mt-8">
-            <h2 className="text-xl font-semibold mb-4">Recent Blogs</h2>
+            <h2 className="text-xl font-semibold text-orange-500 dark:text-orange-400 mb-4">Recent Blogs</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr>
-                    <th className="py-2 px-4 border-b">Title</th>
-                    <th className="py-2 px-4 border-b">Category</th>
-                    <th className="py-2 px-4 border-b hidden md:table-cell">Created At</th>
-                    <th className="py-2 px-4 border-b">Status</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600">Title</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600">Category</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600 hidden md:table-cell">Created At</th>
                   </tr>
                 </thead>
                 <tbody>
                   {stats.recentBlogs.map((blog:any) => (
                     <tr key={blog._id}>
-                      <td className="py-2 px-4 border-b">
+                      <td className="py-2 px-4 border-b dark:border-slate-600">
                         <Link href={`/blog/${blog._id}`} className="text-blue-500 hover:underline">
                           {blog.title}
                         </Link>
                       </td>
-                      <td className="py-2 px-4 border-b">{blog.category.join(', ')}</td>
-                      <td className="py-2 px-4 border-b hidden md:table-cell">
+                      <td className="py-2 px-4 border-b dark:border-slate-600">{blog.category.join(', ')}</td>
+                      <td className="py-2 px-4 border-b dark:border-slate-600 hidden md:table-cell">
                         {new Date(blog.createdAt).toLocaleDateString()}
                       </td>
-                      <td className="py-2 px-4 border-b">{blog.status}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -214,30 +225,28 @@ export default async function Admin() {
 
           {/* Popular Blogs */}
           <div className="mt-8">
-            <h2 className="text-xl font-semibold mb-4">Popular Blogs</h2>
+            <h2 className="text-xl font-semibold text-orange-500 dark:text-orange-400 mb-4">Popular Blogs</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr>
-                    <th className="py-2 px-4 border-b">Title</th>
-                    <th className="py-2 px-4 border-b">Category</th>
-                    <th className="py-2 px-4 border-b hidden md:table-cell">Created At</th>
-                    <th className="py-2 px-4 border-b">Status</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600">Title</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600">Category</th>
+                    <th className="py-2 px-4 border-b dark:border-slate-600 hidden md:table-cell">Created At</th>
                   </tr>
                 </thead>
                 <tbody>
                   {stats.popularBlogs.map((blog:any) => (
                     <tr key={blog._id}>
-                      <td className="py-2 px-4 border-b">
+                      <td className="py-2 px-4 border-b dark:border-slate-600">
                         <Link href={`/blog/${blog._id}`} className="text-blue-500 hover:underline">
                           {blog.title}
                         </Link>
                       </td>
-                      <td className="py-2 px-4 border-b">{blog.category.join(', ')}</td>
-                      <td className="py-2 px-4 border-b hidden md:table-cell">
+                      <td className="py-2 px-4 border-b dark:border-slate-600">{blog.category.join(', ')}</td>
+                      <td className="py-2 px-4 border-b dark:border-slate-600 hidden md:table-cell">
                         {new Date(blog.createdAt).toLocaleDateString()}
                       </td>
-                      <td className="py-2 px-4 border-b">{blog.status}</td>
                     </tr>
                   ))}
                 </tbody>

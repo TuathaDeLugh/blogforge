@@ -1,4 +1,5 @@
 import Blog from "@/models/blog";
+import Email from "@/models/mail";
 import User from "@/models/user";
 import connectdb from "@/util/mongodb";
 import { NextResponse } from "next/server";
@@ -60,13 +61,13 @@ export async function GET(request: Request) {
             },
         ]);
 
-        const mostSavedBlogs = await Blog.find().sort({ usersave: -1 }).limit(5)
+        const mostSavedBlogs = await Blog.find().sort({ usersave: -1 }).limit(5).select('_id images title usersave')
 
-        const mostSharedBlogs = await Blog.find().sort({ share: -1 }).limit(5)
+        const mostSharedBlogs = await Blog.find().sort({ share: -1 }).limit(5).select('_id images title share')
 
-        const recentBlogs = await Blog.find().sort({ createdAt: -1 }).limit(5)
+        const recentBlogs = await Blog.find().sort({ createdAt: -1 }).limit(5).select('_id title images category createdAt')
 
-        const popularBlogs = await Blog.find().sort({ usersave: -1 }).limit(5)
+        const popularBlogs = await Blog.find().sort({ usersave: -1 }).limit(5).select('_id title images category createdAt')
 
         const popularCategories = await Blog.aggregate([
             {
@@ -91,9 +92,7 @@ export async function GET(request: Request) {
         const totalUsers = await User.countDocuments();
         const totalBlogs = await Blog.countDocuments();
 
-        const userDetails = await User.find().select('username name email isAdmin isVerified createdAt').sort({ createdAt: -1 });
-
-        const blogDetails = await Blog.find().select('title category creator createdAt status').sort({ createdAt: -1 });
+        const totalEmails = await Email.find().countDocuments();
 
         return NextResponse.json({
             topWriters,
@@ -105,8 +104,7 @@ export async function GET(request: Request) {
             popularCategories,
             totalUsers,
             totalBlogs,
-            userDetails,
-            blogDetails,
+            totalEmails,
         });
     } catch (error) {
         console.error(error);

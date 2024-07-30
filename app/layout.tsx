@@ -14,7 +14,6 @@ const font = Poppins({ subsets: ['latin'],
 export const metadata: Metadata = {
   title: 'Blog Forge',
   description: 'BlogForge, your destination for inspired blogging. Unleash creativity with our innovative platform, where every word matters. Connect, create, and elevate your stories with us.',
-  manifest:"/manifest.webmanifest",
 }
 
 export default function RootLayout({

@@ -13,7 +13,7 @@ import { IoIosInformationCircleOutline } from 'react-icons/io'
 const SaveList = async () => {
   const session = await getServerSession(authOptions)
   const blogs = await getBlogs(session?.user.dbid!)
-  console.log(blogs.data[0]);
+  console.log(blogs.data);
 
   return (
     <section className="px-4 lg:px-8 mx-auto max-w-[1500px]">

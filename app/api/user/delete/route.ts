@@ -9,9 +9,7 @@ export async function PATCH(request: Request) {
             await connectdb();
             const user = await User.findOne({ forgotPasswordToken : token,forgotPasswordExpiry: {$gt: Date.now()} });
             if (!user) {
-                console.log("invalid token");
-                
-                return NextResponse.json({message: 'Invalid Token'},{status:401});
+                return NextResponse.json({error: 'Invalid Token'},{status:401});
             }
             
             const salt = await bcrypt.genSalt(10)

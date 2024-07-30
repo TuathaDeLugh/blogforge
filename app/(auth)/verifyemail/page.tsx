@@ -14,51 +14,47 @@ export default function VerifyFirst() {
   }
   const [disabled, setDisabled] = useState(false);
   const [token, setToken] = useState("");
+  const [type, setType] = useState("");
 
-
-  const handleVerifyEmail = async () => {
+  const handleEmailVerification = async () => {
     try {
       setDisabled(true);
-      console.log(token);
-      
+
       const values = {
-        token: token
+        token,
+        type,
       };
       const response = await fetch(`/api/user/verify`, {
-        method: "PATCH",
+        method: type === 'update' ? 'PUT' : 'PATCH',
         headers: {
-          "Content-type": "application/json",
+          'Content-type': 'application/json',
         },
         body: JSON.stringify(values),
       });
 
-      if (!response.ok) {
-        throw new Error('Error to verify');
-      }
-
-      toast.success("Account verified");
-      if(session){
-        signOut({ callbackUrl: '/login' })
-      }
-      else{
-        router.push("/login")
+      if (response && response.status === 200) {
+        toast.success("Account Successfully Verified");
+        if (session) {
+          signOut({ callbackUrl: '/login' });
+        } else {
+          router.push("/login");
+        }
+      } else {
+        toast.error('This verification token is expired, you can request a new one');
       }
     } catch (error) {
       console.error(error);
-      toast.error('Failed verification email. Please try again later.');
+      toast.error('Failed to verify email. Please try again later.');
     } finally {
       setDisabled(false);
-      
-
     }
   };
 
   useEffect(() => {
-    const urlToken = window.location.search.split("=")[1];
-    setToken(urlToken || "");
-}, []);
-
-
+    const urlParams = new URLSearchParams(window.location.search);
+    setToken(urlParams.get('token') || '');
+    setType(urlParams.get('type') || 'verify');
+  }, []);
 
   return (
     <div className="flex min-h-[92vh] md:min-h-[90vh] items-center mx-auto max-w-[1500px] justify-center p-3">
@@ -86,7 +82,7 @@ export default function VerifyFirst() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="pl-2 font-bold border-l-8 border-orange-400 text-5xl dark:text-white"
             >
-              Verify Email
+              {type === 'verify' ? 'Verify Email' : 'Verify Updated Email'}
             </H1>
           </div>
 
@@ -95,23 +91,24 @@ export default function VerifyFirst() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}>
             <p>
-              Click the button below to verifiy your email.
+              Click the button below to verify your email.
             </p>
             <div className="md:w-[450px] text-center flex items-center justify-center">
               <button
                 disabled={disabled}
-                onClick={handleVerifyEmail}
+                onClick={handleEmailVerification}
                 className="text-white bg-orange-400 hover:bg-orange-600 disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-5 py-3 flex items-center justify-center gap-4"
               >
-                Verify Email
+                {type === 'verify' ? 'Verify Email' : 'Verify Updated Email'}
                 {disabled && (
                   <AiOutlineLoading3Quarters size={20} className='animate-spin' />
                 )}
               </button>
             </div>
             <p className='text-sm'>
-              After Verifecation you will be redirected to login page and can start using our services!
-
+              After verification, 
+              {type === 'verify' ? ' you will be redirected to the login page and can start using our services!' : ' you can use updated Email for our services!'}
+              
             </p>
           </Div>
         </div>

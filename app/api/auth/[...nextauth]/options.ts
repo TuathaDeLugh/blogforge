@@ -1,10 +1,10 @@
-import User from '@/models/user'
+import User from '@/models/user';
 import connectdb from '@/util/mongodb';
-import { AuthOptions } from 'next-auth'
-import bcrypt from "bcryptjs";
+import { AuthOptions } from 'next-auth';
+import bcrypt from 'bcryptjs';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import GoogleProvider from 'next-auth/providers/google'
-import GitHubProvider from "next-auth/providers/github";
+import GoogleProvider from 'next-auth/providers/google';
+import GitHubProvider from 'next-auth/providers/github';
 
 export type CustomUser = {
   dbid?: string | null;
@@ -14,9 +14,10 @@ export type CustomUser = {
   provider?: string | null;
   email?: string | null;
   avatar?: string | null;
-  isVerified?: Boolean | null,
-  isAdmin?: Boolean | null;
+  isVerified?: boolean | null;
+  isAdmin?: boolean | null;
 };
+
 export const authOptions: AuthOptions = {
   providers: [
     GoogleProvider({
@@ -28,39 +29,44 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.GITHUB_SECRET!,
     }),
     CredentialsProvider({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
-        email: { name: "Email", type: "text" },
-        password: { name: "Password", type: "password" }
+        email: { name: 'Email or Username', type: 'text' },
+        password: { name: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const email = credentials?.email
-        const password = credentials?.password
+        const identifier = credentials?.email; // Can be email or username
+        const password = credentials?.password;
 
         try {
           await connectdb();
-          const user = await User.findOne({ email });
+
+          const user = await User.findOne({
+            $or: [{ email: identifier }, { username: identifier }],
+          });
 
           if (!user) {
+            console.log('User not found');
             return null;
           }
 
           const passwordsMatch = await bcrypt.compare(password || '', user.password || '');
 
           if (!passwordsMatch) {
+            console.log('Passwords do not match');
             return null;
           }
 
           return user;
         } catch (error) {
-          console.error("Error in authorize:", error);
+          console.error('Error in authorize:', error);
           return null;
         }
-      }
+      },
     }),
   ],
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60,
   },
   callbacks: {
@@ -71,53 +77,47 @@ export const authOptions: AuthOptions = {
       if (!dbuser) {
         return true;
       }
-      if (dbuser) {
-        user.dbid = dbuser._id;
-        user.avatar = dbuser.avatar;
-        user.email = dbuser.email;
-        user.name = dbuser.name;
-        user.username =  dbuser.username;
-        user.isVerified =  dbuser.isVerified,
-        user.isAdmin = dbuser.isAdmin;
-        return true;
-      }
-      // Update properties based on your User model
+
+      user.dbid = dbuser._id;
+      user.avatar = dbuser.avatar;
+      user.email = dbuser.email;
+      user.name = dbuser.name;
+      user.username = dbuser.username;
+      user.isVerified = dbuser.isVerified;
+      user.isAdmin = dbuser.isAdmin;
 
       return true;
     },
-    async jwt({ token, user, session,trigger }: { token: any; user?: CustomUser | undefined; trigger?:any; session?: any }){
+    async jwt({ token, user, trigger, session }: { token: any; user?: CustomUser; trigger?: any; session?: any }) {
       if (user) {
-        // Modify token directly
         token.userdbid = user.dbid;
         token.avatar = user.avatar;
         token.email = user.email;
         token.name = user.name;
-        token.username =  user.username;
-        token.isVerified =  user.isVerified,
+        token.username = user.username;
+        token.isVerified = user.isVerified;
         token.isAdmin = user.isAdmin;
       }
-      if (trigger === "update") {
-        return {...token,...session.user }
+      if (trigger === 'update') {
+        return { ...token, ...session.user };
       }
-      return token
+      return token;
     },
     async session({ session, token }: { session: any; token: any }) {
-      session.user.dbid = token?.userdbid;
-        session.user.avatar = token?.avatar;
-        session.user.email = token?.email;
-        session.user.name = token?.name;
-        session.user.username =  token?.username;
-        session.user.isVerified =  token?.isVerified,
-        session.user.isAdmin = token?.isAdmin;
-      // Add any other session properties you want to include
+      session.user.dbid = token.userdbid;
+      session.user.avatar = token.avatar;
+      session.user.email = token.email;
+      session.user.name = token.name;
+      session.user.username = token.username;
+      session.user.isVerified = token.isVerified;
+      session.user.isAdmin = token.isAdmin;
+
       return session;
-    }
+    },
   },
-
-
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/login",
-    error: '/auth/error'
+    signIn: '/login',
+    error: '/auth/error',
   },
 };

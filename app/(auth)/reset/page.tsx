@@ -30,10 +30,10 @@ export default function Reset() {
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
-      validationSchema:Yup.object({
-        password: Yup.string().required("Please enter new password").min(8, 'Password must be 8 characters long').matches(/[0-9]/, 'Password requires a number').matches(/[a-z]/, 'Password requires a lowercase letter').matches(/[A-Z]/, 'Password requires an uppercase letter').matches(/[^\w]/, 'Password requires a symbol'),
-        confirmpassword: Yup.string().required("Please confirm password").oneOf([Yup.ref('password')], 'Confirm Password does not match with password'),
-      }),
+      // validationSchema:Yup.object({
+      //   password: Yup.string().required("Please enter new password").min(8, 'Password must be 8 characters long').matches(/[0-9]/, 'Password requires a number').matches(/[a-z]/, 'Password requires a lowercase letter').matches(/[A-Z]/, 'Password requires an uppercase letter').matches(/[^\w]/, 'Password requires a symbol'),
+      //   confirmpassword: Yup.string().required("Please confirm password").oneOf([Yup.ref('password')], 'Confirm Password does not match with password'),
+      // }),
       onSubmit: (async (values, action) => {
 
         try {
@@ -51,21 +51,27 @@ export default function Reset() {
         },
         body: JSON.stringify(data),
       });
-
+      if (
+        response &&
+        (response).status == 200
+      ) {
+        toast.success("Password Reset Sucessfully");
+        if(session){
+          signOut({ callbackUrl: '/login' })
+        }
+        else{
+          router.push("/login")
+        }
+      } else {
+        toast.error('This password reset token is expired, you can request new one')
+      }
       if (!response.ok) {
         throw new Error('Error to reset password');
       }
 
-      toast.success("Password Reset Sucessfully");
-      if(session){
-        signOut({ callbackUrl: '/login' })
-      }
-      else{
-        router.push("/login")
-      }
           
         } catch (error) {
-          console.log('Login Failed:', error)
+          console.log('Failed:', error)
         }
         setDisabled(false)
         action.resetForm();
@@ -161,7 +167,7 @@ export default function Reset() {
                 type="submit"
                 className="text-white bg-orange-400 hover:bg-orange-600 disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 w-full flex items-center justify-center gap-4"
               >
-                Login
+                Reset
                 {
                   disabled ?
                     <AiOutlineLoading3Quarters size={20} className='animate-spin' />

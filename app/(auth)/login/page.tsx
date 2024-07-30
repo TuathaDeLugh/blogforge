@@ -96,7 +96,7 @@ export default function Login() {
             <div className="w-[85vw] md:w-[450px] h-14">
               <input
                 type="text"
-                placeholder="Email"
+                placeholder="Email or Username"
                 name="email"
                 value={values.email}
                 onChange={handleChange}

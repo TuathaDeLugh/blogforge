@@ -55,22 +55,22 @@ export const sendEmail = async ({ email, emailType,username }: EmailData) => {
           }
           await User.findByIdAndUpdate(userId, updateData);
           
-    // const transporter = nodemailer.createTransport({
-    //   service: 'gmail',
-    //   auth: {
-    //     user: process.env.MAILUSER,
-    //     pass: process.env.MAILPASS
-    //   }
-    // });
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.MAILUSER,
+        pass: process.env.MAILPASS
+      }
+    });
 
-     const transporter = nodemailer.createTransport({
-          host: "sandbox.smtp.mailtrap.io",
-          port: 2525,
-          auth: {
-            user: "8d8f9fefd0c453",
-            pass: "e420d9b073e57c"
-          }
-        });
+    //  const transporter = nodemailer.createTransport({
+    //       host: "sandbox.smtp.mailtrap.io",
+    //       port: 2525,
+    //       auth: {
+    //         user: "8d8f9fefd0c453",
+    //         pass: "e420d9b073e57c"
+    //       }
+    //     });
 
     const mailOption = {
       to: email,

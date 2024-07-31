@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { ProfileSchema } from '@/yupSchema';
 import Link from 'next/link';
+import { Animation, Div } from '@/Components/Motion/Motion';
 
 interface User {
     dbid: string,
@@ -114,6 +115,7 @@ export default function UserEditForm({ user }: { user: User }) {
 
     return (
         <>
+        <Animation>
             <div className="text-orange-400 text-sm mt-2 flex justify-between items-center">
                 
                 <Link
@@ -198,19 +200,25 @@ export default function UserEditForm({ user }: { user: User }) {
                 </div>
                 </form>
             {formik.values.newMail && formik.values.newMail !== user.email && formdisable == true && (
-                <div className="text-sm w-[85vw] md:w-[450px]">
+                <Div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="text-sm w-[85vw] md:w-[450px]">
                     <p className="text-orange-500">New Email needs to be verified. We have sent a verification email. If you have not received it or it has expired, please request a new one.</p>
                     <button
                         onClick={requestNewEmailVerification}
                         className={`mt-2 inline-flex gap-2 text-orange-400 border border-orange-400 hover:bg-orange-400 hover:text-white disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 ${cooldown > 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                         disabled={disabled || cooldown > 0}
-                    >
+                        >
                         Request New Verification Email {cooldown > 0 && `(${cooldown}s)`} {disabled ? (
                             <AiOutlineLoading3Quarters size={20} className='animate-spin' />
                         ) : null}
                     </button>
-                </div>
+                </Div>
             )}
+            </Animation>
         </>
     );
 }

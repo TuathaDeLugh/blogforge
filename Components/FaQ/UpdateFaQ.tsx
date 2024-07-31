@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
@@ -19,7 +19,18 @@ interface UpdateFAQModalProps {
 const UpdateFAQ: React.FC<UpdateFAQModalProps> = ({ faq }) => {
   const router = useRouter();
   const [modalOpen, setModalOpen] = useState(false);
-  
+  const [formValues, setFormValues] = useState({
+    title: faq.title,
+    info: faq.info
+  });
+
+  useEffect(() => {
+    setFormValues({
+      title: faq.title,
+      info: faq.info
+    });
+  }, [faq]);
+
   const postapi = async (ogvalues:any) => {
       await fetch(`/api/faq/${faq._id}`, {
           method: "PUT",
@@ -30,23 +41,22 @@ const UpdateFAQ: React.FC<UpdateFAQModalProps> = ({ faq }) => {
         });
         router.refresh();
     }
-    const { values,errors,touched, handleChange, handleSubmit } = useFormik({
-        initialValues: {
-          title: faq.title,
-          info: faq.info,
-        },
+
+    const { values, errors, touched, handleChange, handleSubmit } = useFormik({
+        initialValues: formValues,
         validationSchema: faQSchema,
-    onSubmit: async (values, action) => {
-      toast.promise(postapi(values), {
-        loading: "updating FAQ",
-        success: "FAQ updated",
-        error: "Failed to update FAQ"
-      });
-      action.resetForm();
-      router.refresh();
-      setModalOpen(false);
-    },
-  });
+        enableReinitialize: true, // Ensure form reinitializes on prop change
+        onSubmit: async (values, action) => {
+          toast.promise(postapi(values), {
+            loading: "updating FAQ",
+            success: "FAQ updated",
+            error: "Failed to update FAQ"
+          });
+          action.resetForm();
+          router.refresh();
+          setModalOpen(false);
+        },
+    });
 
   return (
     <DModal

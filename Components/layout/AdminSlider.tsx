@@ -86,7 +86,7 @@ export default function AdminNav({
       </motion.nav>
       
       {/* Main content with smooth padding transition */}
-      <section className={`transition-padding-left duration-300 ease-in-out mx-auto ${isNavOpen ? 'lg:pl-52' : 'pl-0'}`}>
+      <section className={`duration-300 ease-in-out mx-auto ${isNavOpen ? 'lg:pl-52' : 'pl-0'}`}>
         <div className="px-4 lg:px-8 py-5 mx-auto">
           {children}
         </div>

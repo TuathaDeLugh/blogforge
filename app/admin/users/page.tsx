@@ -81,7 +81,7 @@ export default async function AdminUsers(context: { searchParams: { page: string
             <tbody>
               {users.data?.map((user:any) => {
                 return (
-                  <tr key={user._id} className='border-b dark:border-slate-500'>
+                  <tr key={user._id} className='border-b dark:border-slate-500 odd:bg-transparent even:bg-slate-100 dark:even:bg-slate-800/50'>
                     <Suspense fallback={<p>Loading</p>}>
                       <td
                         className={

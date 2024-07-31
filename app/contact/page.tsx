@@ -83,12 +83,14 @@ export default function Contact() {
               className="text-lg font-semibold text-orange-400">FAQs</h2>
             <ul className="mt-3">
               <li className="flex items-center">
-                <Link href={'faqs'} className="bg-[#e6e6e6cf] dark:bg-slate-700 p-4 rounded-full flex items-center justify-center shrink-0">
+                <Link href={'/faq'} className="bg-[#e6e6e6cf] dark:bg-slate-700 p-4 rounded-full flex items-center justify-center shrink-0">
                   <RiQuestionAnswerLine size={30} />
                 </Link>
                 <p className=" text-sm ml-3">
                   <span className="block">FAQ</span>
-                  <strong>Did you Checked FAQs?</strong>
+                  <strong>Did you Checked FAQs?</strong> <Link href="/faq" className="text-orange-500 transition hover:underline dark:text-orange-400">
+                FAQs
+              </Link>
                 </p>
               </li>
 

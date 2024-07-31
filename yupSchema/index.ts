@@ -81,7 +81,7 @@ export const EditBlogSchema = Yup.object({
 export const ProfileSchema = Yup.object({
   name: Yup.string().min(2).max(25).required("Please enter Full Name"),
   username: Yup.string().min(2).max(25).matches(/^[a-z0-9_]+$/, "Username can only contain small letters, numbers, and underscores").required("Please enter username"),
-  email: Yup.string().email().required("Please enter email"),
+  newMail: Yup.string().email().required("Please enter email"),
 });
 
 export const faQSchema = Yup.object({

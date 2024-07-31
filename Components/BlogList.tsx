@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 interface Blog {
@@ -43,7 +44,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ title, info, category, images }) =>
         <div className="max-w-sm mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
         <div className="md:flex">
           <div className="md:flex-shrink-0">
-            <img className="h-48 w-full object-cover md:h-full md:w-48" src={images[0]?.link} alt={images[0]?.name} />
+            <Image width={400} height={400} className="h-48 w-full object-cover md:h-full md:w-48" src={images[0]?.link} alt={images[0]?.name} />
           </div>
           <div className="p-8">
             <h3 className="block mt-1 text-lg leading-tight font-medium text-black">{title}</h3>

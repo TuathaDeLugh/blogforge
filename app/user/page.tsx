@@ -1,22 +1,17 @@
-'use client'
 import { Div, H1 } from '@/Components/Motion/Motion';
-import React, { useState } from 'react';
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { useSession } from 'next-auth/react';
-import { useFormik } from 'formik';
-import { redirect, useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
-import { ProfileSchema} from '@/yupSchema';
+import React from 'react';
 import UserAvatarEdit from './UserAvatarEdit';
-import Link from 'next/link';
+import UserEditForm from './UserEdit';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../api/auth/[...nextauth]/options';
+import { getSingleUser } from '@/controllers/user';
 
 
 
+export default async function Profile() {
+  const session  =  await getServerSession(authOptions)
+  const user = await getSingleUser(session?.user?.dbid||'');
 
-export default function Profile() {
-  const { data: session } =  useSession()
-
-  if (session && session.user.dbid) {
     return (
       <div className="flex min-h-[92vh] md:min-h-[90vh] items-center mx-auto max-w-[1500px] justify-center">
         <Div
@@ -49,7 +44,12 @@ export default function Profile() {
 
             <UserAvatarEdit userId={session?.user.dbid}/>
 
-            <Form user={session?.user as User}/>
+            <UserEditForm user={{
+              dbid: session?.user.dbid!,
+              name: user.name,
+              email: user.email,
+              newMail: user.newMail || user.email ,
+              username: user.username}}/>
 
           </div>
           <Div
@@ -61,157 +61,3 @@ export default function Profile() {
       </div>
     );
   }
-  else{
-      redirect('/')
-  }
-}
-
-interface User{
-  dbid: string,
-  name: string,
-  username: string,
-  email: string,
-}
-
-function Form({ user }: { user: User }) {
-  
-  const router = useRouter()
-  const { data : session, update } =  useSession()
-  const [disabled, setDisabled] = useState(false);
-  const [formdisable, setformdisable] = useState(true);
-  let initialValues = {
-    name: user?.name || "",
-    username: user?.username || "",
-    email: user?.email || "",
-  };
-
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues,
-    validationSchema: ProfileSchema,
-    onSubmit: (async (values, action) => {
-
-
-      setDisabled(true);
-      try {
-        const response = await fetch(`/api/user/${user.dbid}`, {
-          method: "PUT",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify({ ...values, type: "info" }),
-        });
-        const data = await response.json();
-        setDisabled(false);
-        
-
-        if (response.status === 400) {
-          console.log(data.message);
-          
-          toast.error(data.message);
-        } else if (response.status === 500) {
-          toast.error("Server Error");
-        } 
-          await update({
-            ...session,
-            user: {
-              name: data.updatedUser.name,
-              email:data.updatedUser.email,
-              username:data.updatedUser.username
-            }
-          });
-          
-          action.resetForm();
-          toast.success('Profile Data Updated');
-
-            router.refresh();
-            router.push('/');
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    }
-    ),
-  });
-  return (
-    <>
-    <div className="text-orange-400 text-sm mt-2 flex justify-between ">
-        <button
-          className="text-orange-400 hover:underline underline-offset-4"
-          onClick={()=>setformdisable(!formdisable)}
-          >
-            Need Update?
-        </button>
-        <Link
-          href="/reset/request"
-          className="text-orange-400 hover:underline underline-offset-4"
-        >
-          Reset Password
-        </Link>
-      </div>
-    <form onSubmit={handleSubmit} autoComplete='off' className=' space-y-4 pb-4 mt-5' >
-    <div className=" w-[85vw] md:w-[450px] h-14">
-      <input
-      disabled={formdisable}
-        type="text"
-        placeholder="Name"
-        name="name"
-        value={values.name}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        className={`outline ${errors.name && touched.name ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50' : ' outline-transparent '} w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
-      />
-      {errors.name && touched.name ? (
-        <p className=" text-red-500 text-sm">* {errors.name}</p>
-      ) : null}
-    </div>
-    <div className="w-[85vw] md:w-[450px] h-14">
-      <input
-      disabled={formdisable}
-        type="text"
-        placeholder="Username"
-        name="username"
-        value={values.username}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        className={`outline ${errors.username && touched.username ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50' : ' outline-transparent '} w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
-
-      />
-      {errors.username && touched.username ? (
-        <p className=" text-red-500 text-sm">* {errors.username}</p>
-      ) : null}
-    </div>
-    <div className="w-[85vw] md:w-[450px] h-14">
-      <input
-      disabled={formdisable}
-        type="text"
-        placeholder="Email"
-        name="email"
-        value={values.email}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        className={`outline ${errors.email && touched.email ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50' : ' outline-transparent '} w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
-
-      />
-      {errors.email && touched.email ? (
-        <p className=" text-red-500 text-sm">* {errors.email}</p>
-      ) : null}
-    </div>
-
-    <div
-     className="w-[85vw] md:w-[450px] mb-2">
-      <button
-        disabled={disabled}
-        type="submit"
-        className={`${formdisable && 'hidden'} text-white bg-orange-400 hover:bg-orange-600  disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-4 py-3 w-full flex items-center justify-center gap-4`}
-      >
-        Update
-        {
-          disabled ?
-            <AiOutlineLoading3Quarters size={20} className='animate-spin' />
-            : null
-        }
-      </button>
-    </div>
-  </form>
-  </>
-  )
-}

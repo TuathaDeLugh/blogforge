@@ -17,8 +17,8 @@ const userSchema = new mongoose.Schema({
     deleteAccountToken: { type: String, required: false },
     deleteAccountTokenExpiry: { type: Date, required: false },
     newMail: { type: String, required: false },
-    NewMailToken: { type: Boolean, required: false },
-    NewMailTokenExpiry: { type: Boolean, required: false },
+    NewMailToken: { type: String, required: false },
+    NewMailTokenExpiry: { type: Date, required: false },
 }, { timestamps: true });
 
 export const User = mongoose.models.User || mongoose.model("User", userSchema);

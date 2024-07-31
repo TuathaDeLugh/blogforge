@@ -6,54 +6,32 @@ import toast from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
 
-export default function VerifyFirst() {
+export default function DeleteAccount() {
   const router = useRouter();
-  const { data: session, update } = useSession();
+  const { data: session} = useSession();
   const [disabled, setDisabled] = useState(false);
   const [token, setToken] = useState("");
-  const [type, setType] = useState("");
 
-  const handleEmailVerification = async () => {
+  const handleDeleteAccount = async () => {
     try {
       setDisabled(true);
-
-      const values = {
-        token,
-        type,
-      };
-      const response = await fetch(`/api/user/verify`, {
-        method: type === 'update' ? 'PUT' : 'PATCH',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify(values),
+      const response = await fetch(`/api/user?token=${token}`, {
+        method: "DELETE",
       });
-      const data = await response.json();
 
       if (response && response.status === 200) {
-        toast.success("Account Successfully Verified");
+        toast.success("Account Successfully Deleted");
         if (session) {
-          if (type==='update'){
-            await update({
-              ...session,
-              user: {
-                  email:data.user.email,
-              },
-          });
-          router.push("/");
-          }
-          else{
-            signOut({ callbackUrl: '/login' });
-          }
+            signOut({ callbackUrl: '/' });
         } else {
-          router.push("/login");
+          router.push("/");
         }
       } else {
-        toast.error('This verification token is expired, you can request a new one');
+        toast.error('Failed to delete account. The token might be expired, you can request a new one.');
       }
     } catch (error) {
       console.error(error);
-      toast.error('Failed to verify email. Please try again later.');
+      toast.error('Failed to Delete Account. Please try again later.');
     } finally {
       setDisabled(false);
     }
@@ -62,7 +40,6 @@ export default function VerifyFirst() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     setToken(urlParams.get('token') || '');
-    setType(urlParams.get('type') || 'verify');
   }, []);
 
   return (
@@ -89,9 +66,9 @@ export default function VerifyFirst() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="pl-2 font-bold border-l-8 border-orange-400 text-5xl dark:text-white"
+              className="pl-2 font-bold border-l-8 border-red-400 text-5xl dark:text-white"
             >
-              {type === 'verify' ? 'Verify Email' : 'Verify Updated Email'}
+              Delete Account
             </H1>
           </div>
 
@@ -100,24 +77,33 @@ export default function VerifyFirst() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}>
             <p>
-              Click the button below to verify your email.
+              We&apos;re sorry to see you go! Before you delete your account, consider the benefits of staying with us:
             </p>
-            <div className=" text-center flex items-center justify-center">
+            <ul className="list-disc list-inside text-justify mx-auto max-w-[30rem]">
+  <li>You will no longer be able to add new blogs</li>
+  <li>You will lose the ability to comment on blogs</li>
+  <li>Your created blogs will be transferred to admin</li>
+  <li>You will no longer be able to save blogs to your list</li>
+  <li>All your current saved blogs and preferences will be lost</li>
+  <li>Rejoining will require a new account creation and setup</li>
+</ul>
+            <p>
+              If you&apos;re sure you want to delete your account, click the button below.
+            </p>
+            <div className="text-center flex items-center justify-center">
               <button
                 disabled={disabled}
-                onClick={handleEmailVerification}
-                className="text-white bg-orange-400 hover:bg-orange-600 disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-5 py-3 flex items-center justify-center gap-4"
+                onClick={handleDeleteAccount}
+                className="text-white bg-red-400 hover:bg-red-600 disabled:opacity-50 disabled:pointer-events-none font-semibold rounded-md text-sm px-5 py-3 flex items-center justify-center gap-4"
               >
-                {type === 'verify' ? 'Verify Email' : 'Verify Updated Email'}
+                Delete Account
                 {disabled && (
                   <AiOutlineLoading3Quarters size={20} className='animate-spin' />
                 )}
               </button>
             </div>
             <p className='text-sm'>
-              After verification, 
-              {type === 'verify' ? ' you will be redirected to the login page and can start using our services!' : ' you can use updated Email for our services!'}
-              
+              After deleting your account, you will be redirected to the home page.
             </p>
           </Div>
         </div>
@@ -125,7 +111,7 @@ export default function VerifyFirst() {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="absolute -z-10 hidden w-full h-full bg-orange-400/50 rounded-md -bottom-3 -right-3 md:block"></Div>
+          className="absolute -z-10 hidden w-full h-full bg-red-400/50 rounded-md -bottom-3 -right-3 md:block"></Div>
       </Div>
     </div>
   );

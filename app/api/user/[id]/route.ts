@@ -1,5 +1,6 @@
 import Blog from '@/models/blog'
 import User from '@/models/user'
+import { sendEmail } from '@/util/mailer'
 import connectdb from '@/util/mongodb'
 import {  NextResponse } from 'next/server'
 
@@ -19,45 +20,45 @@ export async function GET(request : Request, { params }:any) {
 export async function PUT(request: Request, { params }: any) {
   try {
     const { id } = params;
-    const { name, username, email, avatar,isAdmin,type } = await request.json();
+    const { name, username,email, newMail, avatar, isAdmin, type } = await request.json();
+    
     await connectdb();
-    const user = await User.findOne({ email, _id: { $ne: id } });
-    const existUsername = await User.findOne({ username,_id: { $ne: id } });
-    if (type === 'info')
-    {
-      if (user) {
-        return NextResponse.json(
-          { message: 'Email is already used by Other user' },
-          { status: 400 }
-        );
+    
+    const [existingUser, existingUsername, currentUser] = await Promise.all([
+      User.findOne({ email: email, _id: { $ne: id } }),
+      User.findOne({ username, _id: { $ne: id } }),
+      User.findById(id)
+    ]);
+
+    if (type === 'info') {
+      if (existingUser) {
+        return NextResponse.json({ message: 'Email is already used by another user' }, { status: 400 });
       }
-      else{
-        if(existUsername){
-          return NextResponse.json(
-            { message: 'Username already exists' },
-            { status: 400 }
-          );
-        }
+      if (existingUsername) {
+        return NextResponse.json({ message: 'Username already exists' }, { status: 400 });
       }
     }
-    const updatedUser = await User.findByIdAndUpdate(
-      id,
-      { name, username, email, avatar,isAdmin},
-      { new: true }
-    );
-  
-    return NextResponse.json(
-      { message: 'Profile and associated blogs updated', updatedUser },
-      { status: 200 }
-    );
-  } catch (error) {
-    return NextResponse.json(
-      { message: 'Internal server error',error},
-      { status: 500 }
-    );
-  }
 
+    const updateFields: any = { name, username, avatar, isAdmin };
+    let responseMessage = 'User updated successfully';
+
+    if (newMail && newMail !== currentUser.email) {
+      updateFields.newMail = newMail;
+      await sendEmail({ email: newMail, emailType: 'EMAIL_CHANGE',username:currentUser.username });
+      responseMessage += '. Email verification link sent to your new email';
+    } else if (newMail === currentUser.email) {
+      updateFields.newMail = '';
+      updateFields.NewMailToken = '';
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(id, updateFields, { new: true });
+
+    return NextResponse.json({ message: responseMessage, user: updatedUser }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ message: 'Internal server error', error }, { status: 500 });
+  }
 }
+
 
 export async function PATCH(request: Request, { params }: any) {
   const { id } = params;
@@ -100,3 +101,5 @@ export async function PATCH(request: Request, { params }: any) {
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
+
+

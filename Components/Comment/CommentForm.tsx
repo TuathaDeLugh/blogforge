@@ -49,7 +49,7 @@ export default function CommentForm({ blogid }:CommentFormPrp) {
     }
     ),
   });
-  if(session){
+  if(session && session.user.dbid){
     return (
       <div className=' mt-5'>
                 <form className='flex justify-between' onSubmit={handleSubmit} autoComplete="off">

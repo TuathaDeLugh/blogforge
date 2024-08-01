@@ -94,11 +94,17 @@ export async function GET(request: Request, response: Response) {
 export async function DELETE(request: Request) {
     try {
         const { searchParams } = new URL(request.url);
-        const id = searchParams.get('id');
+        const token = searchParams.get('token');
         await connectdb();
-        await User.findByIdAndDelete(id);
+        const user = await User.findOne( {deleteAccountToken : token, deleteAccountTokenExpiry :{$gt: Date.now()}});
+        if (!user) {
+            return NextResponse.json({message:"User Delation token is expired"},{status:400})
+        }
+        await User.findByIdAndDelete(user._id);
         return NextResponse.json({ message: "User Deleted" }, { status: 200 });
     } catch (error) {
         console.log(error)
+        return NextResponse.json({ message: "User not Deleted" }, { status: 500 });
+
     }
 }

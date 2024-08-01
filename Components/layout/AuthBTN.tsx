@@ -31,7 +31,7 @@ const AuthLinks = () => {
     { name: 'Register', path: '/register', icon: AiOutlineUserAdd, key: 2 },
   ];
 
-  if (session?.user) {
+  if (session?.user && session.user.dbid) {
     if (session.user.isVerified) {
       dropdata = [
         { name: 'Profile', path: '/user', icon: AiOutlineUser, key: 1 },
@@ -79,7 +79,7 @@ const AuthLinks = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
           >
-            {session?.user && (
+            {session?.user.dbid && (
               <li
                 key={0}
                 className="text-slate-800 dark:text-slate-300 border-b dark:border-slate-600 py-3 text-center"

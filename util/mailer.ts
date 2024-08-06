@@ -56,7 +56,9 @@ export const sendEmail = async ({ email, emailType,username }: EmailData) => {
           await User.findByIdAndUpdate(userId, updateData);
           
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: 'smtp.zoho.in',
+      port: 465, // or 587 for TLS
+      secure: true, // use SSL for port 465, false for port 587
       auth: {
         user: process.env.MAILUSER,
         pass: process.env.MAILPASS
@@ -73,6 +75,7 @@ export const sendEmail = async ({ email, emailType,username }: EmailData) => {
     //     });
 
     const mailOption = {
+      from: "auth@umangsailor.com",
       to: email,
       subject: emailType === 'VERIFY'
       ? "Verify Your Email - BlogForge"

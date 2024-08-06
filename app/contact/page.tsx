@@ -68,7 +68,7 @@ export default function Contact() {
                 </p>
                 <p className=" text-sm ml-3">
                   <span className="block">Mail</span>
-                  <strong>umangsailor@hotmail.com</strong>
+                  <strong>contact@umangsailor.com</strong>
                 </p>
               </li>
 

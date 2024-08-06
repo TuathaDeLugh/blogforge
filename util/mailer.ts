@@ -57,8 +57,8 @@ export const sendEmail = async ({ email, emailType,username }: EmailData) => {
           
     const transporter = nodemailer.createTransport({
       host: 'smtp.zoho.in',
-      port: 465, // or 587 for TLS
-      secure: true, // use SSL for port 465, false for port 587
+      port: 465, 
+      secure: true, 
       auth: {
         user: process.env.MAILUSER,
         pass: process.env.MAILPASS

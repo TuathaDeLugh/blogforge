@@ -40,7 +40,6 @@ export default function AdminNav({
     { name: 'Blogs', href: '/admin/blogs', icon: <FaChartBar /> },
     { name: 'FaQ', href: '/admin/faq', icon: <FaQuoteLeft /> },
     { name: "Contact", href: "/admin/contact", icon: <FiMessageSquare /> },
-    { name: 'Settings', href: '/admin/settings', icon: <FaCog /> },
   ];
 
   const handleLinkClick = (): void => {

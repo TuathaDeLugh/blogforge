@@ -163,8 +163,8 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/user/blog/tab" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                My blog
+              <Link href="/contact" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+              Contact Us
               </Link>
             </li>
           </ul>

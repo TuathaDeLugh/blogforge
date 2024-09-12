@@ -4,6 +4,7 @@ import React from 'react';
 import { redirect} from 'next/navigation';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/options';
+import RegisterForm from './form';
 
 
 
@@ -51,7 +52,7 @@ export default async function Login() {
                             </H1>
                         </div>
 
-
+                        <RegisterForm/>
 
 
                         

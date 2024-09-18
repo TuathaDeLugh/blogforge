@@ -25,7 +25,7 @@ export default async function Faq() {
       </div>
       <div className="sticky grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
         <div className="md:sticky md:h-[65dvh] md:top-40 flex justify-center items-center p-11">
-          <Image src="/FaQ.svg" width={400} height={400} alt="Description" className="w-full h-auto" />
+          <Image src="/faqimage.svg" width={400} height={400} alt="Description" className="w-full h-auto" />
         </div>
         <div className="space-y-4">
           {faqs.map((faq:any, index: number) => (

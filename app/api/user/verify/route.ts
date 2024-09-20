@@ -1,9 +1,11 @@
 import User from "@/models/user";
+import { sendEmail } from "@/util/mailer";
 import connectdb from "@/util/mongodb";
 import { NextResponse } from "next/server";
 
 export async function PATCH(request: Request) {
-        try {
+    try {
+            // const email = "ursailor@gmail.com";
             const {token} = await request.json();
             await connectdb();
             const user = await User.findOne({ verifyToken : token,verifyTokenExpiry: {$gt: Date.now()} });
@@ -11,9 +13,12 @@ export async function PATCH(request: Request) {
                 return NextResponse.json({error: 'Invalid Token'},{status:401});
             }
 
+            const email = user.email;
+
             user.isVerified=true;
             user.verifyToken="";
             await user.save();
+            await sendEmail({ email,emailType:"WELCOME"});
             return NextResponse.json({
                 message: "User Verified",
                 user,

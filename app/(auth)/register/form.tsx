@@ -42,7 +42,6 @@ export default function RegisterForm() {
                 });
                 const data = await response.json();
                 setDisabled(false);
-                console.log(data);
                 
                 if(response.status == 401)
                 {   

@@ -57,7 +57,6 @@ export default function UserEditForm({ user }: { user: User }) {
                 setDisabled(false);
 
                 if (response.status === 400) {
-                    console.log(data.message);
                     toast.error(data.message);
                 } else if (response.status === 500) {
                     toast.error("Server Error");

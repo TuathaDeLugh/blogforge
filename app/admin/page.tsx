@@ -7,7 +7,6 @@ import { FaEnvelope, FaFileAlt, FaUsers } from 'react-icons/fa'
 
 export default async function Admin() {
   const stats = await getStats()
-  console.log(stats);
 
   let wno = 1, rno = 1
   return (

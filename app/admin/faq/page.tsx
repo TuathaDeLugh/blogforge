@@ -9,7 +9,6 @@ import React, { Suspense } from 'react'
 export default async function Adminfaq() {
   const faqs = await getFaQs()
   let i = 1;
-  console.log(faqs);
 
   return (
     <section className='md:my-6'>

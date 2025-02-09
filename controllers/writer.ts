@@ -3,7 +3,6 @@ export default async function getAllWriter(page?:number) {
       const api = process.env.API_URL;
       
       const apiEndpoint = `${api}api/writer?page=${page || 1}`;
-      console.log('API Endpoint:', apiEndpoint);
     const response = await fetch(apiEndpoint, {
       cache: "no-store",
     });

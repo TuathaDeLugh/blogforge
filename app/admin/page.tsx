@@ -1,3 +1,4 @@
+"use dynamic"
 import { Div, H1 } from '@/Components/Motion/Motion'
 import { getStats } from '@/controllers/blog'
 import Image from 'next/image'

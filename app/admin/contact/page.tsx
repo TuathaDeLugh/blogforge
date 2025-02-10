@@ -1,3 +1,4 @@
+"use dynamic"
 import DelmailBtn from '@/Components/Delmail';
 import Pagination from '@/Components/layout/Pagination';
 import { Animation, Div, H1 } from '@/Components/Motion/Motion';

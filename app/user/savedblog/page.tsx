@@ -1,3 +1,4 @@
+"use dynamic"
 import AnimationData from '@/Components/Motion/AnimationData'
 import { Animation, H1 } from '@/Components/Motion/Motion'
 import Pagination from '@/Components/layout/Pagination'

@@ -1,3 +1,4 @@
+"use dynamic"
 import Pagination from '@/Components/layout/Pagination';
 import { H1 } from '@/Components/Motion/Motion';
 import RoleBtn from '@/Components/RoleDropdown';

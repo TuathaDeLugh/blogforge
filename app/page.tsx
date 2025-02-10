@@ -1,3 +1,4 @@
+"use dynamic"
 import React, { Suspense } from 'react'
 import Search from '@/Components/Searchbox/Search';
 import HomePage from '@/Components/Homepage';

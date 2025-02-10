@@ -1,3 +1,4 @@
+"use dynamic"
 import ShareButton from '@/Components/Sharebutton';
 import Pagination from '@/Components/layout/Pagination';
 import { getSingleWriter } from '@/controllers/writer';

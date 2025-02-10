@@ -1,4 +1,4 @@
-
+"use dynamic"
 import DelBlogBtn from '@/app/user/blog/DeleteBlog';
 import Pagination from '@/Components/layout/Pagination';
 import { Animation, Div, H1 } from '@/Components/Motion/Motion';

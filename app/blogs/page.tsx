@@ -1,3 +1,4 @@
+"use dynamic"
 import { H1 } from '@/Components/Motion/Motion';
 import React from 'react'
 import Search from '@/Components/Searchbox/Search';

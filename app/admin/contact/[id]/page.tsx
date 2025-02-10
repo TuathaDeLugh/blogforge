@@ -1,3 +1,4 @@
+"use dynamic"
 import DelmailBtn from '@/Components/Delmail'
 import Goback from '@/Components/layout/GoBack'
 import { getSingleEmail } from '@/controllers/email'

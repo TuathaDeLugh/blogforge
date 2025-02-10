@@ -1,3 +1,4 @@
+"use dynamic"
 import { Div, H1 } from '@/Components/Motion/Motion';
 import React from 'react';
 import UserAvatarEdit from './UserAvatarEdit';

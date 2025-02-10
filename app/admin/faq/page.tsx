@@ -1,3 +1,4 @@
+"use dynamic"
 import AddFAQ from '@/Components/FaQ/AddFaQ';
 import DeleteFaQ from '@/Components/FaQ/DeleteFaQ';
 import UpdateFAQ from '@/Components/FaQ/UpdateFaQ';

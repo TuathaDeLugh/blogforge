@@ -1,3 +1,4 @@
+"use dynamic"
 import Carousel from '@/Components/layout/Crousel';
 import { Animation, Div, H1, P } from '@/Components/Motion/Motion';
 import ShareButton from '@/Components/Sharebutton';

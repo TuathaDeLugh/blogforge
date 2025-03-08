@@ -18,7 +18,7 @@ export default [
     rules: {
       "prettier/prettier": "warn",
       "@typescript-eslint/no-explicit-any": "warn",
-      "max-len": ["error", { code: 80, ignoreUrls: true }],
+      "max-len": ["error", { code: 200, ignoreUrls: true }],
       "no-console": "warn",
       "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     },

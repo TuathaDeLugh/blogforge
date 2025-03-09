@@ -6,7 +6,7 @@ BlogForge is a customizable, open-source blogging platform built with modern web
 
 ## 🚀 Demo
 
-Check out the live demo of BlogForge: [https://blogforge.vercel.app/](https://blogforge.vercel.app/)
+Check out the live demo of BlogForge: [https://blogforge.umangsailor.com/](https://blogforge.umangsailor.com/)
 
 ## 🧐 Features
 

@@ -74,7 +74,7 @@ export const sendEmail = async ({ email, emailType, username }: EmailData) => {
     //     });
 
     const mailOption = {
-      from: "auth@umangsailor.com",
+      from: process.env.MAILUSER,
       to: email,
       subject: emailType === 'VERIFY'
         ? "Verify Your Email - BlogForge"
@@ -129,7 +129,7 @@ export const sendEmail = async ({ email, emailType, username }: EmailData) => {
 
     <div style="background-color: #f9f9f9; padding: 10px; text-align: center; border-top: 1px solid #eee;">
         <p style="color: #888; font-size: 12px;">This email was sent from BlogForge. Please do not reply to this email.</p>
-        <p style="color: #888; font-size: 12px;">If you have any questions, feel free to <a href="mailto:contact@umangsailor.com" style="color: #FFB347; text-decoration: none;">contact us</a>.</p>
+        <p style="color: #888; font-size: 12px;">If you have any questions, feel free to <a href="mailto:service@blogforge.in" style="color: #FFB347; text-decoration: none;">contact us</a>.</p>
     </div>
 </div>
 
@@ -201,7 +201,7 @@ export const sendEmail = async ({ email, emailType, username }: EmailData) => {
     <div style="background-color: #f9f9f9; padding: 10px; text-align: center; border-top: 1px solid #eee;">
       <p style="color: #888; font-size: 12px;">You are receiving this email because you joined BlogForge.</p>
       <p style="color: #888; font-size: 12px;">BlogForge, All rights reserved.</p>
-      <p style="color: #888; font-size: 12px;">This email was sent to ${email}. If you have any questions, feel free to <a href="mailto:contact@umangsailor.com" style="color: #FFB347; text-decoration: none;">contact us</a>.</p>
+      <p style="color: #888; font-size: 12px;">This email was sent to ${email}. If you have any questions, feel free to <a href="mailto:service@blogforge.in" style="color: #FFB347; text-decoration: none;">contact us</a>.</p>
     </div>
   </div>`
       : emailType === 'RESET'
@@ -243,7 +243,7 @@ export const sendEmail = async ({ email, emailType, username }: EmailData) => {
 
     <div style="background-color: #f9f9f9; padding: 10px; text-align: center; border-top: 1px solid #eee;">
         <p style="color: #888; font-size: 12px;">This email was sent from BlogForge. Please do not reply to this email.</p>
-        <p style="color: #888; font-size: 12px;">If you have any questions, feel free to <a href="mailto:contact@umangsailor.com" style="color: #FFB347; text-decoration: none;">contact us</a>.</p>
+        <p style="color: #888; font-size: 12px;">If you have any questions, feel free to <a href="mailto:service@blogforge.in" style="color: #FFB347; text-decoration: none;">contact us</a>.</p>
     </div>
 </div>
 
@@ -291,7 +291,7 @@ export const sendEmail = async ({ email, emailType, username }: EmailData) => {
     <div style="background-color: #f9f9f9; padding: 10px; text-align: center; border-top: 1px solid #eee;">
         <p style="color: #888; font-size: 12px;">You are receiving this email because you requested to delete your BlogForge account.</p>
         <p style="color: #888; font-size: 12px;">BlogForge, All rights reserved.</p>
-        <p style="color: #888; font-size: 12px;">This email was sent to ${email}. If you have any questions, feel free to <a href="mailto:contact@umangsailor.com" style="color: #FF6347; text-decoration: none;">contact us</a>.</p>
+        <p style="color: #888; font-size: 12px;">This email was sent to ${email}. If you have any questions, feel free to <a href="mailto:service@blogforge.in" style="color: #FF6347; text-decoration: none;">contact us</a>.</p>
     </div>
 </div>
 
@@ -337,7 +337,7 @@ export const sendEmail = async ({ email, emailType, username }: EmailData) => {
     <div style="background-color: #f9f9f9; padding: 10px; text-align: center; border-top: 1px solid #eee;">
       <p style="color: #888; font-size: 12px;">You are receiving this email because you requested an email change for your BlogForge account.</p>
       <p style="color: #888; font-size: 12px;">BlogForge, All rights reserved.</p>
-      <p style="color: #888; font-size: 12px;">This email was sent to ${email}. If you have any questions, feel free to <a href="mailto:contact@umangsailor.com" style="color: #FFB347; text-decoration: none;">contact us</a>.</p>
+      <p style="color: #888; font-size: 12px;">This email was sent to ${email}. If you have any questions, feel free to <a href="mailto:service@blogforge.in" style="color: #FFB347; text-decoration: none;">contact us</a>.</p>
     </div>
 </div>
 `

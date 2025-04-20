@@ -92,14 +92,14 @@ export const sendEmail = async ({ email, emailType, username }: EmailData) => {
         <h1 style="color: #fff; margin: 0; font-size: 28px;">
             Verify Your Email for
             <span style="display: inline-block; vertical-align: middle; background-color: #fff; padding: 5px 10px; border-radius: 5px;">
-                <img src="https://blogforge.umangsailor.com/_next/image?url=%2FLogo.png&w=256&q=75" alt="BlogForge Logo" style="width: 120px; height: auto;">
+                <img src="https://blogforge.in/_next/image?url=%2FLogo.png&w=256&q=75" alt="BlogForge Logo" style="width: 120px; height: auto;">
             </span>
         </h1>
     </div>
 
     <div style="padding: 20px; background-color: #f9f9f9; text-align: center;">
     <div style="text-align: center; margin-bottom: 15px;">
-        <img src="${userdata.avatar || 'https://blogforge.umangsailor.com/_next/image?url=%2FBlogForge.png&w=64&q=75'}" alt="User Avatar" style="border-radius: 50%; width: 100px; height: 100px; object-fit: cover;">
+        <img src="${userdata.avatar || 'https://blogforge.in/_next/image?url=%2FBlogForge.png&w=64&q=75'}" alt="User Avatar" style="border-radius: 50%; width: 100px; height: 100px; object-fit: cover;">
       </div>
         <h2 style="color: #333; text-align: center; margin-bottom: 15px;">Hello, ${userdata.username || 'Valued User'}!</h2>
         <p style="color: #555; line-height: 1.6; text-align: center; font-size: 16px;">
@@ -141,7 +141,7 @@ export const sendEmail = async ({ email, emailType, username }: EmailData) => {
       <h1 style="color: #fff; margin: 0; font-size: 28px;">
         Welcome to
         <span style="display: inline-block; vertical-align: middle; background-color: #fff; padding: 5px 10px; border-radius: 5px;">
-          <img src="https://blogforge.umangsailor.com/_next/image?url=%2FLogo.png&w=256&q=75" alt="BlogForge Logo" style="width: 120px; height: auto;">
+          <img src="https://blogforge.in/_next/image?url=%2FLogo.png&w=256&q=75" alt="BlogForge Logo" style="width: 120px; height: auto;">
         </span>
       </h1>
     </div>
@@ -150,7 +150,7 @@ export const sendEmail = async ({ email, emailType, username }: EmailData) => {
     <div style="padding: 20px; background-color: #f9f9f9; text-align: center;">
 
       <div style="text-align: center; margin-bottom: 15px;">
-        <img src="${userdata.avatar || 'https://blogforge.umangsailor.com/_next/image?url=%2FBlogForge.png&w=64&q=75'}" alt="User Avatar" style="border-radius: 50%; width: 100px; height: 100px; object-fit: cover;">
+        <img src="${userdata.avatar || 'https://blogforge.in/_next/image?url=%2FBlogForge.png&w=64&q=75'}" alt="User Avatar" style="border-radius: 50%; width: 100px; height: 100px; object-fit: cover;">
       </div>
 
       
@@ -212,7 +212,7 @@ export const sendEmail = async ({ email, emailType, username }: EmailData) => {
         <h1 style="color: #fff; margin: 0; font-size: 28px;">
             Reset Your Password for
             <span style="display: inline-block; vertical-align: middle; background-color: #fff; padding: 5px 10px; border-radius: 5px;">
-                <img src="https://blogforge.umangsailor.com/_next/image?url=%2FLogo.png&w=256&q=75" alt="BlogForge Logo" style="width: 120px; height: auto;">
+                <img src="https://blogforge.in/_next/image?url=%2FLogo.png&w=256&q=75" alt="BlogForge Logo" style="width: 120px; height: auto;">
             </span>
         </h1>
     </div>
@@ -256,7 +256,7 @@ export const sendEmail = async ({ email, emailType, username }: EmailData) => {
       <h1 style="color: #fff; margin: 0; font-size: 28px;">
         Account Deletion
         <span style="display: inline-block; vertical-align: middle; background-color: #fff; padding: 5px 10px; border-radius: 5px;">
-          <img src="https://blogforge.umangsailor.com/_next/image?url=%2FLogo.png&w=256&q=75" alt="BlogForge Logo" style="width: 120px; height: auto;">
+          <img src="https://blogforge.in/_next/image?url=%2FLogo.png&w=256&q=75" alt="BlogForge Logo" style="width: 120px; height: auto;">
         </span>
       </h1>
     </div>
@@ -305,7 +305,7 @@ export const sendEmail = async ({ email, emailType, username }: EmailData) => {
       <h1 style="color: #fff; margin: 0; font-size: 28px;">
         Confirm Email Change
         <span style="display: inline-block; vertical-align: middle; background-color: #fff; padding: 5px 10px; border-radius: 5px;">
-          <img src="https://blogforge.umangsailor.com/_next/image?url=%2FLogo.png&w=256&q=75" alt="BlogForge Logo" style="width: 120px; height: auto;">
+          <img src="https://blogforge.in/_next/image?url=%2FLogo.png&w=256&q=75" alt="BlogForge Logo" style="width: 120px; height: auto;">
         </span>
       </h1>
     </div>

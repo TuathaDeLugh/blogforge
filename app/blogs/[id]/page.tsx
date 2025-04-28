@@ -12,12 +12,12 @@ import RemoveFromSaveBtn from '@/Components/RemoveFromSaveBTN';
 import SaveBlogBtn from '@/Components/SaveBlogBTN';
 import { Metadata } from 'next';
 import CommentForm from '@/Components/Comment/CommentForm';
-import { AiOutlineUser } from 'react-icons/ai';
 import DelCommentBtn from '@/Components/Comment/DelCommentBtn';
 import DModal from '@/Components/layout/Model';
 import { IoIosInformationCircleOutline } from 'react-icons/io';
 import { getSingleblog } from '@/controllers/blog';
 import { getSingleUser } from '@/controllers/user';
+import DefaultUserProfile from '@/Components/layout/DefaultUserProfile';
 
 interface BlogProps {
   params: {
@@ -243,9 +243,10 @@ export default async function page({ params: { id } }: BlogProps) {
                               className='border dark:border-slate-400 mr-1 w-7 h-7 rounded-full'
                               />
                             ) : (
-                              <AiOutlineUser
-                              size={20}
-                              className='border dark:border-slate-400 mr-1 w-7 h-7 rounded-full'
+                              <DefaultUserProfile
+                              username={comment?.user?.username}
+                              size={28}
+                              random
                               />
                             )} 
                             {' '}

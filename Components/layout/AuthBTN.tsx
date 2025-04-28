@@ -14,6 +14,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import DefaultUserProfile from "./DefaultUserProfile";
 
 const AuthLinks = () => {
   const { data: session } = useSession();
@@ -106,6 +107,8 @@ const AuthLinks = () => {
             alt="avatar"
             className="rounded-full"
           />
+        ) : session?.user?.username ? (
+          <DefaultUserProfile username={session?.user?.username} />
         ) : (
           <AiOutlineUser size={25} />
         )}

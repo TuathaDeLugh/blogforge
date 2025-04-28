@@ -1,11 +1,20 @@
 "use client";
-import Link from 'next/link';
-import { AiOutlineUser, AiOutlineLogin, AiOutlineUserAdd, AiOutlineHome, AiOutlineStar, AiOutlineTool, AiOutlineCheckCircle } from 'react-icons/ai';
-import { FaSignOutAlt } from 'react-icons/fa';
-import React, { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { signOut, useSession } from 'next-auth/react';
-import Image from 'next/image';
+import Link from "next/link";
+import {
+  AiOutlineUser,
+  AiOutlineLogin,
+  AiOutlineUserAdd,
+  AiOutlineHome,
+  AiOutlineStar,
+  AiOutlineTool,
+  AiOutlineCheckCircle,
+} from "react-icons/ai";
+import { FaSignOutAlt } from "react-icons/fa";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
+import DefaultUserProfile from "./DefaultUserProfile";
 
 const AuthLinks = () => {
   const { data: session } = useSession();
@@ -62,13 +71,19 @@ const AuthLinks = () => {
         whileTap={{ scale: 0.9 }}
         transition={{ type: 'spring', stiffness: 300 }}
       >
-        {
-          session?.user?.avatar ? (
-            <Image src={session.user?.avatar} width={25} height={25} alt='avatar' className='rounded-full' />
-          ) : (
-            <AiOutlineUser size={25} />
-          )
-        }
+        {session?.user?.avatar ? (
+          <Image
+            src={session.user?.avatar}
+            width={25}
+            height={25}
+            alt="avatar"
+            className="rounded-full"
+          />
+        ) : session?.user?.username ? (
+          <DefaultUserProfile username={session?.user?.username} />
+        ) : (
+          <AiOutlineUser size={25} />
+        )}
       </motion.button>
 
       <AnimatePresence>

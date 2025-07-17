@@ -16,6 +16,7 @@ export type CustomUser = {
   avatar?: string | null;
   isVerified?: boolean | null;
   isAdmin?: boolean | null;
+  twoFactorEnabled?: boolean | null;
 };
 
 export const authOptions: AuthOptions = {
@@ -33,10 +34,14 @@ export const authOptions: AuthOptions = {
       credentials: {
         email: { name: 'Email or Username', type: 'text' },
         password: { name: 'Password', type: 'password' },
+        otpCode: { name: 'OTP Code', type: 'text' },
+        skipOTP: { name: 'Skip OTP', type: 'text' },
       },
       async authorize(credentials) {
         const identifier = credentials?.email; // Can be email or username
         const password = credentials?.password;
+        const otpCode = credentials?.otpCode;
+        const skipOTP = credentials?.skipOTP === 'true';
 
         try {
           await connectdb();
@@ -57,9 +62,37 @@ export const authOptions: AuthOptions = {
             return null;
           }
 
+          // Check if 2FA is enabled and we're not skipping OTP (for OAuth logins)
+          if (user.twoFactorEnabled && !skipOTP) {
+            if (!otpCode) {
+              // Return a special response to indicate 2FA is required
+              throw new Error('2FA_REQUIRED');
+            }
+
+            // Verify OTP
+            if (!user.twoFactorToken || user.twoFactorToken !== otpCode.toUpperCase()) {
+              console.log('Invalid 2FA code');
+              throw new Error('INVALID_OTP');
+            }
+
+            if (user.twoFactorTokenExpiry && Date.now() > user.twoFactorTokenExpiry) {
+              console.log('2FA code expired');
+              throw new Error('EXPIRED_OTP');
+            }
+
+            // Clear the OTP after successful verification
+            await User.findByIdAndUpdate(user._id, {
+              twoFactorToken: null,
+              twoFactorTokenExpiry: null
+            });
+          }
+
           return user;
         } catch (error) {
           console.error('Error in authorize:', error);
+          if (error instanceof Error) {
+            throw error;
+          }
           return null;
         }
       },
@@ -85,6 +118,7 @@ export const authOptions: AuthOptions = {
       user.username = dbuser.username;
       user.isVerified = dbuser.isVerified;
       user.isAdmin = dbuser.isAdmin;
+      user.twoFactorEnabled = dbuser.twoFactorEnabled;
 
       return true;
     },
@@ -97,6 +131,7 @@ export const authOptions: AuthOptions = {
         token.username = user.username;
         token.isVerified = user.isVerified;
         token.isAdmin = user.isAdmin;
+        token.twoFactorEnabled = user.twoFactorEnabled;
       }
       if (trigger === 'update') {
         return { ...token, ...session.user };
@@ -111,6 +146,7 @@ export const authOptions: AuthOptions = {
       session.user.username = token.username;
       session.user.isVerified = token.isVerified;
       session.user.isAdmin = token.isAdmin;
+      session.user.twoFactorEnabled = token.twoFactorEnabled;
 
       return session;
     },

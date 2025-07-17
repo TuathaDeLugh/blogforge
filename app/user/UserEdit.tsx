@@ -15,6 +15,7 @@ interface User {
     username: string,
     email: string,
     newMail?: string,
+    twoFactorEnabled?: boolean,
 }
 
 export default function UserEditForm({ user }: { user: User }) {
@@ -24,6 +25,7 @@ export default function UserEditForm({ user }: { user: User }) {
     const [formdisable, setFormDisable] = useState(true);
     const [formData, setFormData] = useState(user);
     const [cooldown, setCooldown] = useState(0);
+    const [twoFactorLoading, setTwoFactorLoading] = useState(false);
 
     useEffect(() => {
         setFormData(user);
@@ -110,6 +112,38 @@ export default function UserEditForm({ user }: { user: User }) {
         } catch (error) {
             console.error("Error:", error);
             setDisabled(false);
+        }
+    };
+
+    const handle2FA = async (action: 'enable' | 'disable') => {
+        setTwoFactorLoading(true);
+        try {
+            const response = await fetch('/api/auth/2fa', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    userId: user.dbid, 
+                    action 
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                toast.success(data.message);
+                if (action === 'disable') {
+                    router.refresh();
+                }
+            } else {
+                toast.error(data.message || 'Failed to update 2FA settings');
+            }
+        } catch (error) {
+            console.error('2FA Error:', error);
+            toast.error('An error occurred while updating 2FA settings');
+        } finally {
+            setTwoFactorLoading(false);
         }
     };
 
@@ -218,6 +252,50 @@ export default function UserEditForm({ user }: { user: User }) {
                     </button>
                 </Div>
             )}
+            
+            {/* Two-Factor Authentication Section */}
+            <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 w-[85vw] md:w-[450px]">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                    🔐 Two-Factor Authentication
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    Add an extra layer of security to your account. When enabled, you'll receive a verification code via email each time you log in.
+                </p>
+                
+                <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div>
+                        <p className="font-medium text-gray-900 dark:text-white">
+                            Two-Factor Authentication
+                        </p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                            {user.twoFactorEnabled ? 'Currently enabled' : 'Currently disabled'}
+                        </p>
+                    </div>
+                    
+                    <button
+                        onClick={() => user.twoFactorEnabled ? handle2FA('disable') : handle2FA('enable')}
+                        disabled={twoFactorLoading}
+                        className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                            user.twoFactorEnabled
+                                ? 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50'
+                                : 'bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/50'
+                        } disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2`}
+                    >
+                        {twoFactorLoading ? (
+                            <AiOutlineLoading3Quarters size={16} className="animate-spin" />
+                        ) : null}
+                        {user.twoFactorEnabled ? 'Disable 2FA' : 'Enable 2FA'}
+                    </button>
+                </div>
+                
+                {user.twoFactorEnabled && (
+                    <div className="mt-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md">
+                        <p className="text-sm text-green-800 dark:text-green-400">
+                            ✅ Two-Factor Authentication is active. You'll receive verification codes via email when logging in.
+                        </p>
+                    </div>
+                )}
+            </div>
             </Animation>
         </>
     );

@@ -48,8 +48,9 @@ export default async function Profile() {
               dbid: session?.user.dbid!,
               name: user.name,
               email: user.email,
-              newMail: user.newMail || user.email ,
-              username: user.username}}/>
+              newMail: user.newMail || user.email,
+              username: user.username,
+              twoFactorEnabled: user.twoFactorEnabled}}/>
 
           </div>
           <Div

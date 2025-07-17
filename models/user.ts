@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
     newMail: { type: String, required: false },
     NewMailToken: { type: String, required: false },
     NewMailTokenExpiry: { type: Date, required: false },
+    twoFactorEnabled: { type: Boolean, default: false },
+    twoFactorToken: { type: String, required: false },
+    twoFactorTokenExpiry: { type: Date, required: false },
+    pendingTwoFactorEmail: { type: String, required: false },
 }, { timestamps: true });
 
 export const User = mongoose.models.User || mongoose.model("User", userSchema);

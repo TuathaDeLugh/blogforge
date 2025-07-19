@@ -3,9 +3,10 @@
 import React from 'react';
 import toast from 'react-hot-toast';
 import { IoMdShareAlt } from "react-icons/io";
+import { trackBlogShare } from '@/util/analytics';
 
-const ShareButton: React.FC<{ link: string,className?:string }> = ({ link,className }) => {
-  const handleCopyToClipboard = () => {
+const ShareButton: React.FC<{ link: string, className?: string, blogId?: string }> = ({ link, className, blogId }) => {
+  const handleCopyToClipboard = async () => {
     const shareUrl: string = link;
 
     const textArea = document.createElement('textarea');
@@ -14,6 +15,12 @@ const ShareButton: React.FC<{ link: string,className?:string }> = ({ link,classN
     textArea.select();
     document.execCommand('copy');
     document.body.removeChild(textArea);
+    
+    // Track the share if blogId is provided
+    if (blogId) {
+      await trackBlogShare(blogId);
+    }
+    
     toast('Link saved in your clipbord', {
         icon: '📋'
       });

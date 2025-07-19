@@ -48,12 +48,12 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
         // Calculate average engagement
         const avgEngagement = analytics.totalViews > 0 
-            ? ((analytics.totalSaves + analytics.totalShares + analytics.totalComments) / analytics.totalViews * 100).toFixed(2)
+            ? ((analytics.totalSaves + analytics.totalShares + analytics.totalComments) / analytics.totalViews * 100)
             : 0;
 
         const response = {
             ...analytics.toObject(),
-            avgEngagementRate: parseFloat(avgEngagement as string),
+            avgEngagementRate: avgEngagement,
             blogs: userBlogs.map(blog => {
                 const blogAnalytic = blogAnalytics.find(ba => ba.blogId._id.toString() === blog._id.toString());
                 return {

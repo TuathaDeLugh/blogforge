@@ -1,22 +1,38 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect, useMemo } from 'react';
-import { Div, H1 } from '@/Components/Motion/Motion';
-import { FaEye, FaHeart, FaShare, FaComment, FaUsers, FaFileAlt, FaAngleDoubleUp, FaAngleDoubleDown } from 'react-icons/fa';import { AdminAnalyticsSkeleton } from '@/Components/Analytics/SkeletonLoader';
+import React, { useState, useEffect, useMemo } from "react";
+import { Div, H1 } from "@/Components/Motion/Motion";
+import {
+  FaEye,
+  FaHeart,
+  FaShare,
+  FaComment,
+  FaUsers,
+  FaFileAlt,
+  FaAngleDoubleUp,
+  FaAngleDoubleDown,
+} from "react-icons/fa";
+import { AdminAnalyticsSkeleton } from "@/Components/Analytics/SkeletonLoader";
+import { getAdminAnalytics } from "@/controllers/analytics";
 
 const formatNumber = (num: number): string => {
-  if (typeof num !== 'number' || isNaN(num)) return '0';
+  if (typeof num !== "number" || isNaN(num)) return "0";
   if (num >= 1000000) {
-    return (num / 1000000).toFixed(1) + 'M';
+    return (num / 1000000).toFixed(1) + "M";
   } else if (num >= 1000) {
-    return (num / 1000).toFixed(1) + 'K';
+    return (num / 1000).toFixed(1) + "K";
   }
   return num.toString();
 };
 
-const calculateEngagementRate = (views: number, saves: number, shares: number, comments: number): number => {
+const calculateEngagementRate = (
+  views: number,
+  saves: number,
+  shares: number,
+  comments: number
+): number => {
   if (!views || views === 0) return 0;
-  return ((saves + shares + comments) / views * 100);
+  return ((saves + shares + comments) / views) * 100;
 };
 
 interface AnalyticsOverview {
@@ -79,8 +95,8 @@ const LoadingSpinner = () => (
 const ErrorMessage = ({ message }: { message: string }) => (
   <div className="text-center py-10">
     <p className="text-red-500">{message}</p>
-    <button 
-      onClick={() => window.location.reload()} 
+    <button
+      onClick={() => window.location.reload()}
       className="mt-4 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600"
     >
       Retry
@@ -109,23 +125,14 @@ export default function AnalyticsPage() {
     try {
       setLoading(true);
       setError(null);
-      
-      const response = await fetch(`/api/analytics/admin?days=${period}`);
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      
-      if (data.error) {
-        throw new Error(data.error);
-      }
-      
+
+      const data = await getAdminAnalytics(period);
       setAnalytics(data);
     } catch (error) {
-      console.error('Error fetching analytics:', error);
-      setError(error instanceof Error ? error.message : 'Failed to load analytics data');
+      console.error("Error fetching analytics:", error);
+      setError(
+        error instanceof Error ? error.message : "Failed to load analytics data"
+      );
       setAnalytics(null);
     } finally {
       setLoading(false);
@@ -134,7 +141,7 @@ export default function AnalyticsPage() {
 
   const safeAnalytics = useMemo(() => {
     if (!analytics) return null;
-    
+
     return {
       overview: {
         totalUsers: analytics.overview?.totalUsers || 0,
@@ -150,8 +157,12 @@ export default function AnalyticsPage() {
         totalComments: analytics.overview?.totalComments || 0,
       },
       topBlogs: Array.isArray(analytics.topBlogs) ? analytics.topBlogs : [],
-      topWriters: Array.isArray(analytics.topWriters) ? analytics.topWriters : [],
-      categoryStats: Array.isArray(analytics.categoryStats) ? analytics.categoryStats : [],
+      topWriters: Array.isArray(analytics.topWriters)
+        ? analytics.topWriters
+        : [],
+      categoryStats: Array.isArray(analytics.categoryStats)
+        ? analytics.categoryStats
+        : [],
     };
   }, [analytics]);
 
@@ -208,8 +219,8 @@ export default function AnalyticsPage() {
             onClick={() => setPeriod(days)}
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               period === days
-                ? 'bg-orange-500 text-white'
-                : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+                ? "bg-orange-500 text-white"
+                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
             }`}
           >
             {days} Days
@@ -227,15 +238,25 @@ export default function AnalyticsPage() {
         <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg border border-blue-200 dark:border-blue-800">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Total Users</p>
-              <p className="text-2xl font-bold text-blue-600">{formatNumber(overview.totalUsers)}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Total Users
+              </p>
+              <p className="text-2xl font-bold text-blue-600">
+                {formatNumber(overview.totalUsers)}
+              </p>
               <div className="flex items-center mt-1">
                 {overview.userGrowthRate >= 0 ? (
                   <FaAngleDoubleUp className="text-green-500 mr-1" />
                 ) : (
                   <FaAngleDoubleDown className="text-red-500 mr-1" />
                 )}
-                <span className={`text-sm ${overview.userGrowthRate >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                <span
+                  className={`text-sm ${
+                    overview.userGrowthRate >= 0
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }`}
+                >
                   {overview.userGrowthRate.toFixed(1)}%
                 </span>
               </div>
@@ -247,15 +268,25 @@ export default function AnalyticsPage() {
         <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg border border-green-200 dark:border-green-800">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Total Blogs</p>
-              <p className="text-2xl font-bold text-green-600">{formatNumber(overview.totalBlogs)}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Total Blogs
+              </p>
+              <p className="text-2xl font-bold text-green-600">
+                {formatNumber(overview.totalBlogs)}
+              </p>
               <div className="flex items-center mt-1">
                 {overview.blogGrowthRate >= 0 ? (
                   <FaAngleDoubleUp className="text-green-500 mr-1" />
                 ) : (
                   <FaAngleDoubleDown className="text-red-500 mr-1" />
                 )}
-                <span className={`text-sm ${overview.blogGrowthRate >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                <span
+                  className={`text-sm ${
+                    overview.blogGrowthRate >= 0
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }`}
+                >
                   {overview.blogGrowthRate.toFixed(1)}%
                 </span>
               </div>
@@ -267,8 +298,12 @@ export default function AnalyticsPage() {
         <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg border border-purple-200 dark:border-purple-800">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Total Views</p>
-              <p className="text-2xl font-bold text-purple-600">{formatNumber(overview.totalViews)}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Total Views
+              </p>
+              <p className="text-2xl font-bold text-purple-600">
+                {formatNumber(overview.totalViews)}
+              </p>
               <p className="text-xs text-gray-500">All time</p>
             </div>
             <FaEye className="text-purple-500 text-3xl" />
@@ -278,9 +313,17 @@ export default function AnalyticsPage() {
         <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg border border-orange-200 dark:border-orange-800">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Engagement</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Engagement
+              </p>
               <p className="text-2xl font-bold text-orange-600">
-                {calculateEngagementRate(overview.totalViews, overview.totalSaves, overview.totalShares, overview.totalComments).toFixed(1)}%
+                {calculateEngagementRate(
+                  overview.totalViews,
+                  overview.totalSaves,
+                  overview.totalShares,
+                  overview.totalComments
+                ).toFixed(1)}
+                %
               </p>
               <p className="text-xs text-gray-500">Rate</p>
             </div>
@@ -299,8 +342,12 @@ export default function AnalyticsPage() {
         <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Total Saves</p>
-              <p className="text-xl font-bold">{formatNumber(overview.totalSaves)}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Total Saves
+              </p>
+              <p className="text-xl font-bold">
+                {formatNumber(overview.totalSaves)}
+              </p>
             </div>
             <FaHeart className="text-red-500 text-2xl" />
           </div>
@@ -309,8 +356,12 @@ export default function AnalyticsPage() {
         <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Total Shares</p>
-              <p className="text-xl font-bold">{formatNumber(overview.totalShares)}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Total Shares
+              </p>
+              <p className="text-xl font-bold">
+                {formatNumber(overview.totalShares)}
+              </p>
             </div>
             <FaShare className="text-blue-500 text-2xl" />
           </div>
@@ -319,8 +370,12 @@ export default function AnalyticsPage() {
         <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Total Comments</p>
-              <p className="text-xl font-bold">{formatNumber(overview.totalComments)}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Total Comments
+              </p>
+              <p className="text-xl font-bold">
+                {formatNumber(overview.totalComments)}
+              </p>
             </div>
             <FaComment className="text-green-500 text-2xl" />
           </div>
@@ -336,23 +391,36 @@ export default function AnalyticsPage() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg"
         >
-          <h2 className="text-xl font-semibold text-orange-500 dark:text-orange-400 mb-4">Top Performing Blogs</h2>
+          <h2 className="text-xl font-semibold text-orange-500 dark:text-orange-400 mb-4">
+            Top Performing Blogs
+          </h2>
           <div className="space-y-3">
             {topBlogs.length > 0 ? (
               topBlogs.slice(0, 5).map((blog, index) => (
-                <div key={blog._id || index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
+                <div
+                  key={blog._id || index}
+                  className="flex items-center justify-between p-3 bg-gray-50 dark:bg-slate-700 rounded-lg"
+                >
                   <div className="flex-1">
-                    <p className="font-medium text-sm truncate">{blog.title || 'Untitled'}</p>
-                    <p className="text-xs text-gray-500">by {blog.creator?.username || 'Unknown'}</p>
+                    <p className="font-medium text-sm truncate">
+                      {blog.title || "Untitled"}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      by {blog.creator?.username || "Unknown"}
+                    </p>
                   </div>
                   <div className="text-right">
-                    <p className="font-bold text-purple-600">{formatNumber(blog.views || 0)}</p>
+                    <p className="font-bold text-purple-600">
+                      {formatNumber(blog.views || 0)}
+                    </p>
                     <p className="text-xs text-gray-500">views</p>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="text-gray-500 text-center py-4">No blog data available</p>
+              <p className="text-gray-500 text-center py-4">
+                No blog data available
+              </p>
             )}
           </div>
         </Div>
@@ -364,28 +432,41 @@ export default function AnalyticsPage() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg"
         >
-          <h2 className="text-xl font-semibold text-orange-500 dark:text-orange-400 mb-4">Top Writers</h2>
+          <h2 className="text-xl font-semibold text-orange-500 dark:text-orange-400 mb-4">
+            Top Writers
+          </h2>
           <div className="space-y-3">
             {topWriters.length > 0 ? (
               topWriters.slice(0, 5).map((writer, index) => (
-                <div key={writer._id || index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
+                <div
+                  key={writer._id || index}
+                  className="flex items-center justify-between p-3 bg-gray-50 dark:bg-slate-700 rounded-lg"
+                >
                   <div className="flex items-center space-x-3">
                     <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
                       {index + 1}
                     </div>
                     <div>
-                      <p className="font-medium text-sm">{writer.username || 'Unknown'}</p>
-                      <p className="text-xs text-gray-500">{writer.totalBlogs || 0} blogs</p>
+                      <p className="font-medium text-sm">
+                        {writer.username || "Unknown"}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {writer.totalBlogs || 0} blogs
+                      </p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-bold text-blue-600">{formatNumber(writer.totalViews || 0)}</p>
+                    <p className="font-bold text-blue-600">
+                      {formatNumber(writer.totalViews || 0)}
+                    </p>
                     <p className="text-xs text-gray-500">total views</p>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="text-gray-500 text-center py-4">No writer data available</p>
+              <p className="text-gray-500 text-center py-4">
+                No writer data available
+              </p>
             )}
           </div>
         </Div>
@@ -398,15 +479,28 @@ export default function AnalyticsPage() {
         transition={{ duration: 0.5, delay: 0.4 }}
         className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg"
       >
-        <h2 className="text-xl font-semibold text-orange-500 dark:text-orange-400 mb-4">Category Performance</h2>
+        <h2 className="text-xl font-semibold text-orange-500 dark:text-orange-400 mb-4">
+          Category Performance
+        </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {categoryStats.length > 0 ? (
             categoryStats.slice(0, 10).map((category, index) => (
-              <div key={category._id || index} className="bg-gray-50 dark:bg-slate-700 p-4 rounded-lg text-center">
-                <h3 className="font-bold text-lg">{category._id || 'Unknown'}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{category.count || 0} posts</p>
-                <p className="text-sm text-purple-600 font-medium">{formatNumber(category.totalViews || 0)} views</p>
-                <p className="text-xs text-gray-500">Avg: {Math.round(category.avgViews || 0)} views/post</p>
+              <div
+                key={category._id || index}
+                className="bg-gray-50 dark:bg-slate-700 p-4 rounded-lg text-center"
+              >
+                <h3 className="font-bold text-lg">
+                  {category._id || "Unknown"}
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  {category.count || 0} posts
+                </p>
+                <p className="text-sm text-purple-600 font-medium">
+                  {formatNumber(category.totalViews || 0)} views
+                </p>
+                <p className="text-xs text-gray-500">
+                  Avg: {Math.round(category.avgViews || 0)} views/post
+                </p>
               </div>
             ))
           ) : (

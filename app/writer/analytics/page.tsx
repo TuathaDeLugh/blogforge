@@ -5,8 +5,8 @@ import { useSession } from "next-auth/react";
 import { Div, H1 } from "@/Components/Motion/Motion";
 import { FaEye, FaHeart, FaShare, FaComment, FaFileAlt } from "react-icons/fa";
 import { WriterAnalyticsSkeleton } from "@/Components/Analytics/SkeletonLoader";
-import { getUserAnalytics } from "@/controllers/analytics";
 import Link from "next/link";
+import { getUserAnalytics } from "@/controllers/analytics";
 
 // Safe utility functions to prevent hydration errors
 const formatNumber = (num: number): string => {
@@ -115,7 +115,8 @@ export default function WriterAnalyticsPage() {
       setLoading(true);
       setError(null);
 
-      const data = await getUserAnalytics(session?.user?.dbid!);
+      const userid = session?.user?.dbid || "";
+      const data = await getUserAnalytics(userid);
       setAnalytics(data);
     } catch (error) {
       console.error("Error fetching writer analytics:", error);

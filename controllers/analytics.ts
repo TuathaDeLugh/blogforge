@@ -22,8 +22,7 @@ interface WriterAnalytics {
 
 export async function getUserAnalytics(userId: string): Promise<WriterAnalytics | null> {
   try {
-    const api = process.env.API_URL;
-    const response = await fetch(`${api}/api/analytics/user/${userId}`, {
+    const response = await fetch(`/api/analytics/user/${userId}`, {
       cache: "no-store",
     });
 
@@ -46,9 +45,8 @@ export async function getUserAnalytics(userId: string): Promise<WriterAnalytics 
 
 export async function getAdminAnalytics(days?: number): Promise<any> {
   try {
-    const api = process.env.API_URL;
     const queryParam = days ? `?days=${days}` : '';
-    const response = await fetch(`${api}/api/analytics/admin${queryParam}`, {
+    const response = await fetch(`/api/analytics/admin${queryParam}`, {
       cache: "no-store",
     });
 
@@ -71,8 +69,7 @@ export async function getAdminAnalytics(days?: number): Promise<any> {
 
 export async function getBlogAnalytics(blogId: string): Promise<any> {
   try {
-    const api = process.env.API_URL;
-    const response = await fetch(`${api}/api/analytics/blog/${blogId}`, {
+    const response = await fetch(`/api/analytics/blog/${blogId}`, {
       cache: "no-store",
     });
 

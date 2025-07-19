@@ -9,6 +9,7 @@ import {
   AiOutlineTool,
   AiOutlineCheckCircle,
 } from "react-icons/ai";
+import { FaChartLine } from "react-icons/fa";
 import { FaSignOutAlt } from "react-icons/fa";
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -54,10 +55,16 @@ const AuthLinks = () => {
           key: 2,
         },
         {
+          name: "Analytics",
+          path: "/writer/analytics",
+          icon: FaChartLine,
+          key: 3,
+        },
+        {
           name: "Saved Blog",
           path: "/user/savedblog",
           icon: AiOutlineStar,
-          key: 3,
+          key: 4,
         },
       ];
 
@@ -72,10 +79,16 @@ const AuthLinks = () => {
             key: 3,
           },
           {
+            name: "Analytics",
+            path: "/writer/analytics",
+            icon: FaChartLine,
+            key: 4,
+          },
+          {
             name: "Saved Blog",
             path: "/user/savedblog",
             icon: AiOutlineStar,
-            key: 4,
+            key: 5,
           },
         ];
       }

@@ -3,6 +3,7 @@
 import { addToSavelist } from '@/controllers/savelist'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
+import { trackBlogSave } from '@/util/analytics'
 
 interface SaveListBtnProps {
   uid: string
@@ -14,6 +15,7 @@ const SaveBlogBtn = ({ uid, rid }: SaveListBtnProps) => {
 
   const handleSavelist = async () => {
     await addToSavelist(uid, rid)
+    await trackBlogSave(rid)
     toast.success('Added to the Savelist')
     router.refresh()
   }

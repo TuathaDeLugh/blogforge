@@ -18,6 +18,7 @@ import { IoIosInformationCircleOutline } from 'react-icons/io';
 import { getSingleblog } from '@/controllers/blog';
 import { getSingleUser } from '@/controllers/user';
 import DefaultUserProfile from '@/Components/layout/DefaultUserProfile';
+import ViewTracker from '@/Components/Analytics/ViewTracker';
 
 interface BlogProps {
   params: {
@@ -51,6 +52,7 @@ export default async function page({ params: { id } }: BlogProps) {
 
   if (blog && blog.status=="published") {
     return (<>
+      <ViewTracker blogId={blog._id} />
       <section className=" max-w-[1500px] mx-auto px-4 lg:px-8 ">
         <div className="relative m-5 md:mt-16 mx-2">
           <H1
@@ -113,6 +115,16 @@ export default async function page({ params: { id } }: BlogProps) {
                 transition={{ duration: 0.5, delay: 0.3 }}>
                 <span className=' text-orange-500 dark:text-orange-400  font-medium'>
                   {' '}
+                  Views :{' '}
+                </span>{' '}
+                {blog.views || 0}
+              </P>
+              <P className='  tracking-wider mt-3'
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}>
+                <span className=' text-orange-500 dark:text-orange-400  font-medium'>
+                  {' '}
                   Users Save :{' '}
                 </span>{' '}
                 {blog.usersave}
@@ -136,7 +148,7 @@ export default async function page({ params: { id } }: BlogProps) {
       :{' '}
                 </span>{' '}
                 {blog.share}
-                <ShareButton link={`${process.env.API_URL}share?blog=${encodeURIComponent(blog.title)}`} />
+                <ShareButton link={`${process.env.API_URL}share?blog=${encodeURIComponent(blog.title)}`} blogId={blog._id} />
               </P>
               <Div
                 className=' grow sm:grow-0'

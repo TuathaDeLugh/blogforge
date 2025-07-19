@@ -14,6 +14,8 @@ const blogSchema = new mongoose.Schema({
     detail: { type: String, required: true },
     usersave: { type: Number, default: 0 },
     share: { type: Number, default: 0 },
+    views: { type: Number, default: 0 },
+    uniqueViews: [{ type: String }],
     status: { type: String, enum: ['draft', 'published', 'archived'], default: 'draft' },
     keywords: [String],
     comments: [commentSchema],

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";
 import { IoAddSharp } from "react-icons/io5";
+import { trackBlogComment } from "@/util/analytics";
 
 interface CommentFormPrp {
   blogid: string;
@@ -27,6 +28,10 @@ export default function CommentForm({ blogid }: CommentFormPrp) {
       },
       body: JSON.stringify(ogvalues),
     });
+    
+    // Track comment analytics
+    await trackBlogComment(blogid);
+    
     router.refresh();
   };
   const { values, handleChange, handleSubmit } = useFormik({

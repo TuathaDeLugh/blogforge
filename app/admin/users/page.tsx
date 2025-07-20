@@ -3,6 +3,7 @@ import { Div, H1 } from '@/Components/Motion/Motion';
 import RoleBtn from '@/Components/RoleDropdown';
 import { getAllUsers, getAdminCount } from '@/controllers/user';
 import DeleteUserButton from '@/Components/Admin/DeleteUserButton';
+import UserManagementActions from '@/Components/Admin/UserManagementActions';
 import React, { Suspense } from 'react'
 import { FaUsers, FaUserShield } from 'react-icons/fa'
 import Image from 'next/image'
@@ -160,16 +161,28 @@ export default async function AdminUsers(context: { searchParams: { page: string
                         <RoleBtn user={user} />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                          user.isActive !== false 
-                            ? 'bg-green-100 text-green-800 dark:bg-green-800/20 dark:text-green-400'
-                            : 'bg-red-100 text-red-800 dark:bg-red-800/20 dark:text-red-400'
-                        }`}>
-                          {user.isActive !== false ? 'Active' : 'Inactive'}
-                        </span>
+                        <div className="flex flex-col space-y-1">
+                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                            user.isBanned 
+                              ? 'bg-red-100 text-red-800 dark:bg-red-800/20 dark:text-red-400'
+                              : user.isActive !== false 
+                                ? 'bg-green-100 text-green-800 dark:bg-green-800/20 dark:text-green-400'
+                                : 'bg-gray-100 text-gray-800 dark:bg-gray-800/20 dark:text-gray-400'
+                          }`}>
+                            {user.isBanned ? 'Banned' : user.isActive !== false ? 'Active' : 'Inactive'}
+                          </span>
+                          {user.commentBanned && (
+                            <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-orange-100 text-orange-800 dark:bg-orange-800/20 dark:text-orange-400">
+                              Comment Banned
+                            </span>
+                          )}
+                        </div>
                       </td>
-                      <td className="px-6 py-4 text-sm font-medium break-words">
-                        <DeleteUserButton userId={user._id} username={user.username} userEmail={user.email} />
+                      <td className="px-6 py-4 text-sm font-medium">
+                        <div className="flex items-center space-x-2">
+                          <UserManagementActions user={user} />
+                          <DeleteUserButton userId={user._id} username={user.username} userEmail={user.email} />
+                        </div>
                       </td>
                     </Suspense>
                   </tr>

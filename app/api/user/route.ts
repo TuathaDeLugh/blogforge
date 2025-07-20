@@ -61,7 +61,7 @@ export async function GET(request: Request, response: Response) {
         const pageSize = 15;
         const skip = (page - 1) * pageSize;
         const usernameFilter = { username: { $ne: 'admin' } };
-        const users = await User.find(usernameFilter).sort({ isAdmin: 1 }).select("_id username name email isAdmin").skip(skip).limit(pageSize);
+        const users = await User.find(usernameFilter).sort({ isAdmin: 1 }).select("_id username name email isAdmin isActive isBanned banExpiry banReason commentBanned commentBanExpiry commentBanReason createdAt").skip(skip).limit(pageSize);
 
         const totalDocuments = await User.countDocuments(usernameFilter);
 

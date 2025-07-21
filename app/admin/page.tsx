@@ -7,27 +7,22 @@ import {
   FaEnvelope, 
   FaFileAlt, 
   FaUsers, 
-  FaEye, 
-  FaHeart, 
+  FaHeart,
   FaShare, 
   FaComment,
   FaCalendarAlt,
   FaChartLine,
-  FaCog,
-  FaBell
 } from 'react-icons/fa'
 import { IoMdTrendingDown } from "react-icons/io";
 
 
 export default async function Admin() {
   const stats = await getStats()
-  console.log(stats);
 
-  let wno = 1, rno = 1
   return (
     <section className='md:my-6'>
       {/* Header with Quick Actions */}
-      <div className="md:relative -z-10 mb-8">
+      <div className="md:relative z-10 mb-8">
         <H1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 0.1, y: 0 }}

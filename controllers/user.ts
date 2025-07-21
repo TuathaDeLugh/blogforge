@@ -38,3 +38,32 @@ export async function getAllUsers(page:number) {
       console.log(error);
     }
   }
+
+export async function getAdminCount() {
+    try {
+      const api = process.env.API_URL;
+      const response = await fetch(`${api}/api/user/admin-count`, {
+        cache: "no-store",
+      });
+      const data = await response.json();
+      return data.count;
+    } catch (error) {
+      console.log(error);
+      return 0;
+    }
+  }
+
+export async function deleteUser(userId: string) {
+    try {
+      const api = process.env.API_URL;
+      const response = await fetch(`${api}/api/user/admin-delete?userId=${userId}`, {
+        method: 'DELETE',
+        cache: "no-store",
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }

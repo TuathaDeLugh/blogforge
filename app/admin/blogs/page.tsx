@@ -1,4 +1,3 @@
-
 import DelBlogBtn from '@/app/user/blog/DeleteBlog';
 import Pagination from '@/Components/layout/Pagination';
 import { Animation, Div, H1 } from '@/Components/Motion/Motion';
@@ -9,6 +8,7 @@ import Link from 'next/link';
 import React, { Suspense } from 'react'
 import { HiPencilAlt } from 'react-icons/hi';
 import { IoAddSharp } from 'react-icons/io5';
+import BanAwareEditIcon from '@/Components/BanAwareEditIcon';
 
 export default async function AdminReview(context:any) {
   const blogs = await getAllBlog(parseInt(context.searchParams.page));
@@ -127,9 +127,7 @@ export default async function AdminReview(context:any) {
                             }
                             >
                             <div className=' flex gap-2'>
-                              <Link href={`/user/blog/edit/${blog._id}`} title="Edit" >
-                                <HiPencilAlt className='text-blue-600' size={25} />
-                              </Link>
+                              <BanAwareEditIcon blogId={blog._id} isAdmin={true} />
                               <DelBlogBtn id={blog._id} images={blog.images} title={blog.title} />
                             </div>
                           </td>

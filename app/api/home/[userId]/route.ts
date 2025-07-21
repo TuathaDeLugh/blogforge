@@ -8,6 +8,9 @@ export async function GET(request: Request, { params }: any) {
     await connectdb();
 
     const { userId } = params;
+    const { searchParams } = new URL(request.url);
+     const sortDirection = searchParams.get('sort') === '1' ? 1 : -1;
+
 
     if (!userId || typeof userId !== "string") {
       return NextResponse.json({ error: "User ID is required" });

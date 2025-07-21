@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
 
       await sendEmail({
         email: user.email,
-        emailType: '2FA_OTP',
+        emailType: 'TWO_FA_OTP',
         otpCode: otp
       });
 

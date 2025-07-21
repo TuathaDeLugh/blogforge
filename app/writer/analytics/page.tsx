@@ -51,12 +51,6 @@ interface WriterAnalytics {
   blogs: BlogData[];
 }
 
-// Loading component
-const LoadingSpinner = () => (
-  <div className="flex justify-center items-center min-h-screen">
-    <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-orange-500"></div>
-  </div>
-);
 
 // Error component
 const ErrorMessage = ({ message }: { message: string }) => (

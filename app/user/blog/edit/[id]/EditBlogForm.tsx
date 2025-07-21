@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { RxCross1 } from "react-icons/rx";
 import { IoAdd } from "react-icons/io5";
@@ -19,6 +19,7 @@ import toast from "react-hot-toast";
 import { EditBlogSchema } from "@/yupSchema";
 import { category } from "@/Components/Logic/Category";
 import DefaultUserProfile from "@/Components/layout/DefaultUserProfile";
+import { useSession } from "next-auth/react";
 
 interface Image {
   _id: string;
@@ -34,6 +35,15 @@ interface BlogFormValues {
   detail: string;
   status: string;
   keywords: string[];
+}
+
+interface BanStatus {
+  isBanned: boolean;
+  commentBanned: boolean;
+  banExpiry?: string;
+  commentBanExpiry?: string;
+  banReason?: string;
+  commentBanReason?: string;
 }
 
 interface EditBlogFormProps {
@@ -53,15 +63,35 @@ interface EditBlogFormProps {
 const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
   const [disabled, setDisabled] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession();
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [keywordInput, setKeywordInput] = useState("");
+  const [banStatus, setBanStatus] = useState<BanStatus | null>(null);
   const [remainingImages, setRemainingImages] = useState<
     { link: string; name: string }[]
   >(blog.images.map((image) => ({ link: image.link, name: image.name })));
   const [deletedImages, setDeletedImages] = useState<
     { link: string; name: string }[]
   >([]);
+
+  useEffect(() => {
+    if (session?.user?.dbid) {
+      checkBanStatus();
+    }
+  }, [session]);
+
+  const checkBanStatus = async () => {
+    try {
+      const response = await fetch(`/api/user/ban-status?userId=${session?.user?.dbid}`);
+      if (response.ok) {
+        const data = await response.json();
+        setBanStatus(data);
+      }
+    } catch (error) {
+      console.error('Error checking ban status:', error);
+    }
+  };
 
   const {
     values,
@@ -248,6 +278,115 @@ const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
     updatedKeywords.splice(index, 1);
     setFieldValue("keywords", updatedKeywords);
   };
+
+  // If user is banned, show disabled form
+  if (banStatus?.isBanned) {
+    return (
+      <Div
+        className="h-full flex items-center relative mb-5"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        <div className="mx-auto mt-8 w-full">
+          <div className="mx-auto p-4 md:p-7 rounded-lg border shadow bg-gray-100 dark:bg-gray-800 dark:border-slate-500 dark:shadow-slate-600 opacity-50">
+            <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+              <h3 className="font-bold text-lg mb-2">Account Banned</h3>
+              <p>Your account has been banned. You cannot create or edit blogs.</p>
+              {banStatus.banExpiry && (
+                <p className="text-sm mt-1">
+                  Ban expires: {new Date(banStatus.banExpiry).toLocaleDateString()}
+                </p>
+              )}
+              {banStatus.banReason && (
+                <p className="text-sm mt-1">
+                  Reason: {banStatus.banReason}
+                </p>
+              )}
+            </div>
+            
+            <div className="w-full inline-block">
+              <input
+                type="text"
+                placeholder="Title"
+                value={blog.title}
+                disabled
+                className="w-full rounded-md py-3 px-4 bg-gray-200 dark:bg-gray-600 text-sm cursor-not-allowed"
+              />
+              <p className="mb-6" />
+            </div>
+
+            <div className="inline-block w-full">
+              <div className="border border-transparent rounded bg-gray-200 dark:bg-gray-600 px-[14px] py-3">
+                <label className="text-gray-400 block font-medium mr-2">
+                  Category:
+                </label>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 grow">
+                  {blog.category.slice(0, 5).map((option) => (
+                    <div key={option} className="flex items-center mb-2">
+                      <input
+                        type="checkbox"
+                        checked={true}
+                        disabled
+                        className="mr-2 accent-gray-400 cursor-not-allowed"
+                      />
+                      <label className="text-gray-500">{option}</label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <p className="mb-6" />
+            </div>
+
+            <div className="w-full inline-block">
+              <textarea
+                rows={3}
+                placeholder="One Line Information"
+                value={blog.info}
+                disabled
+                className="w-full rounded-md py-3 px-4 bg-gray-200 dark:bg-gray-600 text-sm cursor-not-allowed resize-none"
+              />
+              <p className="mb-6" />
+            </div>
+
+            <div className="w-full inline-block">
+              <div className="relative p-4 border-dashed border-2 border-gray-300 dark:border-gray-500 bg-gray-200 dark:bg-gray-600 rounded-md cursor-not-allowed">
+                <div className="flex flex-col items-center space-y-4">
+                  <label className="text-sm text-gray-500 cursor-not-allowed">
+                    Blog editing disabled
+                  </label>
+                  {blog.images.length > 0 && (
+                    <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4 opacity-50">
+                      {blog.images.slice(0, 3).map((image, index) => (
+                        <div key={index} className="border dark:border-gray-500 p-1 rounded-md">
+                          <Image
+                            width={128}
+                            height={80}
+                            src={image.link}
+                            alt={`Preview ${index}`}
+                            className="h-20 w-32 object-cover rounded"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <p className="mb-6" />
+            </div>
+
+            <button
+              disabled
+              type="button"
+              className="bg-gray-400 text-gray-600 w-44 h-10 rounded cursor-not-allowed flex justify-center items-center gap-2"
+            >
+              Update Blog
+            </button>
+          </div>
+        </div>
+      </Div>
+    );
+  }
 
   return (
     <Div

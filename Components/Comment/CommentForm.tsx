@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { IoAddSharp } from "react-icons/io5";
 import { trackBlogComment } from "@/util/analytics";
@@ -12,10 +12,38 @@ interface CommentFormPrp {
   blogid: string;
 }
 
+interface BanStatus {
+  isBanned: boolean;
+  commentBanned: boolean;
+  banExpiry?: string;
+  commentBanExpiry?: string;
+  banReason?: string;
+  commentBanReason?: string;
+}
+
 export default function CommentForm({ blogid }: CommentFormPrp) {
   const router = useRouter();
   const { data: session } = useSession();
+  const [banStatus, setBanStatus] = useState<BanStatus | null>(null);
   console.log("🚀 ~ CommentForm ~ session:", session);
+
+  useEffect(() => {
+    if (session?.user?.dbid) {
+      checkBanStatus();
+    }
+  }, [session]);
+
+  const checkBanStatus = async () => {
+    try {
+      const response = await fetch(`/api/user/ban-status?userId=${session?.user?.dbid}`);
+      if (response.ok) {
+        const data = await response.json();
+        setBanStatus(data);
+      }
+    } catch (error) {
+      console.error('Error checking ban status:', error);
+    }
+  };
   const initialValues = {
     user: "",
     comment: "",
@@ -64,6 +92,43 @@ export default function CommentForm({ blogid }: CommentFormPrp) {
       );
     }
     if (session.user.dbid && session.user.isVerified) {
+      // Check if user is comment banned
+      if (banStatus?.commentBanned) {
+        return (
+          <div className="mt-5">
+            <div className="flex justify-between opacity-50">
+              <input
+                type="text"
+                className="w-[80%] bg-gray-200 border rounded-full px-3 py-1 border-gray-300 cursor-not-allowed"
+                placeholder="Comments disabled - You are banned from commenting"
+                disabled
+                readOnly
+              />
+              <button
+                type="button"
+                disabled
+                className="rounded-full p-2 bg-gray-400 text-gray-600 cursor-not-allowed"
+              >
+                <IoAddSharp size={25} />
+              </button>
+            </div>
+            <p className="text-red-500 text-sm mt-2">
+              You have been banned from commenting.
+              {banStatus.commentBanExpiry && (
+                <span className="block">
+                  Ban expires: {new Date(banStatus.commentBanExpiry).toLocaleDateString()}
+                </span>
+              )}
+              {banStatus.commentBanReason && (
+                <span className="block text-xs">
+                  Reason: {banStatus.commentBanReason}
+                </span>
+              )}
+            </p>
+          </div>
+        );
+      }
+
       return (
         <div className=" mt-5">
           <form

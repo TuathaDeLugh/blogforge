@@ -10,9 +10,10 @@ import {
   FaChartBar,
   FaQuoteLeft,
   FaBell,
+  FaShieldAlt,
 } from "react-icons/fa";
 import { TbDeviceAnalytics } from "react-icons/tb";
-import { MdDashboard } from "react-icons/md";
+import { MdDashboard, MdSecurity } from "react-icons/md";
 
 interface NavItem {
   name: string;
@@ -50,6 +51,11 @@ export default function AdminNav({ children }: { children: ReactNode }) {
     { name: "Blogs", href: "/admin/blogs", icon: <FaChartBar /> },
     { name: "Contact", href: "/admin/contact", icon: <FiMessageSquare /> },
     { name: "FAQ", href: "/admin/faq", icon: <FaQuoteLeft /> },
+  ];
+
+  const moderationNavItems: NavItem[] = [
+    { name: "Ban Templates", href: "/admin/ban-templates", icon: <FaShieldAlt /> },
+    { name: "Actions Log", href: "/admin/actions", icon: <MdSecurity /> },
   ];
 
   const handleLinkClick = (): void => {
@@ -108,6 +114,33 @@ export default function AdminNav({ children }: { children: ReactNode }) {
               </h3>
               <ul className="space-y-2">
                 {contentNavItems.map((item) => (
+                  <motion.li
+                    key={item.name}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Link
+                      href={item.href}
+                      className="flex items-center px-3 py-2 rounded-lg group transition-colors duration-200 hover:bg-orange-400/90 dark:hover:bg-orange-500/50 hover:text-white"
+                      onClick={handleLinkClick}
+                    >
+                      <span className="mr-3 text-orange-500 group-hover:text-white">
+                        {item.icon}
+                      </span>
+                      {item.name}
+                    </Link>
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Moderation Section */}
+            <div className="mb-6">
+              <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
+                Moderation
+              </h3>
+              <ul className="space-y-2">
+                {moderationNavItems.map((item) => (
                   <motion.li
                     key={item.name}
                     whileHover={{ scale: 1.02 }}

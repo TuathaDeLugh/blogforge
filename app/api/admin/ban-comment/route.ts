@@ -1,5 +1,6 @@
 import User from "@/models/user";
 import AdminAction from "@/models/adminAction";
+import BanTemplate from "@/models/banTemplate";
 import connectdb from "@/util/mongodb";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
@@ -16,16 +17,40 @@ export async function POST(request: Request) {
             );
         }
 
-        const { userId, action, duration, reason } = await request.json();
+        const { userId, action, duration, reason, templateId } = await request.json();
         
-        if (!userId || !action || !reason) {
+        if (!userId || !action) {
             return NextResponse.json(
-                { message: "User ID, action, and reason are required" },
+                { message: "User ID and action are required" },
                 { status: 400 }
             );
         }
 
         await connectdb();
+
+        let finalReason = reason;
+        let finalDuration = duration;
+
+        // If using a template, fetch template data
+        if (templateId) {
+            const template = await BanTemplate.findById(templateId);
+            if (template && template.isActive && template.banType === 'comment') {
+                finalReason = template.reason;
+                finalDuration = template.duration ? `${template.duration}h` : 'permanent';
+                
+                // Increment usage count
+                await BanTemplate.findByIdAndUpdate(templateId, {
+                    $inc: { usageCount: 1 }
+                });
+            }
+        }
+
+        if (!finalReason) {
+            return NextResponse.json(
+                { message: "Reason is required" },
+                { status: 400 }
+            );
+        }
 
         const user = await User.findById(userId);
         if (!user) {
@@ -48,22 +73,29 @@ export async function POST(request: Request) {
 
         if (action === 'ban') {
             updateData.commentBanned = true;
-            updateData.commentBanReason = reason;
+            updateData.commentBanReason = finalReason;
 
-            if (duration && duration !== 'permanent') {
+            if (finalDuration && finalDuration !== 'permanent') {
                 const banExpiry = new Date();
-                switch (duration) {
-                    case '1day':
-                        banExpiry.setDate(banExpiry.getDate() + 1);
-                        break;
-                    case '1week':
-                        banExpiry.setDate(banExpiry.getDate() + 7);
-                        break;
-                    case '1month':
-                        banExpiry.setMonth(banExpiry.getMonth() + 1);
-                        break;
-                    default:
-                        banExpiry.setDate(banExpiry.getDate() + 1);
+                
+                // Handle template duration (in hours) or predefined durations
+                if (finalDuration.endsWith('h')) {
+                    const hours = parseInt(finalDuration.replace('h', ''));
+                    banExpiry.setHours(banExpiry.getHours() + hours);
+                } else {
+                    switch (finalDuration) {
+                        case '1day':
+                            banExpiry.setDate(banExpiry.getDate() + 1);
+                            break;
+                        case '1week':
+                            banExpiry.setDate(banExpiry.getDate() + 7);
+                            break;
+                        case '1month':
+                            banExpiry.setMonth(banExpiry.getMonth() + 1);
+                            break;
+                        default:
+                            banExpiry.setDate(banExpiry.getDate() + 1);
+                    }
                 }
                 updateData.commentBanExpiry = banExpiry;
             }
@@ -72,8 +104,8 @@ export async function POST(request: Request) {
                 <h2>Comment Privileges Suspended</h2>
                 <p>Dear ${user.name || user.username},</p>
                 <p>Your commenting privileges on BlogForge have been suspended by an administrator.</p>
-                <p><strong>Reason:</strong> ${reason}</p>
-                <p><strong>Duration:</strong> ${duration === 'permanent' ? 'Permanent' : duration}</p>
+                <p><strong>Reason:</strong> ${finalReason}</p>
+                <p><strong>Duration:</strong> ${finalDuration === 'permanent' ? 'Permanent' : finalDuration}</p>
                 ${updateData.commentBanExpiry ? `<p><strong>Suspension expires:</strong> ${updateData.commentBanExpiry.toLocaleDateString()}</p>` : ''}
                 <p>You can still read blogs and use other features, but you cannot post comments during this period.</p>
                 <p>If you believe this action was taken in error, please contact our support team.</p>
@@ -88,7 +120,7 @@ export async function POST(request: Request) {
                 <h2>Comment Privileges Restored</h2>
                 <p>Dear ${user.name || user.username},</p>
                 <p>Your commenting privileges on BlogForge have been restored by an administrator.</p>
-                <p><strong>Reason:</strong> ${reason}</p>
+                <p><strong>Reason:</strong> ${finalReason}</p>
                 <p>You can now comment on blogs again.</p>
                 <p>Best regards,<br>BlogForge Admin Team</p>
             `;
@@ -104,10 +136,12 @@ export async function POST(request: Request) {
             targetType: 'user',
             targetId: userId,
             targetUserId: userId,
-            reason,
+            reason: finalReason,
             metadata: {
-                banDuration: duration,
-                banType: 'comment'
+                banDuration: finalDuration,
+                banType: 'comment',
+                templateId: templateId || null,
+                customReason: templateId ? reason : null
             }
         });
 
@@ -126,7 +160,8 @@ export async function POST(request: Request) {
 
         return NextResponse.json(
             { 
-                message: `User comment privileges ${action === 'ban' ? 'suspended' : 'restored'} successfully`
+                message: `User comment privileges ${action === 'ban' ? 'suspended' : 'restored'} successfully`,
+                templateUsed: templateId ? true : false
             },
             { status: 200 }
         );

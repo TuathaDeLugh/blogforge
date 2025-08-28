@@ -1,8 +1,8 @@
 import React from 'react';
 import { H1 } from '@/Components/Motion/Motion';
-import BanTemplateManager from './BanTemplateManager';
+import AdminActionTemplateManager from './AdminActionTemplateManager';
 
-export default function BanTemplatesPage() {
+export default function AdminActionTemplatesPage() {
   return (
     <section className="md:my-6">
       <div className="relative mx-2">
@@ -20,12 +20,12 @@ export default function BanTemplatesPage() {
           transition={{ duration: 0.5 }}
           className="pl-2 text-2xl md:text-4xl font-bold border-l-8 border-orange-400 dark:text-white"
         >
-          Ban Templates Management
+          Admin Action Templates Management
         </H1>
       </div>
       
       <div className="mt-6">
-        <BanTemplateManager />
+        <AdminActionTemplateManager />
       </div>
     </section>
   );

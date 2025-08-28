@@ -17,11 +17,11 @@ export async function POST(request: Request) {
             );
         }
 
-        const { userId, newUsername, reason, templateId, customSubject } = await request.json();
+        const { userId, reason, templateId, customSubject } = await request.json();
         
-        if (!userId || !newUsername) {
+        if (!userId) {
             return NextResponse.json(
-                { message: "User ID and new username are required" },
+                { message: "User ID is required" },
                 { status: 400 }
             );
         }
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
         // If using a template, fetch template data
         if (templateId) {
             const template = await AdminActionTemplate.findById(templateId);
-            if (template && template.isActive && template.actionType === 'username_change') {
+            if (template && template.isActive && template.actionType === 'delete_account') {
                 finalReason = template.reason;
                 
                 // Increment usage count
@@ -50,16 +50,7 @@ export async function POST(request: Request) {
             );
         }
 
-        // Check if new username already exists
-        const existingUser = await User.findOne({ username: newUsername });
-        if (existingUser) {
-            return NextResponse.json(
-                { message: "Username already exists" },
-                { status: 400 }
-            );
-        }
-
-        // Get the user to update
+        // Get the user to delete
         const user = await User.findById(userId);
         if (!user) {
             return NextResponse.json(
@@ -68,46 +59,34 @@ export async function POST(request: Request) {
             );
         }
 
-        const originalUsername = user.username;
-
-        // Update username
-        await User.findByIdAndUpdate(userId, { username: newUsername });
-
-        // Log admin action
-        await AdminAction.create({
-            adminId: session.user.dbid,
-            actionType: 'username_change',
-            targetType: 'user',
-            targetId: userId,
-            targetUserId: userId,
-            reason: finalReason,
-            metadata: {
-                originalUsername,
-                newUsername,
-                templateId: templateId || null,
-                customReason: templateId ? reason : null
-            }
-        });
+        // Prevent deleting admin users
+        if (user.isAdmin) {
+            return NextResponse.json(
+                { message: "Cannot delete admin users" },
+                { status: 403 }
+            );
+        }
 
         // Get admin info for email
         const admin = await User.findById(session.user.dbid);
         const adminName = admin?.name || admin?.username || 'Administrator';
 
-        // Send notification email
+        // Send notification email before deletion
         const emailContent = `
-            <h2>Username Changed</h2>
-            <p>Dear ${user.name || originalUsername},</p>
-            <p>Your username has been changed to <strong>${newUsername}</strong> by <strong>${adminName}</strong>.</p>
-            <p><strong>Original Username:</strong> @${originalUsername}</p>
-            <p><strong>New Username:</strong> @${newUsername}</p>
+            <h2>Account Deleted</h2>
+            <p>Dear ${user.name || user.username},</p>
+            <p>Your BlogForge account has been deleted by <strong>${adminName}</strong>.</p>
+            <p><strong>Username:</strong> @${user.username}</p>
+            <p><strong>Email:</strong> ${user.email}</p>
             <p><strong>Reason:</strong> ${finalReason}</p>
-            <p><strong>Changed by:</strong> ${adminName}</p>
-            <p>If you have any questions, please contact our support team.</p>
+            <p><strong>Deleted by:</strong> ${adminName}</p>
+            <p>All your data, including blogs and comments, has been permanently removed from our system.</p>
+            <p>If you believe this action was taken in error, please contact our support team immediately.</p>
             <p>Best regards,<br>BlogForge Admin Team</p>
         `;
 
         try {
-            const defaultSubject = `Username Changed to ${newUsername} - BlogForge`;
+            const defaultSubject = `Account Deleted - BlogForge`;
             await sendEmail({
                 email: user.email,
                 emailType: "ADMIN_ACTION",
@@ -119,21 +98,40 @@ export async function POST(request: Request) {
             console.error('Failed to send notification email:', emailError);
         }
 
+        // Log admin action before deletion
+        await AdminAction.create({
+            adminId: session.user.dbid,
+            actionType: 'delete_account',
+            targetType: 'user',
+            targetId: userId,
+            targetUserId: userId,
+            reason: finalReason,
+            metadata: {
+                deletedUsername: user.username,
+                deletedEmail: user.email,
+                deletedName: user.name,
+                templateId: templateId || null,
+                customReason: templateId ? reason : null
+            }
+        });
+
+        // Delete the user
+        await User.findByIdAndDelete(userId);
+
         return NextResponse.json(
             { 
-                message: `Username changed from ${originalUsername} to ${newUsername} successfully`,
-                originalUsername,
-                newUsername,
+                message: `Account for ${user.username} deleted successfully`,
+                deletedUsername: user.username,
                 templateUsed: templateId ? true : false
             },
             { status: 200 }
         );
 
     } catch (error: any) {
-        console.error('Error changing username:', error.message);
+        console.error('Error deleting account:', error.message);
         return NextResponse.json(
             {
-                message: 'Failed to change username',
+                message: 'Failed to delete account',
                 error: error.message,
             },
             { status: 500 }

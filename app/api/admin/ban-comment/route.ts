@@ -17,7 +17,7 @@ export async function POST(request: Request) {
             );
         }
 
-        const { userId, action, duration, reason, templateId } = await request.json();
+        const { userId, action, duration, reason, templateId, customSubject } = await request.json();
         
         if (!userId || !action) {
             return NextResponse.json(
@@ -68,6 +68,10 @@ export async function POST(request: Request) {
             );
         }
 
+        // Get admin info for email
+        const admin = await User.findById(session.user.dbid);
+        const adminName = admin?.name || admin?.username || 'Administrator';
+
         let updateData: any = {};
         let emailContent = '';
 
@@ -103,10 +107,11 @@ export async function POST(request: Request) {
             emailContent = `
                 <h2>Comment Privileges Suspended</h2>
                 <p>Dear ${user.name || user.username},</p>
-                <p>Your commenting privileges on BlogForge have been suspended by an administrator.</p>
+                <p>Your commenting privileges on BlogForge have been suspended by <strong>${adminName}</strong>.</p>
                 <p><strong>Reason:</strong> ${finalReason}</p>
                 <p><strong>Duration:</strong> ${finalDuration === 'permanent' ? 'Permanent' : finalDuration}</p>
                 ${updateData.commentBanExpiry ? `<p><strong>Suspension expires:</strong> ${updateData.commentBanExpiry.toLocaleDateString()}</p>` : ''}
+                <p><strong>Suspended by:</strong> ${adminName}</p>
                 <p>You can still read blogs and use other features, but you cannot post comments during this period.</p>
                 <p>If you believe this action was taken in error, please contact our support team.</p>
                 <p>Best regards,<br>BlogForge Admin Team</p>
@@ -119,8 +124,9 @@ export async function POST(request: Request) {
             emailContent = `
                 <h2>Comment Privileges Restored</h2>
                 <p>Dear ${user.name || user.username},</p>
-                <p>Your commenting privileges on BlogForge have been restored by an administrator.</p>
+                <p>Your commenting privileges on BlogForge have been restored by <strong>${adminName}</strong>.</p>
                 <p><strong>Reason:</strong> ${finalReason}</p>
+                <p><strong>Restored by:</strong> ${adminName}</p>
                 <p>You can now comment on blogs again.</p>
                 <p>Best regards,<br>BlogForge Admin Team</p>
             `;
@@ -147,11 +153,12 @@ export async function POST(request: Request) {
 
         // Send notification email
         try {
+            const defaultSubject = `Comment Privileges ${action === 'ban' ? 'Suspended' : 'Restored'} - BlogForge`;
             await sendEmail({
                 email: user.email,
                 emailType: "ADMIN_ACTION",
                 userId: user._id,
-                customSubject: `Comment Privileges ${action === 'ban' ? 'Suspended' : 'Restored'} - BlogForge`,
+                customSubject: customSubject || defaultSubject,
                 customHtml: emailContent
             });
         } catch (emailError) {

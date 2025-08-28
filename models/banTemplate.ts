@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const banTemplateSchema = new mongoose.Schema({
+const adminActionTemplateSchema = new mongoose.Schema({
     name: { 
         type: String, 
         required: true,
@@ -10,13 +10,13 @@ const banTemplateSchema = new mongoose.Schema({
         type: String, 
         required: true 
     },
-    banType: { 
+    actionType: { 
         type: String, 
-        enum: ['account', 'comment'], 
+        enum: ['account_ban', 'comment_ban', 'username_change', 'delete_account'], 
         required: true 
     },
     duration: { 
-        type: Number, // Duration in hours, null for permanent
+        type: Number, // Duration in hours, null for permanent or N/A
         default: null 
     },
     reason: { 
@@ -40,13 +40,21 @@ const banTemplateSchema = new mongoose.Schema({
     usageCount: { 
         type: Number, 
         default: 0 
+    },
+    // Additional fields for specific action types
+    metadata: {
+        type: mongoose.Schema.Types.Mixed,
+        default: {}
     }
 }, { timestamps: true });
 
 // Index for better performance
-banTemplateSchema.index({ banType: 1, isActive: 1 });
-banTemplateSchema.index({ severity: 1 });
+adminActionTemplateSchema.index({ actionType: 1, isActive: 1 });
+adminActionTemplateSchema.index({ severity: 1 });
 
-export const BanTemplate = mongoose.models.BanTemplate || mongoose.model("BanTemplate", banTemplateSchema);
+export const AdminActionTemplate = mongoose.models.AdminActionTemplate || mongoose.model("AdminActionTemplate", adminActionTemplateSchema);
+
+// Keep backward compatibility
+export const BanTemplate = AdminActionTemplate;
 
 export default BanTemplate;

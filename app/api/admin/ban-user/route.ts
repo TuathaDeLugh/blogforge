@@ -17,7 +17,7 @@ export async function POST(request: Request) {
             );
         }
 
-        const { userId, action, duration, reason, templateId } = await request.json();
+        const { userId, action, duration, reason, templateId, customSubject } = await request.json();
         
         if (!userId || !action) {
             return NextResponse.json(
@@ -68,6 +68,10 @@ export async function POST(request: Request) {
             );
         }
 
+        // Get admin info for email
+        const admin = await User.findById(session.user.dbid);
+        const adminName = admin?.name || admin?.username || 'Administrator';
+
         let updateData: any = {};
         let emailContent = '';
         let actionType = '';
@@ -109,10 +113,11 @@ export async function POST(request: Request) {
             emailContent = `
                 <h2>Account Suspended</h2>
                 <p>Dear ${user.name || user.username},</p>
-                <p>Your BlogForge account has been suspended by an administrator.</p>
+                <p>Your BlogForge account has been suspended by <strong>${adminName}</strong>.</p>
                 <p><strong>Reason:</strong> ${finalReason}</p>
                 <p><strong>Duration:</strong> ${finalDuration === 'permanent' ? 'Permanent' : finalDuration}</p>
                 ${updateData.banExpiry ? `<p><strong>Suspension expires:</strong> ${updateData.banExpiry.toLocaleDateString()}</p>` : ''}
+                <p><strong>Suspended by:</strong> ${adminName}</p>
                 <p>If you believe this action was taken in error, please contact our support team.</p>
                 <p>Best regards,<br>BlogForge Admin Team</p>
             `;
@@ -126,8 +131,9 @@ export async function POST(request: Request) {
             emailContent = `
                 <h2>Account Reinstated</h2>
                 <p>Dear ${user.name || user.username},</p>
-                <p>Your BlogForge account has been reinstated by an administrator.</p>
+                <p>Your BlogForge account has been reinstated by <strong>${adminName}</strong>.</p>
                 <p><strong>Reason:</strong> ${finalReason}</p>
+                <p><strong>Reinstated by:</strong> ${adminName}</p>
                 <p>You can now access your account and use all features of BlogForge.</p>
                 <p>Best regards,<br>BlogForge Admin Team</p>
             `;
@@ -153,11 +159,12 @@ export async function POST(request: Request) {
 
         // Send notification email
         try {
+            const defaultSubject = `Account ${action === 'ban' ? 'Suspended' : 'Reinstated'} - BlogForge`;
             await sendEmail({
                 email: user.email,
                 emailType: "ADMIN_ACTION",
                 userId: user._id,
-                customSubject: `Account ${action === 'ban' ? 'Suspended' : 'Reinstated'} - BlogForge`,
+                customSubject: customSubject || defaultSubject,
                 customHtml: emailContent
             });
         } catch (emailError) {

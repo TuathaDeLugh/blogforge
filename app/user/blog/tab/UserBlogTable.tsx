@@ -7,6 +7,7 @@ import { Div } from '@/Components/Motion/Motion'
 import Pagination from '@/Components/layout/Pagination'
 import DelBlogBtn from '../DeleteBlog'
 import { getUserBlog } from '@/controllers/user'
+import BanAwareEditIcon from '@/Components/BanAwareEditIcon'
 
 interface UserBlogTableProps {
     pageno?: number;
@@ -115,9 +116,7 @@ export default async function UserBlogTable({pageno,status,userid}:UserBlogTable
                                 }
                               >
                                 <div className=' flex gap-2'>
-                                  <Link href={`/user/blog/edit/${blog._id}`} title="Edit" >
-                                    <HiPencilAlt className='text-blue-600' size={25} />
-                                  </Link>
+                                  <BanAwareEditIcon blogId={blog._id} />
                                   <DelBlogBtn id={blog._id} images={blog.images} title={blog.title} />
                                 </div>
                               </td>

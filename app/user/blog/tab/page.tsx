@@ -9,6 +9,7 @@ import Image from 'next/image'
 import Tr from '@/Components/Motion/TableAnimation'
 import DelBlogBtn from '../DeleteBlog'
 import { getUserBlog } from '@/controllers/user'
+import BanAwareEditIcon from '@/Components/BanAwareEditIcon'
 
 export default async function UserBlog(context: { searchParams: { page: string } }) {
   const session = await getServerSession(authOptions)
@@ -148,9 +149,7 @@ export default async function UserBlog(context: { searchParams: { page: string }
                                 }
                                 >
                                 <div className=' flex gap-2'>
-                                  <Link href={`/user/blog/edit/${blog._id}`} title="Edit" >
-                                    <HiPencilAlt className='text-blue-600' size={25} />
-                                  </Link>
+                                  <BanAwareEditIcon blogId={blog._id} />
                                   <DelBlogBtn id={blog._id} images={blog.images} title={blog.title} />
                                 </div>
                               </td>

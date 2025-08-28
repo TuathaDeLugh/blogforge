@@ -62,9 +62,8 @@ export  async function getHomeData() {
 
 export async function getRecommendedData(uId:string,) {
     try {
-      const api = process.env.API_URL;
       
-      const apiEndpoint = `${api}api/home/${uId}`;
+      const apiEndpoint = `/api/home/${uId}?sort=-1`;
     const response = await fetch(apiEndpoint, {
       cache: "no-store",
     });

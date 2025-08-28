@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { IoClose, IoFlash, IoCreate, IoWarning, IoRefresh } from 'react-icons/io5';
 import { MdPerson, MdComment, MdEdit, MdDelete } from 'react-icons/md';
+import Image from 'next/image';
 
 interface AdminActionTemplate {
   _id: string;
@@ -29,7 +30,7 @@ interface EnhancedAdminActionModalProps {
   user: {
     _id: string;
     username: string;
-    name: string;
+    name?: string;
     email: string;
     isBanned?: boolean;
     commentBanned?: boolean;
@@ -52,8 +53,61 @@ export default function EnhancedAdminActionModal({
   const [customDuration, setCustomDuration] = useState('');
   const [customSubject, setCustomSubject] = useState('');
   const [newUsername, setNewUsername] = useState('');
+  const [emailMessage, setEmailMessage] = useState('');
+  const [selectedEmailTemplate, setSelectedEmailTemplate] = useState('');
   const [loading, setLoading] = useState(false);
   const [loadingTemplates, setLoadingTemplates] = useState(true);
+
+  // Email templates for delete account action
+  const emailTemplates = [
+    {
+      id: 'policy_violation',
+      name: 'Policy Violation',
+      message: `Dear ${user.name || user.username},
+
+We regret to inform you that your BlogForge account has been scheduled for deletion due to violations of our community guidelines and terms of service.
+
+Your account will be permanently deleted, and all associated data will be removed from our systems. Any blogs you have created will be transferred to our admin account to maintain content integrity for other users.
+
+If you believe this action was taken in error, please contact our support team immediately.
+
+Best regards,
+BlogForge Admin Team`
+    },
+    {
+      id: 'inactive_account',
+      name: 'Inactive Account',
+      message: `Dear ${user.name || user.username},
+
+Your BlogForge account has been inactive for an extended period. As part of our data management policy, we will be deleting inactive accounts.
+
+Your account will be permanently deleted, and any blogs you have created will be transferred to our admin account to preserve content for the community.
+
+If you wish to keep your account active, please log in within the next 7 days.
+
+Best regards,
+BlogForge Admin Team`
+    },
+    {
+      id: 'user_request',
+      name: 'User Request',
+      message: `Dear ${user.name || user.username},
+
+We have received and processed your request to delete your BlogForge account.
+
+Your account will be permanently deleted as requested. Any blogs you have created will be transferred to our admin account to maintain content availability for other users.
+
+Thank you for being part of the BlogForge community.
+
+Best regards,
+BlogForge Admin Team`
+    },
+    {
+      id: 'custom',
+      name: 'Custom Message',
+      message: ''
+    }
+  ];
 
   useEffect(() => {
     if (isOpen) {
@@ -73,6 +127,14 @@ export default function EnhancedAdminActionModal({
     const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
     
     setNewUsername(`${randomAdjective}${randomNoun}${numbers}`);
+  };
+
+  const handleEmailTemplateChange = (templateId: string) => {
+    setSelectedEmailTemplate(templateId);
+    const template = emailTemplates.find(t => t.id === templateId);
+    if (template) {
+      setEmailMessage(template.message);
+    }
   };
 
   const fetchTemplates = async () => {
@@ -116,6 +178,9 @@ export default function EnhancedAdminActionModal({
           break;
         case 'delete_account':
           endpoint = '/api/admin/delete-account';
+          if (emailMessage.trim()) {
+            payload.emailMessage = emailMessage;
+          }
           break;
       }
       
@@ -154,6 +219,11 @@ export default function EnhancedAdminActionModal({
       return;
     }
 
+    if (actionType === 'delete_account' && !emailMessage.trim()) {
+      toast.error('Please provide an email message for the user');
+      return;
+    }
+
     setLoading(true);
     
     try {
@@ -181,6 +251,7 @@ export default function EnhancedAdminActionModal({
           break;
         case 'delete_account':
           endpoint = '/api/admin/delete-account';
+          payload.emailMessage = emailMessage;
           break;
       }
       
@@ -318,7 +389,7 @@ export default function EnhancedAdminActionModal({
                 {getActionTitle(actionType)} - {user.username}
               </h2>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                {user.name} ({user.email})
+                {user.name || user.username} ({user.email})
               </p>
             </div>
           </div>
@@ -448,6 +519,56 @@ export default function EnhancedAdminActionModal({
                   </h3>
                 </div>
 
+                {/* Delete Account Special UI */}
+                {actionType === 'delete_account' && (
+                  <div className="mb-6">
+                    <Image src={'/delete.svg'} alt='delete user' width={150} height={150} className="mx-auto mb-4" />
+                    
+                    <div className="text-center mb-6">
+                      <p className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                        Delete user: <span className="text-red-500">@{user.username}</span>
+                      </p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                        This action will permanently delete the user and transfer their blogs to admin.
+                      </p>
+                    </div>
+
+                    <div className="space-y-3 mb-4">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Email Template:
+                      </label>
+                      <select
+                        value={selectedEmailTemplate}
+                        onChange={(e) => handleEmailTemplateChange(e.target.value)}
+                        className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      >
+                        <option value="">Select a template...</option>
+                        {emailTemplates.map((template) => (
+                          <option key={template.id} value={template.id}>
+                            {template.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="space-y-2 mb-4">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Email Message to User:
+                      </label>
+                      <textarea
+                        value={emailMessage}
+                        onChange={(e) => setEmailMessage(e.target.value)}
+                        placeholder="Enter the message to send to the user before deletion..."
+                        rows={8}
+                        className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm resize-none"
+                      />
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        This message will be sent to {user.email} before account deletion.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
                 <div className="space-y-4">
                   {/* Username Change Specific Fields */}
                   {actionType === 'username_change' && (
@@ -482,18 +603,35 @@ export default function EnhancedAdminActionModal({
                     </div>
                   )}
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Custom Reason *
-                    </label>
-                    <textarea
-                      value={customReason}
-                      onChange={(e) => setCustomReason(e.target.value)}
-                      rows={3}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
-                      placeholder={`Enter custom reason for ${getActionLabel(actionType)}...`}
-                    />
-                  </div>
+                  {actionType !== 'delete_account' && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Custom Reason *
+                      </label>
+                      <textarea
+                        value={customReason}
+                        onChange={(e) => setCustomReason(e.target.value)}
+                        rows={3}
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
+                        placeholder={`Enter custom reason for ${getActionLabel(actionType)}...`}
+                      />
+                    </div>
+                  )}
+
+                  {actionType === 'delete_account' && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Admin Reason for Deletion *
+                      </label>
+                      <textarea
+                        value={customReason}
+                        onChange={(e) => setCustomReason(e.target.value)}
+                        rows={3}
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
+                        placeholder="Enter admin reason for account deletion (for internal logging)..."
+                      />
+                    </div>
+                  )}
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Duration field for ban actions */}
@@ -532,7 +670,7 @@ export default function EnhancedAdminActionModal({
 
                   <button
                     onClick={handleCustomAction}
-                    disabled={loading || !customReason.trim() || (actionType === 'username_change' && !newUsername.trim())}
+                    disabled={loading || !customReason.trim() || (actionType === 'username_change' && !newUsername.trim()) || (actionType === 'delete_account' && !emailMessage.trim())}
                     className={`w-full px-4 py-2 rounded-lg text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${
                       actionType === 'delete_account' 
                         ? 'bg-red-600 hover:bg-red-700' 

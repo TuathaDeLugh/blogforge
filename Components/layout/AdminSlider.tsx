@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect, ReactNode } from "react";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { FiMenu, FiMessageSquare, FiX } from "react-icons/fi";
+import React, { useState, useEffect, ReactNode } from 'react';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { FiMenu, FiMessageSquare, FiX } from 'react-icons/fi';
 import {
   FaHome,
   FaUsers,
@@ -11,9 +11,9 @@ import {
   FaQuoteLeft,
   FaBell,
   FaShieldAlt,
-} from "react-icons/fa";
-import { TbDeviceAnalytics } from "react-icons/tb";
-import { MdDashboard, MdSecurity } from "react-icons/md";
+} from 'react-icons/fa';
+import { TbDeviceAnalytics } from 'react-icons/tb';
+import { MdDashboard, MdSecurity } from 'react-icons/md';
 
 interface NavItem {
   name: string;
@@ -37,25 +37,33 @@ export default function AdminNav({ children }: { children: ReactNode }) {
     };
 
     handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const mainNavItems: NavItem[] = [
-    { name: "Dashboard", href: "/admin", icon: <MdDashboard /> },
-    { name: "Analytics", href: "/admin/analytics", icon: <TbDeviceAnalytics /> },
+    { name: 'Dashboard', href: '/admin', icon: <MdDashboard /> },
+    {
+      name: 'Analytics',
+      href: '/admin/analytics',
+      icon: <TbDeviceAnalytics />,
+    },
   ];
 
   const contentNavItems: NavItem[] = [
-    { name: "Users", href: "/admin/users", icon: <FaUsers /> },
-    { name: "Blogs", href: "/admin/blogs", icon: <FaChartBar /> },
-    { name: "Contact", href: "/admin/contact", icon: <FiMessageSquare /> },
-    { name: "FAQ", href: "/admin/faq", icon: <FaQuoteLeft /> },
+    { name: 'Users', href: '/admin/users', icon: <FaUsers /> },
+    { name: 'Blogs', href: '/admin/blogs', icon: <FaChartBar /> },
+    { name: 'Contact', href: '/admin/contact', icon: <FiMessageSquare /> },
+    { name: 'FAQ', href: '/admin/faq', icon: <FaQuoteLeft /> },
   ];
 
   const moderationNavItems: NavItem[] = [
-    { name: "Ban Templates", href: "/admin/ban-templates", icon: <FaShieldAlt /> },
-    { name: "Actions Log", href: "/admin/actions", icon: <MdSecurity /> },
+    {
+      name: 'Ban Templates',
+      href: '/admin/ban-templates',
+      icon: <FaShieldAlt />,
+    },
+    { name: 'Actions Log', href: '/admin/actions', icon: <MdSecurity /> },
   ];
 
   const handleLinkClick = (): void => {
@@ -69,10 +77,10 @@ export default function AdminNav({ children }: { children: ReactNode }) {
       {/* Navigation */}
       <motion.nav
         initial={{ x: 0 }}
-        animate={{ x: isNavOpen ? 0 : "-100%" }}
+        animate={{ x: isNavOpen ? 0 : '-100%' }}
         transition={{ duration: 0.3 }}
         className={`fixed z-20 lg:z-10 bottom-0 left-0 h-[calc(100dvh-4rem)] md:h-[calc(100dvh-5rem)] w-56 p-2 lg:translate-x-0 ${
-          isNavOpen ? "translate-x-0" : "-translate-x-full"
+          isNavOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="flex flex-col h-full bg-white/80 dark:bg-slate-800/80 dark:border-slate-600 shadow dark:shadow-slate-500/50 backdrop-blur-sm border rounded-xl p-4">
@@ -161,14 +169,13 @@ export default function AdminNav({ children }: { children: ReactNode }) {
               </ul>
             </div>
 
-            
             {/* Quick Actions */}
             <div className="border-t border-gray-200 dark:border-gray-600 pt-4">
               <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
                 Quick Actions
               </h3>
               <div className="space-y-2">
-                <Link 
+                <Link
                   href="/"
                   className="w-full flex items-center px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500 transition-colors"
                 >
@@ -192,7 +199,7 @@ export default function AdminNav({ children }: { children: ReactNode }) {
       {/* Main content with smooth padding transition */}
       <section
         className={`duration-300 ease-in-out mx-auto ${
-          isNavOpen ? "lg:pl-52" : "pl-0"
+          isNavOpen ? 'lg:pl-52' : 'pl-0'
         }`}
       >
         <div className="px-4 lg:px-8 py-5 mx-auto">{children}</div>

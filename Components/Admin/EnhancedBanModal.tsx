@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { IoClose, IoFlash, IoCreate, IoWarning } from 'react-icons/io5';
@@ -37,16 +37,18 @@ interface EnhancedBanModalProps {
   onSuccess?: () => void;
 }
 
-export default function EnhancedBanModal({ 
-  isOpen, 
-  onClose, 
-  user, 
-  banType, 
-  onSuccess 
+export default function EnhancedBanModal({
+  isOpen,
+  onClose,
+  user,
+  banType,
+  onSuccess,
 }: EnhancedBanModalProps) {
   const [templates, setTemplates] = useState<BanTemplate[]>([]);
   const [unbanTemplates, setUnbanTemplates] = useState<BanTemplate[]>([]);
-  const [selectedTemplate, setSelectedTemplate] = useState<BanTemplate | null>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState<BanTemplate | null>(
+    null
+  );
   const [useCustom, setUseCustom] = useState(false);
   const [customReason, setCustomReason] = useState('');
   const [customDuration, setCustomDuration] = useState('');
@@ -63,9 +65,11 @@ export default function EnhancedBanModal({
   const fetchTemplates = async () => {
     try {
       setLoadingTemplates(true);
-      const response = await fetch(`/api/admin/ban-templates?banType=${banType}&isActive=true`);
+      const response = await fetch(
+        `/api/admin/ban-templates?banType=${banType}&isActive=true`
+      );
       const data = await response.json();
-      
+
       if (data.success) {
         setTemplates(data.templates);
       }
@@ -78,10 +82,13 @@ export default function EnhancedBanModal({
 
   const handleQuickAction = async (template: BanTemplate) => {
     setLoading(true);
-    
+
     try {
-      const endpoint = banType === 'account' ? '/api/admin/ban-user' : '/api/admin/ban-comment';
-      
+      const endpoint =
+        banType === 'account'
+          ? '/api/admin/ban-user'
+          : '/api/admin/ban-comment';
+
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
@@ -97,7 +104,9 @@ export default function EnhancedBanModal({
       const data = await response.json();
 
       if (response.ok) {
-        toast.success(`${banType === 'account' ? 'User banned' : 'Comment privileges suspended'} successfully`);
+        toast.success(
+          `${banType === 'account' ? 'User banned' : 'Comment privileges suspended'} successfully`
+        );
         onSuccess?.();
         onClose();
       } else {
@@ -117,10 +126,13 @@ export default function EnhancedBanModal({
     }
 
     setLoading(true);
-    
+
     try {
-      const endpoint = banType === 'account' ? '/api/admin/ban-user' : '/api/admin/ban-comment';
-      
+      const endpoint =
+        banType === 'account'
+          ? '/api/admin/ban-user'
+          : '/api/admin/ban-comment';
+
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
@@ -138,7 +150,9 @@ export default function EnhancedBanModal({
       const data = await response.json();
 
       if (response.ok) {
-        toast.success(`${banType === 'account' ? 'User banned' : 'Comment privileges suspended'} successfully`);
+        toast.success(
+          `${banType === 'account' ? 'User banned' : 'Comment privileges suspended'} successfully`
+        );
         onSuccess?.();
         onClose();
       } else {
@@ -153,10 +167,13 @@ export default function EnhancedBanModal({
 
   const handleUnban = async () => {
     setLoading(true);
-    
+
     try {
-      const endpoint = banType === 'account' ? '/api/admin/ban-user' : '/api/admin/ban-comment';
-      
+      const endpoint =
+        banType === 'account'
+          ? '/api/admin/ban-user'
+          : '/api/admin/ban-comment';
+
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
@@ -173,7 +190,9 @@ export default function EnhancedBanModal({
       const data = await response.json();
 
       if (response.ok) {
-        toast.success(`${banType === 'account' ? 'User unbanned' : 'Comment privileges restored'} successfully`);
+        toast.success(
+          `${banType === 'account' ? 'User unbanned' : 'Comment privileges restored'} successfully`
+        );
         onSuccess?.();
         onClose();
       } else {
@@ -188,11 +207,16 @@ export default function EnhancedBanModal({
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'low': return 'border-green-200 bg-green-50 text-green-800';
-      case 'medium': return 'border-yellow-200 bg-yellow-50 text-yellow-800';
-      case 'high': return 'border-orange-200 bg-orange-50 text-orange-800';
-      case 'critical': return 'border-red-200 bg-red-50 text-red-800';
-      default: return 'border-gray-200 bg-gray-50 text-gray-800';
+      case 'low':
+        return 'border-green-200 bg-green-50 text-green-800';
+      case 'medium':
+        return 'border-yellow-200 bg-yellow-50 text-yellow-800';
+      case 'high':
+        return 'border-orange-200 bg-orange-50 text-orange-800';
+      case 'critical':
+        return 'border-red-200 bg-red-50 text-red-800';
+      default:
+        return 'border-gray-200 bg-gray-50 text-gray-800';
     }
   };
 
@@ -204,7 +228,8 @@ export default function EnhancedBanModal({
     return `${Math.floor(duration / 720)}m`;
   };
 
-  const isCurrentlyBanned = banType === 'account' ? user.isBanned : user.commentBanned;
+  const isCurrentlyBanned =
+    banType === 'account' ? user.isBanned : user.commentBanned;
 
   if (!isOpen) return null;
 
@@ -221,7 +246,8 @@ export default function EnhancedBanModal({
             )}
             <div>
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                {banType === 'account' ? 'Account Ban' : 'Comment Ban'} - {user.username}
+                {banType === 'account' ? 'Account Ban' : 'Comment Ban'} -{' '}
+                {user.username}
               </h2>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {user.name} ({user.email})
@@ -243,7 +269,8 @@ export default function EnhancedBanModal({
               <div className="flex items-center gap-2 mb-4">
                 <IoWarning className="text-red-500" size={20} />
                 <span className="font-medium text-red-800">
-                  User is currently {banType === 'account' ? 'banned' : 'comment-banned'}
+                  User is currently{' '}
+                  {banType === 'account' ? 'banned' : 'comment-banned'}
                 </span>
               </div>
 
@@ -254,7 +281,9 @@ export default function EnhancedBanModal({
                   disabled={loading}
                   className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors mr-4"
                 >
-                  {loading ? 'Processing...' : `Quick Remove ${banType === 'account' ? 'Ban' : 'Comment Ban'}`}
+                  {loading
+                    ? 'Processing...'
+                    : `Quick Remove ${banType === 'account' ? 'Ban' : 'Comment Ban'}`}
                 </button>
               </div>
 
@@ -272,7 +301,7 @@ export default function EnhancedBanModal({
                     placeholder="Enter reason for removing the ban (optional)..."
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Email Subject (Optional)
@@ -291,7 +320,9 @@ export default function EnhancedBanModal({
                   disabled={loading}
                   className="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
-                  {loading ? 'Processing...' : `Remove ${banType === 'account' ? 'Ban' : 'Comment Ban'} with Custom Details`}
+                  {loading
+                    ? 'Processing...'
+                    : `Remove ${banType === 'account' ? 'Ban' : 'Comment Ban'} with Custom Details`}
                 </button>
               </div>
             </div>
@@ -328,13 +359,18 @@ export default function EnhancedBanModal({
                             {template.severity}
                           </span>
                         </div>
-                        <p className="text-sm mb-2 opacity-80">{template.description}</p>
+                        <p className="text-sm mb-2 opacity-80">
+                          {template.description}
+                        </p>
                         <div className="flex justify-between text-xs">
-                          <span>Duration: {formatDuration(template.duration)}</span>
+                          <span>
+                            Duration: {formatDuration(template.duration)}
+                          </span>
                           <span>Used: {template.usageCount || 0} times</span>
                         </div>
                         <div className="mt-2 text-xs opacity-70">
-                          <strong>Reason:</strong> {template.reason.substring(0, 100)}
+                          <strong>Reason:</strong>{' '}
+                          {template.reason.substring(0, 100)}
                           {template.reason.length > 100 && '...'}
                         </div>
                       </div>
@@ -403,7 +439,9 @@ export default function EnhancedBanModal({
                     disabled={loading || !customReason.trim()}
                     className="w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
-                    {loading ? 'Processing...' : `Apply Custom ${banType === 'account' ? 'Ban' : 'Comment Ban'}`}
+                    {loading
+                      ? 'Processing...'
+                      : `Apply Custom ${banType === 'account' ? 'Ban' : 'Comment Ban'}`}
                   </button>
                 </div>
               </div>

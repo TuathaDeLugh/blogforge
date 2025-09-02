@@ -1,54 +1,46 @@
-.ql-editor{
-    font-size: 1rem;
-    border: 0;
-    padding: 0;
-    overflow-x: hidden;
-    text-align: justify;
-  }
-  .ql-bubble .ql-editor blockquote {
-    
-    border:solid;
-    border:0;
-    padding-left: 1rem;
-    border-left: 0.3rem solid rgb(255, 132, 59);
-    font-size: large;
-    text-align: justify;
-    margin-bottom: 5px;
-    margin-top: 5px;
+.ql-editor {
+  font-size: 1rem;
+  border: 0;
+  padding: 0;
+  overflow-x: hidden;
+  text-align: justify;
+}
+.ql-bubble .ql-editor blockquote {
+  border: solid;
+  border: 0;
+  padding-left: 1rem;
+  border-left: 0.3rem solid rgb(255, 132, 59);
+  font-size: large;
+  text-align: justify;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+.ql-bubble .ql-editor h3 {
+  color: rgb(255, 132, 59);
+  margin: 1rem 0 1rem 0;
+  font-size: large;
+  font-weight: 500;
+  text-align: justify;
+}
 
-  }
-  .ql-bubble .ql-editor h3{
-    
-    color: rgb(255, 132, 59);
-    margin: 1rem 0 1rem 0 ;
-    font-size: large;
-    font-weight: 500;
-    text-align: justify;
-
-  }
-
-  .ql-editor ul{
-    list-style-type: none;
-    padding: 0;
-  }
-  .ql-editor ul li:not(.ql-direction-rtl){
-    padding-left: 0;
-  }
-  .ql-bubble .ql-editor h2{
-    
-    color: rgb(255, 132, 59);
-    margin: 1rem 0 1rem 0 ;
-    font-size: larger;
-    font-weight: 500;
-    text-align: justify;
-
-  }
-  .ql-bubble .ql-editor p{
-    margin: 0.4rem 0 0.4rem 0 ;
-    text-align: justify;
-
-  }
-  .ql-toolbar.ql-snow {
-    background-color: rgb(224, 224, 224);
-
-  }
+.ql-editor ul {
+  list-style-type: none;
+  padding: 0;
+}
+.ql-editor ul li:not(.ql-direction-rtl) {
+  padding-left: 0;
+}
+.ql-bubble .ql-editor h2 {
+  color: rgb(255, 132, 59);
+  margin: 1rem 0 1rem 0;
+  font-size: larger;
+  font-weight: 500;
+  text-align: justify;
+}
+.ql-bubble .ql-editor p {
+  margin: 0.4rem 0 0.4rem 0;
+  text-align: justify;
+}
+.ql-toolbar.ql-snow {
+  background-color: rgb(224, 224, 224);
+}

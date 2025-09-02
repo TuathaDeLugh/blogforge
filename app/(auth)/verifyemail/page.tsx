@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import React, { useEffect, useState } from 'react';
 import { Div, H1 } from '@/Components/Motion/Motion';
 import { signOut, useSession } from 'next-auth/react';
@@ -10,8 +10,8 @@ export default function VerifyFirst() {
   const router = useRouter();
   const { data: session, update } = useSession();
   const [disabled, setDisabled] = useState(false);
-  const [token, setToken] = useState("");
-  const [type, setType] = useState("");
+  const [token, setToken] = useState('');
+  const [type, setType] = useState('');
 
   const handleEmailVerification = async () => {
     try {
@@ -31,25 +31,26 @@ export default function VerifyFirst() {
       const data = await response.json();
 
       if (response && response.status === 200) {
-        toast.success("Account Successfully Verified");
+        toast.success('Account Successfully Verified');
         if (session) {
-          if (type==='update'){
+          if (type === 'update') {
             await update({
               ...session,
               user: {
-                  email:data.user.email,
+                email: data.user.email,
               },
-          });
-          router.push("/");
-          }
-          else{
+            });
+            router.push('/');
+          } else {
             signOut({ callbackUrl: '/login' });
           }
         } else {
-          router.push("/login");
+          router.push('/login');
         }
       } else {
-        toast.error('This verification token is expired, you can request a new one');
+        toast.error(
+          'This verification token is expired, you can request a new one'
+        );
       }
     } catch (error) {
       console.error(error);
@@ -73,9 +74,7 @@ export default function VerifyFirst() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div
-          className="mx-auto p-5 md:p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 min-h-[400px]"
-        >
+        <div className="mx-auto p-5 md:p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 min-h-[400px]">
           <div className="relative mt-5 md:mt-10 mb-16">
             <H1
               initial={{ opacity: 0, x: -20 }}
@@ -95,13 +94,13 @@ export default function VerifyFirst() {
             </H1>
           </div>
 
-          <Div className="text-center space-y-6"
+          <Div
+            className="text-center space-y-6"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}>
-            <p>
-              Click the button below to verify your email.
-            </p>
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <p>Click the button below to verify your email.</p>
             <div className=" text-center flex items-center justify-center">
               <button
                 disabled={disabled}
@@ -110,14 +109,18 @@ export default function VerifyFirst() {
               >
                 {type === 'verify' ? 'Verify Email' : 'Verify Updated Email'}
                 {disabled && (
-                  <AiOutlineLoading3Quarters size={20} className='animate-spin' />
+                  <AiOutlineLoading3Quarters
+                    size={20}
+                    className="animate-spin"
+                  />
                 )}
               </button>
             </div>
-            <p className='text-sm'>
-              After verification, 
-              {type === 'verify' ? ' you will be redirected to the login page and can start using our services!' : ' you can use updated Email for our services!'}
-              
+            <p className="text-sm">
+              After verification,
+              {type === 'verify'
+                ? ' you will be redirected to the login page and can start using our services!'
+                : ' you can use updated Email for our services!'}
             </p>
           </Div>
         </div>
@@ -125,7 +128,8 @@ export default function VerifyFirst() {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="absolute -z-10 hidden w-full h-full bg-orange-400/50 rounded-md -bottom-3 -right-3 md:block"></Div>
+          className="absolute -z-10 hidden w-full h-full bg-orange-400/50 rounded-md -bottom-3 -right-3 md:block"
+        ></Div>
       </Div>
     </div>
   );

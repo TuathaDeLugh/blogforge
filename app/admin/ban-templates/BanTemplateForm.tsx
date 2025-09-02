@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import toast from 'react-hot-toast';
@@ -20,7 +20,10 @@ interface BanTemplateFormProps {
   onClose: () => void;
 }
 
-export default function BanTemplateForm({ template, onClose }: BanTemplateFormProps) {
+export default function BanTemplateForm({
+  template,
+  onClose,
+}: BanTemplateFormProps) {
   const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
@@ -35,38 +38,41 @@ export default function BanTemplateForm({ template, onClose }: BanTemplateFormPr
     },
     validate: (values) => {
       const errors: any = {};
-      
+
       if (!values.name.trim()) {
         errors.name = 'Template name is required';
       }
-      
+
       if (!values.description.trim()) {
         errors.description = 'Description is required';
       }
-      
+
       if (!values.reason.trim()) {
         errors.reason = 'Reason is required';
       }
-      
-      if (values.duration && (isNaN(Number(values.duration)) || Number(values.duration) <= 0)) {
+
+      if (
+        values.duration &&
+        (isNaN(Number(values.duration)) || Number(values.duration) <= 0)
+      ) {
         errors.duration = 'Duration must be a positive number';
       }
-      
+
       return errors;
     },
     onSubmit: async (values) => {
       setLoading(true);
-      
+
       try {
         const payload = {
           ...values,
           duration: values.duration ? Number(values.duration) : null,
         };
 
-        const url = template 
+        const url = template
           ? `/api/admin/ban-templates/${template._id}`
           : '/api/admin/ban-templates';
-        
+
         const method = template ? 'PUT' : 'POST';
 
         const response = await fetch(url, {
@@ -80,7 +86,11 @@ export default function BanTemplateForm({ template, onClose }: BanTemplateFormPr
         const data = await response.json();
 
         if (data.success) {
-          toast.success(template ? 'Template updated successfully' : 'Template created successfully');
+          toast.success(
+            template
+              ? 'Template updated successfully'
+              : 'Template created successfully'
+          );
           onClose();
         } else {
           toast.error(data.message || 'Failed to save template');
@@ -145,7 +155,9 @@ export default function BanTemplateForm({ template, onClose }: BanTemplateFormPr
               placeholder="Brief description of when to use this template"
             />
             {formik.touched.description && formik.errors.description && (
-              <p className="text-red-500 text-sm mt-1">{formik.errors.description}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {formik.errors.description}
+              </p>
             )}
           </div>
 
@@ -200,10 +212,13 @@ export default function BanTemplateForm({ template, onClose }: BanTemplateFormPr
               placeholder="Leave empty for permanent ban"
             />
             <p className="text-sm text-gray-500 mt-1">
-              Leave empty for permanent ban. Examples: 24 (1 day), 168 (1 week), 720 (1 month)
+              Leave empty for permanent ban. Examples: 24 (1 day), 168 (1 week),
+              720 (1 month)
             </p>
             {formik.touched.duration && formik.errors.duration && (
-              <p className="text-red-500 text-sm mt-1">{formik.errors.duration}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {formik.errors.duration}
+              </p>
             )}
           </div>
 
@@ -222,7 +237,9 @@ export default function BanTemplateForm({ template, onClose }: BanTemplateFormPr
               placeholder="Detailed reason that will be shown to the user"
             />
             {formik.touched.reason && formik.errors.reason && (
-              <p className="text-red-500 text-sm mt-1">{formik.errors.reason}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {formik.errors.reason}
+              </p>
             )}
           </div>
 

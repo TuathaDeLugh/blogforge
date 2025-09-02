@@ -1,12 +1,12 @@
-"use client";
-import { useFormik } from "formik";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { IoAddSharp } from "react-icons/io5";
-import { trackBlogComment } from "@/util/analytics";
+'use client';
+import { useFormik } from 'formik';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { IoAddSharp } from 'react-icons/io5';
+import { trackBlogComment } from '@/util/analytics';
 
 interface CommentFormPrp {
   blogid: string;
@@ -25,7 +25,7 @@ export default function CommentForm({ blogid }: CommentFormPrp) {
   const router = useRouter();
   const { data: session } = useSession();
   const [banStatus, setBanStatus] = useState<BanStatus | null>(null);
-  console.log("🚀 ~ CommentForm ~ session:", session);
+  console.log('🚀 ~ CommentForm ~ session:', session);
 
   useEffect(() => {
     if (session?.user?.dbid) {
@@ -35,7 +35,9 @@ export default function CommentForm({ blogid }: CommentFormPrp) {
 
   const checkBanStatus = async () => {
     try {
-      const response = await fetch(`/api/user/ban-status?userId=${session?.user?.dbid}`);
+      const response = await fetch(
+        `/api/user/ban-status?userId=${session?.user?.dbid}`
+      );
       if (response.ok) {
         const data = await response.json();
         setBanStatus(data);
@@ -45,21 +47,21 @@ export default function CommentForm({ blogid }: CommentFormPrp) {
     }
   };
   const initialValues = {
-    user: "",
-    comment: "",
+    user: '',
+    comment: '',
   };
   const postapi = async (ogvalues: any) => {
     await fetch(`/api/blog`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        "Content-type": "application/json",
+        'Content-type': 'application/json',
       },
       body: JSON.stringify(ogvalues),
     });
-    
+
     // Track comment analytics
     await trackBlogComment(blogid);
-    
+
     router.refresh();
   };
   const { values, handleChange, handleSubmit } = useFormik({
@@ -69,12 +71,12 @@ export default function CommentForm({ blogid }: CommentFormPrp) {
         user: session?.user.dbid,
         blog: blogid,
         comment: values.comment,
-        action: "add",
+        action: 'add',
       };
       toast.promise(postapi(data), {
-        loading: "Adding Comment",
-        success: "Comment Added",
-        error: "Failed To Add",
+        loading: 'Adding Comment',
+        success: 'Comment Added',
+        error: 'Failed To Add',
       });
       action.resetForm();
     },
@@ -83,10 +85,13 @@ export default function CommentForm({ blogid }: CommentFormPrp) {
     if (session.user.isVerified === false) {
       return (
         <div className=" mt-5">
-          Please{" "}
-          <Link href="/verifyemail/request" className="text-orange-500 hover:underline">
+          Please{' '}
+          <Link
+            href="/verifyemail/request"
+            className="text-orange-500 hover:underline"
+          >
             Verify
-          </Link>{" "}
+          </Link>{' '}
           your account for comment
         </div>
       );
@@ -116,7 +121,8 @@ export default function CommentForm({ blogid }: CommentFormPrp) {
               You have been banned from commenting.
               {banStatus.commentBanExpiry && (
                 <span className="block">
-                  Ban expires: {new Date(banStatus.commentBanExpiry).toLocaleDateString()}
+                  Ban expires:{' '}
+                  {new Date(banStatus.commentBanExpiry).toLocaleDateString()}
                 </span>
               )}
               {banStatus.commentBanReason && (
@@ -160,10 +166,10 @@ export default function CommentForm({ blogid }: CommentFormPrp) {
   } else {
     return (
       <div className=" mt-5">
-        Please{" "}
+        Please{' '}
         <Link href="/login" className="text-orange-500 hover:underline">
           Login
-        </Link>{" "}
+        </Link>{' '}
         for comment
       </div>
     );

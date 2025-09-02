@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
@@ -25,7 +25,9 @@ export default function BanNotification() {
 
   const checkBanStatus = async () => {
     try {
-      const response = await fetch(`/api/user/ban-status?userId=${session?.user?.dbid}`);
+      const response = await fetch(
+        `/api/user/ban-status?userId=${session?.user?.dbid}`
+      );
       if (response.ok) {
         const data = await response.json();
         setBanStatus(data);
@@ -51,7 +53,8 @@ export default function BanNotification() {
                 Your account has been banned. You cannot create or edit blogs.
                 {banStatus.banExpiry && (
                   <span className="block">
-                    Ban expires: {new Date(banStatus.banExpiry).toLocaleDateString()}
+                    Ban expires:{' '}
+                    {new Date(banStatus.banExpiry).toLocaleDateString()}
                   </span>
                 )}
               </p>
@@ -68,17 +71,22 @@ export default function BanNotification() {
           <div className="flex items-center">
             <MdWarning className="text-xl mr-2" />
             <div>
-              <strong className="font-bold">Comment Privileges Suspended</strong>
+              <strong className="font-bold">
+                Comment Privileges Suspended
+              </strong>
               <p className="text-sm">
                 You have been banned from commenting on blogs.
                 {banStatus.commentBanExpiry && (
                   <span className="block">
-                    Ban expires: {new Date(banStatus.commentBanExpiry).toLocaleDateString()}
+                    Ban expires:{' '}
+                    {new Date(banStatus.commentBanExpiry).toLocaleDateString()}
                   </span>
                 )}
               </p>
               {banStatus.commentBanReason && (
-                <p className="text-xs mt-1">Reason: {banStatus.commentBanReason}</p>
+                <p className="text-xs mt-1">
+                  Reason: {banStatus.commentBanReason}
+                </p>
               )}
             </div>
           </div>

@@ -1,14 +1,14 @@
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import { FaShare } from "react-icons/fa";
-import { IoHeartCircleOutline } from "react-icons/io5";
-import { MdDescription } from "react-icons/md";
-import { Div } from "./Motion/Motion";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import { getHomeData, getRecommendedData } from "@/controllers/blog";
-import DefaultUserProfile from "./layout/DefaultUserProfile";
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
+import { FaShare } from 'react-icons/fa';
+import { IoHeartCircleOutline } from 'react-icons/io5';
+import { MdDescription } from 'react-icons/md';
+import { Div } from './Motion/Motion';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/options';
+import { getHomeData, getRecommendedData } from '@/controllers/blog';
+import DefaultUserProfile from './layout/DefaultUserProfile';
 
 interface BlogPost {
   _id: string;
@@ -54,7 +54,7 @@ interface HomePageProps {
 export default async function Homepage() {
   const blogs = await getHomeData();
   const session = await getServerSession(authOptions);
-  const userId = session?.user?.dbid || "";
+  const userId = session?.user?.dbid || '';
 
   const recommended = await getRecommendedData(userId);
 
@@ -85,7 +85,7 @@ const BlogCard: React.FC<{ blog: BlogPost }> = ({ blog }) => (
           {blog.title}
         </h3>
         <div className="flex flex-wrap gap-2 mb-2">
-          {typeof blog.category === "string" ? (
+          {typeof blog.category === 'string' ? (
             <span className="bg-slate-200 dark:bg-slate-600/70 px-3 py-1 rounded-full text-xs">
               {blog.category}
             </span>
@@ -101,7 +101,7 @@ const BlogCard: React.FC<{ blog: BlogPost }> = ({ blog }) => (
           )}
         </div>
         <p className="text-gray-600 dark:text-slate-300 mb-2 line-clamp-2 h-12">
-          {blog.info.substring(0, 100) + (blog.info.length > 100 ? "..." : "")}
+          {blog.info.substring(0, 100) + (blog.info.length > 100 ? '...' : '')}
         </p>
       </div>
       <div className=" flex items-center gap-2">
@@ -126,15 +126,15 @@ const BlogCard: React.FC<{ blog: BlogPost }> = ({ blog }) => (
           </p>
           {blog.createdAt && (
             <p className="text-gray-600 dark:text-slate-300 text-xs ">
-              {new Date(blog.createdAt).toLocaleString("en-IN", {
-                hour: "2-digit",
-                minute: "2-digit",
+              {new Date(blog.createdAt).toLocaleString('en-IN', {
+                hour: '2-digit',
+                minute: '2-digit',
                 hour12: true,
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                timeZone: "Asia/Kolkata",
-              }) + " IST"}
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                timeZone: 'Asia/Kolkata',
+              }) + ' IST'}
             </p>
           )}
         </div>
@@ -146,7 +146,7 @@ const BlogCard: React.FC<{ blog: BlogPost }> = ({ blog }) => (
           <span>Shares: {blog.share}</span>
         </div>
       ) : (
-        ""
+        ''
       )}
     </div>
   </Link>
@@ -174,7 +174,7 @@ const HomePageContent: React.FC<HomePageProps> = ({ data, recommended }) => {
                 </h2>
                 <Link
                   className=" underline text-sm hover:text-orange-600"
-                  href={"/blogs"}
+                  href={'/blogs'}
                 >
                   Read all
                 </Link>
@@ -266,15 +266,15 @@ const HomePageContent: React.FC<HomePageProps> = ({ data, recommended }) => {
                             {blog.creator.username}
                           </p>
                           <p className="text-gray-600 dark:text-slate-300 text-xs ">
-                            {new Date(blog.createdAt).toLocaleString("en-IN", {
-                              hour: "2-digit",
-                              minute: "2-digit",
+                            {new Date(blog.createdAt).toLocaleString('en-IN', {
+                              hour: '2-digit',
+                              minute: '2-digit',
                               hour12: true,
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                              timeZone: "Asia/Kolkata",
-                            }) + " IST"}
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                              timeZone: 'Asia/Kolkata',
+                            }) + ' IST'}
                           </p>
                         </div>
                       </div>
@@ -291,7 +291,7 @@ const HomePageContent: React.FC<HomePageProps> = ({ data, recommended }) => {
                 </h2>
                 <Link
                   className=" underline text-sm hover:text-orange-600"
-                  href={"/writer"}
+                  href={'/writer'}
                 >
                   View all
                 </Link>
@@ -312,7 +312,10 @@ const HomePageContent: React.FC<HomePageProps> = ({ data, recommended }) => {
                         alt="image hai"
                       />
                     ) : (
-                      <DefaultUserProfile username={writer.username} size={48} />
+                      <DefaultUserProfile
+                        username={writer.username}
+                        size={48}
+                      />
                     )}
                     <h3 className="font-semibold text-orange-500 dark:text-orange-400">
                       @{writer.username}

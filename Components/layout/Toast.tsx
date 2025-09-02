@@ -1,12 +1,7 @@
-'use client'
-import React from 'react'
+'use client';
+import React from 'react';
 import { Toaster } from 'react-hot-toast';
 
 export default function Toast() {
-  return (
-    <Toaster 
-    position="top-center"
-    toastOptions={{duration: 5000 
-    }} />
-  )
+  return <Toaster position="top-center" toastOptions={{ duration: 5000 }} />;
 }

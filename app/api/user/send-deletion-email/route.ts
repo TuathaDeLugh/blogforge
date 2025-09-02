@@ -1,43 +1,43 @@
-import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../../auth/[...nextauth]/options";
+import { NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../../auth/[...nextauth]/options';
 import nodemailer from 'nodemailer';
 
 export async function POST(request: Request) {
-    try {
-        // Check if user is admin
-        const session = await getServerSession(authOptions);
-        if (!session || !session.user || !session.user.isAdmin) {
-            return NextResponse.json(
-                { message: "Unauthorized. Admin access required." },
-                { status: 401 }
-            );
-        }
+  try {
+    // Check if user is admin
+    const session = await getServerSession(authOptions);
+    if (!session || !session.user || !session.user.isAdmin) {
+      return NextResponse.json(
+        { message: 'Unauthorized. Admin access required.' },
+        { status: 401 }
+      );
+    }
 
-        const { email, username, message } = await request.json();
-        
-        if (!email || !username || !message) {
-            return NextResponse.json(
-                { message: "Email, username, and message are required" },
-                { status: 400 }
-            );
-        }
+    const { email, username, message } = await request.json();
 
-        const transporter = nodemailer.createTransport({
-            host: 'smtp.zoho.in',
-            port: 465,
-            secure: true,
-            auth: {
-                user: process.env.MAILUSER,
-                pass: process.env.MAILPASS
-            }
-        });
+    if (!email || !username || !message) {
+      return NextResponse.json(
+        { message: 'Email, username, and message are required' },
+        { status: 400 }
+      );
+    }
 
-        const mailOption = {
-            from: process.env.MAILUSER,
-            to: email,
-            subject: "Important: Account Deletion Notification - BlogForge",
-            html: `
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.zoho.in',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.MAILUSER,
+        pass: process.env.MAILPASS,
+      },
+    });
+
+    const mailOption = {
+      from: process.env.MAILUSER,
+      to: email,
+      subject: 'Important: Account Deletion Notification - BlogForge',
+      html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 2px solid #FF6347; border-radius: 8px; overflow: hidden; background-color: #fff;">
                     
                     <div style="background-color: #FF6347; padding: 20px; text-align: center;">
@@ -78,24 +78,23 @@ export async function POST(request: Request) {
                         <p style="color: #888; font-size: 12px;">This email was sent to ${email}. If you have any questions, feel free to <a href="mailto:service@blogforge.in" style="color: #FF6347; text-decoration: none;">contact us</a>.</p>
                     </div>
                 </div>
-            `
-        };
+            `,
+    };
 
-        await transporter.sendMail(mailOption);
+    await transporter.sendMail(mailOption);
 
-        return NextResponse.json(
-            { message: "Deletion notification email sent successfully" },
-            { status: 200 }
-        );
-
-    } catch (error: any) {
-        console.error('Error sending deletion email:', error.message);
-        return NextResponse.json(
-            {
-                message: 'Failed to send deletion email',
-                error: error.message,
-            },
-            { status: 500 }
-        );
-    }
+    return NextResponse.json(
+      { message: 'Deletion notification email sent successfully' },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.error('Error sending deletion email:', error.message);
+    return NextResponse.json(
+      {
+        message: 'Failed to send deletion email',
+        error: error.message,
+      },
+      { status: 500 }
+    );
+  }
 }

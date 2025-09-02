@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import React, { useState, useEffect } from 'react';
 import { Div, H1 } from '@/Components/Motion/Motion';
 import { useSession } from 'next-auth/react';
@@ -9,11 +9,10 @@ import { redirect } from 'next/navigation';
 export default function VerifyFirst() {
   const { data: session } = useSession();
   if (session?.user.isVerified || !session) {
-    redirect('/')
+    redirect('/');
   }
   const [disabled, setDisabled] = useState(false);
   const [timer, setTimer] = useState<number | null>(null);
-
 
   const handleVerifyEmail = async () => {
     try {
@@ -21,12 +20,12 @@ export default function VerifyFirst() {
       setTimer(59);
       const values = {
         email: session?.user.email,
-        emailType: "VERIFY",
+        emailType: 'VERIFY',
       };
       const response = await fetch(`/api/email/sendmail`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-type": "application/json",
+          'Content-type': 'application/json',
         },
         body: JSON.stringify(values),
       });
@@ -35,7 +34,7 @@ export default function VerifyFirst() {
         throw new Error('Error sending verification link');
       }
 
-      toast.success("Verification email sent to " + values.email);
+      toast.success('Verification email sent to ' + values.email);
     } catch (error) {
       console.error(error);
       toast.error('Failed to send verification email. Please try again later.');
@@ -68,9 +67,7 @@ export default function VerifyFirst() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div
-          className="mx-auto p-5 md:p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 min-h-[400px]"
-        >
+        <div className="mx-auto p-5 md:p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 min-h-[400px]">
           <div className="relative mt-5 md:mt-10 mb-10">
             <H1
               initial={{ opacity: 0, x: -20 }}
@@ -89,12 +86,15 @@ export default function VerifyFirst() {
               Verify Email
             </H1>
           </div>
-          <Div className="md:w-[450px] text-center space-y-6"
+          <Div
+            className="md:w-[450px] text-center space-y-6"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}>
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
             <p>
-              Looks like you didn&apos;t verified! Just need to confirm your email address by clicking the button.
+              Looks like you didn&apos;t verified! Just need to confirm your
+              email address by clicking the button.
             </p>
             <div className="md:w-[450px] text-center flex items-center justify-center">
               <button
@@ -104,17 +104,20 @@ export default function VerifyFirst() {
               >
                 Get Email
                 {disabled && (
-                  <AiOutlineLoading3Quarters size={20} className='animate-spin' />
+                  <AiOutlineLoading3Quarters
+                    size={20}
+                    className="animate-spin"
+                  />
                 )}
               </button>
             </div>
             <p>
-              If you don&apos;t get the email within a few minutes please check your spam folder.
+              If you don&apos;t get the email within a few minutes please check
+              your spam folder.
               {timer && (
                 <span>
                   {` or retry for email in 00:${timer < 10 ? `0${timer}` : timer}`}
                 </span>
-
               )}
             </p>
           </Div>
@@ -123,7 +126,8 @@ export default function VerifyFirst() {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="absolute -z-10 hidden w-full h-full bg-orange-400/50 rounded-md -bottom-3 -right-3 md:block"></Div>
+          className="absolute -z-10 hidden w-full h-full bg-orange-400/50 rounded-md -bottom-3 -right-3 md:block"
+        ></Div>
       </Div>
     </div>
   );

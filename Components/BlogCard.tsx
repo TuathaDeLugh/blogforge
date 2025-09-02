@@ -1,7 +1,7 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
-import AnimationData from './Motion/AnimationData'
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
+import AnimationData from './Motion/AnimationData';
 
 // Define the interfaces
 interface Image {
@@ -28,7 +28,6 @@ interface BlogProps {
   data: Blog[];
 }
 
-
 export default function BlogCards({ data }: BlogProps) {
   return (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -37,7 +36,7 @@ export default function BlogCards({ data }: BlogProps) {
           key={blog._id}
           index={index}
           whileTap={{ scale: 0.99 }}
-          whileHover={{ scale: 1.05}}
+          whileHover={{ scale: 1.05 }}
           className="overflow-hidden rounded-lg shadow-lg hover:scale-105 bg-white dark:bg-gray-800 border border-transparent hover:border-orange-500 hover:bg-orange-500/10 hover:dark:bg-orange-400/10"
         >
           <div className="block group">
@@ -55,16 +54,19 @@ export default function BlogCards({ data }: BlogProps) {
                 <h3 className="text-2xl font-semibold mb-2 text-orange-500 dark:text-orange-400 group-hover:text-black group-hover:dark:text-white ">
                   {blog.title}
                 </h3>
-                <p className='my-3'>
-
-                {blog.category?.map((cat:any) => (
-                  <span key={cat} className="my-3 text-sm  bg-slate-200 dark:bg-slate-600/70 rounded-full px-2 py-1 mr-1">
-                  {cat}
-                </span>
-              ))}
-              </p>
+                <p className="my-3">
+                  {blog.category?.map((cat: any) => (
+                    <span
+                      key={cat}
+                      className="my-3 text-sm  bg-slate-200 dark:bg-slate-600/70 rounded-full px-2 py-1 mr-1"
+                    >
+                      {cat}
+                    </span>
+                  ))}
+                </p>
                 <p className="text-gray-600 dark:text-gray-300 h-12 mb-4">
-                {blog.info.substring(0, 100) + (blog.info.length > 100 ? '...' : '')}
+                  {blog.info.substring(0, 100) +
+                    (blog.info.length > 100 ? '...' : '')}
                 </p>
                 <div className="flex items-center">
                   {blog.creator.avatar ? (
@@ -77,7 +79,9 @@ export default function BlogCards({ data }: BlogProps) {
                     />
                   ) : null}
                   <div className="ml-3">
-                    <p className="text-gray-700 dark:text-gray-400">{blog.creator.username}</p>
+                    <p className="text-gray-700 dark:text-gray-400">
+                      {blog.creator.username}
+                    </p>
                     <p className="text-sm text-gray-500 dark:text-gray-500">
                       {new Date(blog.createdAt).toLocaleString('en-IN', {
                         timeZone: 'Asia/Kolkata',

@@ -55,7 +55,10 @@ export const authOptions: AuthOptions = {
             return null;
           }
 
-          const passwordsMatch = await bcrypt.compare(password || '', user.password || '');
+          const passwordsMatch = await bcrypt.compare(
+            password || '',
+            user.password || ''
+          );
 
           if (!passwordsMatch) {
             console.log('Passwords do not match');
@@ -70,12 +73,18 @@ export const authOptions: AuthOptions = {
             }
 
             // Verify OTP
-            if (!user.twoFactorToken || user.twoFactorToken !== otpCode.toUpperCase()) {
+            if (
+              !user.twoFactorToken ||
+              user.twoFactorToken !== otpCode.toUpperCase()
+            ) {
               console.log('Invalid 2FA code');
               throw new Error('INVALID_OTP');
             }
 
-            if (user.twoFactorTokenExpiry && Date.now() > user.twoFactorTokenExpiry) {
+            if (
+              user.twoFactorTokenExpiry &&
+              Date.now() > user.twoFactorTokenExpiry
+            ) {
               console.log('2FA code expired');
               throw new Error('EXPIRED_OTP');
             }
@@ -83,7 +92,7 @@ export const authOptions: AuthOptions = {
             // Clear the OTP after successful verification
             await User.findByIdAndUpdate(user._id, {
               twoFactorToken: null,
-              twoFactorTokenExpiry: null
+              twoFactorTokenExpiry: null,
             });
           }
 
@@ -122,7 +131,17 @@ export const authOptions: AuthOptions = {
 
       return true;
     },
-    async jwt({ token, user, trigger, session }: { token: any; user?: CustomUser; trigger?: any; session?: any }) {
+    async jwt({
+      token,
+      user,
+      trigger,
+      session,
+    }: {
+      token: any;
+      user?: CustomUser;
+      trigger?: any;
+      session?: any;
+    }) {
       if (user) {
         token.userdbid = user.dbid;
         token.avatar = user.avatar;

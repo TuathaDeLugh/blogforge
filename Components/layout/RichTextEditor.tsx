@@ -1,8 +1,8 @@
-"use client"
+'use client';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import 'react-quill/dist/quill.bubble.css';
-import "@/style/texteditor.css"
+import '@/style/texteditor.css';
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -13,25 +13,29 @@ interface RichTextEditorProps {
   theme?: string;
 }
 
-const RichTextEditor: React.FC<RichTextEditorProps> = ({ value, onChange, className, theme }) => {
+const RichTextEditor: React.FC<RichTextEditorProps> = ({
+  value,
+  onChange,
+  className,
+  theme,
+}) => {
   const toolbarOptions = [
     ['bold', 'italic', 'underline'],
     ['blockquote', 'code-block'],
-    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-    [{ 'script': 'sub' }, { 'script': 'super' }],
-    [{ 'header': [2, 3, false] }],
-    [{ 'align': [] }],
-    ['clean']
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    [{ script: 'sub' }, { script: 'super' }],
+    [{ header: [2, 3, false] }],
+    [{ align: [] }],
+    ['clean'],
   ];
-
 
   return (
     <DynamicReactQuill
-      theme = {'bubble'}
+      theme={'bubble'}
       value={value}
       onChange={onChange}
       modules={{
-        toolbar: toolbarOptions
+        toolbar: toolbarOptions,
       }}
       className={className}
     />

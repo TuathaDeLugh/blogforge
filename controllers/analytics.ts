@@ -20,10 +20,12 @@ interface WriterAnalytics {
   blogs: BlogData[];
 }
 
-export async function getUserAnalytics(userId: string): Promise<WriterAnalytics | null> {
+export async function getUserAnalytics(
+  userId: string
+): Promise<WriterAnalytics | null> {
   try {
     const response = await fetch(`/api/analytics/user/${userId}`, {
-      cache: "no-store",
+      cache: 'no-store',
     });
 
     if (!response.ok) {
@@ -38,7 +40,7 @@ export async function getUserAnalytics(userId: string): Promise<WriterAnalytics 
 
     return data;
   } catch (error) {
-    console.error("Error fetching user analytics:", error);
+    console.error('Error fetching user analytics:', error);
     throw error;
   }
 }
@@ -47,7 +49,7 @@ export async function getAdminAnalytics(days?: number): Promise<any> {
   try {
     const queryParam = days ? `?days=${days}` : '';
     const response = await fetch(`/api/analytics/admin${queryParam}`, {
-      cache: "no-store",
+      cache: 'no-store',
     });
 
     if (!response.ok) {
@@ -62,7 +64,7 @@ export async function getAdminAnalytics(days?: number): Promise<any> {
 
     return data;
   } catch (error) {
-    console.error("Error fetching admin analytics:", error);
+    console.error('Error fetching admin analytics:', error);
     throw error;
   }
 }
@@ -70,7 +72,7 @@ export async function getAdminAnalytics(days?: number): Promise<any> {
 export async function getBlogAnalytics(blogId: string): Promise<any> {
   try {
     const response = await fetch(`/api/analytics/blog/${blogId}`, {
-      cache: "no-store",
+      cache: 'no-store',
     });
 
     if (!response.ok) {
@@ -85,7 +87,7 @@ export async function getBlogAnalytics(blogId: string): Promise<any> {
 
     return data;
   } catch (error) {
-    console.error("Error fetching blog analytics:", error);
+    console.error('Error fetching blog analytics:', error);
     throw error;
   }
 }

@@ -1,21 +1,21 @@
-"use client";
-import Image from "next/image";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { AiOutlineClose } from "react-icons/ai";
-import Link from "next/link";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import AuthBTN from "./AuthBTN";
+'use client';
+import Image from 'next/image';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { AiOutlineClose } from 'react-icons/ai';
+import Link from 'next/link';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import AuthBTN from './AuthBTN';
 
 let navData = [
-  { name: "Home", path: "/", key: 1 },
-  { name: "Blogs", path: "/blogs", key: 2 },
-  { name: "About", path: "/about", key: 3 },
-  { name: "contact", path: "/contact", key: 4 },
+  { name: 'Home', path: '/', key: 1 },
+  { name: 'Blogs', path: '/blogs', key: 2 },
+  { name: 'About', path: '/about', key: 3 },
+  { name: 'contact', path: '/contact', key: 4 },
 ];
 
 const variants = {
-  open: { opacity: 1, height: "auto", innerWidth: "auto", y: 0 },
+  open: { opacity: 1, height: 'auto', innerWidth: 'auto', y: 0 },
   closed: { opacity: 0, height: 0, innerWidth: 0, y: -100 },
 };
 
@@ -23,7 +23,7 @@ export default function Navbar() {
   const [navbarAni, setNavbarAni] = useState<boolean>(false);
   const [navbar, setNavbar] = useState<boolean>(false);
   const [windowWidth, setWindowWidth] = useState<number>(
-    typeof window !== "undefined" ? window.innerWidth : 0
+    typeof window !== 'undefined' ? window.innerWidth : 0
   );
   const navRef = useRef<HTMLDivElement>(null);
 
@@ -35,7 +35,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (typeof window !== "undefined") {
+      if (typeof window !== 'undefined') {
         setWindowWidth(window.innerWidth);
         setNavbar(window.innerWidth >= 768);
       }
@@ -43,16 +43,16 @@ export default function Navbar() {
 
     handleResize();
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
   useEffect(() => {
     if (windowWidth < 768) {
-      document.body.style.overflow = navbarAni ? "hidden" : "auto";
+      document.body.style.overflow = navbarAni ? 'hidden' : 'auto';
     }
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -66,10 +66,10 @@ export default function Navbar() {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [closeNavbarWithDelay, navbarAni, windowWidth]);
 
@@ -91,9 +91,9 @@ export default function Navbar() {
                   }}
                   whileTap={{ scale: 0.5 }}
                   whileHover={{ scale: 1.1 }}
-                  transition={{ type: "spring", stiffness: 300 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
                 >
-                  <AiOutlineClose size={"30"} />
+                  <AiOutlineClose size={'30'} />
                 </motion.button>
               ) : (
                 <motion.button
@@ -104,9 +104,9 @@ export default function Navbar() {
                   }}
                   whileTap={{ scale: 0.5 }}
                   whileHover={{ scale: 1.1 }}
-                  transition={{ type: "spring", stiffness: 300 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
                 >
-                  <GiHamburgerMenu size={"30"} />
+                  <GiHamburgerMenu size={'30'} />
                 </motion.button>
               )}
             </div>
@@ -114,14 +114,14 @@ export default function Navbar() {
             <div className=" grow  justify-between   md:items-center md:flex ">
               <div className="flex items-center justify-center py-3 md:py-5 md:block">
                 <Link href="/" className="flex">
-                  <Image src={"/Logo.png"} alt="" width={150} height={28} />
+                  <Image src={'/Logo.png'} alt="" width={150} height={28} />
                 </Link>
               </div>
 
               <motion.div
                 variants={variants}
                 animate={
-                  windowWidth < 768 ? (navbarAni ? "open" : "closed") : "open"
+                  windowWidth < 768 ? (navbarAni ? 'open' : 'closed') : 'open'
                 }
                 className={`w-full md:w-auto  md:block md:pb-0 md:overflow-hidden md:max-h-screen`}
               >
@@ -136,7 +136,7 @@ export default function Navbar() {
                           <motion.li
                             key={link.key}
                             whileTap={{ scale: 0.9 }}
-                            transition={{ type: "spring", stiffness: 300 }}
+                            transition={{ type: 'spring', stiffness: 300 }}
                             className={`text-l py-5 px-5 text-center `}
                           >
                             <Link

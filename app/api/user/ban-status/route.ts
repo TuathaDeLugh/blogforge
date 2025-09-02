@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
-import { checkUserBanStatus } from "@/util/banCheck";
-import User from "@/models/user";
-import connectdb from "@/util/mongodb";
+import { NextResponse } from 'next/server';
+import { checkUserBanStatus } from '@/util/banCheck';
+import User from '@/models/user';
+import connectdb from '@/util/mongodb';
 
 export async function GET(request: Request) {
   try {
@@ -10,35 +10,36 @@ export async function GET(request: Request) {
 
     if (!userId) {
       return NextResponse.json(
-        { message: "User ID is required" },
+        { message: 'User ID is required' },
         { status: 400 }
       );
     }
 
     await connectdb();
-    
+
     // Get user ban details
-    const user = await User.findById(userId).select('isBanned banExpiry banReason commentBanned commentBanExpiry commentBanReason');
-    
+    const user = await User.findById(userId).select(
+      'isBanned banExpiry banReason commentBanned commentBanExpiry commentBanReason'
+    );
+
     if (!user) {
-      return NextResponse.json(
-        { message: "User not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: 'User not found' }, { status: 404 });
     }
 
     // Check and update expired bans
     const banStatus = await checkUserBanStatus(userId);
 
-    return NextResponse.json({
-      isBanned: banStatus.isBanned,
-      commentBanned: banStatus.commentBanned,
-      banExpiry: user.banExpiry,
-      commentBanExpiry: user.commentBanExpiry,
-      banReason: user.banReason,
-      commentBanReason: user.commentBanReason
-    }, { status: 200 });
-
+    return NextResponse.json(
+      {
+        isBanned: banStatus.isBanned,
+        commentBanned: banStatus.commentBanned,
+        banExpiry: user.banExpiry,
+        commentBanExpiry: user.commentBanExpiry,
+        banReason: user.banReason,
+        commentBanReason: user.commentBanReason,
+      },
+      { status: 200 }
+    );
   } catch (error: any) {
     console.error('Error checking ban status:', error);
     return NextResponse.json(

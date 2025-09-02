@@ -6,22 +6,35 @@ import Image from 'next/image';
 
 async function getAdminActions(page: number = 1) {
   try {
-    const response = await fetch(`${process.env.NEXTAUTH_URL}/api/admin/actions?page=${page}`, {
-      cache: 'no-store'
-    });
-    
+    const response = await fetch(
+      `${process.env.API_URL}/api/admin/actions?page=${page}`,
+      {
+        cache: 'no-store',
+      }
+    );
+
     if (!response.ok) {
       throw new Error('Failed to fetch admin actions');
     }
-    
+
     return await response.json();
   } catch (error) {
     console.error('Error fetching admin actions:', error);
-    return { data: [], meta: { totalDocuments: 0, totalPages: 0, currentPage: 1, hasNextPage: false } };
+    return {
+      data: [],
+      meta: {
+        totalDocuments: 0,
+        totalPages: 0,
+        currentPage: 1,
+        hasNextPage: false,
+      },
+    };
   }
 }
 
-export default async function AdminActionsPage(context: { searchParams: { page: string; }; }) {
+export default async function AdminActionsPage(context: {
+  searchParams: { page: string };
+}) {
   const page = parseInt(context.searchParams.page) || 1;
   const actionsData = await getAdminActions(page);
 
@@ -64,7 +77,7 @@ export default async function AdminActionsPage(context: { searchParams: { page: 
   };
 
   return (
-    <section className='md:my-6'>
+    <section className="md:my-6">
       {/* Header */}
       <div className="md:relative -z-10 mb-8">
         <H1
@@ -78,7 +91,7 @@ export default async function AdminActionsPage(context: { searchParams: { page: 
         <H1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }} 
+          transition={{ duration: 0.5, delay: 0.3 }}
           className="pl-2 text-2xl md:text-4xl font-bold border-l-8 border-orange-400 dark:text-white"
         >
           Admin Action Log
@@ -98,9 +111,15 @@ export default async function AdminActionsPage(context: { searchParams: { page: 
         <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white rounded-xl p-6 shadow-lg">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-indigo-100 text-sm font-medium">Total Actions</p>
-              <p className="text-3xl font-bold">{actionsData.meta.totalDocuments}</p>
-              <p className="text-indigo-100 text-xs mt-1">Administrative actions logged</p>
+              <p className="text-indigo-100 text-sm font-medium">
+                Total Actions
+              </p>
+              <p className="text-3xl font-bold">
+                {actionsData.meta.totalDocuments}
+              </p>
+              <p className="text-indigo-100 text-xs mt-1">
+                Administrative actions logged
+              </p>
             </div>
             <div className="bg-indigo-400/30 p-3 rounded-lg">
               <FaHistory className="text-2xl" />
@@ -111,9 +130,15 @@ export default async function AdminActionsPage(context: { searchParams: { page: 
         <div className="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl p-6 shadow-lg">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-purple-100 text-sm font-medium">Current Page</p>
-              <p className="text-3xl font-bold">{actionsData.meta.currentPage}</p>
-              <p className="text-purple-100 text-xs mt-1">of {actionsData.meta.totalPages} pages</p>
+              <p className="text-purple-100 text-sm font-medium">
+                Current Page
+              </p>
+              <p className="text-3xl font-bold">
+                {actionsData.meta.currentPage}
+              </p>
+              <p className="text-purple-100 text-xs mt-1">
+                of {actionsData.meta.totalPages} pages
+              </p>
             </div>
             <div className="bg-purple-400/30 p-3 rounded-lg">
               <FaHistory className="text-2xl" />
@@ -152,7 +177,10 @@ export default async function AdminActionsPage(context: { searchParams: { page: 
             </thead>
             <tbody className="bg-white dark:bg-slate-800 divide-y divide-gray-200 dark:divide-slate-600">
               {actionsData.data?.map((action: any) => (
-                <tr key={action._id} className="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors">
+                <tr
+                  key={action._id}
+                  className="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors"
+                >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center space-x-3">
                       <div className="flex-shrink-0">
@@ -182,7 +210,11 @@ export default async function AdminActionsPage(context: { searchParams: { page: 
                         ) : (
                           <div className="h-8 w-8 rounded-full bg-orange-500 flex items-center justify-center">
                             <span className="text-white font-medium text-xs">
-                              {(action.adminId?.name || action.adminId?.username)?.charAt(0)?.toUpperCase()}
+                              {(
+                                action.adminId?.name || action.adminId?.username
+                              )
+                                ?.charAt(0)
+                                ?.toUpperCase()}
                             </span>
                           </div>
                         )}
@@ -200,32 +232,45 @@ export default async function AdminActionsPage(context: { searchParams: { page: 
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                     {action.targetUserId ? (
                       <div>
-                        <div className="font-medium">{action.targetUserId.name || 'N/A'}</div>
-                        <div className="text-gray-500 dark:text-gray-400">@{action.targetUserId.username}</div>
+                        <div className="font-medium">
+                          {action.targetUserId.name || 'N/A'}
+                        </div>
+                        <div className="text-gray-500 dark:text-gray-400">
+                          @{action.targetUserId.username}
+                        </div>
                       </div>
                     ) : (
-                      <span className="text-gray-500 dark:text-gray-400">System</span>
+                      <span className="text-gray-500 dark:text-gray-400">
+                        System
+                      </span>
                     )}
                   </td>
                   <td className="px-6 py-4">
-                    <div className="text-sm text-gray-900 dark:text-gray-100 max-w-xs truncate" title={action.reason}>
+                    <div
+                      className="text-sm text-gray-900 dark:text-gray-100 max-w-xs truncate"
+                      title={action.reason}
+                    >
                       {action.reason || 'No reason provided'}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                     {new Date(action.createdAt).toLocaleDateString()} <br />
-                    <span className="text-xs">{new Date(action.createdAt).toLocaleTimeString()}</span>
+                    <span className="text-xs">
+                      {new Date(action.createdAt).toLocaleTimeString()}
+                    </span>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        
+
         {actionsData.data?.length === 0 && (
           <div className="text-center py-12">
             <FaHistory className="mx-auto h-12 w-12 text-gray-400" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No actions found</h3>
+            <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+              No actions found
+            </h3>
             <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
               No administrative actions have been logged yet.
             </p>

@@ -1,20 +1,20 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { useFormik } from "formik";
-import { RxCross1 } from "react-icons/rx";
-import { IoAdd } from "react-icons/io5";
-import { storage } from "@/util/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import Image from "next/image";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import { NewBlogSchema } from "@/yupSchema";
-import { Div } from "@/Components/Motion/Motion";
-import RichTextEditor from "@/Components/layout/RichTextEditor";
-import { useSession } from "next-auth/react";
-import { category } from "@/Components/Logic/Category";
-import DefaultUserProfile from "@/Components/layout/DefaultUserProfile";
+'use client';
+import React, { useState, useEffect } from 'react';
+import { useFormik } from 'formik';
+import { RxCross1 } from 'react-icons/rx';
+import { IoAdd } from 'react-icons/io5';
+import { storage } from '@/util/firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import Image from 'next/image';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { NewBlogSchema } from '@/yupSchema';
+import { Div } from '@/Components/Motion/Motion';
+import RichTextEditor from '@/Components/layout/RichTextEditor';
+import { useSession } from 'next-auth/react';
+import { category } from '@/Components/Logic/Category';
+import DefaultUserProfile from '@/Components/layout/DefaultUserProfile';
 
 interface Image {
   _id: string;
@@ -48,7 +48,7 @@ const NewBlogForm: React.FC = () => {
   const user = session?.user;
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [isDragging, setIsDragging] = useState(false);
-  const [keywordInput, setKeywordInput] = useState("");
+  const [keywordInput, setKeywordInput] = useState('');
   const [banStatus, setBanStatus] = useState<BanStatus | null>(null);
 
   useEffect(() => {
@@ -59,7 +59,9 @@ const NewBlogForm: React.FC = () => {
 
   const checkBanStatus = async () => {
     try {
-      const response = await fetch(`/api/user/ban-status?userId=${session?.user?.dbid}`);
+      const response = await fetch(
+        `/api/user/ban-status?userId=${session?.user?.dbid}`
+      );
       if (response.ok) {
         const data = await response.json();
         setBanStatus(data);
@@ -79,12 +81,12 @@ const NewBlogForm: React.FC = () => {
     setFieldValue,
   } = useFormik<BlogFormValues>({
     initialValues: {
-      title: "",
+      title: '',
       category: [],
-      info: "",
+      info: '',
       images: [],
-      detail: "",
-      status: "Select",
+      detail: '',
+      status: 'Select',
       keywords: [],
     },
     validationSchema: NewBlogSchema,
@@ -121,9 +123,9 @@ const NewBlogForm: React.FC = () => {
 
           // Make the POST request
           await fetch(`/api/blog`, {
-            method: "POST",
+            method: 'POST',
             headers: {
-              "Content-type": "application/json",
+              'Content-type': 'application/json',
             },
             body: JSON.stringify(data),
           });
@@ -133,7 +135,7 @@ const NewBlogForm: React.FC = () => {
           action.resetForm();
           router.back();
         } catch (error) {
-          console.error("Error posting data:", error);
+          console.error('Error posting data:', error);
           setDisabled(false);
 
           // Handle error as needed
@@ -141,16 +143,16 @@ const NewBlogForm: React.FC = () => {
       };
 
       toast.promise(postapi(), {
-        loading: "Posting Blog",
-        success: "Blog Posted Successfully",
-        error: " Failed Post",
+        loading: 'Posting Blog',
+        success: 'Blog Posted Successfully',
+        error: ' Failed Post',
       });
     },
   });
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    setFieldValue("images", [...values.images, ...files]);
+    setFieldValue('images', [...values.images, ...files]);
 
     // Display image previews
     const urls = files.map((file) => URL.createObjectURL(file));
@@ -161,7 +163,7 @@ const NewBlogForm: React.FC = () => {
     const updatedFiles = [...values.images];
     updatedFiles.splice(index, 1);
 
-    setFieldValue("images", updatedFiles);
+    setFieldValue('images', updatedFiles);
 
     const updatedUrls = [...imageUrls];
     updatedUrls.splice(index, 1);
@@ -187,7 +189,7 @@ const NewBlogForm: React.FC = () => {
     setIsDragging(false);
 
     const files = Array.from(e.dataTransfer.files || []);
-    setFieldValue("images", [...values.images, ...files]);
+    setFieldValue('images', [...values.images, ...files]);
 
     // Display image previews
     const urls = files.map((file) => URL.createObjectURL(file));
@@ -201,16 +203,16 @@ const NewBlogForm: React.FC = () => {
   };
 
   const handleKeywordAdd = () => {
-    if (keywordInput.trim() !== "") {
-      setKeywordInput("");
-      setFieldValue("keywords", [...values.keywords, keywordInput.trim()]);
+    if (keywordInput.trim() !== '') {
+      setKeywordInput('');
+      setFieldValue('keywords', [...values.keywords, keywordInput.trim()]);
     }
   };
 
   const handleDeleteKeyword = (index: number) => {
     const updatedKeywords = [...values.keywords];
     updatedKeywords.splice(index, 1);
-    setFieldValue("keywords", updatedKeywords);
+    setFieldValue('keywords', updatedKeywords);
   };
 
   // If user is banned, show disabled form
@@ -226,19 +228,20 @@ const NewBlogForm: React.FC = () => {
           <div className="mx-auto p-4 md:p-7 rounded-lg border shadow bg-gray-100 dark:bg-gray-800 dark:border-slate-500 dark:shadow-slate-600 opacity-50">
             <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
               <h3 className="font-bold text-lg mb-2">Account Banned</h3>
-              <p>Your account has been banned. You cannot create or edit blogs.</p>
+              <p>
+                Your account has been banned. You cannot create or edit blogs.
+              </p>
               {banStatus.banExpiry && (
                 <p className="text-sm mt-1">
-                  Ban expires: {new Date(banStatus.banExpiry).toLocaleDateString()}
+                  Ban expires:{' '}
+                  {new Date(banStatus.banExpiry).toLocaleDateString()}
                 </p>
               )}
               {banStatus.banReason && (
-                <p className="text-sm mt-1">
-                  Reason: {banStatus.banReason}
-                </p>
+                <p className="text-sm mt-1">Reason: {banStatus.banReason}</p>
               )}
             </div>
-            
+
             <div className="w-full inline-block">
               <input
                 type="text"
@@ -326,8 +329,8 @@ const NewBlogForm: React.FC = () => {
               onBlur={handleBlur}
               className={`outline ${
                 errors.title && touched.title
-                  ? " outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50"
-                  : " outline-transparent "
+                  ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50'
+                  : ' outline-transparent '
               } w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
             />
             {errors.title && touched.title ? (
@@ -341,16 +344,16 @@ const NewBlogForm: React.FC = () => {
             <div
               className={`border ${
                 errors.category && touched.category
-                  ? "  border-red-400 dark:border-red-600 placeholder-red-600/50"
-                  : " border-transparent "
+                  ? '  border-red-400 dark:border-red-600 placeholder-red-600/50'
+                  : ' border-transparent '
               } rounded bg-gray-100 dark:bg-gray-700 px-[14px] py-3`}
             >
               <label
                 htmlFor="category"
                 className={`${
                   errors.category && touched.category
-                    ? "text-red-400 dark:text-red-600 "
-                    : " text-gray-400  "
+                    ? 'text-red-400 dark:text-red-600 '
+                    : ' text-gray-400  '
                 } block font-medium mr-2`}
               >
                 Category:
@@ -390,8 +393,8 @@ const NewBlogForm: React.FC = () => {
               onBlur={handleBlur}
               className={`outline  resize-none ${
                 errors.info && touched.info
-                  ? " outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50"
-                  : " outline-transparent "
+                  ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50'
+                  : ' outline-transparent '
               } w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
             ></textarea>
             {errors.info && touched.info ? (
@@ -407,10 +410,10 @@ const NewBlogForm: React.FC = () => {
             <div
               className={`relative p-4 border-dashed  border-2 ${
                 isDragging
-                  ? "border-orange-400 bg-orange-400/10"
+                  ? 'border-orange-400 bg-orange-400/10'
                   : errors.images && touched.images
-                  ? "border-red-600 dark:border-red-500 bg-gray-100 dark:bg-gray-700 "
-                  : "border-gray-300 dark:border-gray-500 bg-gray-100 dark:bg-gray-700"
+                    ? 'border-red-600 dark:border-red-500 bg-gray-100 dark:bg-gray-700 '
+                    : 'border-gray-300 dark:border-gray-500 bg-gray-100 dark:bg-gray-700'
               } rounded-md cursor-pointer`}
               onDragOver={handleDragOver}
               onDragEnter={handleDragEnter}
@@ -430,15 +433,15 @@ const NewBlogForm: React.FC = () => {
                   htmlFor="images"
                   className={`text-sm ${
                     isDragging
-                      ? "text-orange-400"
+                      ? 'text-orange-400'
                       : errors.images && touched.images
-                      ? "text-red-600 dark:text-red-500"
-                      : "text-gray-600 dark:text-gray-200"
+                        ? 'text-red-600 dark:text-red-500'
+                        : 'text-gray-600 dark:text-gray-200'
                   } cursor-pointer`}
                 >
                   {isDragging
-                    ? "Drop your images here"
-                    : "Click / Drag & Drop to add images"}
+                    ? 'Drop your images here'
+                    : 'Click / Drag & Drop to add images'}
                 </label>
                 {imageUrls.length > 0 && (
                   <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
@@ -469,9 +472,9 @@ const NewBlogForm: React.FC = () => {
             </div>
             {errors.images && touched.images ? (
               <p className="text-red-600 dark:text-red-500 text-sm mb-1">
-                *{" "}
+                *{' '}
                 {Array.isArray(errors.images)
-                  ? errors.images.join(", ")
+                  ? errors.images.join(', ')
                   : errors.images}
               </p>
             ) : (
@@ -482,8 +485,8 @@ const NewBlogForm: React.FC = () => {
             <div
               className={`outline ${
                 errors.keywords && touched.keywords
-                  ? " outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50"
-                  : " outline-transparent "
+                  ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50'
+                  : ' outline-transparent '
               } w-full rounded-md bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
             >
               <div className="relative">
@@ -496,8 +499,8 @@ const NewBlogForm: React.FC = () => {
                   placeholder="Keywords"
                   className={`outline ${
                     errors.keywords && touched.keywords
-                      ? " outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50"
-                      : " outline-transparent "
+                      ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50'
+                      : ' outline-transparent '
                   } w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
                 />
                 <button
@@ -542,23 +545,23 @@ const NewBlogForm: React.FC = () => {
             <div
               className={`outline ${
                 errors.detail && touched.detail
-                  ? " outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50"
-                  : " outline-transparent "
+                  ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50'
+                  : ' outline-transparent '
               } w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
             >
               <label
                 htmlFor="detail"
                 className={`${
                   errors.detail && touched.detail
-                    ? "text-red-400 dark:text-red-600 "
-                    : " text-gray-400  "
+                    ? 'text-red-400 dark:text-red-600 '
+                    : ' text-gray-400  '
                 } block font-medium text-base mr-2`}
               >
                 Detail:
               </label>
               <RichTextEditor
                 value={values.detail}
-                onChange={(value) => setFieldValue("detail", value)}
+                onChange={(value) => setFieldValue('detail', value)}
               />
             </div>
             {errors.detail && touched.detail ? (
@@ -574,16 +577,16 @@ const NewBlogForm: React.FC = () => {
             <div
               className={`outline ${
                 errors.status && touched.status
-                  ? "outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50"
-                  : "outline-transparent"
+                  ? 'outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50'
+                  : 'outline-transparent'
               } flex items-center gap-2 w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
             >
               <label
                 htmlFor="ststus"
                 className={`${
                   errors.status && touched.status
-                    ? "text-red-400 dark:text-red-600 "
-                    : " text-gray-400  "
+                    ? 'text-red-400 dark:text-red-600 '
+                    : ' text-gray-400  '
                 } block font-medium mr-2`}
               >
                 Status:
@@ -613,13 +616,13 @@ const NewBlogForm: React.FC = () => {
           </div>
 
           <span className="flex items-center text-base font-semibold  text-orange-500 dark:text-orange-400/70 mx-5 mb-6">
-            Blog will be Post by :{" "}
+            Blog will be Post by :{' '}
             {user?.avatar ? (
               <Image
                 width={50}
                 height={50}
                 src={user?.avatar}
-                alt={user?.username || "user image"}
+                alt={user?.username || 'user image'}
                 className="ml-3 mr-1 w-7 h-7 rounded-full border border-orange-500"
               />
             ) : (
@@ -628,7 +631,7 @@ const NewBlogForm: React.FC = () => {
                 size={28}
                 className="ml-3 mr-1 w-7 h-7 rounded-full border border-orange-500"
               />
-            )}{" "}
+            )}{' '}
             {user?.username}
           </span>
 

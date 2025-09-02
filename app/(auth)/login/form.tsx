@@ -1,13 +1,13 @@
-"use client";
-import { useFormik } from "formik";
-import { FcGoogle } from "react-icons/fc";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import toast from "react-hot-toast";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { FaEye, FaEyeSlash, FaGithub } from "react-icons/fa";
-import { loginSchema } from "@/yupSchema";
+'use client';
+import { useFormik } from 'formik';
+import { FcGoogle } from 'react-icons/fc';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+import toast from 'react-hot-toast';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { FaEye, FaEyeSlash, FaGithub } from 'react-icons/fa';
+import { loginSchema } from '@/yupSchema';
 
 export default function LoginForm() {
   const [disabled, setDisabled] = useState(false);
@@ -17,7 +17,7 @@ export default function LoginForm() {
     userId: string;
     email: string;
   } | null>(null);
-  const [otpCode, setOtpCode] = useState("");
+  const [otpCode, setOtpCode] = useState('');
   const [resendCooldown, setResendCooldown] = useState(0);
   const [loginCredentials, setLoginCredentials] = useState<{
     email: string;
@@ -25,8 +25,8 @@ export default function LoginForm() {
   } | null>(null);
 
   const initialValues = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   };
   const router = useRouter();
 
@@ -35,7 +35,7 @@ export default function LoginForm() {
       initialValues,
       validationSchema: loginSchema,
       onSubmit: async (values, action) => {
-        console.log("Regular login form submitted");
+        console.log('Regular login form submitted');
         try {
           setDisabled(true);
 
@@ -46,7 +46,7 @@ export default function LoginForm() {
           });
 
           // First login attempt - check if 2FA is needed
-          const result = await signIn("credentials", {
+          const result = await signIn('credentials', {
             redirect: false,
             email: values.email,
             password: values.password,
@@ -55,15 +55,15 @@ export default function LoginForm() {
           if (result?.ok) {
             // Login successful without 2FA
             router.refresh();
-            router.push("/");
+            router.push('/');
             toast.success(`Logged in successfully with ${values.email}`);
-          } else if (result?.error === "2FA_REQUIRED") {
+          } else if (result?.error === '2FA_REQUIRED') {
             // 2FA is required, send OTP
             try {
-              const response = await fetch("/api/auth/login", {
-                method: "POST",
+              const response = await fetch('/api/auth/login', {
+                method: 'POST',
                 headers: {
-                  "Content-Type": "application/json",
+                  'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                   email: values.email,
@@ -76,20 +76,20 @@ export default function LoginForm() {
               if (data.requires2FA) {
                 setShow2FA(true);
                 setUserInfo({ userId: data.userId, email: data.email });
-                toast.success("Verification code sent to your email");
+                toast.success('Verification code sent to your email');
               } else {
-                toast.error("Failed to send verification code");
+                toast.error('Failed to send verification code');
               }
             } catch (error) {
-              console.error("Error sending OTP:", error);
-              toast.error("Failed to send verification code");
+              console.error('Error sending OTP:', error);
+              toast.error('Failed to send verification code');
             }
           } else {
-            toast.error(result?.error || "Invalid credentials");
+            toast.error(result?.error || 'Invalid credentials');
           }
         } catch (error) {
-          console.log("Login Failed:", error);
-          toast.error("Login failed");
+          console.log('Login Failed:', error);
+          toast.error('Login failed');
         }
         setDisabled(false);
         action.resetForm();
@@ -98,10 +98,10 @@ export default function LoginForm() {
 
   const handle2FASubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("2FA form submitted");
+    console.log('2FA form submitted');
 
     if (!loginCredentials || otpCode.length !== 6) {
-      toast.error("Please enter a valid 6-character verification code");
+      toast.error('Please enter a valid 6-character verification code');
       return;
     }
 
@@ -109,7 +109,7 @@ export default function LoginForm() {
       setDisabled(true);
 
       // 2FA verification attempt
-      const result = await signIn("credentials", {
+      const result = await signIn('credentials', {
         redirect: false,
         email: loginCredentials.email,
         password: loginCredentials.password,
@@ -118,18 +118,18 @@ export default function LoginForm() {
 
       if (result?.ok) {
         router.refresh();
-        router.push("/");
+        router.push('/');
         toast.success(`Logged in successfully with ${loginCredentials.email}`);
-      } else if (result?.error === "INVALID_OTP") {
-        toast.error("Invalid verification code");
-      } else if (result?.error === "EXPIRED_OTP") {
-        toast.error("Verification code has expired");
+      } else if (result?.error === 'INVALID_OTP') {
+        toast.error('Invalid verification code');
+      } else if (result?.error === 'EXPIRED_OTP') {
+        toast.error('Verification code has expired');
       } else {
-        toast.error("Verification failed");
+        toast.error('Verification failed');
       }
     } catch (error) {
-      console.log("2FA verification failed:", error);
-      toast.error("Verification failed");
+      console.log('2FA verification failed:', error);
+      toast.error('Verification failed');
     } finally {
       setDisabled(false);
     }
@@ -140,20 +140,20 @@ export default function LoginForm() {
 
     setDisabled(true);
     try {
-      const response = await fetch("/api/auth/2fa", {
-        method: "POST",
+      const response = await fetch('/api/auth/2fa', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           userId: userInfo.userId,
-          action: "send-otp",
+          action: 'send-otp',
         }),
       });
 
       const data = await response.json();
       if (response.ok) {
-        toast.success("New verification code sent");
+        toast.success('New verification code sent');
         setResendCooldown(60);
 
         // Start countdown
@@ -167,10 +167,10 @@ export default function LoginForm() {
           });
         }, 1000);
       } else {
-        toast.error(data.message || "Failed to send code");
+        toast.error(data.message || 'Failed to send code');
       }
     } catch (error) {
-      toast.error("Failed to send verification code");
+      toast.error('Failed to send verification code');
     } finally {
       setDisabled(false);
     }
@@ -179,7 +179,7 @@ export default function LoginForm() {
   const handleBack = () => {
     setShow2FA(false);
     setUserInfo(null);
-    setOtpCode("");
+    setOtpCode('');
     setResendCooldown(0);
     setLoginCredentials(null);
   };
@@ -204,8 +204,8 @@ export default function LoginForm() {
                 onBlur={handleBlur}
                 className={`outline ${
                   errors.email && touched.email
-                    ? " outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50"
-                    : " outline-transparent "
+                    ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50'
+                    : ' outline-transparent '
                 } w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
               />
               {errors.email && touched.email ? (
@@ -215,7 +215,7 @@ export default function LoginForm() {
             <div className="w-[85vw] md:w-[450px] h-14">
               <div className="relative">
                 <input
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   placeholder="Password"
                   name="password"
                   value={values.password}
@@ -223,8 +223,8 @@ export default function LoginForm() {
                   onBlur={handleBlur}
                   className={`outline ${
                     errors.password && touched.password
-                      ? " outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50"
-                      : " outline-transparent "
+                      ? ' outline-1 outline-red-400 dark:outline-red-600 placeholder-red-600/50'
+                      : ' outline-transparent '
                   } w-full rounded-md py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm focus:ring-2 ring-orange-500 focus:outline-none`}
                 />
                 <div
@@ -261,14 +261,14 @@ export default function LoginForm() {
           <div className="md:w-[450px] text-center">OR</div>
           <div className="md:w-[450px] mb-8 mt-2 grid grid-cols-2 gap-3 ">
             <button
-              onClick={() => signIn("google", { callbackUrl: "/authlogin" })}
+              onClick={() => signIn('google', { callbackUrl: '/authlogin' })}
               className="text-black bg-slate-200 hover:opacity-50 border border-slate-500 font-semibold rounded-md text-sm px-4 py-3 w-full flex gap-2 items-center justify-center"
             >
-              Login With{" "}
+              Login With{' '}
               <FcGoogle size={20} className="bg-white rounded-full" />
             </button>
             <button
-              onClick={() => signIn("github", { callbackUrl: "/authlogin" })}
+              onClick={() => signIn('github', { callbackUrl: '/authlogin' })}
               className="text-white bg-slate-600 hover:opacity-50 font-semibold rounded-md text-sm px-4 py-3 w-full flex gap-2 items-center justify-center"
             >
               Login With
@@ -329,7 +329,7 @@ export default function LoginForm() {
             >
               {resendCooldown > 0
                 ? `Resend code in ${resendCooldown}s`
-                : "Resend verification code"}
+                : 'Resend verification code'}
             </button>
             <br />
             <button

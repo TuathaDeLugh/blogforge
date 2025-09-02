@@ -44,6 +44,7 @@ Here are some of the key features of BlogForge:
 3. **Setup `.env` file**:
 
    Create a `.env` file in the root directory with the following environment variables:
+
    ```
    API_URL = 'http://localhost:3000/'
    MONGO_URI = 'MongoDB URL'

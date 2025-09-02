@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect, useMemo } from "react";
-import { useSession } from "next-auth/react";
-import { Div, H1 } from "@/Components/Motion/Motion";
-import { FaEye, FaHeart, FaShare, FaComment, FaFileAlt } from "react-icons/fa";
-import { WriterAnalyticsSkeleton } from "@/Components/Analytics/SkeletonLoader";
-import Link from "next/link";
-import { getUserAnalytics } from "@/controllers/analytics";
+import React, { useState, useEffect, useMemo } from 'react';
+import { useSession } from 'next-auth/react';
+import { Div, H1 } from '@/Components/Motion/Motion';
+import { FaEye, FaHeart, FaShare, FaComment, FaFileAlt } from 'react-icons/fa';
+import { WriterAnalyticsSkeleton } from '@/Components/Analytics/SkeletonLoader';
+import Link from 'next/link';
+import { getUserAnalytics } from '@/controllers/analytics';
 
 // Safe utility functions to prevent hydration errors
 const formatNumber = (num: number): string => {
-  if (typeof num !== "number" || isNaN(num)) return "0";
+  if (typeof num !== 'number' || isNaN(num)) return '0';
   if (num >= 1000000) {
-    return (num / 1000000).toFixed(1) + "M";
+    return (num / 1000000).toFixed(1) + 'M';
   } else if (num >= 1000) {
-    return (num / 1000).toFixed(1) + "K";
+    return (num / 1000).toFixed(1) + 'K';
   }
   return num.toString();
 };
@@ -50,7 +50,6 @@ interface WriterAnalytics {
   avgEngagementRate: number;
   blogs: BlogData[];
 }
-
 
 // Error component
 const ErrorMessage = ({ message }: { message: string }) => (
@@ -109,13 +108,13 @@ export default function WriterAnalyticsPage() {
       setLoading(true);
       setError(null);
 
-      const userid = session?.user?.dbid || "";
+      const userid = session?.user?.dbid || '';
       const data = await getUserAnalytics(userid);
       setAnalytics(data);
     } catch (error) {
-      console.error("Error fetching writer analytics:", error);
+      console.error('Error fetching writer analytics:', error);
       setError(
-        error instanceof Error ? error.message : "Failed to load analytics data"
+        error instanceof Error ? error.message : 'Failed to load analytics data'
       );
       setAnalytics(null);
     } finally {
@@ -128,7 +127,7 @@ export default function WriterAnalyticsPage() {
     if (!analytics) return null;
 
     return {
-      userId: analytics.userId || "",
+      userId: analytics.userId || '',
       totalBlogs: analytics.totalBlogs || 0,
       totalViews: analytics.totalViews || 0,
       totalSaves: analytics.totalSaves || 0,
@@ -334,7 +333,7 @@ export default function WriterAnalyticsPage() {
             </h2>
             <div className="space-y-3">
               <h3 className="font-bold text-lg">
-                {topBlog.title || "Untitled"}
+                {topBlog.title || 'Untitled'}
               </h3>
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center">
@@ -419,7 +418,7 @@ export default function WriterAnalyticsPage() {
                           href={`/blogs/${blog._id}`}
                           className="text-blue-500 hover:underline font-medium"
                         >
-                          {blog.title || "Untitled"}
+                          {blog.title || 'Untitled'}
                         </Link>
                       </td>
                       <td className="py-3 px-4 border-b dark:border-slate-600 text-center font-semibold text-purple-600">
@@ -438,10 +437,10 @@ export default function WriterAnalyticsPage() {
                         <span
                           className={`font-semibold ${
                             engagementRate > 5
-                              ? "text-green-600"
+                              ? 'text-green-600'
                               : engagementRate > 2
-                              ? "text-yellow-600"
-                              : "text-red-600"
+                                ? 'text-yellow-600'
+                                : 'text-red-600'
                           }`}
                         >
                           {engagementRate.toFixed(1)}%
@@ -450,7 +449,7 @@ export default function WriterAnalyticsPage() {
                       <td className="py-3 px-4 border-b dark:border-slate-600 text-center text-sm text-gray-500">
                         {blog.createdAt
                           ? new Date(blog.createdAt).toLocaleDateString()
-                          : "Unknown"}
+                          : 'Unknown'}
                       </td>
                     </tr>
                   );

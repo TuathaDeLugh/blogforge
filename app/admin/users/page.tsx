@@ -4,16 +4,18 @@ import RoleBtn from '@/Components/RoleDropdown';
 import { getAllUsers, getAdminCount } from '@/controllers/user';
 import DeleteUserButton from '@/Components/Admin/DeleteUserButton';
 import UserManagementActions from '@/Components/Admin/UserManagementActions';
-import React, { Suspense } from 'react'
-import { FaUsers, FaUserShield } from 'react-icons/fa'
-import Image from 'next/image'
+import React, { Suspense } from 'react';
+import { FaUsers, FaUserShield } from 'react-icons/fa';
+import Image from 'next/image';
 
-export default async function AdminUsers(context: { searchParams: { page: string; }; }) {
+export default async function AdminUsers(context: {
+  searchParams: { page: string };
+}) {
   const users = await getAllUsers(parseInt(context.searchParams.page));
   const adminCount = await getAdminCount();
   let i = 1;
   return (
-    <section className='md:my-6'>
+    <section className="md:my-6">
       {/* Header */}
       <div className="md:relative -z-10 mb-8">
         <H1
@@ -27,7 +29,7 @@ export default async function AdminUsers(context: { searchParams: { page: string
         <H1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }} 
+          transition={{ duration: 0.5, delay: 0.3 }}
           className="pl-2 text-2xl md:text-4xl font-bold border-l-8 border-orange-400 dark:text-white"
         >
           User Management
@@ -59,7 +61,9 @@ export default async function AdminUsers(context: { searchParams: { page: string
             <div>
               <p className="text-green-100 text-sm font-medium">Current Page</p>
               <p className="text-3xl font-bold">{users.meta.currentPage}</p>
-              <p className="text-green-100 text-xs mt-1">of {users.meta.totalPages} pages</p>
+              <p className="text-green-100 text-xs mt-1">
+                of {users.meta.totalPages} pages
+              </p>
             </div>
             <div className="bg-green-400/30 p-3 rounded-lg">
               <FaUsers className="text-2xl" />
@@ -70,7 +74,9 @@ export default async function AdminUsers(context: { searchParams: { page: string
         <div className="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl p-6 shadow-lg">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-purple-100 text-sm font-medium">Total Admins</p>
+              <p className="text-purple-100 text-sm font-medium">
+                Total Admins
+              </p>
               <p className="text-3xl font-bold">{adminCount}</p>
               <p className="text-purple-100 text-xs mt-1">Admin users</p>
             </div>
@@ -80,7 +86,7 @@ export default async function AdminUsers(context: { searchParams: { page: string
           </div>
         </div>
       </Div>
-  {/* Enhanced Users Table */}
+      {/* Enhanced Users Table */}
       <Div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -117,8 +123,13 @@ export default async function AdminUsers(context: { searchParams: { page: string
             <tbody className="bg-white dark:bg-slate-800 divide-y divide-gray-200 dark:divide-slate-600">
               {users.data?.map((user: any) => {
                 return (
-                  <tr key={user._id} className="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors">
-                    <Suspense fallback={<td className="px-6 py-4">Loading...</td>}>
+                  <tr
+                    key={user._id}
+                    className="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors"
+                  >
+                    <Suspense
+                      fallback={<td className="px-6 py-4">Loading...</td>}
+                    >
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                         {i++}
                       </td>
@@ -136,7 +147,9 @@ export default async function AdminUsers(context: { searchParams: { page: string
                             ) : (
                               <div className="h-10 w-10 rounded-full bg-orange-500 flex items-center justify-center">
                                 <span className="text-white font-medium text-sm">
-                                  {(user.name || user.username)?.charAt(0)?.toUpperCase()}
+                                  {(user.name || user.username)
+                                    ?.charAt(0)
+                                    ?.toUpperCase()}
                                 </span>
                               </div>
                             )}
@@ -155,21 +168,29 @@ export default async function AdminUsers(context: { searchParams: { page: string
                         {user.email}
                       </td>
                       <td className="hidden lg:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                        {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}
+                        {user.createdAt
+                          ? new Date(user.createdAt).toLocaleDateString()
+                          : 'N/A'}
                       </td>
                       <td className="px-6 py-4">
                         <RoleBtn user={user} />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex flex-col space-y-1">
-                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                            user.isBanned 
-                              ? 'bg-red-100 text-red-800 dark:bg-red-800/20 dark:text-red-400'
-                              : user.isActive !== false 
-                                ? 'bg-green-100 text-green-800 dark:bg-green-800/20 dark:text-green-400'
-                                : 'bg-gray-100 text-gray-800 dark:bg-gray-800/20 dark:text-gray-400'
-                          }`}>
-                            {user.isBanned ? 'Banned' : user.isActive !== false ? 'Active' : 'Inactive'}
+                          <span
+                            className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                              user.isBanned
+                                ? 'bg-red-100 text-red-800 dark:bg-red-800/20 dark:text-red-400'
+                                : user.isActive !== false
+                                  ? 'bg-green-100 text-green-800 dark:bg-green-800/20 dark:text-green-400'
+                                  : 'bg-gray-100 text-gray-800 dark:bg-gray-800/20 dark:text-gray-400'
+                            }`}
+                          >
+                            {user.isBanned
+                              ? 'Banned'
+                              : user.isActive !== false
+                                ? 'Active'
+                                : 'Inactive'}
                           </span>
                           {user.commentBanned && (
                             <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-orange-100 text-orange-800 dark:bg-orange-800/20 dark:text-orange-400">
@@ -181,18 +202,22 @@ export default async function AdminUsers(context: { searchParams: { page: string
                       <td className="px-6 py-4 text-sm font-medium">
                         <div className="flex items-center space-x-2">
                           <UserManagementActions user={user} />
-                          <DeleteUserButton userId={user._id} username={user.username} userEmail={user.email} />
+                          <DeleteUserButton
+                            userId={user._id}
+                            username={user.username}
+                            userEmail={user.email}
+                          />
                         </div>
                       </td>
                     </Suspense>
                   </tr>
-                )
+                );
               })}
             </tbody>
           </table>
         </div>
       </Div>
-      <Pagination pagedata={users.meta}/>
-</section>
-  )
+      <Pagination pagedata={users.meta} />
+    </section>
+  );
 }

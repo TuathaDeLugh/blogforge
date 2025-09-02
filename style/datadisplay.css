@@ -1,25 +1,25 @@
-.data blockquote{
-    display: block;
-    border:solid;
-    border:0;
-    padding-left: 1rem;
-    border-left: 0.3rem solid rgb(255, 132, 59);
-    font-size: large;
-    margin-bottom: 5px;
-    margin-top: 5px;
-  }
-  .data h3{
-    color: rgb(255, 132, 59);
-    margin: 1rem 0 1rem 0 ;
-    font-size: large;
-    font-weight: 450;
-  }
-  .data h2{
-    color: rgb(255, 132, 59);
-    margin: 1rem 0 1rem 0 ;
-    font-size: larger;
-    font-weight: 450;
-  }
-  .data p{
-    margin: 0.4rem 0 0.4rem 0 ;
-  }
+.data blockquote {
+  display: block;
+  border: solid;
+  border: 0;
+  padding-left: 1rem;
+  border-left: 0.3rem solid rgb(255, 132, 59);
+  font-size: large;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+.data h3 {
+  color: rgb(255, 132, 59);
+  margin: 1rem 0 1rem 0;
+  font-size: large;
+  font-weight: 450;
+}
+.data h2 {
+  color: rgb(255, 132, 59);
+  margin: 1rem 0 1rem 0;
+  font-size: larger;
+  font-weight: 450;
+}
+.data p {
+  margin: 0.4rem 0 0.4rem 0;
+}

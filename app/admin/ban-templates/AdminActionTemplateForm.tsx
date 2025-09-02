@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import toast from 'react-hot-toast';
@@ -8,7 +8,11 @@ interface AdminActionTemplate {
   _id: string;
   name: string;
   description: string;
-  actionType: 'account_ban' | 'comment_ban' | 'username_change' | 'delete_account';
+  actionType:
+    | 'account_ban'
+    | 'comment_ban'
+    | 'username_change'
+    | 'delete_account';
   duration: number | null;
   reason: string;
   isActive: boolean;
@@ -20,7 +24,10 @@ interface AdminActionTemplateFormProps {
   onClose: () => void;
 }
 
-export default function AdminActionTemplateForm({ template, onClose }: AdminActionTemplateFormProps) {
+export default function AdminActionTemplateForm({
+  template,
+  onClose,
+}: AdminActionTemplateFormProps) {
   const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
@@ -35,38 +42,41 @@ export default function AdminActionTemplateForm({ template, onClose }: AdminActi
     },
     validate: (values) => {
       const errors: any = {};
-      
+
       if (!values.name.trim()) {
         errors.name = 'Template name is required';
       }
-      
+
       if (!values.description.trim()) {
         errors.description = 'Description is required';
       }
-      
+
       if (!values.reason.trim()) {
         errors.reason = 'Reason is required';
       }
-      
-      if (values.duration && (isNaN(Number(values.duration)) || Number(values.duration) <= 0)) {
+
+      if (
+        values.duration &&
+        (isNaN(Number(values.duration)) || Number(values.duration) <= 0)
+      ) {
         errors.duration = 'Duration must be a positive number';
       }
-      
+
       return errors;
     },
     onSubmit: async (values) => {
       setLoading(true);
-      
+
       try {
         const payload = {
           ...values,
           duration: values.duration ? Number(values.duration) : null,
         };
 
-        const url = template 
+        const url = template
           ? `/api/admin/action-templates/${template._id}`
           : '/api/admin/action-templates';
-        
+
         const method = template ? 'PUT' : 'POST';
 
         const response = await fetch(url, {
@@ -80,7 +90,11 @@ export default function AdminActionTemplateForm({ template, onClose }: AdminActi
         const data = await response.json();
 
         if (data.success) {
-          toast.success(template ? 'Template updated successfully' : 'Template created successfully');
+          toast.success(
+            template
+              ? 'Template updated successfully'
+              : 'Template created successfully'
+          );
           onClose();
         } else {
           toast.error(data.message || 'Failed to save template');
@@ -93,7 +107,9 @@ export default function AdminActionTemplateForm({ template, onClose }: AdminActi
     },
   });
 
-  const showDurationField = formik.values.actionType === 'account_ban' || formik.values.actionType === 'comment_ban';
+  const showDurationField =
+    formik.values.actionType === 'account_ban' ||
+    formik.values.actionType === 'comment_ban';
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -101,7 +117,9 @@ export default function AdminActionTemplateForm({ template, onClose }: AdminActi
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-            {template ? 'Edit Admin Action Template' : 'Create New Admin Action Template'}
+            {template
+              ? 'Edit Admin Action Template'
+              : 'Create New Admin Action Template'}
           </h2>
           <button
             onClick={onClose}
@@ -147,7 +165,9 @@ export default function AdminActionTemplateForm({ template, onClose }: AdminActi
               placeholder="Brief description of when to use this template"
             />
             {formik.touched.description && formik.errors.description && (
-              <p className="text-red-500 text-sm mt-1">{formik.errors.description}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {formik.errors.description}
+              </p>
             )}
           </div>
 
@@ -205,10 +225,13 @@ export default function AdminActionTemplateForm({ template, onClose }: AdminActi
                 placeholder="Leave empty for permanent ban"
               />
               <p className="text-sm text-gray-500 mt-1">
-                Leave empty for permanent ban. Examples: 24 (1 day), 168 (1 week), 720 (1 month)
+                Leave empty for permanent ban. Examples: 24 (1 day), 168 (1
+                week), 720 (1 month)
               </p>
               {formik.touched.duration && formik.errors.duration && (
-                <p className="text-red-500 text-sm mt-1">{formik.errors.duration}</p>
+                <p className="text-red-500 text-sm mt-1">
+                  {formik.errors.duration}
+                </p>
               )}
             </div>
           )}
@@ -228,7 +251,9 @@ export default function AdminActionTemplateForm({ template, onClose }: AdminActi
               placeholder="Detailed reason that will be shown to the user"
             />
             {formik.touched.reason && formik.errors.reason && (
-              <p className="text-red-500 text-sm mt-1">{formik.errors.reason}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {formik.errors.reason}
+              </p>
             )}
           </div>
 

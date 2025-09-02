@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import React, { useEffect, useState } from 'react';
 import { Div, H1 } from '@/Components/Motion/Motion';
 import { signOut, useSession } from 'next-auth/react';
@@ -8,26 +8,28 @@ import { useRouter } from 'next/navigation';
 
 export default function DeleteAccount() {
   const router = useRouter();
-  const { data: session} = useSession();
+  const { data: session } = useSession();
   const [disabled, setDisabled] = useState(false);
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState('');
 
   const handleDeleteAccount = async () => {
     try {
       setDisabled(true);
       const response = await fetch(`/api/user?token=${token}`, {
-        method: "DELETE",
+        method: 'DELETE',
       });
 
       if (response && response.status === 200) {
-        toast.success("Account Successfully Deleted");
+        toast.success('Account Successfully Deleted');
         if (session) {
-            signOut({ callbackUrl: '/' });
+          signOut({ callbackUrl: '/' });
         } else {
-          router.push("/");
+          router.push('/');
         }
       } else {
-        toast.error('Failed to delete account. The token might be expired, you can request a new one.');
+        toast.error(
+          'Failed to delete account. The token might be expired, you can request a new one.'
+        );
       }
     } catch (error) {
       console.error(error);
@@ -50,9 +52,7 @@ export default function DeleteAccount() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div
-          className="mx-auto p-5 md:p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 min-h-[400px]"
-        >
+        <div className="mx-auto p-5 md:p-7 rounded-lg border shadow bg-white dark:bg-gray-900 dark:border-slate-500 dark:shadow-slate-600 min-h-[400px]">
           <div className="relative mt-5 md:mt-10 mb-16">
             <H1
               initial={{ opacity: 0, x: -20 }}
@@ -72,23 +72,27 @@ export default function DeleteAccount() {
             </H1>
           </div>
 
-          <Div className="text-center space-y-6"
+          <Div
+            className="text-center space-y-6"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}>
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
             <p>
-              We&apos;re sorry to see you go! Before you delete your account, consider the benefits of staying with us:
+              We&apos;re sorry to see you go! Before you delete your account,
+              consider the benefits of staying with us:
             </p>
             <ul className="list-disc list-inside text-justify mx-auto max-w-[30rem]">
-  <li>You will no longer be able to add new blogs</li>
-  <li>You will lose the ability to comment on blogs</li>
-  <li>Your created blogs will be transferred to admin</li>
-  <li>You will no longer be able to save blogs to your list</li>
-  <li>All your current saved blogs and preferences will be lost</li>
-  <li>Rejoining will require a new account creation and setup</li>
-</ul>
+              <li>You will no longer be able to add new blogs</li>
+              <li>You will lose the ability to comment on blogs</li>
+              <li>Your created blogs will be transferred to admin</li>
+              <li>You will no longer be able to save blogs to your list</li>
+              <li>All your current saved blogs and preferences will be lost</li>
+              <li>Rejoining will require a new account creation and setup</li>
+            </ul>
             <p>
-              If you&apos;re sure you want to delete your account, click the button below.
+              If you&apos;re sure you want to delete your account, click the
+              button below.
             </p>
             <div className="text-center flex items-center justify-center">
               <button
@@ -98,12 +102,16 @@ export default function DeleteAccount() {
               >
                 Delete Account
                 {disabled && (
-                  <AiOutlineLoading3Quarters size={20} className='animate-spin' />
+                  <AiOutlineLoading3Quarters
+                    size={20}
+                    className="animate-spin"
+                  />
                 )}
               </button>
             </div>
-            <p className='text-sm'>
-              After deleting your account, you will be redirected to the home page.
+            <p className="text-sm">
+              After deleting your account, you will be redirected to the home
+              page.
             </p>
           </Div>
         </div>
@@ -111,7 +119,8 @@ export default function DeleteAccount() {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="absolute -z-10 hidden w-full h-full bg-red-400/50 rounded-md -bottom-3 -right-3 md:block"></Div>
+          className="absolute -z-10 hidden w-full h-full bg-red-400/50 rounded-md -bottom-3 -right-3 md:block"
+        ></Div>
       </Div>
     </div>
   );

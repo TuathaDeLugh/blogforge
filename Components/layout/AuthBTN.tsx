@@ -1,5 +1,5 @@
-"use client";
-import Link from "next/link";
+'use client';
+import Link from 'next/link';
 import {
   AiOutlineUser,
   AiOutlineLogin,
@@ -8,14 +8,14 @@ import {
   AiOutlineStar,
   AiOutlineTool,
   AiOutlineCheckCircle,
-} from "react-icons/ai";
-import { FaChartLine } from "react-icons/fa";
-import { FaSignOutAlt } from "react-icons/fa";
-import React, { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
-import DefaultUserProfile from "./DefaultUserProfile";
+} from 'react-icons/ai';
+import { FaChartLine } from 'react-icons/fa';
+import { FaSignOutAlt } from 'react-icons/fa';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { signOut, useSession } from 'next-auth/react';
+import Image from 'next/image';
+import DefaultUserProfile from './DefaultUserProfile';
 
 const AuthLinks = () => {
   const { data: session } = useSession();
@@ -32,37 +32,37 @@ const AuthLinks = () => {
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener('mousedown', handleOutsideClick);
 
     return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, []);
 
   let dropdata = [
-    { name: "Login", path: "/login", icon: AiOutlineLogin, key: 1 },
-    { name: "Register", path: "/register", icon: AiOutlineUserAdd, key: 2 },
+    { name: 'Login', path: '/login', icon: AiOutlineLogin, key: 1 },
+    { name: 'Register', path: '/register', icon: AiOutlineUserAdd, key: 2 },
   ];
 
   if (session?.user && session.user.dbid) {
     if (session.user.isVerified) {
       dropdata = [
-        { name: "Profile", path: "/user", icon: AiOutlineUser, key: 1 },
+        { name: 'Profile', path: '/user', icon: AiOutlineUser, key: 1 },
         {
-          name: "My Blog",
-          path: "/user/blog/tab",
+          name: 'My Blog',
+          path: '/user/blog/tab',
           icon: AiOutlineHome,
           key: 2,
         },
         {
-          name: "Analytics",
-          path: "/writer/analytics",
+          name: 'Analytics',
+          path: '/writer/analytics',
           icon: FaChartLine,
           key: 3,
         },
         {
-          name: "Saved Blog",
-          path: "/user/savedblog",
+          name: 'Saved Blog',
+          path: '/user/savedblog',
           icon: AiOutlineStar,
           key: 4,
         },
@@ -70,23 +70,23 @@ const AuthLinks = () => {
 
       if (session?.user?.isAdmin) {
         dropdata = [
-          { name: "Admin Panel", path: "/admin", icon: AiOutlineTool, key: 1 },
-          { name: "Profile", path: "/user", icon: AiOutlineUser, key: 2 },
+          { name: 'Admin Panel', path: '/admin', icon: AiOutlineTool, key: 1 },
+          { name: 'Profile', path: '/user', icon: AiOutlineUser, key: 2 },
           {
-            name: "My Blog",
-            path: "/user/blog/tab",
+            name: 'My Blog',
+            path: '/user/blog/tab',
             icon: AiOutlineHome,
             key: 3,
           },
           {
-            name: "Analytics",
-            path: "/writer/analytics",
+            name: 'Analytics',
+            path: '/writer/analytics',
             icon: FaChartLine,
             key: 4,
           },
           {
-            name: "Saved Blog",
-            path: "/user/savedblog",
+            name: 'Saved Blog',
+            path: '/user/savedblog',
             icon: AiOutlineStar,
             key: 5,
           },
@@ -95,8 +95,8 @@ const AuthLinks = () => {
     } else {
       dropdata = [
         {
-          name: "Verify Email",
-          path: "/verifyemail/request",
+          name: 'Verify Email',
+          path: '/verifyemail/request',
           icon: AiOutlineCheckCircle,
           key: 1,
         },
@@ -110,7 +110,7 @@ const AuthLinks = () => {
         onClick={() => setOpen(!open)}
         className="border border-gray-300 dark:border-gray-500 rounded-full m-1 p-[1px]"
         whileTap={{ scale: 0.9 }}
-        transition={{ type: "spring", stiffness: 300 }}
+        transition={{ type: 'spring', stiffness: 300 }}
       >
         {session?.user?.avatar ? (
           <Image
@@ -163,7 +163,7 @@ const AuthLinks = () => {
                 whileHover={{ scale: 1.05 }}
                 className="rounded-lg text-red-400 border border-red-400 p-1 m-2 text-center hover:bg-red-400 hover:text-slate-50 md:dark:hover:text-slate-200"
               >
-                <button onClick={() => signOut({ callbackUrl: "/" })}>
+                <button onClick={() => signOut({ callbackUrl: '/' })}>
                   <FaSignOutAlt className="inline-block mr-2" /> Log Out
                 </button>
               </motion.li>

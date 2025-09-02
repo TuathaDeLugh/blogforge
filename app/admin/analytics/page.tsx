@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect, useMemo } from "react";
-import { Div, H1 } from "@/Components/Motion/Motion";
+import React, { useState, useEffect, useMemo } from 'react';
+import { Div, H1 } from '@/Components/Motion/Motion';
 import {
   FaEye,
   FaHeart,
@@ -11,16 +11,16 @@ import {
   FaFileAlt,
   FaAngleDoubleUp,
   FaAngleDoubleDown,
-} from "react-icons/fa";
-import { AdminAnalyticsSkeleton } from "@/Components/Analytics/SkeletonLoader";
-import { getAdminAnalytics } from "@/controllers/analytics";
+} from 'react-icons/fa';
+import { AdminAnalyticsSkeleton } from '@/Components/Analytics/SkeletonLoader';
+import { getAdminAnalytics } from '@/controllers/analytics';
 
 const formatNumber = (num: number): string => {
-  if (typeof num !== "number" || isNaN(num)) return "0";
+  if (typeof num !== 'number' || isNaN(num)) return '0';
   if (num >= 1000000) {
-    return (num / 1000000).toFixed(1) + "M";
+    return (num / 1000000).toFixed(1) + 'M';
   } else if (num >= 1000) {
-    return (num / 1000).toFixed(1) + "K";
+    return (num / 1000).toFixed(1) + 'K';
   }
   return num.toString();
 };
@@ -129,9 +129,9 @@ export default function AnalyticsPage() {
       const data = await getAdminAnalytics(period);
       setAnalytics(data);
     } catch (error) {
-      console.error("Error fetching analytics:", error);
+      console.error('Error fetching analytics:', error);
       setError(
-        error instanceof Error ? error.message : "Failed to load analytics data"
+        error instanceof Error ? error.message : 'Failed to load analytics data'
       );
       setAnalytics(null);
     } finally {
@@ -219,8 +219,8 @@ export default function AnalyticsPage() {
             onClick={() => setPeriod(days)}
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               period === days
-                ? "bg-orange-500 text-white"
-                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
+                ? 'bg-orange-500 text-white'
+                : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
             }`}
           >
             {days} Days
@@ -253,8 +253,8 @@ export default function AnalyticsPage() {
                 <span
                   className={`text-sm ${
                     overview.userGrowthRate >= 0
-                      ? "text-green-500"
-                      : "text-red-500"
+                      ? 'text-green-500'
+                      : 'text-red-500'
                   }`}
                 >
                   {overview.userGrowthRate.toFixed(1)}%
@@ -283,8 +283,8 @@ export default function AnalyticsPage() {
                 <span
                   className={`text-sm ${
                     overview.blogGrowthRate >= 0
-                      ? "text-green-500"
-                      : "text-red-500"
+                      ? 'text-green-500'
+                      : 'text-red-500'
                   }`}
                 >
                   {overview.blogGrowthRate.toFixed(1)}%
@@ -403,10 +403,10 @@ export default function AnalyticsPage() {
                 >
                   <div className="flex-1">
                     <p className="font-medium text-sm truncate">
-                      {blog.title || "Untitled"}
+                      {blog.title || 'Untitled'}
                     </p>
                     <p className="text-xs text-gray-500">
-                      by {blog.creator?.username || "Unknown"}
+                      by {blog.creator?.username || 'Unknown'}
                     </p>
                   </div>
                   <div className="text-right">
@@ -448,7 +448,7 @@ export default function AnalyticsPage() {
                     </div>
                     <div>
                       <p className="font-medium text-sm">
-                        {writer.username || "Unknown"}
+                        {writer.username || 'Unknown'}
                       </p>
                       <p className="text-xs text-gray-500">
                         {writer.totalBlogs || 0} blogs
@@ -490,7 +490,7 @@ export default function AnalyticsPage() {
                 className="bg-gray-50 dark:bg-slate-700 p-4 rounded-lg text-center"
               >
                 <h3 className="font-bold text-lg">
-                  {category._id || "Unknown"}
+                  {category._id || 'Unknown'}
                 </h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   {category.count || 0} posts

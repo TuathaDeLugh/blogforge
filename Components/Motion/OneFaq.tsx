@@ -1,18 +1,18 @@
-"use client"
+'use client';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { IoMdArrowDropdown } from 'react-icons/io';
 
 interface FAQProps {
-    faq: {
-      _id: string;
-      title: string;
-      info: string;
-    };
-    index:number
-  }
+  faq: {
+    _id: string;
+    title: string;
+    info: string;
+  };
+  index: number;
+}
 
-const OneFaQ: React.FC<FAQProps> = ({ faq,index }) => {
+const OneFaQ: React.FC<FAQProps> = ({ faq, index }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -24,8 +24,15 @@ const OneFaQ: React.FC<FAQProps> = ({ faq,index }) => {
       onClick={() => setIsOpen(!isOpen)}
     >
       <div className="flex justify-between items-center">
-      <h3 className={`text-xl font-semibold ${index%2 ? "text-orange-500 dark:orange-400" : ""} `}>{faq.title}</h3>
-      <IoMdArrowDropdown className={`duration-300 ease-in-out ${isOpen ? ' rotate-180 ' : 'rotate-0'}  w-10 ${index%2 ? "text-orange-500 dark:orange-400" : ""} `} size={25} />
+        <h3
+          className={`text-xl font-semibold ${index % 2 ? 'text-orange-500 dark:orange-400' : ''} `}
+        >
+          {faq.title}
+        </h3>
+        <IoMdArrowDropdown
+          className={`duration-300 ease-in-out ${isOpen ? ' rotate-180 ' : 'rotate-0'}  w-10 ${index % 2 ? 'text-orange-500 dark:orange-400' : ''} `}
+          size={25}
+        />
       </div>
       <motion.div
         initial={{ height: 0, opacity: 0 }}
@@ -39,4 +46,4 @@ const OneFaQ: React.FC<FAQProps> = ({ faq,index }) => {
   );
 };
 
-export default OneFaQ
+export default OneFaQ;

@@ -1,8 +1,10 @@
 import React from 'react';
 
 // Individual skeleton components
-export const SkeletonCard = ({ className = "" }: { className?: string }) => (
-  <div className={`bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg border dark:border-slate-500 animate-pulse ${className}`}>
+export const SkeletonCard = ({ className = '' }: { className?: string }) => (
+  <div
+    className={`bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg border dark:border-slate-500 animate-pulse ${className}`}
+  >
     <div className="flex items-center justify-between">
       <div className="flex-1">
         <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-24 mb-2"></div>
@@ -19,7 +21,10 @@ export const SkeletonTable = () => (
     <div className="h-6 bg-gray-300 dark:bg-gray-600 rounded w-48 mb-4"></div>
     <div className="space-y-3">
       {[...Array(5)].map((_, i) => (
-        <div key={i} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
+        <div
+          key={i}
+          className="flex items-center justify-between p-3 bg-gray-50 dark:bg-slate-700 rounded-lg"
+        >
           <div className="flex-1">
             <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-3/4 mb-1"></div>
             <div className="h-3 bg-gray-300 dark:bg-gray-600 rounded w-1/2"></div>
@@ -39,7 +44,10 @@ export const SkeletonCategoryGrid = () => (
     <div className="h-6 bg-gray-300 dark:bg-gray-600 rounded w-48 mb-4"></div>
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
       {[...Array(10)].map((_, i) => (
-        <div key={i} className="bg-gray-50 dark:bg-slate-700 p-4 rounded-lg text-center">
+        <div
+          key={i}
+          className="bg-gray-50 dark:bg-slate-700 p-4 rounded-lg text-center"
+        >
           <div className="h-5 bg-gray-300 dark:bg-gray-600 rounded w-16 mx-auto mb-2"></div>
           <div className="h-3 bg-gray-300 dark:bg-gray-600 rounded w-12 mx-auto mb-1"></div>
           <div className="h-3 bg-gray-300 dark:bg-gray-600 rounded w-14 mx-auto mb-1"></div>
@@ -100,12 +108,18 @@ export const SkeletonBlogTable = () => (
         </thead>
         <tbody>
           {[...Array(5)].map((_, i) => (
-            <tr key={i} className="odd:bg-transparent even:bg-slate-50 dark:even:bg-slate-700/50">
+            <tr
+              key={i}
+              className="odd:bg-transparent even:bg-slate-50 dark:even:bg-slate-700/50"
+            >
               <td className="py-3 px-4 border-b dark:border-slate-600">
                 <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-32"></div>
               </td>
               {[...Array(6)].map((_, j) => (
-                <td key={j} className="py-3 px-4 border-b dark:border-slate-600 text-center">
+                <td
+                  key={j}
+                  className="py-3 px-4 border-b dark:border-slate-600 text-center"
+                >
                   <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-12 mx-auto"></div>
                 </td>
               ))}
@@ -128,7 +142,10 @@ export const AdminAnalyticsSkeleton = () => (
     {/* Period Selector Skeleton */}
     <div className="flex gap-2 mb-6">
       {[...Array(3)].map((_, i) => (
-        <div key={i} className="h-10 bg-gray-300 dark:bg-gray-600 rounded w-20 animate-pulse"></div>
+        <div
+          key={i}
+          className="h-10 bg-gray-300 dark:bg-gray-600 rounded w-20 animate-pulse"
+        ></div>
       ))}
     </div>
 

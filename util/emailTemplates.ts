@@ -15,11 +15,11 @@ export const EMAIL_TEMPLATES = {
         <div style="text-align: center; margin-bottom: 15px;">
           <img src="${
             userdata.avatar ||
-            "https://blogforge.in/_next/image?url=%2FBlogForge.png&w=64&q=75"
+            'https://blogforge.in/_next/image?url=%2FBlogForge.png&w=64&q=75'
           }" alt="User Avatar" style="border-radius: 50%; width: 100px; height: 100px; object-fit: cover;">
         </div>
         <h2 style="color: #333; text-align: center; margin-bottom: 15px;">Hello, ${
-          userdata.username || "Valued User"
+          userdata.username || 'Valued User'
         }!</h2>
         <p style="color: #555; line-height: 1.6; text-align: center; font-size: 16px;">
           Welcome to <strong>BlogForge</strong>! We're excited to have you as part of our community of bloggers and creators.
@@ -39,7 +39,7 @@ export const EMAIL_TEMPLATES = {
         <p style="color: #FFB347; word-wrap: break-word; font-size: 14px;">
           <a href="${process.env
             .API_URL!}verifyemail?token=${hashToken}" style="color: #FFB347; text-decoration: none;">${process
-    .env.API_URL!}verifyemail?token=${hashToken}</a>
+            .env.API_URL!}verifyemail?token=${hashToken}</a>
         </p>
         <p style="color: #555; line-height: 1.6; text-align: center; font-size: 16px;">
           Thank you for verifying your email and joining BlogForge. We can't wait to see your creative work come to life!
@@ -66,11 +66,11 @@ export const EMAIL_TEMPLATES = {
         <div style="text-align: center; margin-bottom: 15px;">
           <img src="${
             userdata.avatar ||
-            "https://blogforge.in/_next/image?url=%2FBlogForge.png&w=64&q=75"
+            'https://blogforge.in/_next/image?url=%2FBlogForge.png&w=64&q=75'
           }" alt="User Avatar" style="border-radius: 50%; width: 100px; height: 100px; object-fit: cover;">
         </div>
         <h2 style="color: #333; text-align: center; margin-bottom: 15px;">Hello, ${
-          userdata.username || "Valued User"
+          userdata.username || 'Valued User'
         }!</h2>
         <p style="color: #555; line-height: 1.6; text-align: center; font-size: 16px;">
           We're absolutely thrilled to have you on board at <strong>BlogForge</strong>! You've joined a growing community of passionate writers, creators, and readers.
@@ -131,7 +131,7 @@ export const EMAIL_TEMPLATES = {
       </div>
       <div style="padding: 20px; background-color: #f9f9f9; text-align: center;">
         <h2 style="color: #333; text-align: center; margin-bottom: 15px;">Hello, ${
-          userdata.username || "Valued User"
+          userdata.username || 'Valued User'
         }!</h2>
         <p style="color: #555; line-height: 1.6; text-align: center; font-size: 16px;">
           We received a request to reset your password for your BlogForge account. To proceed, please click the button below.
@@ -148,7 +148,7 @@ export const EMAIL_TEMPLATES = {
         <p style="color: #FFB347; word-wrap: break-word; font-size: 14px;">
           <a href="${process.env
             .API_URL!}reset?token=${hashToken}" style="color: #FFB347; text-decoration: none;">${process
-    .env.API_URL!}reset?token=${hashToken}</a>
+            .env.API_URL!}reset?token=${hashToken}</a>
         </p>
         <p style="color: #555; line-height: 1.6; text-align: center; font-size: 16px;">
           If you did not request this password reset, please ignore this email.
@@ -173,7 +173,7 @@ export const EMAIL_TEMPLATES = {
       </div>
       <div style="padding: 20px; background-color: #f9f9f9; text-align: center;">
         <h2 style="color: #333; text-align: center; margin-bottom: 15px;">Hello, ${
-          userdata.username || "User"
+          userdata.username || 'User'
         }!</h2>
         <p style="color: #555; text-align: center;">You have requested to delete your BlogForge account. We're sorry to see you go. Please be aware of the following consequences:</p>
         <ul style="color: #555; text-align: left; margin: 20px auto; max-width: 500px; list-style-type: disc; padding-left: 20px;">
@@ -193,7 +193,7 @@ export const EMAIL_TEMPLATES = {
         <p style="color: #FF6347; text-align: center; margin-bottom: 20px; word-wrap: break-word;"><a href="${process
           .env
           .API_URL!}deleteaccount?token=${hashToken}" style="color: #FF6347; text-decoration: none;">${process
-    .env.API_URL!}deleteaccount?token=${hashToken}</a></p>
+          .env.API_URL!}deleteaccount?token=${hashToken}</a></p>
         <p style="color: #555; text-align: center;">If you did not request this change, please ignore this email.</p>
       </div>
       <div style="background-color: #f9f9f9; padding: 10px; text-align: center; border-top: 1px solid #eee;">
@@ -220,11 +220,11 @@ export const EMAIL_TEMPLATES = {
         <div style="text-align: center; margin-bottom: 15px;">
           <img src="${
             userdata.avatar ||
-            "https://blogforge.in/_next/image?url=%2FBlogForge.png&w=64&q=75"
+            'https://blogforge.in/_next/image?url=%2FBlogForge.png&w=64&q=75'
           }" alt="User Avatar" style="border-radius: 50%; width: 100px; height: 100px; object-fit: cover;">
         </div>
         <h2 style="color: #333; text-align: center; margin-bottom: 15px;">Hello, ${
-          userdata.username || "Valued User"
+          userdata.username || 'Valued User'
         }!</h2>
         <p style="color: #555; line-height: 1.6; text-align: center; font-size: 16px;">
           You have requested to enable <strong>Two-Factor Authentication (2FA)</strong> for your BlogForge account. This will add an extra layer of security to protect your account.
@@ -252,7 +252,7 @@ export const EMAIL_TEMPLATES = {
         <p style="color: #4CAF50; word-wrap: break-word; font-size: 14px;">
           <a href="${process.env
             .API_URL!}enable-2fa?token=${hashToken}" style="color: #4CAF50; text-decoration: none;">${process
-    .env.API_URL!}enable-2fa?token=${hashToken}</a>
+            .env.API_URL!}enable-2fa?token=${hashToken}</a>
         </p>
         <p style="color: #555; line-height: 1.6; text-align: center; font-size: 16px;">
           If you did not request this change, please ignore this email and your account will remain unchanged.
@@ -279,11 +279,11 @@ export const EMAIL_TEMPLATES = {
         <div style="text-align: center; margin-bottom: 15px;">
           <img src="${
             userdata.avatar ||
-            "https://blogforge.in/_next/image?url=%2FBlogForge.png&w=64&q=75"
+            'https://blogforge.in/_next/image?url=%2FBlogForge.png&w=64&q=75'
           }" alt="User Avatar" style="border-radius: 50%; width: 100px; height: 100px; object-fit: cover;">
         </div>
         <h2 style="color: #333; text-align: center; margin-bottom: 15px;">Hello, ${
-          userdata.username || "Valued User"
+          userdata.username || 'Valued User'
         }!</h2>
         <p style="color: #555; line-height: 1.6; text-align: center; font-size: 16px;">
           Someone is trying to log into your BlogForge account. To complete the login process, please use the verification code below:
@@ -323,7 +323,7 @@ export const EMAIL_TEMPLATES = {
       </div>
       <div style="padding: 20px; background-color: #f9f9f9; text-align: center;">
         <h2 style="color: #333; text-align: center; margin-bottom: 15px;">Hello, ${
-          userdata.username || "Valued User"
+          userdata.username || 'Valued User'
         }!</h2>
         <p style="color: #555; line-height: 1.6; text-align: center; font-size: 16px;">
           You have requested to change your email address for your BlogForge account. Please click the button below to confirm this change.
@@ -340,7 +340,7 @@ export const EMAIL_TEMPLATES = {
         <p style="color: #FFB347; text-align: center; margin: 10px 0; word-wrap: break-word;">
           <a href="${process.env
             .API_URL!}verifyemail?type=update&token=${hashToken}" style="color: #FFB347; text-decoration: none;">${process
-    .env.API_URL!}verifyemail?type=update&token=${hashToken}</a>
+            .env.API_URL!}verifyemail?type=update&token=${hashToken}</a>
         </p>
         <p style="color: #555; line-height: 1.6; text-align: center; font-size: 16px;">
           If you did not request this change, please ignore this email.
@@ -358,12 +358,12 @@ export const EMAIL_TEMPLATES = {
 };
 
 export const EMAIL_SUBJECTS = {
-  VERIFY: "Verify Your Email - BlogForge",
-  WELCOME: "Welcome to BlogForge!",
-  RESET: "Reset Your Password - BlogForge",
-  DELETE: "Delete Your Account - BlogForge",
-  ENABLE_2FA: "Enable Two-Factor Authentication - BlogForge",
-  TWO_FA_OTP: "Your Login Verification Code - BlogForge",
-  EMAIL_CHANGE: "Confirm Email Change - BlogForge",
-  ADMIN_ACTION: "Admin Action Notification - BlogForge",
+  VERIFY: 'Verify Your Email - BlogForge',
+  WELCOME: 'Welcome to BlogForge!',
+  RESET: 'Reset Your Password - BlogForge',
+  DELETE: 'Delete Your Account - BlogForge',
+  ENABLE_2FA: 'Enable Two-Factor Authentication - BlogForge',
+  TWO_FA_OTP: 'Your Login Verification Code - BlogForge',
+  EMAIL_CHANGE: 'Confirm Email Change - BlogForge',
+  ADMIN_ACTION: 'Admin Action Notification - BlogForge',
 };

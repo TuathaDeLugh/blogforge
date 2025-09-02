@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
 import { MdBlock, MdCheckCircle } from 'react-icons/md';
@@ -11,11 +11,11 @@ interface BlockUserButtonProps {
   onBlockStatusChange?: (blocked: boolean) => void;
 }
 
-export default function BlockUserButton({ 
-  targetUserId, 
-  targetUsername, 
-  isBlocked, 
-  onBlockStatusChange 
+export default function BlockUserButton({
+  targetUserId,
+  targetUsername,
+  isBlocked,
+  onBlockStatusChange,
 }: BlockUserButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [blocked, setBlocked] = useState(isBlocked);
@@ -39,7 +39,9 @@ export default function BlockUserButton({
       if (response.ok) {
         const newBlockedStatus = !blocked;
         setBlocked(newBlockedStatus);
-        toast.success(`User ${newBlockedStatus ? 'blocked' : 'unblocked'} successfully`);
+        toast.success(
+          `User ${newBlockedStatus ? 'blocked' : 'unblocked'} successfully`
+        );
         onBlockStatusChange?.(newBlockedStatus);
       } else {
         toast.error(data.message || 'Failed to update block status');
@@ -61,7 +63,9 @@ export default function BlockUserButton({
           ? 'bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-800/20 dark:text-green-400 dark:hover:bg-green-800/30'
           : 'bg-red-100 text-red-800 hover:bg-red-200 dark:bg-red-800/20 dark:text-red-400 dark:hover:bg-red-800/30'
       }`}
-      title={blocked ? `Unblock @${targetUsername}` : `Block @${targetUsername}`}
+      title={
+        blocked ? `Unblock @${targetUsername}` : `Block @${targetUsername}`
+      }
     >
       {blocked ? (
         <>

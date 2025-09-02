@@ -27,7 +27,10 @@ export default function Pagination({ pagedata }: PaginationProps) {
       endPage = totalPages;
     }
 
-    return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+    return Array.from(
+      { length: endPage - startPage + 1 },
+      (_, i) => startPage + i
+    );
   };
 
   const pages = getPagesToShow();
@@ -37,7 +40,9 @@ export default function Pagination({ pagedata }: PaginationProps) {
       <div className="mt-5 flex items-center justify-center space-x-6 text-slate-600 dark:text-slate-200">
         <Link
           className={`${
-            currentPage === 1 ? 'pointer-events-none bg-gray-100 dark:bg-gray-700 text-slate-400' : ''
+            currentPage === 1
+              ? 'pointer-events-none bg-gray-100 dark:bg-gray-700 text-slate-400'
+              : ''
           } hidden md:block rounded-lg border border-gray-300 dark:border-gray-500 px-3 py-2 text-sm font-medium hover:bg-orange-400 dark:hover:bg-orange-500 hover:text-white transition-all`}
           href={`?page=${currentPage - 1}`}
         >
@@ -68,7 +73,9 @@ export default function Pagination({ pagedata }: PaginationProps) {
         </nav>
         <Link
           className={`${
-            !hasNextPage ? 'pointer-events-none bg-gray-100 dark:bg-gray-700 text-slate-400' : ''
+            !hasNextPage
+              ? 'pointer-events-none bg-gray-100 dark:bg-gray-700 text-slate-400'
+              : ''
           } hidden md:block rounded-lg border border-gray-300 dark:border-gray-500  px-3 py-2 text-sm font-medium hover:bg-orange-400 dark:hover:bg-orange-500 hover:text-white transition-all`}
           href={`?page=${currentPage + 1}`}
         >

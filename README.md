@@ -76,6 +76,17 @@ Technologies used in BlogForge:
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" height="40" width="52" alt="Firebase logo" />
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" height="40" width="52" alt="Tailwind CSS logo" />
 
+📦 Project Management
+
+We have migrated issue tracking and repository management to GitLab.
+<br/>
+<a href="https://gitlab.com/blogforge/BlogForge-Web" target="_blank">
+<img src="https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png" height="40" width="40" alt="GitLab Tanuki Logo" />
+</a>
+<a href="https://gitlab.com/blogforge/BlogForge-Web" target="_blank">
+BlogForge on GitLab
+</a>
+
 ## 👥 Contributors
 
 Thanks to all contributors who have helped make BlogForge better:

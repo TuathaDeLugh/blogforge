@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 export default function LoadingTrending() {
   return (
-<div className="w-full max-w-[1500px] mx-auto lg:h-auto px-2">
+    <div className="w-full max-w-[1500px] mx-auto lg:h-auto px-2">
       <div className="relative w-full h-[28rem] m-auto overflow-hidden rounded-lg animate-pulse">
         <div className="absolute inset-0 lg:flex lg:gap-3">
           <div className="w-full h-full lg:w-1/2 bg-gray-300 dark:bg-gray-700 animate-pulse"></div>
@@ -19,5 +19,5 @@ export default function LoadingTrending() {
         </div>
       </div>
     </div>
-  )
+  );
 }

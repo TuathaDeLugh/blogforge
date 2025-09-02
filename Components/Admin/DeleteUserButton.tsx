@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -13,7 +13,11 @@ interface DeleteUserButtonProps {
   userEmail: string;
 }
 
-export default function DeleteUserButton({ userId, username, userEmail }: DeleteUserButtonProps) {
+export default function DeleteUserButton({
+  userId,
+  username,
+  userEmail,
+}: DeleteUserButtonProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [emailMessage, setEmailMessage] = useState('');
@@ -33,7 +37,7 @@ Your account will be permanently deleted, and all associated data will be remove
 If you believe this action was taken in error, please contact our support team immediately.
 
 Best regards,
-BlogForge Admin Team`
+BlogForge Admin Team`,
     },
     {
       id: 'inactive_account',
@@ -47,7 +51,7 @@ Your account will be permanently deleted, and any blogs you have created will be
 If you wish to keep your account active, please log in within the next 7 days.
 
 Best regards,
-BlogForge Admin Team`
+BlogForge Admin Team`,
     },
     {
       id: 'user_request',
@@ -61,18 +65,18 @@ Your account will be permanently deleted as requested. Any blogs you have create
 Thank you for being part of the BlogForge community.
 
 Best regards,
-BlogForge Admin Team`
+BlogForge Admin Team`,
     },
     {
       id: 'custom',
       name: 'Custom Message',
-      message: ''
-    }
+      message: '',
+    },
   ];
 
   const handleTemplateChange = (templateId: string) => {
     setSelectedTemplate(templateId);
-    const template = emailTemplates.find(t => t.id === templateId);
+    const template = emailTemplates.find((t) => t.id === templateId);
     if (template) {
       setEmailMessage(template.message);
     }
@@ -104,14 +108,19 @@ BlogForge Admin Team`
       }
 
       // Then delete the user
-      const deleteResponse = await fetch(`/api/user/admin-delete?userId=${userId}`, {
-        method: 'DELETE',
-      });
+      const deleteResponse = await fetch(
+        `/api/user/admin-delete?userId=${userId}`,
+        {
+          method: 'DELETE',
+        }
+      );
 
       const data = await deleteResponse.json();
 
       if (deleteResponse.ok) {
-        toast.success(`User ${username} deleted successfully. Email notification sent.`);
+        toast.success(
+          `User ${username} deleted successfully. Email notification sent.`
+        );
         router.refresh();
         setModalOpen(false);
       } else {
@@ -127,13 +136,18 @@ BlogForge Admin Team`
 
   return (
     <DModal
-      btn={<MdOutlineDelete size={20} className='text-red-400 hover:text-red-600 cursor-pointer' />}
+      btn={
+        <MdOutlineDelete
+          size={20}
+          className="text-red-400 hover:text-red-600 cursor-pointer"
+        />
+      }
       header="Delete User Account"
       isOpen={modalOpen}
       setIsOpen={setModalOpen}
       submit={
-        <button 
-          className='w-full h-full rounded bg-red-500/70 dark:bg-red-400/90 hover:bg-red-600 dark:hover:bg-red-600 inline-block p-3 disabled:opacity-50' 
+        <button
+          className="w-full h-full rounded bg-red-500/70 dark:bg-red-400/90 hover:bg-red-600 dark:hover:bg-red-600 inline-block p-3 disabled:opacity-50"
           onClick={handleDelete}
           disabled={isDeleting}
         >
@@ -142,14 +156,21 @@ BlogForge Admin Team`
       }
     >
       <div className="w-full space-y-4">
-        <Image src={'/delete.svg'} alt='delete user' width={150} height={150} className="mx-auto" />
-        
+        <Image
+          src={'/delete.svg'}
+          alt="delete user"
+          width={150}
+          height={150}
+          className="mx-auto"
+        />
+
         <div className="text-center">
           <p className="text-lg font-semibold text-gray-800 dark:text-gray-200">
             Delete user: <span className="text-red-500">@{username}</span>
           </p>
           <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-            This action will permanently delete the user and transfer their blogs to admin.
+            This action will permanently delete the user and transfer their
+            blogs to admin.
           </p>
         </div>
 

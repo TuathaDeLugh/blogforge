@@ -1,15 +1,18 @@
-"use client"
-import React, { useState, useEffect, useRef } from "react";
-import Link from "next/link";
+'use client';
+import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { category } from "./Logic/Category";
+import { category } from './Logic/Category';
 
 const FilterDropDown = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const handleOutsideClick = (event: MouseEvent) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
       setOpen(false);
     }
   };
@@ -22,58 +25,58 @@ const FilterDropDown = () => {
     };
   }, []);
 
-  const ddata= category;
+  const ddata = category;
 
   return (
     <div className="relative w-1/5  py-3 md:py-4 " ref={dropdownRef}>
-        <div
-        className="border-l w-full border-black dark:border-gray-500 ">
-      <motion.button className='w-full'
-      whileTap={{ scale: 0.9 }}
-      transition={{ type: 'spring', stiffness: 100 }}
-      onClick={() => setOpen(!open)}
-      >Filter</motion.button>
+      <div className="border-l w-full border-black dark:border-gray-500 ">
+        <motion.button
+          className="w-full"
+          whileTap={{ scale: 0.9 }}
+          transition={{ type: 'spring', stiffness: 100 }}
+          onClick={() => setOpen(!open)}
+        >
+          Filter
+        </motion.button>
       </div>
       <AnimatePresence>
-
-      
-      {open ? (
-        <motion.ul
-        className=" bg-gray-300/70 dark:bg-slate-700/70 backdrop-blur-sm mt-6 absolute right-5 md:right-0 list-none m-1 border overflow-y-auto max-h-60 md:max-h-96 dark:border-slate-700 w-max  rounded "
-        initial={{ opacity: 0, y: -20 , x:20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-      >
-          <motion.li
-            key={"all"}
-            whileHover={{ scale: 1.05 }}
-            className="text-l rounded-lg text-slate-800 dark:text-slate-300 p-1 m-2 text-left hover:bg-orange-400/90 hover:text-white md:dark:hover:text-slate-200"
+        {open ? (
+          <motion.ul
+            className=" bg-gray-300/70 dark:bg-slate-700/70 backdrop-blur-sm mt-6 absolute right-5 md:right-0 list-none m-1 border overflow-y-auto max-h-60 md:max-h-96 dark:border-slate-700 w-max  rounded "
+            initial={{ opacity: 0, y: -20, x: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
           >
-            <Link
-              onClick={() => setOpen(!open)}
-              href={`/blogs`}
-              className="inline-block px-1 w-full"
-            >
-              {"All"}
-            </Link>
-          </motion.li>
-          {ddata.map((link) => (
             <motion.li
-              key={link}
+              key={'all'}
               whileHover={{ scale: 1.05 }}
               className="text-l rounded-lg text-slate-800 dark:text-slate-300 p-1 m-2 text-left hover:bg-orange-400/90 hover:text-white md:dark:hover:text-slate-200"
             >
               <Link
                 onClick={() => setOpen(!open)}
-                href={`/blogs/filter/${encodeURIComponent(link)}`}
-                className="inline-block px-1 w-full capitalize"
+                href={`/blogs`}
+                className="inline-block px-1 w-full"
               >
-                {link.split('_').join(' ')}
+                {'All'}
               </Link>
             </motion.li>
-          ))}
-        </motion.ul>
-      ) : null}
+            {ddata.map((link) => (
+              <motion.li
+                key={link}
+                whileHover={{ scale: 1.05 }}
+                className="text-l rounded-lg text-slate-800 dark:text-slate-300 p-1 m-2 text-left hover:bg-orange-400/90 hover:text-white md:dark:hover:text-slate-200"
+              >
+                <Link
+                  onClick={() => setOpen(!open)}
+                  href={`/blogs/filter/${encodeURIComponent(link)}`}
+                  className="inline-block px-1 w-full capitalize"
+                >
+                  {link.split('_').join(' ')}
+                </Link>
+              </motion.li>
+            ))}
+          </motion.ul>
+        ) : null}
       </AnimatePresence>
     </div>
   );

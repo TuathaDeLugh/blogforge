@@ -1,16 +1,26 @@
-"use client";
+'use client';
 import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import toast from 'react-hot-toast';
 import { IoAdd, IoTrash, IoCreate, IoEye } from 'react-icons/io5';
-import { MdSecurity, MdComment, MdPerson, MdEdit, MdDelete } from 'react-icons/md';
+import {
+  MdSecurity,
+  MdComment,
+  MdPerson,
+  MdEdit,
+  MdDelete,
+} from 'react-icons/md';
 import AdminActionTemplateForm from './AdminActionTemplateForm';
 
 interface AdminActionTemplate {
   _id: string;
   name: string;
   description: string;
-  actionType: 'account_ban' | 'comment_ban' | 'username_change' | 'delete_account';
+  actionType:
+    | 'account_ban'
+    | 'comment_ban'
+    | 'username_change'
+    | 'delete_account';
   duration: number | null;
   reason: string;
   isActive: boolean;
@@ -29,8 +39,11 @@ export default function AdminActionTemplateManager() {
   const [templates, setTemplates] = useState<AdminActionTemplate[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [editingTemplate, setEditingTemplate] = useState<AdminActionTemplate | null>(null);
-  const [filter, setFilter] = useState<'all' | 'account_ban' | 'comment_ban' | 'username_change' | 'delete_account'>('all');
+  const [editingTemplate, setEditingTemplate] =
+    useState<AdminActionTemplate | null>(null);
+  const [filter, setFilter] = useState<
+    'all' | 'account_ban' | 'comment_ban' | 'username_change' | 'delete_account'
+  >('all');
 
   useEffect(() => {
     fetchTemplates();
@@ -39,13 +52,14 @@ export default function AdminActionTemplateManager() {
   const fetchTemplates = async () => {
     try {
       setLoading(true);
-      const url = filter === 'all' 
-        ? '/api/admin/action-templates' 
-        : `/api/admin/action-templates?actionType=${filter}`;
-      
+      const url =
+        filter === 'all'
+          ? '/api/admin/action-templates'
+          : `/api/admin/action-templates?actionType=${filter}`;
+
       const response = await fetch(url);
       const data = await response.json();
-      
+
       if (data.success) {
         setTemplates(data.templates);
       } else {
@@ -62,12 +76,15 @@ export default function AdminActionTemplateManager() {
     if (!confirm('Are you sure you want to delete this template?')) return;
 
     try {
-      const response = await fetch(`/api/admin/action-templates/${templateId}`, {
-        method: 'DELETE',
-      });
+      const response = await fetch(
+        `/api/admin/action-templates/${templateId}`,
+        {
+          method: 'DELETE',
+        }
+      );
 
       const data = await response.json();
-      
+
       if (data.success) {
         toast.success('Template deleted successfully');
         fetchTemplates();
@@ -92,31 +109,46 @@ export default function AdminActionTemplateManager() {
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'low': return 'text-green-600 bg-green-100';
-      case 'medium': return 'text-yellow-600 bg-yellow-100';
-      case 'high': return 'text-orange-600 bg-orange-100';
-      case 'critical': return 'text-red-600 bg-red-100';
-      default: return 'text-gray-600 bg-gray-100';
+      case 'low':
+        return 'text-green-600 bg-green-100';
+      case 'medium':
+        return 'text-yellow-600 bg-yellow-100';
+      case 'high':
+        return 'text-orange-600 bg-orange-100';
+      case 'critical':
+        return 'text-red-600 bg-red-100';
+      default:
+        return 'text-gray-600 bg-gray-100';
     }
   };
 
   const getActionTypeIcon = (actionType: string) => {
     switch (actionType) {
-      case 'account_ban': return <MdPerson className="text-red-500" size={20} />;
-      case 'comment_ban': return <MdComment className="text-orange-500" size={20} />;
-      case 'username_change': return <MdEdit className="text-blue-500" size={20} />;
-      case 'delete_account': return <MdDelete className="text-red-600" size={20} />;
-      default: return <MdSecurity className="text-gray-500" size={20} />;
+      case 'account_ban':
+        return <MdPerson className="text-red-500" size={20} />;
+      case 'comment_ban':
+        return <MdComment className="text-orange-500" size={20} />;
+      case 'username_change':
+        return <MdEdit className="text-blue-500" size={20} />;
+      case 'delete_account':
+        return <MdDelete className="text-red-600" size={20} />;
+      default:
+        return <MdSecurity className="text-gray-500" size={20} />;
     }
   };
 
   const getActionTypeLabel = (actionType: string) => {
     switch (actionType) {
-      case 'account_ban': return 'Account Ban';
-      case 'comment_ban': return 'Comment Ban';
-      case 'username_change': return 'Username Change';
-      case 'delete_account': return 'Delete Account';
-      default: return 'Unknown';
+      case 'account_ban':
+        return 'Account Ban';
+      case 'comment_ban':
+        return 'Comment Ban';
+      case 'username_change':
+        return 'Username Change';
+      case 'delete_account':
+        return 'Delete Account';
+      default:
+        return 'Unknown';
     }
   };
 
@@ -129,7 +161,11 @@ export default function AdminActionTemplateManager() {
   };
 
   if (!session?.user?.isAdmin) {
-    return <div className="text-center text-red-500">Access denied. Admin privileges required.</div>;
+    return (
+      <div className="text-center text-red-500">
+        Access denied. Admin privileges required.
+      </div>
+    );
   }
 
   return (
@@ -220,7 +256,9 @@ export default function AdminActionTemplateManager() {
                     {template.name}
                   </h3>
                 </div>
-                <span className={`px-2 py-1 rounded-full text-xs font-medium ${getSeverityColor(template.severity)}`}>
+                <span
+                  className={`px-2 py-1 rounded-full text-xs font-medium ${getSeverityColor(template.severity)}`}
+                >
                   {template.severity}
                 </span>
               </div>
@@ -240,19 +278,26 @@ export default function AdminActionTemplateManager() {
 
               {/* Details */}
               <div className="space-y-2 mb-4">
-                {(template.actionType === 'account_ban' || template.actionType === 'comment_ban') && (
+                {(template.actionType === 'account_ban' ||
+                  template.actionType === 'comment_ban') && (
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500">Duration:</span>
-                    <span className="font-medium">{formatDuration(template.duration)}</span>
+                    <span className="font-medium">
+                      {formatDuration(template.duration)}
+                    </span>
                   </div>
                 )}
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Used:</span>
-                  <span className="font-medium">{template.usageCount} times</span>
+                  <span className="font-medium">
+                    {template.usageCount} times
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Status:</span>
-                  <span className={`font-medium ${template.isActive ? 'text-green-600' : 'text-red-600'}`}>
+                  <span
+                    className={`font-medium ${template.isActive ? 'text-green-600' : 'text-red-600'}`}
+                  >
                     {template.isActive ? 'Active' : 'Inactive'}
                   </span>
                 </div>
@@ -262,10 +307,9 @@ export default function AdminActionTemplateManager() {
               <div className="mb-4">
                 <p className="text-xs text-gray-500 mb-1">Reason:</p>
                 <p className="text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 p-2 rounded text-ellipsis overflow-hidden">
-                  {template.reason.length > 100 
-                    ? `${template.reason.substring(0, 100)}...` 
-                    : template.reason
-                  }
+                  {template.reason.length > 100
+                    ? `${template.reason.substring(0, 100)}...`
+                    : template.reason}
                 </p>
               </div>
 
@@ -289,7 +333,8 @@ export default function AdminActionTemplateManager() {
               {/* Footer */}
               <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
                 <p className="text-xs text-gray-500">
-                  Created by {template.createdBy.username} • {new Date(template.createdAt).toLocaleDateString()}
+                  Created by {template.createdBy.username} •{' '}
+                  {new Date(template.createdAt).toLocaleDateString()}
                 </p>
               </div>
             </div>

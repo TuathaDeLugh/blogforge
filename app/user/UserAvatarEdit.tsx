@@ -1,13 +1,13 @@
-"use client";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
-import { AiOutlineUser } from "react-icons/ai";
-import React, { useEffect, useRef, useState } from "react";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { FaPencilAlt } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion";
-import DefaultUserProfile from "@/Components/layout/DefaultUserProfile";
+'use client';
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import { AiOutlineUser } from 'react-icons/ai';
+import React, { useEffect, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import { FaPencilAlt } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import DefaultUserProfile from '@/Components/layout/DefaultUserProfile';
 
 interface AvatarModelProps {
   userId?: string | null;
@@ -42,11 +42,11 @@ export default function UserAvatarEdit({ userId }: AvatarModelProps) {
       }
 
       const response = await fetch(`/api/user/${userId}`, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ avatar: chosenAvatar, type: "avatar" }),
+        body: JSON.stringify({ avatar: chosenAvatar, type: 'avatar' }),
       });
       const { updatedUser } = await response.json();
 
@@ -57,12 +57,12 @@ export default function UserAvatarEdit({ userId }: AvatarModelProps) {
         },
       });
       router.refresh();
-      toast.success("Avatar Updated Successfully.");
+      toast.success('Avatar Updated Successfully.');
       if (!response.ok) {
-        throw new Error("Avatar update failed");
+        throw new Error('Avatar update failed');
       }
     } catch (error: any) {
-      console.error("Error updating avatar:", error.message);
+      console.error('Error updating avatar:', error.message);
     }
   };
 
@@ -86,20 +86,20 @@ export default function UserAvatarEdit({ userId }: AvatarModelProps) {
 
     const handleScroll = () => {
       if (modalOpen) {
-        document.body.style.overflow = "hidden";
+        document.body.style.overflow = 'hidden';
       } else {
-        document.body.style.overflow = "";
+        document.body.style.overflow = '';
       }
     };
 
-    document.addEventListener("click", clickHandler);
-    document.addEventListener("keydown", keyHandler);
+    document.addEventListener('click', clickHandler);
+    document.addEventListener('keydown', keyHandler);
     handleScroll();
 
     return () => {
-      document.removeEventListener("click", clickHandler);
-      document.removeEventListener("keydown", keyHandler);
-      document.body.style.overflow = "";
+      document.removeEventListener('click', clickHandler);
+      document.removeEventListener('keydown', keyHandler);
+      document.body.style.overflow = '';
     };
   }, [modalOpen]);
 
@@ -127,14 +127,14 @@ export default function UserAvatarEdit({ userId }: AvatarModelProps) {
           ) : (
             <div
               className={`w-28 h-28 rounded-full text-gray-400 cursor-pointer border-2 flex items-center justify-center transition duration-300 ${
-                selectedAvatar === ""
-                  ? "border-2 border-orange-500 "
-                  : "dark:border-gray-500"
+                selectedAvatar === ''
+                  ? 'border-2 border-orange-500 '
+                  : 'dark:border-gray-500'
               }`}
             >
               <DefaultUserProfile
                 username={session?.user?.username}
-                key={"clear"}
+                key={'clear'}
                 size={105}
               />
             </div>
@@ -170,29 +170,29 @@ export default function UserAvatarEdit({ userId }: AvatarModelProps) {
                 <div className="flex flex-wrap gap-4 max-h-72 overflow-auto justify-center">
                   <div
                     className={`w-20 h-20 rounded-full text-gray-400 cursor-pointer border-2 flex items-center justify-center transition duration-300 ${
-                      selectedAvatar === ""
-                        ? "border-2 border-orange-500 "
-                        : "dark:border-gray-500"
+                      selectedAvatar === ''
+                        ? 'border-2 border-orange-500 '
+                        : 'dark:border-gray-500'
                     }`}
-                    onClick={() => handleAvatarClick("")}
+                    onClick={() => handleAvatarClick('')}
                   >
                     <DefaultUserProfile
                       username={session?.user?.username}
-                      key={"clear"}
+                      key={'clear'}
                       size={73}
                     />
                   </div>
                   {session && session.user && session.user.image ? (
                     <Image
-                      key={"google"}
+                      key={'google'}
                       src={session.user.image}
                       alt={`googleavatar`}
                       width={100}
                       height={100}
                       className={`w-20 h-20 rounded-full cursor-pointer border-2 p-[1px]  transition duration-300 ${
                         selectedAvatar === session.user.image
-                          ? "border-2 border-orange-500"
-                          : "border"
+                          ? 'border-2 border-orange-500'
+                          : 'border'
                       }`}
                       onClick={() => handleAvatarClick(session.user.image!)}
                     />
@@ -206,8 +206,8 @@ export default function UserAvatarEdit({ userId }: AvatarModelProps) {
                       height={100}
                       className={`w-20 h-20 rounded-full cursor-pointer border-2 p-[1px]  transition duration-300 ${
                         selectedAvatar === avatar
-                          ? "border-2 border-orange-500"
-                          : "border-transparent"
+                          ? 'border-2 border-orange-500'
+                          : 'border-transparent'
                       }`}
                       onClick={() => handleAvatarClick(avatar)}
                     />

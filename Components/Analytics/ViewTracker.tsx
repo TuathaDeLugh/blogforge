@@ -14,8 +14,9 @@ export default function ViewTracker({ blogId }: ViewTrackerProps) {
   useEffect(() => {
     const trackView = async () => {
       // Create a unique identifier for the user
-      const userIdentifier = session?.user?.dbid || 
-        localStorage.getItem('anonymousId') || 
+      const userIdentifier =
+        session?.user?.dbid ||
+        localStorage.getItem('anonymousId') ||
         `anonymous_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
       // Store anonymous ID for future visits

@@ -1,6 +1,6 @@
 'use client';
-import React, { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface DModalProps {
   btn: React.ReactNode | null | undefined;
@@ -13,7 +13,16 @@ interface DModalProps {
   setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DModal: React.FC<DModalProps> = ({ btn, header, children, submit, timerDuration, form, isOpen, setIsOpen }) => {
+const DModal: React.FC<DModalProps> = ({
+  btn,
+  header,
+  children,
+  submit,
+  timerDuration,
+  form,
+  isOpen,
+  setIsOpen,
+}) => {
   const [internalOpen, setInternalOpen] = useState(false);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
 
@@ -26,7 +35,12 @@ const DModal: React.FC<DModalProps> = ({ btn, header, children, submit, timerDur
   useEffect(() => {
     const clickHandler = ({ target }: { target: EventTarget | null }) => {
       if (!modal.current) return;
-      if (!modalOpen || modal.current.contains(target as Node) || trigger.current?.contains(target as Node)) return;
+      if (
+        !modalOpen ||
+        modal.current.contains(target as Node) ||
+        trigger.current?.contains(target as Node)
+      )
+        return;
       setModalOpen(false);
     };
 
@@ -88,11 +102,7 @@ const DModal: React.FC<DModalProps> = ({ btn, header, children, submit, timerDur
 
   return (
     <>
-      <button
-        className="w-full"
-        ref={trigger}
-        onClick={handleOpenModal}
-      >
+      <button className="w-full" ref={trigger} onClick={handleOpenModal}>
         {btn}
       </button>
       <AnimatePresence>
@@ -116,61 +126,62 @@ const DModal: React.FC<DModalProps> = ({ btn, header, children, submit, timerDur
               <h3 className="pb-[18px] text-xl font-semibold sm:text-2xl text-orange-500 dark:text-orange-400">
                 {header}
               </h3>
-              
+
               <div className=" text-base font-normal leading-relaxed flex flex-col items-center gap-5 text-black dark:text-white">
                 {children}
               </div>
-              {
-                !form &&
-              
-              <div className="mt-10 -mx-3 flex flex-wrap">
-                {timeLeft === null ? (
-                  <>
-                    <div className="w-1/2 px-3">
+              {!form && (
+                <div className="mt-10 -mx-3 flex flex-wrap">
+                  {timeLeft === null ? (
+                    <>
+                      <div className="w-1/2 px-3">
+                        <motion.button
+                          onClick={() => setModalOpen(false)}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="block w-full text-gray-400 dark:text-white rounded-md border border-stroke dark:border-slate-600 p-3 text-center text-base font-medium transition hover:border-red-500/70 dark:hover:border-red-500 hover:text-red-500/70 dark:hover:text-red-500"
+                        >
+                          Cancel
+                        </motion.button>
+                      </div>
+                      <div className="w-1/2 px-3">
+                        <motion.div
+                          onClick={() => setModalOpen(false)}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="block w-full rounded-md border dark:border-slate-600 bg-orange-500/70 dark:bg-orange-400/90 text-center text-base font-medium text-white transition"
+                        >
+                          {submit}
+                        </motion.div>
+                      </div>
+                    </>
+                  ) : (
+                    <motion.div
+                      className="w-full px-3"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
                       <motion.button
                         onClick={() => setModalOpen(false)}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="block w-full text-gray-400 dark:text-white rounded-md border border-stroke dark:border-slate-600 p-3 text-center text-base font-medium transition hover:border-red-500/70 dark:hover:border-red-500 hover:text-red-500/70 dark:hover:text-red-500"
+                        className="block w-full bg-gradient-to-r from-orange-500 to-orange-500/60 rounded-md border border-stroke dark:border-slate-600 p-3 text-center text-base font-medium transition hover:border-orange-500/70 dark:hover:border-orange-500 text-black dark:text-white relative"
+                        style={{
+                          backgroundSize: `${(timeLeft / (timerDuration || 1)) * 100}% 100%`,
+                          backgroundPosition: '0% 50%',
+                          backgroundRepeat: 'no-repeat',
+                        }}
+                        initial={{ backgroundSize: '0% 100%' }}
+                        animate={{
+                          backgroundSize: `${(timeLeft / (timerDuration || 1)) * 100}% 100%`,
+                        }}
+                        transition={{ duration: 1, ease: 'linear' }}
                       >
-                        Cancel
+                        Close
                       </motion.button>
-                    </div>
-                    <div className="w-1/2 px-3">
-                      <motion.div
-                        onClick={() => setModalOpen(false)}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="block w-full rounded-md border dark:border-slate-600 bg-orange-500/70 dark:bg-orange-400/90 text-center text-base font-medium text-white transition"
-                      >
-                        {submit}
-                      </motion.div>
-                    </div>
-                  </>
-                ) : (
-                  <motion.div className="w-full px-3"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}>
-<motion.button
-  onClick={() => setModalOpen(false)}
-  className="block w-full bg-gradient-to-r from-orange-500 to-orange-500/60 rounded-md border border-stroke dark:border-slate-600 p-3 text-center text-base font-medium transition hover:border-orange-500/70 dark:hover:border-orange-500 text-black dark:text-white relative"
-  style={{
-    backgroundSize: `${((timeLeft / (timerDuration || 1)) * 100)}% 100%`,
-    backgroundPosition: '0% 50%',
-    backgroundRepeat: 'no-repeat',
-  }}
-  initial={{ backgroundSize: '0% 100%' }}
-  animate={{ backgroundSize: `${((timeLeft / (timerDuration || 1)) * 100)}% 100%` }}
-  transition={{ duration: 1, ease: 'linear' }}
->
-  Close
-</motion.button>
-                  </motion.div>
-                )}
-              </div>
-}
+                    </motion.div>
+                  )}
+                </div>
+              )}
             </motion.div>
-            
           </motion.div>
         )}
       </AnimatePresence>

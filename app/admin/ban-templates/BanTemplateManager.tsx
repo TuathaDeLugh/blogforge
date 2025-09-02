@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import toast from 'react-hot-toast';
@@ -29,7 +29,9 @@ export default function BanTemplateManager() {
   const [templates, setTemplates] = useState<BanTemplate[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [editingTemplate, setEditingTemplate] = useState<BanTemplate | null>(null);
+  const [editingTemplate, setEditingTemplate] = useState<BanTemplate | null>(
+    null
+  );
   const [filter, setFilter] = useState<'all' | 'account' | 'comment'>('all');
 
   useEffect(() => {
@@ -39,13 +41,14 @@ export default function BanTemplateManager() {
   const fetchTemplates = async () => {
     try {
       setLoading(true);
-      const url = filter === 'all' 
-        ? '/api/admin/ban-templates' 
-        : `/api/admin/ban-templates?banType=${filter}`;
-      
+      const url =
+        filter === 'all'
+          ? '/api/admin/ban-templates'
+          : `/api/admin/ban-templates?banType=${filter}`;
+
       const response = await fetch(url);
       const data = await response.json();
-      
+
       if (data.success) {
         setTemplates(data.templates);
       } else {
@@ -67,7 +70,7 @@ export default function BanTemplateManager() {
       });
 
       const data = await response.json();
-      
+
       if (data.success) {
         toast.success('Template deleted successfully');
         fetchTemplates();
@@ -92,11 +95,16 @@ export default function BanTemplateManager() {
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'low': return 'text-green-600 bg-green-100';
-      case 'medium': return 'text-yellow-600 bg-yellow-100';
-      case 'high': return 'text-orange-600 bg-orange-100';
-      case 'critical': return 'text-red-600 bg-red-100';
-      default: return 'text-gray-600 bg-gray-100';
+      case 'low':
+        return 'text-green-600 bg-green-100';
+      case 'medium':
+        return 'text-yellow-600 bg-yellow-100';
+      case 'high':
+        return 'text-orange-600 bg-orange-100';
+      case 'critical':
+        return 'text-red-600 bg-red-100';
+      default:
+        return 'text-gray-600 bg-gray-100';
     }
   };
 
@@ -109,7 +117,11 @@ export default function BanTemplateManager() {
   };
 
   if (!session?.user?.isAdmin) {
-    return <div className="text-center text-red-500">Access denied. Admin privileges required.</div>;
+    return (
+      <div className="text-center text-red-500">
+        Access denied. Admin privileges required.
+      </div>
+    );
   }
 
   return (
@@ -184,7 +196,9 @@ export default function BanTemplateManager() {
                     {template.name}
                   </h3>
                 </div>
-                <span className={`px-2 py-1 rounded-full text-xs font-medium ${getSeverityColor(template.severity)}`}>
+                <span
+                  className={`px-2 py-1 rounded-full text-xs font-medium ${getSeverityColor(template.severity)}`}
+                >
                   {template.severity}
                 </span>
               </div>
@@ -198,15 +212,21 @@ export default function BanTemplateManager() {
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Duration:</span>
-                  <span className="font-medium">{formatDuration(template.duration)}</span>
+                  <span className="font-medium">
+                    {formatDuration(template.duration)}
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Used:</span>
-                  <span className="font-medium">{template.usageCount} times</span>
+                  <span className="font-medium">
+                    {template.usageCount} times
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Status:</span>
-                  <span className={`font-medium ${template.isActive ? 'text-green-600' : 'text-red-600'}`}>
+                  <span
+                    className={`font-medium ${template.isActive ? 'text-green-600' : 'text-red-600'}`}
+                  >
                     {template.isActive ? 'Active' : 'Inactive'}
                   </span>
                 </div>
@@ -216,10 +236,9 @@ export default function BanTemplateManager() {
               <div className="mb-4">
                 <p className="text-xs text-gray-500 mb-1">Reason:</p>
                 <p className="text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 p-2 rounded text-ellipsis overflow-hidden">
-                  {template.reason.length > 100 
-                    ? `${template.reason.substring(0, 100)}...` 
-                    : template.reason
-                  }
+                  {template.reason.length > 100
+                    ? `${template.reason.substring(0, 100)}...`
+                    : template.reason}
                 </p>
               </div>
 
@@ -243,7 +262,8 @@ export default function BanTemplateManager() {
               {/* Footer */}
               <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
                 <p className="text-xs text-gray-500">
-                  Created by {template.createdBy.username} • {new Date(template.createdAt).toLocaleDateString()}
+                  Created by {template.createdBy.username} •{' '}
+                  {new Date(template.createdAt).toLocaleDateString()}
                 </p>
               </div>
             </div>
@@ -253,10 +273,7 @@ export default function BanTemplateManager() {
 
       {/* Form Modal */}
       {showForm && (
-        <BanTemplateForm
-          template={editingTemplate}
-          onClose={handleFormClose}
-        />
+        <BanTemplateForm template={editingTemplate} onClose={handleFormClose} />
       )}
     </div>
   );

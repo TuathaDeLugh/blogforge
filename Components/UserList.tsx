@@ -17,13 +17,12 @@ interface UserListProps {
 }
 
 interface UserCardProps {
-    username: string;
-    name: string;
-    avatar: string;
-    email: string;
-    score: number;
-  }
-
+  username: string;
+  name: string;
+  avatar: string;
+  email: string;
+  score: number;
+}
 
 const UserList: React.FC<UserListProps> = ({ users }) => {
   return (
@@ -35,20 +34,30 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
   );
 };
 
-  
-  const UserCard: React.FC<UserCardProps> = ({ username, name, avatar, email, score }) => {
-    return (
-        <div className="max-w-xs mx-auto bg-white rounded-xl shadow-md overflow-hidden">
-        <Image height={100} width={100} className="h-32 w-full object-cover" src={avatar} alt={name} />
-        <div className="p-6">
-          <h3 className="text-lg leading-tight font-medium text-black">{name}</h3>
-          <p className="text-gray-500">@{username}</p>
-          <p className="text-gray-500">{email}</p>
-          <p className="text-gray-500">Score: {score}</p>
-        </div>
+const UserCard: React.FC<UserCardProps> = ({
+  username,
+  name,
+  avatar,
+  email,
+  score,
+}) => {
+  return (
+    <div className="max-w-xs mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+      <Image
+        height={100}
+        width={100}
+        className="h-32 w-full object-cover"
+        src={avatar}
+        alt={name}
+      />
+      <div className="p-6">
+        <h3 className="text-lg leading-tight font-medium text-black">{name}</h3>
+        <p className="text-gray-500">@{username}</p>
+        <p className="text-gray-500">{email}</p>
+        <p className="text-gray-500">Score: {score}</p>
       </div>
-    );
-  };
-
+    </div>
+  );
+};
 
 export default UserList;

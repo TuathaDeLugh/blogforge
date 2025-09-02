@@ -1,50 +1,50 @@
-import React from "react";
+import React from 'react';
 
 interface ProfileAvatarProps {
   username: string | null | undefined;
-  size?: "sm" | "md" | number;
+  size?: 'sm' | 'md' | number;
   className?: string;
   random?: boolean;
 }
 
 export default function DefaultUserProfile({
   username,
-  size = "sm",
-  className = "",
+  size = 'sm',
+  className = '',
   random = false,
 }: ProfileAvatarProps) {
-  const initial = username?.charAt(0)?.toUpperCase() || "?";
+  const initial = username?.charAt(0)?.toUpperCase() || '?';
 
   const sizeClasses = {
-    sm: "w-[30px] h-[30px] text-md",
-    md: "w-24 h-24 text-2xl",
+    sm: 'w-[30px] h-[30px] text-md',
+    md: 'w-24 h-24 text-2xl',
   };
 
   const generateRandomGradient = () => {
     const colors = [
       // Main oranges / warm shades
-      "#FF7F00",
-      "#FF6B00",
-      "#FF4500",
-      "#E25822",
-      "#FF8C00",
+      '#FF7F00',
+      '#FF6B00',
+      '#FF4500',
+      '#E25822',
+      '#FF8C00',
 
       // Reddish / fiery accents
-      "#FF6347",
-      "#E34234",
+      '#FF6347',
+      '#E34234',
 
       // Yellows (deeper, golden side)
-      "#FFA500", 
-      "#FFD700",
-      "#E39B02",
+      '#FFA500',
+      '#FFD700',
+      '#E39B02',
 
       // Sky blues (richer side)
-      "#00BFFF",
-      "#1E90FF",
+      '#00BFFF',
+      '#1E90FF',
 
       // Greens (stronger, not pastel)
-      "#32CD32",
-      "#228B22",
+      '#32CD32',
+      '#228B22',
     ];
 
     const randomColor = () => colors[Math.floor(Math.random() * colors.length)];
@@ -56,7 +56,7 @@ export default function DefaultUserProfile({
     : undefined;
 
   const customSizeStyle =
-    typeof size === "number"
+    typeof size === 'number'
       ? {
           width: `${size}px`,
           height: `${size}px`,
@@ -64,7 +64,7 @@ export default function DefaultUserProfile({
         }
       : {};
 
-  const sizeClass = typeof size === "string" ? sizeClasses[size] : "";
+  const sizeClass = typeof size === 'string' ? sizeClasses[size] : '';
 
   return (
     <div

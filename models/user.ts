@@ -1,6 +1,7 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose';
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema(
+  {
     username: { type: String, required: true, unique: true },
     name: String,
     avatar: String,
@@ -31,8 +32,10 @@ const userSchema = new mongoose.Schema({
     twoFactorToken: { type: String, required: false },
     twoFactorTokenExpiry: { type: Date, required: false },
     pendingTwoFactorEmail: { type: String, required: false },
-}, { timestamps: true });
+  },
+  { timestamps: true }
+);
 
-export const User = mongoose.models.User || mongoose.model("User", userSchema);
+export const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 export default User;

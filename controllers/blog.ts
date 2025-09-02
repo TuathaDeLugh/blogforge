@@ -1,89 +1,86 @@
-export default async function getAllBlog(page?:number) {
-    try {
-      const api = process.env.API_URL;
-      
-      const apiEndpoint = `${api}api/blog?page=${page || 1}`;
-      console.log('API Endpoint:', apiEndpoint);
+export default async function getAllBlog(page?: number) {
+  try {
+    const api = process.env.API_URL;
+
+    const apiEndpoint = `${api}api/blog?page=${page || 1}`;
+    console.log('API Endpoint:', apiEndpoint);
     const response = await fetch(apiEndpoint, {
-      cache: "no-store",
+      cache: 'no-store',
     });
-      const blogs = await response.json();
-      return blogs;
-    } catch (error) {
-      console.log(error);
-    }
+    const blogs = await response.json();
+    return blogs;
+  } catch (error) {
+    console.log(error);
   }
+}
 
-  export async function getSingleblog(id:string) {
-    try {
-      const api = process.env.API_URL;
+export async function getSingleblog(id: string) {
+  try {
+    const api = process.env.API_URL;
 
-      const response = await fetch(`${api}api/blog/${id}`,
-      {
-        cache: "no-store",
-      });
-      const oneblog = await response.json();
-      return oneblog.data;
-    } catch (error) {
-      console.log(error);
-    }
+    const response = await fetch(`${api}api/blog/${id}`, {
+      cache: 'no-store',
+    });
+    const oneblog = await response.json();
+    return oneblog.data;
+  } catch (error) {
+    console.log(error);
   }
+}
 
-  export async function getFilterBlog(category:string,page?:number) {
-    try {
-      const api = process.env.API_URL;
-      
-      const apiEndpoint = `${api}api/blog/filter/?category=${category}&page=${page || 1}`;
-      console.log('API Endpoint:', apiEndpoint);
+export async function getFilterBlog(category: string, page?: number) {
+  try {
+    const api = process.env.API_URL;
+
+    const apiEndpoint = `${api}api/blog/filter/?category=${category}&page=${page || 1}`;
+    console.log('API Endpoint:', apiEndpoint);
     const response = await fetch(apiEndpoint, {
-      cache: "no-store",
+      cache: 'no-store',
     });
-      const blogs = await response.json();
-      return blogs;
-    } catch (error) {
-      console.log(error);
-    }
+    const blogs = await response.json();
+    return blogs;
+  } catch (error) {
+    console.log(error);
   }
+}
 
-export  async function getHomeData() {
-    try {
-      const api = process.env.API_URL;
-      
-      const apiEndpoint = `${api}api/home`;
+export async function getHomeData() {
+  try {
+    const api = process.env.API_URL;
+
+    const apiEndpoint = `${api}api/home`;
     const response = await fetch(apiEndpoint, {
-      cache: "no-store",
+      cache: 'no-store',
     });
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
   }
+}
 
-export async function getRecommendedData(uId:string,) {
-    try {
-      
-      const apiEndpoint = `/api/home/${uId}?sort=-1`;
+export async function getRecommendedData(uId: string) {
+  try {
+    const apiEndpoint = `/api/home/${uId}?sort=-1`;
     const response = await fetch(apiEndpoint, {
-      cache: "no-store",
+      cache: 'no-store',
     });
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
   }
+}
 
-  export async function getStats() {
-    try {
-        const api = process.env.API_URL;
-        const response = await fetch(`${api}/api/adminpanal?sort=-1`,
-            {
-                cache: "no-store",
-            });
-        const stats = await response.json();
-        return stats;
-    } catch (error) {
-        console.log(error);
-    }
+export async function getStats() {
+  try {
+    const api = process.env.API_URL;
+    const response = await fetch(`${api}/api/adminpanal?sort=-1`, {
+      cache: 'no-store',
+    });
+    const stats = await response.json();
+    return stats;
+  } catch (error) {
+    console.log(error);
+  }
 }

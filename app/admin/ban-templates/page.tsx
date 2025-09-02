@@ -23,7 +23,7 @@ export default function AdminActionTemplatesPage() {
           Admin Action Templates Management
         </H1>
       </div>
-      
+
       <div className="mt-6">
         <AdminActionTemplateManager />
       </div>

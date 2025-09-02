@@ -1,25 +1,25 @@
-import Blog from "@/models/blog";
-import User from "@/models/user";
-import connectdb from "@/util/mongodb";
-import { NextResponse } from "next/server";
+import Blog from '@/models/blog';
+import User from '@/models/user';
+import connectdb from '@/util/mongodb';
+import { NextResponse } from 'next/server';
 
 export async function GET(request: Request, response: Response) {
   try {
     const { searchParams } = new URL(request.url);
-    let sort = searchParams.get("sort");
+    let sort = searchParams.get('sort');
 
     if (!sort) {
-      sort = "-1";
+      sort = '-1';
     }
 
     await connectdb();
 
     // Fetch all published blogs
-    const allBlogs = await Blog.find({ status: "published" })
-      .populate("creator", "_id username avatar")
+    const allBlogs = await Blog.find({ status: 'published' })
+      .populate('creator', '_id username avatar')
       .sort({ createdAt: -1 })
       .select(
-        "title category images info createdAt updatedAt usersave share creator"
+        'title category images info createdAt updatedAt usersave share creator'
       )
       .exec();
 
@@ -56,42 +56,42 @@ export async function GET(request: Request, response: Response) {
 
     // Popular blogs by category using aggregation
     const popularBlogsByCategory = await Blog.aggregate([
-      { $match: { status: "published" } },
-      { $unwind: "$category" },
+      { $match: { status: 'published' } },
+      { $unwind: '$category' },
       {
         $addFields: {
-          score: { $add: ["$share", { $multiply: ["$usersave", 2] }] },
+          score: { $add: ['$share', { $multiply: ['$usersave', 2] }] },
         },
       },
       { $sort: { score: -1 } },
       {
         $group: {
-          _id: "$category",
-          blog: { $first: "$$ROOT" },
+          _id: '$category',
+          blog: { $first: '$$ROOT' },
         },
       },
       {
         $lookup: {
-          from: "users",
-          localField: "blog.creator",
-          foreignField: "_id",
-          as: "creator",
+          from: 'users',
+          localField: 'blog.creator',
+          foreignField: '_id',
+          as: 'creator',
         },
       },
-      { $unwind: "$creator" },
+      { $unwind: '$creator' },
       {
         $project: {
-          _id: "$blog._id",
-          title: "$blog.title",
-          images: "$blog.images",
-          category: "$blog.category",
-          info: "$blog.info",
+          _id: '$blog._id',
+          title: '$blog.title',
+          images: '$blog.images',
+          category: '$blog.category',
+          info: '$blog.info',
           creator: {
-            _id: "$creator._id",
-            username: "$creator.username",
-            name: "$creator.name",
-            email: "$creator.email",
-            avatar: "$creator.avatar",
+            _id: '$creator._id',
+            username: '$creator.username',
+            name: '$creator.name',
+            email: '$creator.email',
+            avatar: '$creator.avatar',
           },
         },
       },
@@ -101,41 +101,41 @@ export async function GET(request: Request, response: Response) {
     const topWriters = await User.aggregate([
       {
         $lookup: {
-          from: "blogs",
-          let: { userId: "$_id" },
+          from: 'blogs',
+          let: { userId: '$_id' },
           pipeline: [
             {
               $match: {
                 $expr: {
                   $and: [
-                    { $eq: ["$creator", "$$userId"] },
-                    { $eq: ["$status", "published"] },
+                    { $eq: ['$creator', '$$userId'] },
+                    { $eq: ['$status', 'published'] },
                   ],
                 },
               },
             },
             {
               $group: {
-                _id: "$creator",
+                _id: '$creator',
                 totalBlogs: { $sum: 1 },
-                totalUsersave: { $sum: "$usersave" },
-                totalShare: { $sum: "$share" },
+                totalUsersave: { $sum: '$usersave' },
+                totalShare: { $sum: '$share' },
               },
             },
           ],
-          as: "publishedBlogs",
+          as: 'publishedBlogs',
         },
       },
       {
         $addFields: {
-          totalBlogs: { $arrayElemAt: ["$publishedBlogs.totalBlogs", 0] },
-          totalUsersave: { $arrayElemAt: ["$publishedBlogs.totalUsersave", 0] },
-          totalShare: { $arrayElemAt: ["$publishedBlogs.totalShare", 0] },
+          totalBlogs: { $arrayElemAt: ['$publishedBlogs.totalBlogs', 0] },
+          totalUsersave: { $arrayElemAt: ['$publishedBlogs.totalUsersave', 0] },
+          totalShare: { $arrayElemAt: ['$publishedBlogs.totalShare', 0] },
           score: {
             $add: [
               {
                 $ifNull: [
-                  { $arrayElemAt: ["$publishedBlogs.totalBlogs", 0] },
+                  { $arrayElemAt: ['$publishedBlogs.totalBlogs', 0] },
                   0,
                 ],
               },
@@ -143,7 +143,7 @@ export async function GET(request: Request, response: Response) {
                 $multiply: [
                   {
                     $ifNull: [
-                      { $arrayElemAt: ["$publishedBlogs.totalUsersave", 0] },
+                      { $arrayElemAt: ['$publishedBlogs.totalUsersave', 0] },
                       0,
                     ],
                   },
@@ -152,7 +152,7 @@ export async function GET(request: Request, response: Response) {
               },
               {
                 $ifNull: [
-                  { $arrayElemAt: ["$publishedBlogs.totalShare", 0] },
+                  { $arrayElemAt: ['$publishedBlogs.totalShare', 0] },
                   0,
                 ],
               },
@@ -190,9 +190,9 @@ export async function GET(request: Request, response: Response) {
 
     return NextResponse.json(responsePayload, { status: 200 });
   } catch (error) {
-    console.error("Error fetching user and blogs:", error);
+    console.error('Error fetching user and blogs:', error);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: 'Internal Server Error' },
       { status: 500 }
     );
   }

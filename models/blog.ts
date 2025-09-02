@@ -1,12 +1,16 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose';
 
-const commentSchema = new mongoose.Schema({
+const commentSchema = new mongoose.Schema(
+  {
     _id: { type: String },
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     comment: String,
-}, { timestamps: true });
+  },
+  { timestamps: true }
+);
 
-const blogSchema = new mongoose.Schema({
+const blogSchema = new mongoose.Schema(
+  {
     title: { type: String, required: true },
     category: { type: [String], required: true },
     images: [{ _id: { type: String }, name: String, link: String }],
@@ -16,12 +20,18 @@ const blogSchema = new mongoose.Schema({
     share: { type: Number, default: 0 },
     views: { type: Number, default: 0 },
     uniqueViews: [{ type: String }],
-    status: { type: String, enum: ['draft', 'published', 'archived'], default: 'draft' },
+    status: {
+      type: String,
+      enum: ['draft', 'published', 'archived'],
+      default: 'draft',
+    },
     keywords: [String],
     comments: [commentSchema],
     creator: { type: Schema.Types.ObjectId, ref: 'User' },
-}, { timestamps: true });
+  },
+  { timestamps: true }
+);
 
-export const Blog = mongoose.models.Blog || mongoose.model("Blog", blogSchema);
+export const Blog = mongoose.models.Blog || mongoose.model('Blog', blogSchema);
 
 export default Blog;

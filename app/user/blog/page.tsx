@@ -1,5 +1,5 @@
-import { redirect } from 'next/navigation'
+import { redirect } from 'next/navigation';
 
 export default function Bpage() {
-    redirect('/user/blog/tab')
+  redirect('/user/blog/tab');
 }

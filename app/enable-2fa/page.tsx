@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -34,7 +34,9 @@ export default function Enable2FA() {
 
         if (response.ok) {
           setSuccess(true);
-          toast.success('Two-Factor Authentication has been enabled successfully!');
+          toast.success(
+            'Two-Factor Authentication has been enabled successfully!'
+          );
           setTimeout(() => {
             router.push('/user');
           }, 3000);
@@ -65,31 +67,36 @@ export default function Enable2FA() {
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900 dark:text-white">
             {loading ? 'Enabling 2FA...' : success ? '2FA Enabled!' : 'Error'}
           </h2>
-          
+
           {loading && (
             <div className="mt-8 flex justify-center">
-              <AiOutlineLoading3Quarters size={40} className="animate-spin text-orange-500" />
+              <AiOutlineLoading3Quarters
+                size={40}
+                className="animate-spin text-orange-500"
+              />
             </div>
           )}
-          
+
           {success && (
             <div className="mt-8">
               <div className="text-6xl mb-4">✅</div>
               <p className="text-gray-600 dark:text-gray-400">
-                Two-Factor Authentication has been successfully enabled for your account.
-                You will now receive verification codes via email when logging in.
+                Two-Factor Authentication has been successfully enabled for your
+                account. You will now receive verification codes via email when
+                logging in.
               </p>
               <p className="text-sm text-gray-500 dark:text-gray-500 mt-4">
                 Redirecting you back to your profile...
               </p>
             </div>
           )}
-          
+
           {!loading && !success && (
             <div className="mt-8">
               <div className="text-6xl mb-4">❌</div>
               <p className="text-gray-600 dark:text-gray-400">
-                Failed to enable Two-Factor Authentication. The link may be invalid or expired.
+                Failed to enable Two-Factor Authentication. The link may be
+                invalid or expired.
               </p>
               <p className="text-sm text-gray-500 dark:text-gray-500 mt-4">
                 Redirecting you back to your profile...

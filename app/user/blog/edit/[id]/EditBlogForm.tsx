@@ -3,13 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { RxCross1 } from 'react-icons/rx';
 import { IoAdd } from 'react-icons/io5';
-import { storage } from '@/util/firebase';
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject,
-} from 'firebase/storage';
+import { uploadFilesToBucket, deleteFilesFromBucket } from '@/util/bucket';
 import Image from 'next/image';
 import { Div } from '@/Components/Motion/Motion';
 import RichTextEditor from '@/Components/layout/RichTextEditor';
@@ -120,17 +114,15 @@ const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
 
       const postapi = async () => {
         try {
-          // Delete images from Firebase Storage
+          // Delete images from Bucket API
           try {
-            await Promise.all(
-              deletedImages.map(async ({ name }) => {
-                const imageRef = ref(storage, `blogimages/${name}`);
-                await deleteObject(imageRef);
-              })
-            );
+            if (deletedImages.length > 0) {
+              const fileNamesToDelete = deletedImages.map(({ name }) => name);
+              await deleteFilesFromBucket(fileNamesToDelete);
+            }
           } catch (error: any) {
             toast.error(
-              'Firebase image deletion error report this issue to admin on contact page',
+              'Bucket image deletion error report this issue to admin on contact page',
               {
                 duration: 10000,
               }
@@ -138,19 +130,16 @@ const EditBlogForm: React.FC<EditBlogFormProps> = ({ blog }) => {
           }
           setDeletedImages([]);
 
-          // Upload images to Firebase Storage
-
-          const uploadedImageUrls = await Promise.all(
-            values.images.map(async (imageFile) => {
-              const imageRef = ref(storage, `blogimages/${imageFile.name}`);
-              await uploadBytes(imageRef, imageFile);
-              return {
-                _id: Math.floor(Math.random() * 1000000).toString(),
-                name: imageFile.name,
-                link: await getDownloadURL(imageRef),
-              };
-            })
-          );
+          // Upload new images to Bucket API
+          let uploadedImageUrls: any[] = [];
+          if (values.images.length > 0) {
+            const uploadedFiles = await uploadFilesToBucket(values.images);
+            uploadedImageUrls = uploadedFiles.map((file) => ({
+              _id: Math.floor(Math.random() * 1000000).toString(),
+              name: file.name,
+              link: file.link,
+            }));
+          }
 
           // Now that all images are uploaded, construct the data for the PUT request
           const data = {

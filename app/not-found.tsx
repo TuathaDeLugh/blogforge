@@ -48,7 +48,7 @@ export default function Error() {
               width={400}
               height={400}
               alt="disconnected"
-              src="https://firebasestorage.googleapis.com/v0/b/blog-forge-sailor.appspot.com/o/202012_07.jpg?alt=media&token=82f0ce91-8dd4-4d73-b126-e64351ef4877"
+              src="https://bucket.umangsailor.com/storage/blogforge/assets/202012_07.jpg"
               className="rounded-full"
             />
           </Div>

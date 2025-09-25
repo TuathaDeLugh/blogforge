@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { RxCross1 } from 'react-icons/rx';
 import { IoAdd } from 'react-icons/io5';
-import { storage } from '@/util/firebase';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { uploadFilesToBucket } from '@/util/bucket';
 import Image from 'next/image';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
@@ -96,18 +95,13 @@ const NewBlogForm: React.FC = () => {
 
       const postapi = async () => {
         try {
-          // Upload images to Firebase Storage
-          const uploadedImageUrls = await Promise.all(
-            values.images.map(async (imageFile) => {
-              const imageRef = ref(storage, `blogimages/${imageFile.name}`);
-              await uploadBytes(imageRef, imageFile);
-              return {
-                _id: Math.floor(Math.random() * 1000000).toString(),
-                name: imageFile.name,
-                link: await getDownloadURL(imageRef),
-              };
-            })
-          );
+          // Upload images to Bucket API
+          const uploadedFiles = await uploadFilesToBucket(values.images);
+          const uploadedImageUrls = uploadedFiles.map((file) => ({
+            _id: Math.floor(Math.random() * 1000000).toString(),
+            name: file.name,
+            link: file.link,
+          }));
 
           // Now that all images are uploaded, construct the data for the POST request
           const data = {

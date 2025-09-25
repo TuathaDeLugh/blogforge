@@ -2,8 +2,7 @@
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { MdOutlineDelete } from 'react-icons/md';
-import { ref, deleteObject } from 'firebase/storage';
-import { storage } from '@/util/firebase';
+import { deleteFilesFromBucket } from '@/util/bucket';
 import toast from 'react-hot-toast';
 import DModal from '@/Components/layout/Model';
 import Image from 'next/image';
@@ -23,15 +22,14 @@ export default function DelBlogBtn({ id, images, title }: DelBlogBtnProps) {
   async function handleDelete() {
     const delapi = async () => {
       try {
-        await Promise.all(
-          images.map(async ({ name }) => {
-            const imageRef = ref(storage, `blogimages/${name}`);
-            await deleteObject(imageRef);
-          })
-        );
+        // Delete images from Bucket API
+        if (images.length > 0) {
+          const fileNamesToDelete = images.map(({ name }) => name);
+          await deleteFilesFromBucket(fileNamesToDelete);
+        }
       } catch (error: any) {
         toast.error(
-          'Firebase image deletion error report this issue to admin on contact page',
+          'Bucket image deletion error report this issue to admin on contact page',
           {
             duration: 10000,
           }

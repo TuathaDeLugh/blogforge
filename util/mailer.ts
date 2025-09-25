@@ -119,7 +119,7 @@ export const sendEmail = async ({
     }
 
     const transporter = nodemailer.createTransport({
-      host: 'smtp.zoho.in',
+      host: process.env.MAILHOST,
       port: 465,
       secure: true,
       auth: {

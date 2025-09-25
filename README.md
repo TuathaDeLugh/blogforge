@@ -53,8 +53,6 @@ Here are some of the key features of BlogForge:
    GOOGLE_SECRET = 'PROJECT Secret That provided by cloud.google '
    GITHUB_ID = 'PROJECT ID That provided by github'
    GITHUB_SECRET = 'PROJECT Secret That provided by github'
-   FIREBASE_API_KEY = 'firebase Project storage key'
-   FIREBASE_AUTH_DOMAIN = 'firebase project auth domain'
    MAILUSER = "Mail Service username or Emailid"
    MAILPASS = "Mail Service password"
    ```

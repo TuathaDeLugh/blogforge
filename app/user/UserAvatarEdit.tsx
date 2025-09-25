@@ -23,7 +23,7 @@ export default function UserAvatarEdit({ userId }: AvatarModelProps) {
 
   const avatars: string[] = [];
   for (let i = 1; i <= 37; i++) {
-    const imageName = `https://firebasestorage.googleapis.com/v0/b/blog-forge-sailor.appspot.com/o/Avatars%2FAvatar%20(${i}).png?alt=media`;
+    const imageName = `https://bucket.umangsailor.com/storage/blogforge/Avatars/Avatar%20(${i}).png`;
     avatars.push(imageName);
   }
 

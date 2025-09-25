@@ -88,7 +88,7 @@ export async function POST(request: Request) {
     // Send notification email before deletion using the existing email system
     try {
       const transporter = nodemailer.createTransport({
-        host: 'smtp.zoho.in',
+        host: process.env.MAILHOST,
         port: 465,
         secure: true,
         auth: {

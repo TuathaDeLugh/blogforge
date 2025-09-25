@@ -1,9 +1,4 @@
-// Server-side analytics functions for API routes
-import {
-  BlogAnalytics,
-  UserAnalytics,
-  SiteAnalytics,
-} from '@/models/analytics';
+import { SiteAnalytics } from '@/models/analytics';
 import Blog from '@/models/blog';
 import User from '@/models/user';
 

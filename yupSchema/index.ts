@@ -33,7 +33,7 @@ export const SignupSchema = Yup.object({
     .max(25)
     .matches(
       /^[a-z0-9_]+$/,
-      'Username can only contain small letters, numbers, and underscores'
+      'Only enter small letters, numbers and underscores'
     )
     .required('Please enter username'),
   email: Yup.string().email().required('Please enter email'),

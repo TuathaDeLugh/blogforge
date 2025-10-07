@@ -48,11 +48,11 @@ export default function UserAvatarEdit({ userId }: AvatarModelProps) {
         },
         body: JSON.stringify({ avatar: chosenAvatar, type: 'avatar' }),
       });
-      const { updatedUser } = await response.json();
+      const { user: updatedUser } = await response.json();
 
       await update({
-        ...session,
         user: {
+          ...session!.user,
           avatar: updatedUser.avatar,
         },
       });

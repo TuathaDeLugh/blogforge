@@ -45,7 +45,7 @@ export default function DeleteAccount() {
   }, []);
 
   return (
-    <div className="flex min-h-[92vh] md:min-h-[90vh] items-center mx-auto max-w-[1500px] justify-center p-3">
+    <div className="flex min-h-[92vh] md:min-h-[90vh] items-center mx-auto max-w-[1500px] justify-center mb-4 p-3">
       <Div
         className="h-full flex items-center relative max-w-2xl md:mx-5"
         initial={{ opacity: 0, x: -30 }}

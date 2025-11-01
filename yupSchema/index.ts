@@ -69,7 +69,7 @@ export const NewBlogSchema = Yup.object({
   images: Yup.array()
     .required('atlist one image is required')
     .min(1, 'Select at least one image')
-    .max(7, 'You can put maximum 7 images')
+    .max(10, 'You can put maximum 10 images')
     .test('fileType', 'Invalid file type, only images are allowed', (value) => {
       if (!value) return true; // If no file is provided, skip the test
       return value.every((file) =>
@@ -100,7 +100,7 @@ export const EditBlogSchema = Yup.object({
     .min(1, 'Add at least one keyword'),
   detail: Yup.string().required('Detail is required'),
   images: Yup.array()
-    .max(7, 'You can put maximum 7 images')
+    .max(10, 'You can put maximum 10 images')
     .test('fileType', 'Invalid file type, only images are allowed', (value) => {
       if (!value) return true; // If no file is provided, skip the test
       return value.every((file) =>

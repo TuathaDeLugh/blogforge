@@ -31,10 +31,14 @@ export async function getUserBlog(
   }
 }
 
-export async function getAllUsers(page: number) {
+export async function getAllUsers(page: number, search?: string) {
   try {
     const api = process.env.API_URL;
-    const response = await fetch(`${api}/api/user/?page=${page || 1}`, {
+    let url = `${api}/api/user/?page=${page || 1}`;
+    if (search) {
+      url += `&search=${search}`;
+    }
+    const response = await fetch(url, {
       cache: 'no-store',
     });
     const user = await response.json();

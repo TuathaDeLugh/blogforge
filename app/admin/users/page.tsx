@@ -7,13 +7,16 @@ import UserManagementActions from '@/Components/Admin/UserManagementActions';
 import React, { Suspense } from 'react';
 import { FaUsers, FaUserShield } from 'react-icons/fa';
 import Image from 'next/image';
+import SearchInput from '@/Components/SearchInput';
 
 export default async function AdminUsers(context: {
-  searchParams: { page: string };
+  searchParams: { page: string; search?: string };
 }) {
-  const users = await getAllUsers(parseInt(context.searchParams.page));
+  const { page = '1', search } = context.searchParams;
+  const users = await getAllUsers(parseInt(page), search);
   const adminCount = await getAdminCount();
-  let i = 1;
+  let i = (parseInt(page) - 1) * 15 + 1;
+
   return (
     <section className="md:my-6">
       {/* Header */}
@@ -35,7 +38,6 @@ export default async function AdminUsers(context: {
           User Management
         </H1>
       </div>
-
       {/* User Stats */}
       <Div
         initial={{ opacity: 0, y: -20 }}
@@ -86,6 +88,9 @@ export default async function AdminUsers(context: {
           </div>
         </div>
       </Div>
+      <div className="mb-6">
+        <SearchInput />
+      </div>
       {/* Enhanced Users Table */}
       <Div
         initial={{ opacity: 0, y: -20 }}
@@ -94,33 +99,33 @@ export default async function AdminUsers(context: {
         className="bg-white dark:bg-slate-800 rounded-xl shadow-lg border overflow-hidden"
       >
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-slate-700">
             <thead className="bg-gray-50 dark:bg-slate-700">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   #
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   User
                 </th>
-                <th className="hidden md:table-cell px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Email
                 </th>
-                <th className="hidden lg:table-cell px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Joined
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Role
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white dark:bg-slate-800 divide-y divide-gray-200 dark:divide-slate-600">
+            <tbody className="bg-white dark:bg-slate-800 divide-y divide-gray-200 dark:divide-slate-700">
               {users.data?.map((user: any) => {
                 return (
                   <tr

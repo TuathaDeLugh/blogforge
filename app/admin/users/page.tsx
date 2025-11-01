@@ -96,10 +96,10 @@ export default async function AdminUsers(context: {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
-        className="bg-white dark:bg-slate-800 rounded-xl shadow-lg border overflow-hidden"
+        className="bg-white dark:bg-slate-800 rounded-xl shadow-lg border overflow-hidden border-gray-200 dark:border-slate-700"
       >
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200 dark:divide-slate-700">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-slate-700 ">
             <thead className="bg-gray-50 dark:bg-slate-700">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">

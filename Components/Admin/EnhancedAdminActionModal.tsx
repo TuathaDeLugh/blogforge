@@ -2,7 +2,13 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { IoFlash, IoCreate, IoWarning, IoRefresh } from 'react-icons/io5';
+import {
+  IoFlash,
+  IoCreate,
+  IoWarning,
+  IoRefresh,
+  IoShieldCheckmarkOutline,
+} from 'react-icons/io5';
 import { MdPerson, MdComment, MdEdit, MdDelete } from 'react-icons/md';
 import Image from 'next/image';
 import ModalWrapper from '../layout/ModalWrapper';
@@ -57,68 +63,22 @@ export default function EnhancedAdminActionModal({
   onSuccess,
 }: EnhancedAdminActionModalProps) {
   const [templates, setTemplates] = useState<AdminActionTemplate[]>([]);
-  const [selectedTemplate, setSelectedTemplate] =
-    useState<AdminActionTemplate | null>(null);
-  const [useCustom, setUseCustom] = useState(false);
   const [customReason, setCustomReason] = useState('');
   const [customDuration, setCustomDuration] = useState('');
   const [customSubject, setCustomSubject] = useState('');
   const [newUsername, setNewUsername] = useState('');
-  const [emailMessage, setEmailMessage] = useState('');
-  const [selectedEmailTemplate, setSelectedEmailTemplate] = useState('');
   const [loading, setLoading] = useState(false);
   const [loadingTemplates, setLoadingTemplates] = useState(true);
 
-  // Email templates for delete account action
-  const emailTemplates = [
-    {
-      id: 'policy_violation',
-      name: 'Policy Violation',
-      message: `Dear ${user.name || user.username},
-
-We regret to inform you that your BlogForge account has been scheduled for deletion due to violations of our community guidelines and terms of service.
-
-Your account will be permanently deleted, and all associated data will be removed from our systems. Any blogs you have created will be transferred to our admin account to maintain content integrity for other users.
-
-If you believe this action was taken in error, please contact our support team immediately.
-
-Best regards,
-BlogForge Admin Team`,
-    },
-    {
-      id: 'inactive_account',
-      name: 'Inactive Account',
-      message: `Dear ${user.name || user.username},
-
-Your BlogForge account has been inactive for an extended period. As part of our data management policy, we will be deleting inactive accounts.
-
-Your account will be permanently deleted, and any blogs you have created will be transferred to our admin account to preserve content for the community.
-
-If you wish to keep your account active, please log in within the next 7 days.
-
-Best regards,
-BlogForge Admin Team`,
-    },
-    {
-      id: 'user_request',
-      name: 'User Request',
-      message: `Dear ${user.name || user.username},
-
-We have received and processed your request to delete your BlogForge account.
-
-Your account will be permanently deleted as requested. Any blogs you have created will be transferred to our admin account to maintain content availability for other users.
-
-Thank you for being part of the BlogForge community.
-
-Best regards,
-BlogForge Admin Team`,
-    },
-    {
-      id: 'custom',
-      name: 'Custom Message',
-      message: '',
-    },
-  ];
+  useEffect(() => {
+    if (!isOpen) {
+      setTemplates([]);
+      setCustomReason('');
+      setCustomDuration('');
+      setCustomSubject('');
+      setNewUsername('');
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (isOpen) {
@@ -163,65 +123,6 @@ BlogForge Admin Team`,
     setNewUsername(`${randomAdjective}${randomNoun}${numbers}`);
   };
 
-  const handleEmailTemplateChange = (templateId: string) => {
-    setSelectedEmailTemplate(templateId);
-    const template = emailTemplates.find((t) => t.id === templateId);
-    if (template) {
-      setEmailMessage(template.message);
-    }
-  };
-
-  const handleDelete = async () => {
-    if (!emailMessage.trim()) {
-      toast.error('Please provide an email message before deleting the user.');
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const emailResponse = await fetch('/api/user/send-deletion-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: user.email,
-          username: user.username,
-          message: emailMessage,
-        }),
-      });
-
-      if (!emailResponse.ok) {
-        throw new Error('Failed to send email notification');
-      }
-
-      // Then delete the user
-      const deleteResponse = await fetch(
-        `/api/user/admin-delete?userId=${user._id}`,
-        {
-          method: 'DELETE',
-        }
-      );
-
-      const data = await deleteResponse.json();
-
-      if (deleteResponse.ok) {
-        toast.success(
-          `User ${user.username} deleted successfully. Email notification sent.`
-        );
-        onSuccess?.();
-        onClose();
-      } else {
-        toast.error(data.message || 'Failed to delete user');
-      }
-    } catch (error) {
-      console.error('Error deleting user:', error);
-      toast.error('Failed to delete user or send email notification');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const fetchTemplates = async () => {
     try {
       setLoadingTemplates(true);
@@ -244,10 +145,6 @@ BlogForge Admin Team`,
     setLoading(true);
 
     try {
-      if (actionType === 'delete_account') {
-        await handleDelete();
-        return;
-      }
       let endpoint = '';
       let payload: any = {
         userId: user._id,
@@ -266,6 +163,9 @@ BlogForge Admin Team`,
         case 'username_change':
           endpoint = '/api/admin/change-username';
           payload.newUsername = newUsername;
+          break;
+        case 'delete_account':
+          endpoint = '/api/admin/delete-account';
           break;
       }
 
@@ -304,11 +204,6 @@ BlogForge Admin Team`,
       return;
     }
 
-    if (actionType === 'delete_account') {
-      await handleDelete();
-      return;
-    }
-
     setLoading(true);
 
     try {
@@ -333,6 +228,9 @@ BlogForge Admin Team`,
         case 'username_change':
           endpoint = '/api/admin/change-username';
           payload.newUsername = newUsername;
+          break;
+        case 'delete_account':
+          endpoint = '/api/admin/delete-account';
           break;
       }
 
@@ -419,11 +317,11 @@ BlogForge Admin Team`,
   const getActionTitle = (type: string) => {
     switch (type) {
       case 'account_ban':
-        return 'Account Ban';
+        return 'Give Account Ban';
       case 'comment_ban':
-        return 'Comment Ban';
+        return 'Give Comment Ban';
       case 'username_change':
-        return 'Username Change';
+        return 'change Username';
       case 'delete_account':
         return 'Delete Account';
       default:
@@ -510,90 +408,76 @@ BlogForge Admin Team`,
         </div>
       }
       submitButton={
-        <button
-          onClick={handleDelete}
-          disabled={
-            loading ||
-            !customReason.trim() ||
-            (actionType === 'username_change' && !newUsername.trim()) ||
-            (actionType === 'delete_account' && !emailMessage.trim())
-          }
-          className={`w-full h-full px-4 py-2 rounded-lg text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${
-            actionType === 'delete_account'
-              ? 'bg-red-600 hover:bg-red-700'
-              : 'bg-orange-500 hover:bg-orange-600'
-          }`}
-        >
-          {loading ? 'Processing...' : `${getActionTitle(actionType)}`}
-        </button>
+        showUnbanSection ? (
+          <button
+            onClick={handleUnban}
+            disabled={loading}
+            className="w-full h-full px-4 py-2 rounded-lg text-white bg-green-600 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            {loading ? 'Processing...' : 'Confirm Unban'}
+          </button>
+        ) : (
+          <button
+            onClick={handleCustomAction}
+            disabled={loading || !customReason.trim()}
+            className={`w-full h-full px-4 py-2 rounded-lg text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${
+              actionType === 'delete_account'
+                ? 'bg-red-600 hover:bg-red-700'
+                : 'bg-orange-500 hover:bg-orange-600'
+            }`}
+          >
+            {loading ? 'Processing...' : `${getActionTitle(actionType)}`}
+          </button>
+        )
       }
     >
       <div className="py-6 text-left w-full">
-        {showUnbanSection && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <div className="flex items-center gap-2 mb-4">
-              <IoWarning className="text-red-500" size={20} />
-              <span className="font-medium text-red-800">
-                User is currently{' '}
-                {actionType === 'account_ban' ? 'banned' : 'comment-banned'}
-              </span>
+        {showUnbanSection ? (
+          <div className="w-full text-center">
+            <div className="mx-auto mb-6 w-fit bg-green-100 dark:bg-green-900/50 p-4 rounded-full">
+              <IoShieldCheckmarkOutline size={40} className="text-green-600" />
             </div>
+            <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
+              Lift Suspension for @{user.username}
+            </h3>
+            <p className="text-gray-500 dark:text-gray-400 mt-2">
+              This user is currently{' '}
+              {actionType === 'account_ban' ? 'banned' : 'comment-banned'}.
+              Lifting the suspension will restore their privileges.
+            </p>
 
-            {/* Quick Unban */}
-            <div className="mb-4">
-              <button
-                onClick={handleUnban}
-                disabled={loading}
-                className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors mr-4"
-              >
-                {loading
-                  ? 'Processing...'
-                  : `Quick Remove ${actionType === 'account_ban' ? 'Ban' : 'Comment Ban'}`}
-              </button>
-            </div>
-
-            {/* Custom Unban Reason */}
-            <div className="space-y-3">
+            <div className="text-left space-y-4 mt-8">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Custom Unban Reason (Optional)
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Reason for Lifting Ban (Optional)
                 </label>
                 <textarea
                   value={customReason}
                   onChange={(e) => setCustomReason(e.target.value)}
-                  rows={2}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-900 resize-none"
-                  placeholder="Enter reason for removing the ban (optional)..."
+                  rows={3}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
+                  placeholder="e.g., Ban expired, user appealed successfully."
                 />
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  This reason will be logged for administrative purposes. If
+                  left blank, a default reason will be used.
+                </p>
               </div>
-
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Email Subject (Optional)
                 </label>
                 <input
                   type="text"
                   value={customSubject}
                   onChange={(e) => setCustomSubject(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-900"
-                  placeholder="Custom email subject for unban notification..."
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  placeholder="e.g., Your account has been reinstated"
                 />
               </div>
-
-              <button
-                onClick={() => handleUnban()}
-                disabled={loading}
-                className="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                {loading
-                  ? 'Processing...'
-                  : `Remove ${actionType === 'account_ban' ? 'Ban' : 'Comment Ban'} with Custom Details`}
-              </button>
             </div>
           </div>
-        )}
-
-        {!showUnbanSection && (
+        ) : (
           <>
             {/* Quick Actions */}
             <div className="mb-6">
@@ -616,7 +500,9 @@ BlogForge Admin Team`,
                   {templates.map((template) => (
                     <div
                       key={template._id}
-                      className={`border-2 rounded-lg p-4 cursor-pointer transition-all hover:shadow-md ${getSeverityColor(template.severity)}`}
+                      className={`border-2 rounded-lg p-4 cursor-pointer transition-all hover:shadow-md ${getSeverityColor(
+                        template.severity
+                      )}`}
                       onClick={() => !loading && handleQuickAction(template)}
                     >
                       <div className="flex items-start justify-between mb-2">
@@ -657,67 +543,6 @@ BlogForge Admin Team`,
                 </h3>
               </div>
 
-              {/* Delete Account Special UI */}
-              {actionType === 'delete_account' && (
-                <div className="mb-6">
-                  <Image
-                    src={'/delete.svg'}
-                    alt="delete user"
-                    width={150}
-                    height={150}
-                    className="mx-auto mb-4"
-                  />
-
-                  <div className="text-center mb-6">
-                    <p className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                      Delete user:{' '}
-                      <span className="text-red-500">@{user.username}</span>
-                    </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-                      This action will permanently delete the user and transfer
-                      their blogs to admin.
-                    </p>
-                  </div>
-
-                  <div className="space-y-3 mb-4">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Email Template:
-                    </label>
-                    <select
-                      value={selectedEmailTemplate}
-                      onChange={(e) =>
-                        handleEmailTemplateChange(e.target.value)
-                      }
-                      className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                    >
-                      <option value="">Select a template...</option>
-                      {emailTemplates.map((template) => (
-                        <option key={template.id} value={template.id}>
-                          {template.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="space-y-2 mb-4">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Email Message to User:
-                    </label>
-                    <textarea
-                      value={emailMessage}
-                      onChange={(e) => setEmailMessage(e.target.value)}
-                      placeholder="Enter the message to send to the user before deletion..."
-                      rows={8}
-                      className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm resize-none"
-                    />
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      This message will be sent to {user.email} before account
-                      deletion.
-                    </p>
-                  </div>
-                </div>
-              )}
-
               <div className="space-y-4">
                 {/* Username Change Specific Fields */}
                 {actionType === 'username_change' && (
@@ -752,35 +577,20 @@ BlogForge Admin Team`,
                   </div>
                 )}
 
-                {actionType !== 'delete_account' && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Custom Reason *
-                    </label>
-                    <textarea
-                      value={customReason}
-                      onChange={(e) => setCustomReason(e.target.value)}
-                      rows={3}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
-                      placeholder={`Enter custom reason for ${getActionLabel(actionType)}...`}
-                    />
-                  </div>
-                )}
-
-                {actionType === 'delete_account' && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Admin Reason for Deletion *
-                    </label>
-                    <textarea
-                      value={customReason}
-                      onChange={(e) => setCustomReason(e.target.value)}
-                      rows={3}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
-                      placeholder="Enter admin reason for account deletion (for internal logging)..."
-                    />
-                  </div>
-                )}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Custom Reason *
+                  </label>
+                  <textarea
+                    value={customReason}
+                    onChange={(e) => setCustomReason(e.target.value)}
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
+                    placeholder={`Enter custom reason for ${getActionLabel(
+                      actionType
+                    )}...`}
+                  />
+                </div>
 
                 {(actionType === 'account_ban' ||
                   actionType === 'comment_ban') && (

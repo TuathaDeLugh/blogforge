@@ -3,7 +3,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MdEdit, MdBlock, MdComment, MdPersonOff } from 'react-icons/md';
+import {
+  MdEdit,
+  MdBlock,
+  MdComment,
+  MdPersonOff,
+  MdDelete,
+} from 'react-icons/md';
 import EnhancedAdminActionModal from './EnhancedAdminActionModal';
 
 interface UserManagementActionsProps {
@@ -72,6 +78,15 @@ export default function UserManagementActions({
               : 'Ban from Commenting'
           }
           onClick={() => setModalOpen('comment_ban')}
+        />
+      </motion.div>
+
+      <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}>
+        <MdDelete
+          size={18}
+          className="text-red-500 hover:text-red-700 cursor-pointer"
+          title="Delete User"
+          onClick={() => setModalOpen('delete_account')}
         />
       </motion.div>
 

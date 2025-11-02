@@ -34,6 +34,7 @@ export default function AdminActionTemplateForm({
   const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       name: template?.name || '',
       description: template?.description || '',
@@ -110,6 +111,13 @@ export default function AdminActionTemplateForm({
     },
   });
 
+  useEffect(() => {
+    if (!isOpen) {
+      formik.resetForm();
+      formik.setErrors({});
+    }
+  }, [isOpen]);
+
   const showDurationField =
     formik.values.actionType === 'account_ban' ||
     formik.values.actionType === 'comment_ban';
@@ -127,7 +135,8 @@ export default function AdminActionTemplateForm({
       showCancelButton
       submitButton={
         <button
-          type="submit"
+          type="button"
+          onClick={() => formik.handleSubmit()}
           disabled={loading}
           className="h-full w-full flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
@@ -146,7 +155,10 @@ export default function AdminActionTemplateForm({
       }
       modalClassName="!max-w-2xl"
     >
-      <form onSubmit={formik.handleSubmit} className="py-6 space-y-6 text-left">
+      <form
+        onSubmit={formik.handleSubmit}
+        className="py-6 space-y-6 text-left w-full"
+      >
         {/* Template Name */}
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">

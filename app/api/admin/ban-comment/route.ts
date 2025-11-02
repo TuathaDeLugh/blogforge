@@ -35,7 +35,11 @@ export async function POST(request: Request) {
     // If using a template, fetch template data
     if (templateId) {
       const template = await BanTemplate.findById(templateId);
-      if (template && template.isActive && template.banType === 'comment') {
+      if (
+        template &&
+        template.isActive &&
+        template.actionType === 'comment_ban'
+      ) {
         finalReason = template.reason;
         finalDuration = template.duration
           ? `${template.duration}h`

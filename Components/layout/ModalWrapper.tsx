@@ -103,7 +103,7 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({
                 {header}
               </h3>
             )}
-            <div className="text-base font-normal leading-relaxed flex flex-col items-center gap-5 text-black dark:text-white max-h-[calc(90vh-250px)] overflow-y-auto">
+            <div className="text-base px-[2px] font-normal leading-relaxed flex flex-col items-center gap-5 text-black dark:text-white max-h-[calc(90vh-250px)] overflow-y-auto">
               {children}
             </div>
             {(showCancelButton || submitButton) && (

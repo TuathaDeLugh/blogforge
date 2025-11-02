@@ -494,8 +494,8 @@ BlogForge Admin Team`,
     <ModalWrapper
       isOpen={isOpen}
       setIsOpen={onClose}
-      disableOutsideclick={true}
-      showCancelButton={true}
+      disableOutsideclick
+      showCancelButton
       header={
         <div className="flex items-center gap-3">
           {getActionIcon(actionType)}

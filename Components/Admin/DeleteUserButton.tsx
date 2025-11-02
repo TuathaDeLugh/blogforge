@@ -119,8 +119,8 @@ export default function DeleteUserButton({
         isOpen={modalOpen}
         setIsOpen={setModalOpen}
         header="Delete User Account"
-        disableOutsideclick={true}
-        showCancelButton={true}
+        disableOutsideclick
+        showCancelButton
         submitButton={
           <button
             className="w-full h-full rounded bg-red-500/70 dark:bg-red-400/90 hover:bg-red-600 dark:hover:bg-red-600 inline-block p-3 disabled:opacity-50"

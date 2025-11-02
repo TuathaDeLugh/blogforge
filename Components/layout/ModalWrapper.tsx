@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef, ReactNode } from 'react';
+import React, { useEffect, useRef, ReactNode, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoClose } from 'react-icons/io5';
 
@@ -26,24 +26,35 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({
   modalClassName = '',
   ...rest
 }) => {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const modalOpen = isOpen !== undefined ? isOpen : internalOpen;
+  const setModalOpen = setIsOpen !== undefined ? setIsOpen : setInternalOpen;
+
+  const trigger = useRef<HTMLButtonElement>(null);
   const modal = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const clickHandler = ({ target }: { target: EventTarget | null }) => {
-      if (disableOutsideclick || !modal.current || !isOpen) return;
-      if (!modal.current.contains(target as Node)) {
-        setIsOpen(false);
-      }
+      if (!modal.current) return;
+      if (
+        !modalOpen ||
+        modal.current.contains(target as Node) ||
+        trigger.current?.contains(target as Node)
+      )
+        return;
+      if (disableOutsideclick) return;
+      setModalOpen(false);
     };
 
     const keyHandler = ({ keyCode }: { keyCode: number }) => {
-      if (!disableOutsideclick && isOpen && keyCode === 27) {
-        setIsOpen(false);
+      if (modalOpen && keyCode === 27) {
+        setModalOpen(false);
       }
     };
 
     const handleScroll = () => {
-      if (isOpen) {
+      if (modalOpen) {
         document.body.style.overflow = 'hidden';
       } else {
         document.body.style.overflow = '';
@@ -59,11 +70,11 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({
       document.removeEventListener('keydown', keyHandler);
       document.body.style.overflow = '';
     };
-  }, [isOpen, disableOutsideclick, setIsOpen]);
+  }, [modalOpen, disableOutsideclick]);
 
   return (
     <AnimatePresence>
-      {isOpen && (
+      {modalOpen && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -77,11 +88,11 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({
             initial={{ y: -50, opacity: 0, scale: 0.8 }}
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: -50, opacity: 0, scale: 0.8 }}
-            className={`${modalClassName} w-full relative max-w-[570px] rounded-[20px] bg-gray-50 dark:bg-gray-800 border dark:border-slate-600 px-4 py-8 text-center md:px-[70px] md:py-[60px]`}
+            className={`${modalClassName} w-full relative max-w-[570px] max-h-[90vh] rounded-[20px] bg-gray-50 dark:bg-gray-800 border dark:border-slate-600 px-4 py-8 text-center md:px-[40px] md:py-[50px]`}
           >
             {disableOutsideclick && (
               <button
-                onClick={() => setIsOpen(false)}
+                onClick={() => setModalOpen(false)}
                 className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100"
               >
                 <IoClose size={24} />
@@ -92,7 +103,7 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({
                 {header}
               </h3>
             )}
-            <div className="text-base font-normal leading-relaxed flex flex-col items-center gap-5 text-black dark:text-white">
+            <div className="text-base font-normal leading-relaxed flex flex-col items-center gap-5 text-black dark:text-white max-h-[calc(90vh-250px)] overflow-y-auto">
               {children}
             </div>
             {(showCancelButton || submitButton) && (
@@ -100,7 +111,7 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({
                 {showCancelButton && (
                   <div className="w-1/2 px-3">
                     <motion.button
-                      onClick={() => setIsOpen(false)}
+                      onClick={() => setModalOpen(false)}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       className="block w-full text-gray-400 dark:text-white rounded-md border border-stroke dark:border-slate-600 p-3 text-center text-base font-medium transition hover:border-red-500/70 dark:hover:border-red-500 hover:text-red-500/70 dark:hover:text-red-500"

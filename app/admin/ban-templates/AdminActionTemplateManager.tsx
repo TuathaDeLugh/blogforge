@@ -1,4 +1,5 @@
 'use client';
+import { AnimatePresence } from 'framer-motion';
 import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import toast from 'react-hot-toast';
@@ -343,12 +344,11 @@ export default function AdminActionTemplateManager() {
       )}
 
       {/* Form Modal */}
-      {showForm && (
-        <AdminActionTemplateForm
-          template={editingTemplate}
-          onClose={handleFormClose}
-        />
-      )}
+      <AdminActionTemplateForm
+        isOpen={showForm}
+        template={editingTemplate}
+        onClose={handleFormClose}
+      />
     </div>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { MdEdit, MdBlock, MdComment, MdPersonOff } from 'react-icons/md';
 import EnhancedAdminActionModal from './EnhancedAdminActionModal';
 
@@ -75,28 +75,26 @@ export default function UserManagementActions({
         />
       </motion.div>
 
-      {modalOpen && (
-        <EnhancedAdminActionModal
-          isOpen={true}
-          onClose={handleModalClose}
-          user={{
-            _id: user._id,
-            username: user.username,
-            name: user.name || user.username,
-            email: user.email,
-            isBanned: user.isBanned,
-            commentBanned: user.commentBanned,
-          }}
-          actionType={
-            modalOpen as
-              | 'account_ban'
-              | 'comment_ban'
-              | 'username_change'
-              | 'delete_account'
-          }
-          onSuccess={handleSuccess}
-        />
-      )}
+      <EnhancedAdminActionModal
+        isOpen={!!modalOpen}
+        onClose={handleModalClose}
+        user={{
+          _id: user._id,
+          username: user.username,
+          name: user.name || user.username,
+          email: user.email,
+          isBanned: user.isBanned,
+          commentBanned: user.commentBanned,
+        }}
+        actionType={
+          modalOpen as
+            | 'account_ban'
+            | 'comment_ban'
+            | 'username_change'
+            | 'delete_account'
+        }
+        onSuccess={handleSuccess}
+      />
     </div>
   );
 }

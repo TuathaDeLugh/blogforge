@@ -62,11 +62,27 @@ export async function GET(request: Request, response: Response) {
     await connectdb();
     const { searchParams } = new URL(request.url);
     const pageParam = searchParams.get('page');
+    const search = searchParams.get('search');
     const page = parseInt(pageParam as string) || 1;
     const pageSize = 15;
     const skip = (page - 1) * pageSize;
+
     const usernameFilter = { username: { $ne: 'admin' } };
-    const users = await User.find(usernameFilter)
+
+    let filter: any = usernameFilter;
+
+    if (search) {
+      const searchFilter = {
+        $or: [
+          { name: { $regex: search, $options: 'i' } },
+          { username: { $regex: search, $options: 'i' } },
+          { email: { $regex: search, $options: 'i' } },
+        ],
+      };
+      filter = { $and: [usernameFilter, searchFilter] };
+    }
+
+    const users = await User.find(filter)
       .sort({ isAdmin: 1 })
       .select(
         '_id username name email isAdmin isActive isBanned banExpiry banReason commentBanned commentBanExpiry commentBanReason createdAt'
@@ -74,7 +90,7 @@ export async function GET(request: Request, response: Response) {
       .skip(skip)
       .limit(pageSize);
 
-    const totalDocuments = await User.countDocuments(usernameFilter);
+    const totalDocuments = await User.countDocuments(filter);
 
     const hasNextPage = skip + pageSize < totalDocuments;
 

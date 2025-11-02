@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import DModal from '../layout/Model';
+import ModalWrapper from '../layout/ModalWrapper';
 import Image from 'next/image';
 import { MdOutlineDelete } from 'react-icons/md';
 import toast from 'react-hot-toast';
@@ -28,44 +28,17 @@ export default function DeleteUserButton({
     {
       id: 'policy_violation',
       name: 'Policy Violation',
-      message: `Dear ${username},
-
-We regret to inform you that your BlogForge account has been scheduled for deletion due to violations of our community guidelines and terms of service.
-
-Your account will be permanently deleted, and all associated data will be removed from our systems. Any blogs you have created will be transferred to our admin account to maintain content integrity for other users.
-
-If you believe this action was taken in error, please contact our support team immediately.
-
-Best regards,
-BlogForge Admin Team`,
+      message: `Dear ${username},`,
     },
     {
       id: 'inactive_account',
       name: 'Inactive Account',
-      message: `Dear ${username},
-
-Your BlogForge account has been inactive for an extended period. As part of our data management policy, we will be deleting inactive accounts.
-
-Your account will be permanently deleted, and any blogs you have created will be transferred to our admin account to preserve content for the community.
-
-If you wish to keep your account active, please log in within the next 7 days.
-
-Best regards,
-BlogForge Admin Team`,
+      message: `Dear ${username},`,
     },
     {
       id: 'user_request',
       name: 'User Request',
-      message: `Dear ${username},
-
-We have received and processed your request to delete your BlogForge account.
-
-Your account will be permanently deleted as requested. Any blogs you have created will be transferred to our admin account to maintain content availability for other users.
-
-Thank you for being part of the BlogForge community.
-
-Best regards,
-BlogForge Admin Team`,
+      message: `Dear ${username},`,
     },
     {
       id: 'custom',
@@ -135,79 +108,83 @@ BlogForge Admin Team`,
   };
 
   return (
-    <DModal
-      btn={
+    <>
+      <button onClick={() => setModalOpen(true)}>
         <MdOutlineDelete
           size={20}
           className="text-red-400 hover:text-red-600 cursor-pointer"
         />
-      }
-      header="Delete User Account"
-      isOpen={modalOpen}
-      setIsOpen={setModalOpen}
-      submit={
-        <button
-          className="w-full h-full rounded bg-red-500/70 dark:bg-red-400/90 hover:bg-red-600 dark:hover:bg-red-600 inline-block p-3 disabled:opacity-50"
-          onClick={handleDelete}
-          disabled={isDeleting}
-        >
-          {isDeleting ? 'Deleting...' : 'Delete User'}
-        </button>
-      }
-    >
-      <div className="w-full space-y-4">
-        <Image
-          src={'/delete.svg'}
-          alt="delete user"
-          width={150}
-          height={150}
-          className="mx-auto"
-        />
-
-        <div className="text-center">
-          <p className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-            Delete user: <span className="text-red-500">@{username}</span>
-          </p>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-            This action will permanently delete the user and transfer their
-            blogs to admin.
-          </p>
-        </div>
-
-        <div className="space-y-3">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Email Template:
-          </label>
-          <select
-            value={selectedTemplate}
-            onChange={(e) => handleTemplateChange(e.target.value)}
-            className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+      </button>
+      <ModalWrapper
+        isOpen={modalOpen}
+        setIsOpen={setModalOpen}
+        header="Delete User Account"
+        disableOutsideclick={true}
+        showCancelButton={true}
+        submitButton={
+          <button
+            className="w-full h-full rounded bg-red-500/70 dark:bg-red-400/90 hover:bg-red-600 dark:hover:bg-red-600 inline-block p-3 disabled:opacity-50"
+            onClick={handleDelete}
+            disabled={isDeleting}
           >
-            <option value="">Select a template...</option>
-            {emailTemplates.map((template) => (
-              <option key={template.id} value={template.id}>
-                {template.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Email Message to User:
-          </label>
-          <textarea
-            value={emailMessage}
-            onChange={(e) => setEmailMessage(e.target.value)}
-            placeholder="Enter the message to send to the user before deletion..."
-            rows={8}
-            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm resize-none"
+            {isDeleting ? 'Deleting...' : 'Delete User'}
+          </button>
+        }
+      >
+        <div className="w-full space-y-4">
+          <Image
+            src={'/delete.svg'}
+            alt="delete user"
+            width={150}
+            height={150}
+            className="mx-auto"
           />
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            This message will be sent to {userEmail} before account deletion.
-          </p>
+
+          <div className="text-center">
+            <p className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+              Delete user: <span className="text-red-500">@{username}</span>
+            </p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+              This action will permanently delete the user and transfer their
+              blogs to admin.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Email Template:
+            </label>
+            <select
+              value={selectedTemplate}
+              onChange={(e) => handleTemplateChange(e.target.value)}
+              className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+            >
+              <option value="">Select a template...</option>
+              {emailTemplates.map((template) => (
+                <option key={template.id} value={template.id}>
+                  {template.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Email Message to User:
+            </label>
+            <textarea
+              value={emailMessage}
+              onChange={(e) => setEmailMessage(e.target.value)}
+              placeholder="Enter the message to send to the user before deletion..."
+              rows={8}
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm resize-none"
+            />
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              This message will be sent to {userEmail} before account deletion.
+            </p>
+          </div>
         </div>
-      </div>
-    </DModal>
+      </ModalWrapper>
+    </>
   );
 }

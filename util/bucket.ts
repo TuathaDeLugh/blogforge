@@ -1,6 +1,7 @@
 // Bucket API utility functions for file upload and deletion
 const BUCKET_API_URL = 'https://bucket.umangsailor.com';
 const BUCKET_NAME = 'blogforge';
+const FOLDER_NAME = 'blogimages';
 
 export interface UploadedFile {
   name: string;
@@ -14,6 +15,7 @@ export interface BucketUploadResponse {
 
 export interface BucketDeleteRequest {
   bucket: string;
+  folder: string;
   names: string[];
 }
 
@@ -35,6 +37,7 @@ export async function uploadFilesToBucket(
 
   const formData = new FormData();
   formData.append('bucket', BUCKET_NAME);
+  formData.append('folder', FOLDER_NAME);
 
   files.forEach((file) => {
     formData.append('files', file);
@@ -81,6 +84,7 @@ export async function deleteFilesFromBucket(
 
   const deleteRequest: BucketDeleteRequest = {
     bucket: BUCKET_NAME,
+    folder: FOLDER_NAME,
     names: fileNames,
   };
 

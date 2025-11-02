@@ -87,7 +87,7 @@ export default function AdminNav({ children }: { children: ReactNode }) {
           <div className="text-2xl font-bold mb-8 bg-gradient-to-r from-orange-500 to-orange-400 text-transparent bg-clip-text">
             Admin Panel
           </div>
-          <div className="flex-grow overflow-y-auto">
+          <div className="flex-grow overflow-y-auto overflow-x-hidden">
             {/* Main Section */}
             <div className="mb-6">
               <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">

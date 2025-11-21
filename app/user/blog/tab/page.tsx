@@ -1,25 +1,71 @@
+'use client';
+
 import Pagination from '@/Components/layout/Pagination';
-import { authOptions } from '@/app/api/auth/[...nextauth]/options';
-import { getServerSession } from 'next-auth';
 import Link from 'next/link';
-import React, { Suspense } from 'react';
-import { HiPencilAlt } from 'react-icons/hi';
+import React, { Suspense, useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { FiEye } from 'react-icons/fi';
 import { Animation, Div, H1 } from '@/Components/Motion/Motion';
 import Image from 'next/image';
 import Tr from '@/Components/Motion/TableAnimation';
 import DelBlogBtn from '../DeleteBlog';
-import { getUserBlog } from '@/controllers/user';
 import BanAwareEditIcon from '@/Components/BanAwareEditIcon';
+import BlogSearchFilter from '@/Components/BlogSearchFilter';
+import { useSearchParams } from 'next/navigation';
 
-export default async function UserBlog(context: {
-  searchParams: { page: string };
-}) {
-  const session = await getServerSession(authOptions);
-  const dbid = session?.user.dbid || '';
-  const page = parseInt(context.searchParams.page) || 1;
-  const filter = '';
-  const blogs = await getUserBlog(dbid, page, filter);
+// Available blog categories
+const BLOG_CATEGORIES = [
+  'technology',
+  'lifestyle',
+  'travel',
+  'food',
+  'health_and_fitness',
+  'business',
+  'entertainment',
+  'education',
+  'sports',
+  'fashion',
+];
+
+export default function UserBlog() {
+  const { data: session } = useSession();
+  const searchParams = useSearchParams();
+  const [blogs, setBlogs] = useState<any>({
+    data: [],
+    meta: { totalDocuments: 0 },
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      if (!session?.user?.dbid) return;
+
+      setLoading(true);
+      try {
+        const params = new URLSearchParams(searchParams.toString());
+        const response = await fetch(
+          `/api/blog/user/${session.user.dbid}?${params.toString()}`,
+          { cache: 'no-store' }
+        );
+        const data = await response.json();
+        setBlogs(data);
+      } catch (error) {
+        console.error('Error fetching blogs:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, [session, searchParams]);
+
+  if (!session) {
+    return (
+      <div className="text-center py-10">
+        Please sign in to view your blogs.
+      </div>
+    );
+  }
 
   return (
     <>
@@ -49,6 +95,10 @@ export default async function UserBlog(context: {
           Draft
         </Link>
       </div>
+
+      {/* Search and Filter Component */}
+      <BlogSearchFilter categories={BLOG_CATEGORIES} showStatusFilter={true} />
+
       <H1
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -66,7 +116,9 @@ export default async function UserBlog(context: {
         }
       >
         <div className=" block w-full rounded overflow-x-auto">
-          {blogs.data.length > 0 ? (
+          {loading ? (
+            <div className="text-center py-10">Loading blogs...</div>
+          ) : blogs.data.length > 0 ? (
             <table className=" items-center w-full bg-transparent overflow-y-hidden ">
               <thead>
                 <tr className="border border-l-0 border-r-0 bg-slate-200 dark:bg-slate-600 dark:border-slate-500 ">

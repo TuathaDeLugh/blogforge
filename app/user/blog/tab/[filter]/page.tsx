@@ -1,30 +1,75 @@
+'use client';
+
 import Pagination from '@/Components/layout/Pagination';
-import { authOptions } from '@/app/api/auth/[...nextauth]/options';
-import { getServerSession } from 'next-auth';
 import Link from 'next/link';
-import React, { Suspense } from 'react';
-import { HiPencilAlt } from 'react-icons/hi';
+import React, { Suspense, useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { FiEye } from 'react-icons/fi';
 import { Animation, Div, H1 } from '@/Components/Motion/Motion';
 import Image from 'next/image';
 import Tr from '@/Components/Motion/TableAnimation';
 import DelBlogBtn from '../../DeleteBlog';
-import { getUserBlog } from '@/controllers/user';
 import BanAwareEditIcon from '@/Components/BanAwareEditIcon';
+import BlogSearchFilter from '@/Components/BlogSearchFilter';
+import { useSearchParams, useParams } from 'next/navigation';
 
-interface UserBlogFilterProps {
-  searchParams: {
-    page: string;
-  };
-  params: {
-    filter: string;
-  };
-}
+// Available blog categories
+const BLOG_CATEGORIES = [
+  'technology',
+  'lifestyle',
+  'travel',
+  'food',
+  'health_and_fitness',
+  'business',
+  'entertainment',
+  'education',
+  'sports',
+  'fashion',
+];
 
-export default async function UserBlogFilter(props: UserBlogFilterProps) {
-  const session = await getServerSession(authOptions);
-  const dbid = session?.user.dbid || '';
-  const page = parseInt(props.searchParams.page) || 1;
-  const blogs = await getUserBlog(dbid, page, props.params.filter);
+export default function UserBlogFilter() {
+  const { data: session } = useSession();
+  const searchParams = useSearchParams();
+  const params = useParams();
+  const filter = params.filter as string;
+  const [blogs, setBlogs] = useState<any>({
+    data: [],
+    meta: { totalDocuments: 0 },
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      if (!session?.user?.dbid) return;
+
+      setLoading(true);
+      try {
+        const urlParams = new URLSearchParams(searchParams.toString());
+        // Add the filter from the route
+        urlParams.set('filter', filter);
+        const response = await fetch(
+          `/api/blog/user/${session.user.dbid}?${urlParams.toString()}`,
+          { cache: 'no-store' }
+        );
+        const data = await response.json();
+        setBlogs(data);
+      } catch (error) {
+        console.error('Error fetching blogs:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, [session, searchParams, filter]);
+
+  if (!session) {
+    return (
+      <div className="text-center py-10">
+        Please sign in to view your blogs.
+      </div>
+    );
+  }
 
   return (
     <>
@@ -37,23 +82,27 @@ export default async function UserBlogFilter(props: UserBlogFilterProps) {
         </Link>
         <Link
           href={'/user/blog/tab/published'}
-          className={`py-2 px-4 border-b-2 ${props.params.filter == 'published' ? 'border-orange-400' : 'border-transparent'} focus:outline-none`}
+          className={`py-2 px-4 border-b-2 ${filter === 'published' ? 'border-orange-400' : 'border-transparent'} focus:outline-none`}
         >
           Published
         </Link>
         <Link
           href={'/user/blog/tab/archived'}
-          className={`py-2 px-4 border-b-2 ${props.params.filter == 'archived' ? 'border-orange-400' : 'border-transparent'} focus:outline-none`}
+          className={`py-2 px-4 border-b-2 ${filter === 'archived' ? 'border-orange-400' : 'border-transparent'} focus:outline-none`}
         >
           Archived
         </Link>
         <Link
           href={'/user/blog/tab/draft'}
-          className={`py-2 px-4 border-b-2 ${props.params.filter == 'draft' ? 'border-orange-400' : 'border-transparent'} focus:outline-none`}
+          className={`py-2 px-4 border-b-2 ${filter === 'draft' ? 'border-orange-400' : 'border-transparent'} focus:outline-none`}
         >
           Draft
         </Link>
       </div>
+
+      {/* Search and Filter Component */}
+      <BlogSearchFilter categories={BLOG_CATEGORIES} showStatusFilter={false} />
+
       <H1
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -71,7 +120,9 @@ export default async function UserBlogFilter(props: UserBlogFilterProps) {
         }
       >
         <div className=" block w-full rounded overflow-x-auto">
-          {blogs.data.length > 0 ? (
+          {loading ? (
+            <div className="text-center py-10">Loading blogs...</div>
+          ) : blogs.data.length > 0 ? (
             <table className=" items-center w-full bg-transparent overflow-y-hidden ">
               <thead>
                 <tr className="border border-l-0 border-r-0 bg-slate-200 dark:bg-slate-600 dark:border-slate-500 ">
@@ -162,6 +213,15 @@ export default async function UserBlogFilter(props: UserBlogFilterProps) {
                             }
                           >
                             <div className=" flex gap-2">
+                              <Link
+                                href={`/user/blog/preview/${blog._id}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                                title="Preview blog"
+                              >
+                                <FiEye size={25} />
+                              </Link>
                               <BanAwareEditIcon blogId={blog._id} />
                               <DelBlogBtn
                                 id={blog._id}

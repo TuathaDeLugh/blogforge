@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 import React, { Suspense } from 'react';
 import { HiPencilAlt } from 'react-icons/hi';
+import { FiEye } from 'react-icons/fi';
 import { Animation, Div, H1 } from '@/Components/Motion/Motion';
 import Image from 'next/image';
 import Tr from '@/Components/Motion/TableAnimation';
@@ -156,6 +157,15 @@ export default async function UserBlog(context: {
                             }
                           >
                             <div className=" flex gap-2">
+                              <Link
+                                href={`/user/blog/preview/${blog._id}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                                title="Preview blog"
+                              >
+                                <FiEye size={25} />
+                              </Link>
                               <BanAwareEditIcon blogId={blog._id} />
                               <DelBlogBtn
                                 id={blog._id}

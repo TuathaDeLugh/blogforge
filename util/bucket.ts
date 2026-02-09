@@ -8,9 +8,17 @@ export interface UploadedFile {
   link: string;
 }
 
+export interface BucketFileInfo {
+  originalName: string;
+  name: string;
+  url: string;
+  size: number;
+  time: string;
+}
+
 export interface BucketUploadResponse {
   message: string;
-  files: string[];
+  files: BucketFileInfo[];
 }
 
 export interface BucketDeleteRequest {
@@ -57,10 +65,10 @@ export async function uploadFilesToBucket(
 
     const result: BucketUploadResponse = await response.json();
 
-    // Transform the response to match the expected format
-    return files.map((file, index) => ({
-      name: file.name,
-      link: result.files[index] || '',
+    // Transform the new response format to match the expected format
+    return result.files.map((fileInfo) => ({
+      name: fileInfo.name,
+      link: fileInfo.url,
     }));
   } catch (error) {
     console.error('Bucket upload error:', error);
